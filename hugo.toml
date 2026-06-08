@@ -1,0 +1,11 @@
+baseURL = 'https://hugokit.app/'
+languageCode = 'en'
+title = 'HugoKit'
+theme = "hugokit-website-theme"
+[params]
+  description = "A native macOS companion for Hugo. Manage sites, run servers, and deploy — no terminal needed."
+  tagline = "Your Hugo sites, one click away."
+  version = "0.1.0"
+
+    [markup.goldmark.renderer]
+      unsafe = true

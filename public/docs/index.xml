@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Documentation on HugoKit</title>
+    <link>http://localhost:1313/docs/</link>
+    <description>Recent content in Documentation on HugoKit</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 15 Apr 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/docs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Getting started with HugoKit</title>
+      <link>http://localhost:1313/docs/getting-started/</link>
+      <pubDate>Wed, 15 Apr 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/getting-started/</guid>
+      <description>Add your first Hugo site, start the local server, and see live reload in action — without touching the terminal.</description>
+    </item>
+    <item>
+      <title>Deploying to GitHub Pages</title>
+      <link>http://localhost:1313/docs/github-pages-setup/</link>
+      <pubDate>Tue, 14 Apr 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/github-pages-setup/</guid>
+      <description>Connect your GitHub account once, then push every site to Pages with a single click.</description>
+    </item>
+    <item>
+      <title>Faster drafting with the Content card</title>
+      <link>http://localhost:1313/docs/content-workflow/</link>
+      <pubDate>Mon, 13 Apr 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/content-workflow/</guid>
+      <description>Draft toggles, front-matter health checks, and quick-new content — how to keep writing without breaking the build.</description>
+    </item>
+  </channel>
+</rss>

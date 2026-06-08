@@ -1,0 +1,37 @@
+// ═══════════════════════════════════════════════════════════════════════
+// Tech Stack
+// ═══════════════════════════════════════════════════════════════════════
+
+.tech-stack {
+  background: var(--bg);
+}
+
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.tech-item {
+  text-align: center;
+  padding: 24px 16px;
+  background: var(--bg-card-solid);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 1px 4px var(--shadow-card);
+}
+
+.tech-item .tech-label {
+  font-size: 0.75rem;
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+
+.tech-item .tech-value {
+  font-weight: 600;
+  font-size: 0.95rem;
+}

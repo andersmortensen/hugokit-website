@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Version 0.1 — HugoKit</title>
+  <meta name="description" content="A native macOS companion for Hugo. Manage sites, run servers, and deploy — no terminal needed.">
+
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif:wght@300;400&display=swap" rel="stylesheet">
+
+  
+  
+  <link rel="stylesheet" href="/css/style.min.dbbcb98ce18f86559a3d06c6a1a57c711a88863830c5b439d31727093702a80c.css">
+
+  
+  <script>
+    (function() {
+      var saved = localStorage.getItem('theme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var isDark = saved === 'dark' || (saved !== 'light' && prefersDark);
+      if (saved) document.documentElement.setAttribute('data-theme', saved);
+      if (isDark) document.documentElement.classList.add('dark-active');
+    })();
+  </script>
+</head>
+<body>
+  <nav class="navbar">
+  <div class="navbar-inner">
+    <a href="/" class="navbar-brand">
+      <img src="/images/app-icons/Icon-iOS-Dark-1024x1024@1x.png" alt="HugoKit" class="app-icon" />
+
+      HugoKit
+    </a>
+
+    <div class="navbar-center">
+      
+      <a href="#feat-server" class="nav-feat-pill" data-target="feat-server">
+        <span class="fnav-icon" style="background: rgba(52,200,138,0.12); color: #34C88A;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <circle cx="12" cy="12" r="9"/>
+  <line x1="3" y1="12" x2="21" y2="12"/>
+  <path d="M12 3c2.5 2.5 3.8 5.5 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.5-3.8-9s1.3-6.5 3.8-9z"/>
+</svg></span>
+        Server
+      </a>
+      <a href="#feat-content" class="nav-feat-pill" data-target="feat-content">
+        <span class="fnav-icon" style="background: rgba(5,148,204,0.12); color: #0594CC;"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+  <rect x="4" y="13" width="3.5" height="7" rx="0.75"/>
+  <rect x="10.25" y="9" width="3.5" height="11" rx="0.75"/>
+  <rect x="16.5" y="5" width="3.5" height="15" rx="0.75"/>
+</svg></span>
+        Content
+      </a>
+      <a href="#feat-config" class="nav-feat-pill" data-target="feat-config">
+        <span class="fnav-icon" style="background: rgba(234,185,82,0.12); color: #EAB952;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <circle cx="12" cy="12" r="3"/>
+  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+</svg></span>
+        Config
+      </a>
+      <a href="#feat-deploy" class="nav-feat-pill" data-target="feat-deploy">
+        <span class="fnav-icon" style="background: rgba(254,63,136,0.1); color: #FE3F88;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <line x1="22" y1="2" x2="11" y2="13"/>
+  <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+</svg></span>
+        Publish
+      </a>
+      <a href="#feat-themes" class="nav-feat-pill" data-target="feat-themes">
+        <span class="fnav-icon" style="background: rgba(78,186,178,0.12); color: #4EBAB2;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+  <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+  <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+  <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+</svg></span>
+        Themes
+      </a>
+      <a href="#feat-multisite" class="nav-feat-pill" data-target="feat-multisite">
+        <span class="fnav-icon" style="background: rgba(139,92,246,0.1); color: #8b5cf6;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <rect x="7" y="7" width="14" height="14" rx="2.5"/>
+  <path d="M3 17V5.5A2.5 2.5 0 0 1 5.5 3H17"/>
+</svg></span>
+        Multi-site
+      </a>
+
+    </div>
+
+    <a href="#download" class="navbar-cta">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 12l-4-4h2.5V3h3v5H12L8 12z"/><path d="M14 14H2v-2h12v2z"/></svg>
+      Download
+      <span class="navbar-cta-version">v0.1 beta</span>
+    </a>
+
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Skift mellem lys og mørk tilstand">
+      <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+
+  <main>
+    
+<article class="section changelog-post">
+  <div class="container container-narrow">
+    <header class="changelog-post-header">
+      <a class="blog-post-back" href="/whats-new/">← What's new</a>
+
+      <div class="changelog-post-meta">
+        <span class="wn-type-badge wn-type-changelog">Changelog</span>
+        <span class="wn-version-badge">0.1</span>
+        
+        <time class="wn-date" datetime="2026-04-13T00:00:00&#43;00:00">Apr 13, 2026</time>
+      </div>
+
+      <h1>Version 0.1</h1>
+    </header>
+
+    
+    <div class="changelog-post-list">
+      
+      <div class="changelog-item">
+        <span class="changelog-badge badge-new">New</span>
+        <span class="changelog-text">Multi-site management — manage multiple Hugo sites from one compact window</span>
+      </div>
+      
+      <div class="changelog-item">
+        <span class="changelog-badge badge-new">New</span>
+        <span class="changelog-text">One-click server with live log streaming, draft toggles, and port control</span>
+      </div>
+      
+      <div class="changelog-item">
+        <span class="changelog-badge badge-new">New</span>
+        <span class="changelog-text">One-click GitHub Pages publishing — OAuth, Actions workflow, and multi-remote support (e.g. production &#43; staging repo)</span>
+      </div>
+      
+      <div class="changelog-item">
+        <span class="changelog-badge badge-new">New</span>
+        <span class="changelog-text">Preflight auto-fix — validates and patches subpath issues in templates and JS before every deploy</span>
+      </div>
+      
+      <div class="changelog-item">
+        <span class="changelog-badge badge-new">New</span>
+        <span class="changelog-text">Visual config editor for hugo.toml, yaml, and json</span>
+      </div>
+      
+      <div class="changelog-item">
+        <span class="changelog-badge badge-new">New</span>
+        <span class="changelog-text">Content analytics with draft tracking, front matter health, and structured logging</span>
+      </div>
+      
+      <div class="changelog-item">
+        <span class="changelog-badge badge-new">New</span>
+        <span class="changelog-text">Built-in Hugo reference across 9 categories</span>
+      </div>
+      
+      <div class="changelog-item">
+        <span class="changelog-badge badge-new">New</span>
+        <span class="changelog-text">Guided onboarding wizard, command palette (⌘K), and menu bar extra</span>
+      </div>
+      
+    </div>
+    
+
+    
+  </div>
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="/images/app-icons/Icon-iOS-Dark-1024x1024@1x.png" alt="HugoKit" class="app-icon" />
+
+        HugoKit
+      </div>
+      <ul class="footer-links">
+        <li><a href="https://andersmortensen.com">Anders Mortensen</a></li>
+      </ul>
+    </div>
+    <p class="footer-copyright">&copy; 2026 Anders Mortensen. All rights reserved.</p>
+  </div>
+</footer>
+
+
+  
+  <script>
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.closest('.faq-item').classList.toggle('open');
+      });
+    });
+
+     
+    (function() {
+      var modal = document.getElementById('hugo-explainer-modal');
+      var openBtn = document.getElementById('hugo-explainer-open');
+      var closeBtn = document.getElementById('hugo-explainer-close');
+      if (!modal || !openBtn) return;
+
+      openBtn.addEventListener('click', function() { modal.classList.add('open'); });
+      if (closeBtn) closeBtn.addEventListener('click', function() { modal.classList.remove('open'); });
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) modal.classList.remove('open');
+      });
+    })();
+
+     
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+      }
+    });
+
+     
+    (function() {
+      var html = document.documentElement;
+      var toggle = document.getElementById('theme-toggle');
+      var mq = window.matchMedia('(prefers-color-scheme: dark)');
+
+      function isDark() {
+        var theme = html.getAttribute('data-theme');
+        if (theme === 'dark') return true;
+        if (theme === 'light') return false;
+        return mq.matches;
+      }
+
+      function apply() {
+        html.classList.toggle('dark-active', isDark());
+      }
+
+      if (toggle) {
+        toggle.addEventListener('click', function() {
+          var nowDark = isDark();
+          var next = nowDark ? 'light' : 'dark';
+          html.setAttribute('data-theme', next);
+          localStorage.setItem('theme', next);
+          apply();
+        });
+      }
+
+       
+      mq.addEventListener('change', function() {
+        if (!localStorage.getItem('theme')) apply();
+      });
+
+      apply();
+    })();
+
+     
+    (function() {
+      var rows = document.querySelectorAll('.showcase-row');
+      if (!rows.length) return;
+
+       
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        rows.forEach(function(r) { r.classList.add('revealed'); });
+        return;
+      }
+
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -15% 0px', threshold: 0 });
+
+      rows.forEach(function(row) { observer.observe(row); });
+    })();
+
+     
+    (function() {
+      var pills = document.querySelectorAll('.nav-feat-pill');
+      if (!pills.length) return;
+
+      var targets = [];
+      pills.forEach(function(pill) {
+        var el = document.getElementById(pill.getAttribute('data-target'));
+        if (el) targets.push({ id: pill.getAttribute('data-target'), el: el });
+      });
+      if (!targets.length) return;
+
+      var intersecting = new Set();
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            intersecting.add(entry.target.id);
+          } else {
+            intersecting.delete(entry.target.id);
+          }
+        });
+         
+        var activeId = null;
+        for (var i = 0; i < targets.length; i++) {
+          if (intersecting.has(targets[i].id)) { activeId = targets[i].id; break; }
+        }
+        pills.forEach(function(pill) {
+          pill.classList.toggle('active', pill.getAttribute('data-target') === activeId);
+        });
+      }, { rootMargin: '-30% 0px -55% 0px', threshold: 0 });
+
+      targets.forEach(function(t) { observer.observe(t.el); });
+    })();
+  </script>
+
+</body>
+</html>

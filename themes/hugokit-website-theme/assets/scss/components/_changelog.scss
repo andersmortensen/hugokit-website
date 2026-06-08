@@ -1,0 +1,85 @@
+// ═══════════════════════════════════════════════════════════════════════
+// Changelog
+// ═══════════════════════════════════════════════════════════════════════
+
+.changelog {
+  background: var(--bg-warm);
+}
+
+.changelog-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.changelog-entry {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 32px;
+  padding: 36px 0;
+  border-top: 1px solid var(--border);
+}
+
+.changelog-entry:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+.changelog-version-col {
+  padding-top: 3px;
+}
+
+.changelog-version {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-1);
+  letter-spacing: -0.01em;
+}
+
+.changelog-date {
+  font-size: 0.8rem;
+  color: var(--text-2);
+  margin-top: 4px;
+}
+
+.changelog-content-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.changelog-item {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  line-height: 1.5;
+}
+
+.changelog-badge {
+  flex-shrink: 0;
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+}
+
+.changelog-text {
+  font-size: 0.9375rem;
+  color: var(--text-1);
+}
+
+@media (max-width: 640px) {
+  .changelog-entry {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .changelog-version-col {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+}

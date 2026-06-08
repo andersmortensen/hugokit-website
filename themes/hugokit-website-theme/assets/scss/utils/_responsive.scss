@@ -1,0 +1,76 @@
+// ═══════════════════════════════════════════════════════════════════════
+// Global responsive overrides
+// ═══════════════════════════════════════════════════════════════════════
+// Cross-component media queries that would otherwise be split across
+// many partials. Loaded LAST in main.scss so they win cascade ties with
+// the original per-component media queries declared in source order.
+// ═══════════════════════════════════════════════════════════════════════
+
+@media (max-width: 768px) {
+  .hero {
+    min-height: auto;
+    padding: 120px 0 60px;
+  }
+
+  // hero-orbit, .pill-N, .orbit-pill osv. tilhørte en ældre variant af
+  // orbit-layoutet — markup bruger dem ikke længere. Den nuværende
+  // orbit-hero har sit eget mobile-breakpoint i _hero.scss (960px).
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .integration-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .tech-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .navbar-inner {
+    margin: 6px 12px 0;
+    padding: 0 6px 0 0;
+    height: 44px;
+    gap: 6px;
+  }
+
+  .navbar-center {
+    padding: 3px;
+  }
+
+  .nav-feat-pill {
+    font-size: 0.75rem;
+    padding: 5px 10px 5px 5px;
+    gap: 5px;
+  }
+
+  .fnav-icon {
+    width: 20px;
+    height: 20px;
+    font-size: 0.6rem;
+  }
+
+  .navbar-cta-version {
+    display: none;
+  }
+
+  .section {
+    padding: 64px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .integration-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+}

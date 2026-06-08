@@ -1,0 +1,112 @@
+{{/* ═══════════════════════════════════════════════════════════════════
+     WHAT'S NEW — aggregated listing at /whats-new/
+     ═══════════════════════════════════════════════════════════════════ */}}
+
+{{ define "main" }}
+{{ $sections := slice "changelog" "blog" "docs" }}
+{{ $entries := where site.RegularPages "Section" "in" $sections }}
+{{/* Reference pages (/docs/reference/*) are stable documentation, not
+     timeline updates — exclude them from the What's new aggregation. */}}
+{{ $entries = where $entries "Type" "!=" "reference" }}
+{{ $entries = $entries.ByDate.Reverse }}
+
+{{ $changelogCount := len (where $entries "Section" "changelog") }}
+{{ $blogCount := len (where $entries "Section" "blog") }}
+{{ $docsCount := len (where $entries "Section" "docs") }}
+{{ $totalCount := len $entries }}
+
+<section class="section wn-page" data-theme-color="peach">
+  <div class="container container-narrow">
+
+    <header class="wn-page-header">
+      <h1>What's new</h1>
+      {{ with .Params.description }}<p class="wn-page-lede">{{ . }}</p>{{ end }}
+    </header>
+
+    <div class="wn-tabs" role="tablist" aria-label="Filter by post type">
+      <button type="button" class="wn-tab is-active" data-filter="all" role="tab" aria-selected="true">
+        <span class="wn-tab-label">All</span>
+        <span class="wn-tab-count">{{ $totalCount }}</span>
+      </button>
+      <button type="button" class="wn-tab" data-filter="changelog" role="tab" aria-selected="false">
+        <span class="wn-tab-label">Changelog</span>
+        <span class="wn-tab-count">{{ $changelogCount }}</span>
+      </button>
+      <button type="button" class="wn-tab" data-filter="blog" role="tab" aria-selected="false">
+        <span class="wn-tab-label">Blog</span>
+        <span class="wn-tab-count">{{ $blogCount }}</span>
+      </button>
+      <button type="button" class="wn-tab" data-filter="docs" role="tab" aria-selected="false">
+        <span class="wn-tab-label">Guides</span>
+        <span class="wn-tab-count">{{ $docsCount }}</span>
+      </button>
+    </div>
+
+    <div class="wn-timeline" id="wn-timeline">
+      {{ range $entries }}
+        {{ partial "whatsnew-item.html" . }}
+      {{ end }}
+
+      {{ if not $entries }}
+      <p class="wn-empty">No updates yet — check back soon.</p>
+      {{ end }}
+    </div>
+
+  </div>
+</section>
+
+<script>
+  (function () {
+    var tabs = document.querySelectorAll('.wn-tab');
+    var entries = Array.prototype.slice.call(
+      document.querySelectorAll('#wn-timeline .wn-entry')
+    );
+    if (!tabs.length || !entries.length) return;
+
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var FADE_MS = reduceMotion ? 0 : 220;
+
+    function applyFilter(filter) {
+      var leaving = [];
+      var entering = [];
+
+      entries.forEach(function (e) {
+        var match = filter === 'all' || e.getAttribute('data-type') === filter;
+        if (match && e.hidden) entering.push(e);
+        else if (!match && !e.hidden) leaving.push(e);
+      });
+
+      if (!leaving.length && !entering.length) return;
+
+      leaving.forEach(function (e) { e.classList.add('is-leaving'); });
+
+      setTimeout(function () {
+        leaving.forEach(function (e) {
+          e.hidden = true;
+          e.classList.remove('is-leaving');
+        });
+        entering.forEach(function (e) {
+          e.classList.add('is-entering');
+          e.hidden = false;
+        });
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            entering.forEach(function (e) { e.classList.remove('is-entering'); });
+          });
+        });
+      }, FADE_MS);
+    }
+
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        tabs.forEach(function (t) {
+          var active = t === tab;
+          t.classList.toggle('is-active', active);
+          t.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+        applyFilter(tab.getAttribute('data-filter'));
+      });
+    });
+  })();
+</script>
+{{ end }}

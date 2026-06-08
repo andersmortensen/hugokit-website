@@ -1,0 +1,89 @@
+{{/* ═══════════════════════════════════════════════════════════════════
+     REFERENCE SIDEBAR — lists every feature reference page, grouped
+     by the `group` front-matter field. Highlights the current page.
+     Context: the current Page (so we can mark the active item).
+     ═══════════════════════════════════════════════════════════════════ */}}
+
+{{ $current := .RelPermalink }}
+{{ $features := where site.RegularPages "Type" "reference" }}
+{{ $groups := $features.GroupByParam "group" }}
+
+<aside class="docs-sidebar" aria-label="Reference navigation">
+  <div class="docs-sidebar-inner">
+
+    <div class="docs-sidebar-head">
+      <span class="docs-sidebar-eyebrow">Reference</span>
+      <label class="docs-sidebar-search" for="docs-sidebar-search">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input
+          id="docs-sidebar-search"
+          type="search"
+          class="docs-sidebar-search-input"
+          placeholder="Filter…"
+          autocomplete="off"
+          spellcheck="false">
+      </label>
+    </div>
+
+    <nav class="docs-sidebar-nav" id="docs-sidebar-nav">
+      {{ range $groups }}
+      <div class="docs-sidebar-group" data-group="{{ .Key | lower }}">
+        <h3 class="docs-sidebar-group-title">{{ .Key }}</h3>
+        <ul class="docs-sidebar-list" role="list">
+          {{ range .Pages.ByParam "order" }}
+          {{ $isActive := eq .RelPermalink $current }}
+          <li class="docs-sidebar-item{{ if $isActive }} is-active{{ end }}"
+              data-title="{{ .Title | lower }}"
+              data-summary="{{ .Params.summary | default "" | lower }}">
+            <a href="{{ .RelPermalink }}" {{ if $isActive }}aria-current="page"{{ end }}>
+              {{ .Title }}
+            </a>
+          </li>
+          {{ end }}
+        </ul>
+      </div>
+      {{ end }}
+    </nav>
+
+    <p class="docs-sidebar-empty" id="docs-sidebar-empty" hidden>
+      No match.
+    </p>
+
+  </div>
+</aside>
+
+<script>
+  (function () {
+    var input = document.getElementById('docs-sidebar-search');
+    var nav = document.getElementById('docs-sidebar-nav');
+    var empty = document.getElementById('docs-sidebar-empty');
+    if (!input || !nav) return;
+
+    var items = Array.prototype.slice.call(nav.querySelectorAll('.docs-sidebar-item'));
+    var groups = Array.prototype.slice.call(nav.querySelectorAll('.docs-sidebar-group'));
+
+    function applyFilter() {
+      var q = (input.value || '').toLowerCase().trim();
+      var anyMatch = false;
+
+      items.forEach(function (it) {
+        if (!q) { it.hidden = false; return; }
+        var hay = (it.getAttribute('data-title') + ' ' + it.getAttribute('data-summary'));
+        var match = hay.indexOf(q) !== -1;
+        it.hidden = !match;
+        if (match) anyMatch = true;
+      });
+
+      groups.forEach(function (g) {
+        g.hidden = g.querySelectorAll('.docs-sidebar-item:not([hidden])').length === 0;
+      });
+
+      if (empty) empty.hidden = !q || anyMatch;
+    }
+
+    input.addEventListener('input', applyFilter);
+  })();
+</script>

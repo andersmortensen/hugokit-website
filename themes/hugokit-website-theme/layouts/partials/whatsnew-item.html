@@ -1,0 +1,76 @@
+{{/* ═══════════════════════════════════════════════════════════════════
+     WHAT'S NEW — single card entry
+     Used on /whats-new/ listing and the homepage section.
+     ═══════════════════════════════════════════════════════════════════ */}}
+
+{{ $type := .Section }}
+{{ $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" }}
+
+{{/* Read-time preference order:
+     1. explicit `readMinutes` front-matter (docs)
+     2. Hugo's calculated `.ReadingTime`
+*/}}
+{{ $minutes := .Params.readMinutes | default .ReadingTime }}
+
+<a class="wn-entry wn-card" data-type="{{ $type }}" href="{{ .RelPermalink }}">
+  <div class="wn-entry-meta">
+    <span class="wn-type-badge wn-type-{{ $type }}">{{ if eq $type "changelog" }}Release{{ else if eq $type "docs" }}Guide{{ else }}{{ humanize $type }}{{ end }}</span>
+
+    {{/* Secondary badge row — type-specific.
+         Changelog: version.
+         Docs:      category (+ difficulty pill when set).
+    */}}
+    {{ if eq $type "changelog" }}
+      {{ with .Params.version }}<span class="wn-version-badge">{{ . }}</span>{{ end }}
+    {{ else if eq $type "docs" }}
+      {{ with .Params.category }}<span class="wn-docs-category">{{ . }}</span>{{ end }}
+      {{ with .Params.difficulty }}
+        <span class="docs-difficulty docs-difficulty-{{ lower . }}">{{ . }}</span>
+      {{ end }}
+    {{ end }}
+
+    <time class="wn-date" datetime="{{ $dateMachine }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+
+    {{ if and (ne $type "changelog") $minutes }}
+      <span class="wn-dot-sep" aria-hidden="true">·</span>
+      <span class="wn-reading-time">{{ $minutes }} min read</span>
+    {{ end }}
+
+    <span class="wn-entry-arrow" aria-hidden="true">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </span>
+  </div>
+
+  <h3 class="wn-title">{{ .Title }}</h3>
+
+  {{ if eq $type "changelog" }}
+    {{ $changes := .Params.changes }}
+    {{ $total := len $changes }}
+    {{ $preview := first 6 $changes }}
+    <div class="wn-changelog-list">
+      {{ range $preview }}
+      <div class="changelog-item">
+        <span class="changelog-badge badge-{{ lower .type }}">{{ .type }}</span>
+        <span class="changelog-text">{{ .text }}</span>
+      </div>
+      {{ end }}
+      {{ if gt $total 6 }}
+        <div class="wn-changelog-more">+ {{ sub $total 6 }} more</div>
+      {{ end }}
+    </div>
+  {{ else }}
+    {{ with .Params.summary }}
+    <p class="wn-summary">{{ . }}</p>
+    {{ else }}
+    <p class="wn-summary">{{ .Summary | plainify | truncate 220 }}</p>
+    {{ end }}
+  {{ end }}
+
+  {{/* Docs CTA strip — signals "this links to documentation, not a blog post". */}}
+  {{ if eq $type "docs" }}
+    <span class="wn-docs-cta" aria-hidden="true">
+      Read the guide
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </span>
+  {{ end }}
+</a>

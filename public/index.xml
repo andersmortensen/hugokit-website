@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>HugoKit</title>
+    <link>http://localhost:1313/</link>
+    <description>Recent content on HugoKit</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 15 Apr 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Getting started with HugoKit</title>
+      <link>http://localhost:1313/docs/getting-started/</link>
+      <pubDate>Wed, 15 Apr 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/getting-started/</guid>
+      <description>Add your first Hugo site, start the local server, and see live reload in action — without touching the terminal.</description>
+    </item>
+    <item>
+      <title>Version 0.1.0</title>
+      <link>http://localhost:1313/changelog/0-1-0/</link>
+      <pubDate>Mon, 13 Apr 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/changelog/0-1-0/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Deploying to GitHub Pages</title>
+      <link>http://localhost:1313/docs/github-pages-setup/</link>
+      <pubDate>Tue, 14 Apr 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/github-pages-setup/</guid>
+      <description>Connect your GitHub account once, then push every site to Pages with a single click.</description>
+    </item>
+    <item>
+      <title>Faster drafting with the Content card</title>
+      <link>http://localhost:1313/docs/content-workflow/</link>
+      <pubDate>Mon, 13 Apr 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/content-workflow/</guid>
+      <description>Draft toggles, front-matter health checks, and quick-new content — how to keep writing without breaking the build.</description>
+    </item>
+    <item>
+      <title>The thinking behind HugoKit</title>
+      <link>http://localhost:1313/blog/hello-hugokit/</link>
+      <pubDate>Tue, 14 Apr 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/hello-hugokit/</guid>
+      <description>Why a Hugo site deserves a native macOS home — and what I tried to leave out.</description>
+    </item>
+    <item>
+      <title>Post 3</title>
+      <link>http://localhost:1313/posts/post-3/</link>
+      <pubDate>Wed, 15 Mar 2023 11:00:00 -0700</pubDate>
+      <guid>http://localhost:1313/posts/post-3/</guid>
+      <description>&lt;p&gt;Occaecat aliqua consequat laborum ut ex aute aliqua culpa quis irure esse magna dolore quis. Proident fugiat labore eu laboris officia Lorem enim. Ipsum occaecat cillum ut tempor id sint aliqua incididunt nisi incididunt reprehenderit. Voluptate ad minim sint est aute aliquip esse occaecat tempor officia qui sunt. Aute ex ipsum id ut in est velit est laborum incididunt. Aliqua qui id do esse sunt eiusmod id deserunt eu nostrud aute sit ipsum. Deserunt esse cillum Lorem non magna adipisicing mollit amet consequat.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Post 2</title>
+      <link>http://localhost:1313/posts/post-2/</link>
+      <pubDate>Wed, 15 Feb 2023 10:00:00 -0700</pubDate>
+      <guid>http://localhost:1313/posts/post-2/</guid>
+      <description>&lt;p&gt;Anim eiusmod irure incididunt sint cupidatat. Incididunt irure irure irure nisi ipsum do ut quis fugiat consectetur proident cupidatat incididunt cillum. Dolore voluptate occaecat qui mollit laborum ullamco et. Ipsum laboris officia anim laboris culpa eiusmod ex magna ex cupidatat anim ipsum aute. Mollit aliquip occaecat qui sunt velit ut cupidatat reprehenderit enim sunt laborum. Velit veniam in officia nulla adipisicing ut duis officia.&lt;/p&gt;&#xA;&lt;p&gt;Exercitation voluptate irure in irure tempor mollit Lorem nostrud ad officia. Velit id fugiat occaecat do tempor. Sit officia Lorem aliquip eu deserunt consectetur. Aute proident deserunt in nulla aliquip dolore ipsum Lorem ut cupidatat consectetur sit sint laborum. Esse cupidatat sit sint sunt tempor exercitation deserunt. Labore dolor duis laborum est do nisi ut veniam dolor et nostrud nostrud.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Post 1</title>
+      <link>http://localhost:1313/posts/post-1/</link>
+      <pubDate>Sun, 15 Jan 2023 09:00:00 -0700</pubDate>
+      <guid>http://localhost:1313/posts/post-1/</guid>
+      <description>&lt;p&gt;Tempor proident minim aliquip reprehenderit dolor et ad anim Lorem duis sint eiusmod. Labore ut ea duis dolor. Incididunt consectetur proident qui occaecat incididunt do nisi Lorem. Tempor do laborum elit laboris excepteur eiusmod do. Eiusmod nisi excepteur ut amet pariatur adipisicing Lorem.&lt;/p&gt;&#xA;&lt;p&gt;Occaecat nulla excepteur dolore excepteur duis eiusmod ullamco officia anim in voluptate ea occaecat officia. Cillum sint esse velit ea officia minim fugiat. Elit ea esse id aliquip pariatur cupidatat id duis minim incididunt ea ea. Anim ut duis sunt nisi. Culpa cillum sit voluptate voluptate eiusmod dolor. Enim nisi Lorem ipsum irure est excepteur voluptate eu in enim nisi. Nostrud ipsum Lorem anim sint labore consequat do.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Command palette</title>
+      <link>http://localhost:1313/docs/reference/command-palette/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/reference/command-palette/</guid>
+      <description>⌘K anywhere in the app opens a searchable list of every HugoKit action.</description>
+    </item>
+    <item>
+      <title>Configuration</title>
+      <link>http://localhost:1313/docs/reference/configuration/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/reference/configuration/</guid>
+      <description>Visual editor for hugo.toml, hugo.yaml, and hugo.json — with validation and format conversion.</description>
+    </item>
+    <item>
+      <title>Content</title>
+      <link>http://localhost:1313/docs/reference/content/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/reference/content/</guid>
+      <description>Browse, count, and create Markdown content per site — with front-matter health surfaced inline.</description>
+    </item>
+    <item>
+      <title>Publish</title>
+      <link>http://localhost:1313/docs/reference/publish/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/reference/publish/</guid>
+      <description>Deploy the active site to GitHub Pages or any FTP / SFTP host, with smart sync and preflight checks.</description>
+    </item>
+    <item>
+      <title>Server</title>
+      <link>http://localhost:1313/docs/reference/server/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/reference/server/</guid>
+      <description>Run Hugo&amp;rsquo;s local preview server directly from HugoKit, with live reload and structured log output.</description>
+    </item>
+    <item>
+      <title>Site switcher</title>
+      <link>http://localhost:1313/docs/reference/site-switcher/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/reference/site-switcher/</guid>
+      <description>Top-of-sidebar control that flips between every Hugo site you&amp;rsquo;ve added to HugoKit.</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,539 @@
+// ═══════════════════════════════════════════════════════════════════════
+// Hero v3 — Centered editorial. Hex mark sits above headline.
+// Massive serif headline, centered composition, generous whitespace.
+// ═══════════════════════════════════════════════════════════════════════
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  padding: clamp(140px, 16vh, 200px) 0 clamp(80px, 10vh, 120px);
+}
+
+// ── Splash-only hero (homepage) ─────────────────────────────────────────
+.hero--splash-only {
+  justify-content: stretch;
+  padding: 0;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero--splash-only::before { display: none; }
+
+.hero--splash-only > .hero-splash {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+// ═════════════════════════════════════════════════════════════════════
+// HERO OVERLAY — editorial layout inspired by hellohello.is
+// Big headline dominates. Subtitle and pills secondary.
+// ═════════════════════════════════════════════════════════════════════
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: center;
+  padding: 0 clamp(32px, 6vw, 80px) clamp(64px, 10vh, 100px);
+}
+
+// Dark warm glow behind logo
+html.dark-active .hero--splash-only::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 70vw;
+  max-width: 700px;
+  height: 70vw;
+  max-height: 700px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(
+    circle at center,
+    rgba(184, 115, 85, 0.18) 0%,
+    rgba(184, 115, 85, 0.08) 35%,
+    transparent 65%
+  );
+  filter: blur(12px);
+}
+
+// ── Headline — oversized editorial serif ────────────────────────────────
+.hero-headline {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: clamp(3.2rem, 9vw, 7.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  margin: 0 0 clamp(20px, 3vh, 36px);
+  pointer-events: auto;
+  position: relative;
+  z-index: 2;
+
+  // Scroll reveal
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1s var(--ease-out-gentle),
+              transform 1s var(--ease-out-gentle);
+}
+
+html:not(.is-splashing) .hero-headline {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-subtitle {
+  font-family: var(--font-sans);
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--text-2);
+  max-width: 540px;
+  margin: 0 auto clamp(28px, 4vh, 44px);
+  pointer-events: auto;
+  position: relative;
+  z-index: 2;
+
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s var(--ease-out-gentle) 0.2s,
+              transform 0.8s var(--ease-out-gentle) 0.2s;
+}
+
+html:not(.is-splashing) .hero-subtitle {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+// ── Orbit: hidden on v3 — pills go inline below subtitle ────────────────
+.hero--orbit {
+  --orbit-radius: clamp(180px, min(28vw, 28vh), 260px);
+  --orbit-cy: 50%;
+}
+
+.hero-orbit {
+  display: none; // v3: no orbit ring
+}
+
+// ── Pills — horizontal scroll row, studio-style ─────────────────────────
+.hero-pills {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  pointer-events: auto;
+  z-index: 2;
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s var(--ease-out-gentle) 0.4s,
+              transform 0.8s var(--ease-out-gentle) 0.4s;
+}
+
+html:not(.is-splashing) .hero-pills {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-pills::-webkit-scrollbar { display: none; }
+
+.hero-pills > li {
+  position: static;
+  transform: none;
+  flex-shrink: 0;
+}
+
+.hero-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px 10px 10px;
+  background: color-mix(in srgb, var(--paper) 80%, transparent);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-pill);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    box-shadow 0.3s var(--ease-default),
+    background 0.2s var(--ease-default),
+    border-color 0.2s var(--ease-default);
+}
+
+.hero-pill .fnav-icon {
+  width: 28px;
+  height: 28px;
+}
+.hero-pill .fnav-icon svg {
+  width: 15px;
+  height: 15px;
+}
+
+.hero-pill:hover {
+  background: var(--paper);
+  border-color: var(--hairline-strong);
+  box-shadow:
+    0 4px 16px rgba(26, 21, 16, 0.08),
+    0 1px 3px rgba(26, 21, 16, 0.04);
+}
+
+html.dark-active .hero-pill {
+  background: color-mix(in srgb, var(--paper-2) 70%, transparent);
+  border-color: rgba(242, 236, 224, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+html.dark-active .hero-pill:hover {
+  background: color-mix(in srgb, var(--paper-2) 90%, transparent);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+// ── Hero subtitle (below headline) ──────────────────────────────────────
+.hero-sub {
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  color: var(--text-2);
+  max-width: 48ch;
+  line-height: 1.65;
+  margin-bottom: 2.5rem;
+}
+
+// ── Hero actions (download CTA) ─────────────────────────────────────────
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 4rem;
+}
+
+// ── Primary hero button ─────────────────────────────────────────────────
+.btn-primary-hero {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.6rem;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: background 0.2s, box-shadow 0.3s;
+}
+.btn-primary-hero:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.12); }
+
+// ── Ghost hero button ───────────────────────────────────────────────────
+.btn-ghost-hero {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.8rem 1.4rem;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-2);
+  background: transparent;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.btn-ghost-hero:hover {
+  border-color: var(--clay);
+  color: var(--clay-deep);
+  background: var(--clay-soft);
+}
+
+// ── App window preview ──────────────────────────────────────────────────
+.hero-app-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+}
+
+.app-frame {
+  background: var(--bg-card);
+  border-radius: 12px;
+  border: 1px solid var(--hairline);
+  box-shadow:
+    0 1px 3px rgba(0,0,0,0.04),
+    0 16px 60px rgba(0,0,0,0.08),
+    0 0 0 0.5px rgba(0,0,0,0.03);
+  overflow: hidden;
+}
+
+.app-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 0.9rem;
+  background: rgba(10,10,11,0.02);
+  border-bottom: 1px solid rgba(10,10,11,0.06);
+}
+.app-dots { display: flex; gap: 6px; }
+.app-dots span { width: 10px; height: 10px; border-radius: 50%; }
+.dot-r { background: #ff5f57; }
+.dot-y { background: #febc2e; }
+.dot-g { background: #28c840; }
+.app-titlebar-name {
+  flex: 1;
+  text-align: center;
+  font-size: 0.7rem;
+  color: var(--ink-faint);
+  font-weight: 500;
+}
+
+.app-body {
+  padding: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.app-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.55rem 0.7rem;
+  background: var(--paper);
+  border-radius: 7px;
+  transition: background 0.2s;
+}
+.app-row:hover { background: var(--paper-2); }
+.app-row-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+.app-row-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.app-row-icon svg {
+  width: 10px;
+  height: 10px;
+}
+.app-row-badge {
+  font-size: 0.625rem;
+  font-weight: 500;
+  padding: 0.1rem 0.4rem;
+  border-radius: 100px;
+}
+.badge-run { background: var(--sage-soft); color: var(--sage); }
+.badge-clay { background: var(--clay-soft); color: var(--clay); }
+.badge-steel { background: rgba(138,130,116,0.08); color: var(--ink-faint); }
+
+.app-statusbar {
+  padding: 0.4rem 0.85rem;
+  background: rgba(10,10,11,0.02);
+  border-top: 1px solid rgba(10,10,11,0.06);
+  font-size: 0.625rem;
+  color: var(--ink-faint);
+  font-family: var(--font-mono);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.app-statusbar-dot { color: var(--sage); font-size: 0.4rem; }
+
+// ── Responsive ──────────────────────────────────────────────────────────
+@media (max-width: 768px) {
+  .hero-overlay {
+    padding: 0 20px clamp(40px, 8vh, 72px);
+  }
+
+  .hero-headline {
+    font-size: clamp(2.4rem, 10vw, 3.6rem);
+  }
+
+  .hero-app-wrap { max-width: 100%; }
+}
+
+// ── Subtle warm vignette ────────────────────────────────────────────────
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 80% 60% at 50% 55%,
+    rgba(244, 239, 227, 0.5) 0%,
+    rgba(244, 239, 227, 0.18) 55%,
+    transparent 100%
+  );
+  z-index: 0;
+}
+
+html.dark-active .hero::before {
+  background: radial-gradient(
+    ellipse 80% 60% at 50% 55%,
+    rgba(35, 28, 23, 0.4) 0%,
+    rgba(26, 21, 18, 0.15) 55%,
+    transparent 100%
+  );
+}
+
+.hero > .container {
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+// ── Hero badge (eyebrow) ────────────────────────────────────────────────
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: var(--sage-soft);
+  border: 1px solid color-mix(in srgb, var(--sage) 18%, transparent);
+  border-radius: var(--radius-pill);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--sage-deep);
+  margin-bottom: 28px;
+}
+
+.hero-badge .dot {
+  width: 6px;
+  height: 6px;
+  background: var(--sage);
+  border-radius: 50%;
+}
+
+.hero h1 {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: clamp(3.2rem, 9vw, 7.5rem);
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+  margin-bottom: 24px;
+  color: var(--ink);
+}
+
+.hero h1 em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 300;
+  color: var(--sage-deep);
+}
+
+html.dark-active .hero h1 em { color: var(--sage); }
+
+.hero-description {
+  color: var(--text-2);
+  font-size: 1.15rem;
+  max-width: 520px;
+  margin: 0 auto 48px;
+  line-height: 1.7;
+}
+
+// Hero explainer link → sage
+.hero-explainer {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  background: transparent;
+  border: none;
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.hero-explainer-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--sage);
+}
+
+.hero-explainer svg { opacity: 0.6; transition: opacity 0.2s; }
+
+.hero-explainer:hover {
+  background: var(--sage-soft);
+  color: var(--sage);
+}
+.hero-explainer:hover svg { opacity: 1; }
+
+.hero-centered {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hugo-explainer-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  color: var(--text-2);
+  background: none;
+  border: none;
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  margin-bottom: 28px;
+  transition: color 0.2s, background 0.2s;
+  cursor: pointer;
+}
+
+.hugo-explainer-link:hover {
+  background: var(--sage-soft);
+  color: var(--sage);
+}
+.hugo-explainer-link svg { opacity: 0.7; transition: opacity 0.2s; }
+.hugo-explainer-link:hover svg { opacity: 1; }
+
+// ── Reduced motion ──────────────────────────────────────────────────────
+@media (prefers-reduced-motion: reduce) {
+  .hero-headline,
+  .hero-subtitle,
+  .hero-pills {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

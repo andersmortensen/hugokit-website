@@ -1,0 +1,35 @@
+{{/* ═══════════════════════════════════════════════════════════════════
+     WHAT'S NEW — homepage section
+     Shows the latest N entries across changelog + blog (and future types).
+     Full archive lives at /whats-new/.
+     ═══════════════════════════════════════════════════════════════════ */}}
+
+{{ $limit := 5 }}
+{{ $sections := slice "changelog" "blog" "docs" }}
+{{ $entries := where site.RegularPages "Section" "in" $sections }}
+{{/* Reference pages live under /docs/reference/ but shouldn't appear in
+     What's new — they're stable reference material, not timeline updates. */}}
+{{ $entries = where $entries "Type" "!=" "reference" }}
+{{ $entries = $entries.ByDate.Reverse }}
+{{ $entries = first $limit $entries }}
+
+{{ if $entries }}
+<section id="whats-new" class="section changelog" data-theme-color="warm">
+  <div class="container">
+    <div class="section-header">
+      <h2>What's new</h2>
+      <p>Releases, notes, and updates from HugoKit.</p>
+    </div>
+
+    <div class="wn-timeline">
+      {{ range $entries }}
+        {{ partial "whatsnew-item.html" . }}
+      {{ end }}
+    </div>
+
+    <div class="wn-archive-link">
+      <a href="/whats-new/" class="wn-archive-btn">See all updates →</a>
+    </div>
+  </div>
+</section>
+{{ end }}

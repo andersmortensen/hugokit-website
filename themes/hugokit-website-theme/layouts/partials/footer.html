@@ -1,0 +1,39 @@
+{{ $downloadHref := cond .IsHome "#download" "/#download" }}
+
+<footer class="site-footer" data-theme-color="warm" id="download">
+  <div class="footer-cta-block">
+    <div class="container">
+      <div class="footer-cta-inner">
+        <p class="footer-eyebrow">
+          <span class="footer-eyebrow-dot"></span>
+          Built for macOS · Free
+        </p>
+
+        <h2 class="footer-cta-title">Ready to ditch the terminal?</h2>
+
+        <p class="footer-cta-sub">Your Hugo sites, one click away.</p>
+
+        <div class="footer-cta-actions">
+          <a href="{{ $downloadHref }}" class="footer-cta-primary">
+            <svg class="footer-cta-icon-down" width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 12l-4-4h2.5V3h3v5H12L8 12z"/><path d="M14 14H2v-2h12v2z"/></svg>
+            <span>Download HugoKit</span>
+            <svg class="footer-cta-icon-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="https://github.com/andersmortensen/HugoKit" class="footer-cta-secondary">
+            {{ partial "feat-icon.html" "github" }}
+            View on GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="footer-meta">
+        <div class="footer-brand">
+          {{ partial "brand-lockup.html" (dict "size" 30) }}
+        </div>
+        <p class="footer-copyright">&copy; {{ now.Year }} Anders Mortensen · {{ partial "version.html" . }}</p>
+      </div>
+    </div>
+  </div>
+</footer>

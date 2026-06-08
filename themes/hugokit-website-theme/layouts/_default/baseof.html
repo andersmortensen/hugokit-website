@@ -1,0 +1,127 @@
+{{ $startsPeach := or .IsHome (eq .Section "whats-new") }}
+<!DOCTYPE html>
+<html lang="{{ site.Language.LanguageCode }}" dir="ltr"{{ if .IsHome }} class="is-splashing"{{ end }} data-page-start="{{ cond $startsPeach "peach" "neutral" }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ if .IsHome }}{{ site.Title }} — {{ site.Params.tagline }}{{ else }}{{ .Title }} — {{ site.Title }}{{ end }}</title>
+  <meta name="description" content="{{ site.Params.description }}">
+
+  {{/* Browser theme color. Rendered with the correct color for whatever
+       sits at the top of this page (peach on pages with a gradient-top,
+       neutral elsewhere). A scroll-tracker in the body updates this
+       continuously as the user scrolls between coloured sections. */}}
+  {{ $defaultLight := cond $startsPeach "#F4DCC5" "#f2f2f1" }}
+  {{ $defaultDark  := cond $startsPeach "#2a1c10" "#131313" }}
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="{{ $defaultLight }}">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="{{ $defaultDark }}">
+
+  {{/* Google Fonts — HugoKit Identity v2
+       IBM Plex Sans (UI + body) · IBM Plex Mono (code / meta) ·
+       Noto Serif (editorial display). Locked 2026-04-16. */}}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Serif:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+
+  {{/* Theme CSS — modular SCSS pipeline (libsass via Hugo-extended).
+       Dev: unminified, source-mapped. Prod: minified + fingerprinted. */}}
+  {{ $scss := resources.Get "scss/main.scss" }}
+  {{ $opts := dict "targetPath" "css/main.css" "enableSourceMap" (eq hugo.Environment "development") }}
+  {{ $css := $scss | toCSS $opts }}
+  {{ if eq hugo.Environment "development" }}
+    <link rel="stylesheet" href="{{ $css.RelPermalink }}">
+  {{ else }}
+    {{ $css = $css | minify | fingerprint }}
+    <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" crossorigin="anonymous">
+  {{ end }}
+
+  {{/* Theme init — runs before paint to prevent FOUC.
+       CSS on html[data-page-start="..."] handles the initial body
+       background so Safari's tab-bar sampler sees the right colour
+       before any JS runs. Scroll tracker takes over after that. */}}
+  <script>
+    (function() {
+      var saved = localStorage.getItem('theme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var isDark = saved === 'dark' || (saved !== 'light' && prefersDark);
+      if (saved) document.documentElement.setAttribute('data-theme', saved);
+      if (isDark) document.documentElement.classList.add('dark-active');
+    })();
+
+    /* ── Splash intro (homepage, once per session) ────────────────
+       The .is-splashing class on the root element is rendered
+       server-side so the hidden state is in place before paint.
+       If this session has already seen the splash, we bail
+       immediately — no flash of hidden content. Otherwise we remove
+       the class once the DOM is parsed and let CSS delays orchestrate. */
+    (function() {
+      var html = document.documentElement;
+      if (!html.classList.contains('is-splashing')) return;
+
+      var STORAGE_KEY = 'hk-splash-seen';
+      var alreadySeen = false;
+      try { alreadySeen = sessionStorage.getItem(STORAGE_KEY) === '1'; } catch (e) {}
+
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (alreadySeen || reduceMotion) {
+        /* Remove synchronously so first paint is in the normal state */
+        html.classList.remove('is-splashing');
+        return;
+      }
+
+      function release() {
+        /* Two rAFs: guarantee browsers paint the hidden state once
+           before we flip to the visible state and kick transitions. */
+        requestAnimationFrame(function() {
+          requestAnimationFrame(function() {
+            html.classList.remove('is-splashing');
+            try { sessionStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
+          });
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', release, { once: true });
+      } else {
+        release();
+      }
+    })();
+  </script>
+</head>
+<body>
+  {{ partial "navbar.html" . }}
+
+  <main id="spa-main">
+    {{ block "main" . }}{{ end }}
+  </main>
+
+  {{ partial "footer.html" . }}
+
+  {{/* SPA router config — skal sættes FØR scriptet loader. */}}
+  <script>
+    window.__basePath = "{{ "/" | relURL }}";
+    window.__spaRouterConfig = {
+      rootSelector: '#spa-main',
+      preload: true,
+      cacheSize: 30,
+      ignoreSelectors: ['[data-no-spa]', '[target=_blank]', '[download]']
+    };
+  </script>
+
+  {{/* Page init + SPA router — via asset-pipeline så de fingerprintes
+       i prod og cache-bustes automatisk når indholdet ændres. */}}
+  {{ $pageInit := resources.Get "js/page-init.js" }}
+  {{ $spaRouter := resources.Get "js/spa-router.js" }}
+  {{ if eq hugo.Environment "development" }}
+    <script src="{{ $pageInit.RelPermalink }}" defer></script>
+    <script src="{{ $spaRouter.RelPermalink }}" defer></script>
+  {{ else }}
+    {{ $pageInit = $pageInit | minify | fingerprint }}
+    {{ $spaRouter = $spaRouter | minify | fingerprint }}
+    <script src="{{ $pageInit.RelPermalink }}" integrity="{{ $pageInit.Data.Integrity }}" crossorigin="anonymous" defer></script>
+    <script src="{{ $spaRouter.RelPermalink }}" integrity="{{ $spaRouter.Data.Integrity }}" crossorigin="anonymous" defer></script>
+  {{ end }}
+
+</body>
+</html>

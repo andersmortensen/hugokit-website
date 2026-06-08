@@ -1,0 +1,65 @@
+{{ define "main" }}
+{{ $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" }}
+
+<article class="section blog-post">
+  <div class="blog-post-inner">
+
+    <nav class="blog-post-nav">
+      <a class="blog-post-back" href="/whats-new/">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+        What's new
+      </a>
+    </nav>
+
+    {{ $authorName := .Params.author | default "Anders Mortensen" }}
+    {{ $authorRole := .Params.authorRole | default "Making HugoKit" }}
+    {{ $authorUrl  := .Params.authorUrl  | default "https://andersmortensen.com" }}
+    {{ $initials   := "AM" }}
+
+    <header class="blog-post-header">
+      <span class="blog-post-eyebrow">Blog</span>
+      <h1>{{ .Title }}</h1>
+      {{ with .Params.summary }}<p class="blog-post-lede">{{ . }}</p>{{ end }}
+
+      <div class="blog-post-meta">
+        <time datetime="{{ $dateMachine }}">{{ .Date.Format "January 2, 2006" }}</time>
+        {{ if .ReadingTime }}
+          <span class="blog-post-sep" aria-hidden="true">·</span>
+          <span>{{ .ReadingTime }} min read</span>
+        {{ end }}
+      </div>
+    </header>
+
+    <div class="blog-post-divider" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </div>
+
+    <div class="blog-post-content">
+      {{ .Content }}
+    </div>
+
+    <aside class="blog-post-author">
+      <span class="blog-post-author-eyebrow">Written by</span>
+      <a class="blog-post-author-link" href="{{ $authorUrl }}" target="_blank" rel="noopener author">
+        <span class="blog-post-avatar" aria-hidden="true">{{ $initials }}</span>
+        <span class="blog-post-author-text">
+          <span class="blog-post-author-name">{{ $authorName }}</span>
+          <span class="blog-post-author-role">{{ $authorRole }}</span>
+        </span>
+      </a>
+    </aside>
+
+    <footer class="blog-post-footer">
+      <a class="blog-post-footer-link" href="/whats-new/">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+        All updates
+      </a>
+      <a class="blog-post-footer-cta" href="#download">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 12l-4-4h2.5V3h3v5H12L8 12z"/><path d="M14 14H2v-2h12v2z"/></svg>
+        Download HugoKit
+      </a>
+    </footer>
+
+  </div>
+</article>
+{{ end }}

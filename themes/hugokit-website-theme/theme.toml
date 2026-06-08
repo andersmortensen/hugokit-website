@@ -1,0 +1,10 @@
+name = "HugoKit Website Theme"
+license = "Proprietary"
+licenselink = ""
+description = "Custom theme for HugoKit landing page"
+tags = ["landing", "product", "minimal"]
+min_version = "0.120.0"
+
+[author]
+  name = "Anders Mortensen"
+  homepage = "https://andersmortensen.com"

@@ -1,0 +1,90 @@
+// ═══════════════════════════════════════════════════════════════════════
+// Dot grid v3 — warm paper dots on cream
+// ═══════════════════════════════════════════════════════════════════════
+
+:root {
+  --dotgrid-bg: #ece6d5;
+  --dotgrid-dot: rgba(26, 21, 16, 0.14);
+  --dotgrid-dot-bright: rgba(26, 21, 16, 0.45);
+  --dotgrid-dot-hero: rgba(26, 21, 16, 0.18);
+  --dotgrid-size: 20px;
+  --dotgrid-radius: 1px;
+  --bg: var(--dotgrid-bg);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --dotgrid-bg: #1a1512;
+    --dotgrid-dot: rgba(242, 236, 224, 0.08);
+    --dotgrid-dot-bright: rgba(242, 236, 224, 0.45);
+    --dotgrid-dot-hero: rgba(242, 236, 224, 0.22);
+    --bg: var(--dotgrid-bg);
+  }
+}
+
+:root[data-theme="dark"] {
+  --dotgrid-bg: #1a1512;
+  --dotgrid-dot: rgba(242, 236, 224, 0.08);
+  --dotgrid-dot-bright: rgba(242, 236, 224, 0.45);
+  --dotgrid-dot-hero: rgba(242, 236, 224, 0.22);
+  --bg: var(--dotgrid-bg);
+}
+
+html {
+  background-color: var(--dotgrid-bg);
+}
+
+body {
+  background-color: var(--bg);
+  background-image: radial-gradient(
+    circle,
+    var(--dotgrid-dot) var(--dotgrid-radius),
+    transparent calc(var(--dotgrid-radius) + 0.5px)
+  );
+  background-size: var(--dotgrid-size) var(--dotgrid-size);
+  background-position: -10px -10px;
+  background-repeat: repeat;
+  transition: background-color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body { transition: none; }
+}
+
+// Paper page-start (v3: replaces peach)
+html[data-page-start="paper"],
+html[data-page-start="peach"] {
+  --dotgrid-bg: #f4efe3;
+}
+
+html[data-page-start="paper"].dark-active,
+html[data-page-start="paper"][data-theme="dark"],
+html[data-page-start="peach"].dark-active,
+html[data-page-start="peach"][data-theme="dark"] {
+  --dotgrid-bg: #1a1512;
+  --dotgrid-dot-hero: rgba(242, 236, 224, 0.22);
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-page-start="paper"]:not([data-theme="light"]),
+  html[data-page-start="peach"]:not([data-theme="light"]) {
+    --dotgrid-bg: #1a1512;
+    --dotgrid-dot: rgba(242, 236, 224, 0.08);
+    --dotgrid-dot-hero: rgba(242, 236, 224, 0.22);
+  }
+}
+
+html[data-page-start="paper"] body,
+html[data-page-start="peach"] body {
+  background-color: var(--dotgrid-bg);
+  background-image: radial-gradient(
+    circle,
+    var(--dotgrid-dot) var(--dotgrid-radius),
+    transparent calc(var(--dotgrid-radius) + 0.5px)
+  );
+  background-size: var(--dotgrid-size) var(--dotgrid-size);
+}
+
+@media print {
+  body { background-image: none !important; }
+}

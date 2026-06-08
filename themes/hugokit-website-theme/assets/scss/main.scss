@@ -1,0 +1,58 @@
+// ═══════════════════════════════════════════════════════════════════════
+// HugoKit Website Theme — Shiori layout × HugoKit identity
+// Warm cream/sage surfaces · Mint-teal accent · Noto Serif headlines
+//
+// Modular SCSS entry point. Loads partials in cascade-safe order:
+//   1. Base    — reset, theme tokens
+//   2. Layout  — containers, navigation
+//   3. Components — hero, modal, features, etc.
+//   4. Utils   — global responsive overrides (must load after components)
+//   5. Late-bound sections (changelog, whats-new, post typography)
+// ═══════════════════════════════════════════════════════════════════════
+
+// Using @import (not @use) so the pipeline works with both libsass
+// (Hugo-extended built-in) and Dart Sass. Switch to @use once you've
+// installed Dart Sass and set transpiler: "dartsass" in baseof.html.
+
+// Base
+@import 'base/reset';
+@import 'base/theme';
+@import 'base/dot-grid';
+
+// Layout
+@import 'layout/container';
+@import 'layout/navbar';
+
+// Core components (source order from original style.css)
+@import 'components/logo';
+@import 'components/buttons';
+@import 'components/hero';
+@import 'components/hero-splash';
+@import 'components/modal';
+@import 'components/badges';
+@import 'components/intro';
+@import 'components/showcase';
+@import 'components/features';
+@import 'components/integrations';
+@import 'components/tech-stack';
+@import 'components/faq';
+@import 'components/cta';
+
+// Layout — footer
+@import 'layout/footer';
+
+// Global responsive overrides (pre-mobile tweaks)
+@import 'utils/responsive';
+
+// Late-loaded sections (appear after global responsive in original cascade)
+@import 'components/changelog';
+@import 'components/whatsnew';
+@import 'components/docs';
+@import 'components/post';
+
+// Splash intro — loaded last so its transitions win
+@import 'components/splash';
+
+// Section transparency — must load AFTER all section components
+// so .hero / .wn-page / .docs-page transparency wins the cascade
+@import 'utils/section-transparency';

@@ -1,0 +1,33 @@
+{{ define "main" }}
+<article class="section changelog-post">
+  <div class="container container-narrow">
+    <header class="changelog-post-header">
+      <a class="blog-post-back" href="/whats-new/">← What's new</a>
+
+      <div class="changelog-post-meta">
+        <span class="wn-type-badge wn-type-changelog">Changelog</span>
+        {{ with .Params.version }}<span class="wn-version-badge">{{ . }}</span>{{ end }}
+        {{ $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" }}
+        <time class="wn-date" datetime="{{ $dateMachine }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+      </div>
+
+      <h1>{{ .Title }}</h1>
+    </header>
+
+    {{ with .Params.changes }}
+    <div class="changelog-post-list">
+      {{ range . }}
+      <div class="changelog-item">
+        <span class="changelog-badge badge-{{ lower .type }}">{{ .type }}</span>
+        <span class="changelog-text">{{ .text }}</span>
+      </div>
+      {{ end }}
+    </div>
+    {{ end }}
+
+    {{ with .Content }}
+    <div class="blog-post-content">{{ . }}</div>
+    {{ end }}
+  </div>
+</article>
+{{ end }}

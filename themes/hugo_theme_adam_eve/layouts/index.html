@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+
+<head>
+  {{ partial "header.html" . }}
+</head>
+
+<body>
+  <!-- Either nohomebar parameter is defined to false or is missing -->
+  {{ if and (isset .Site.Params "nohomebar") (eq $.Site.Params.nohomebar true) }}
+     <!-- so no homepage menu bar -->
+  {{ else }}
+    {{ partial "menu.html" . }}
+  {{ end }}
+  <header style="text-align: center;">
+    {{ partial "site_title.html" . }}
+  <hr />
+  </header>
+  <main>
+  {{ .Content }}
+  {{ $pages := where .Site.RegularPages "Type" "post" }}
+  {{ if isset .Site.Params "nohomepagepostlist" }}
+  <!-- No homepage post list -->
+  {{ else if ne (len $pages) 0 }}
+    <h1>Posts</h1>
+    <ul>
+    {{ range sort $pages.ByTitle "Date" "desc" }}
+    <li>{{ .Date | time.Format ":date_medium" }}, {{ .Date | time.Format ":time_short" }} - <a href="{{ .Permalink }}">{{ .Name }}</a></li>
+    {{ end }}
+    </ul>
+  {{ end }}
+  </main>
+  <footer>
+    <hr />
+    {{ partial "footer.html" . }}
+  </footer>
+</body>
+</html>

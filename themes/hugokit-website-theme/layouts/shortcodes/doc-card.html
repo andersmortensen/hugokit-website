@@ -1,0 +1,24 @@
+{{- /*
+  DOC-CARD SHORTCODE
+  Renders a card linking to any doc page, auto-pulling its title,
+  summary, difficulty and read-time from front matter so the content
+  stays in sync with the linked page.
+
+  Usage (inside a .md file):
+    {{< doc-card "/docs/github-pages-setup/" >}}
+    {{< doc-card "/docs/reference/server/" >}}
+
+  Whitespace note: all Hugo actions use {{- -}} trim markers and the
+  output HTML has no internal newlines. Without this Goldmark wraps
+  each line in <p>, which breaks card layout when two shortcodes sit
+  on adjacent lines.
+*/ -}}
+{{- $path := .Get 0 -}}
+{{- $p := .Page.GetPage $path -}}
+{{- if $p -}}
+{{- $isReference := eq $p.Type "reference" -}}
+{{- $minutes := $p.Params.readMinutes | default $p.ReadingTime -}}
+<a class="doc-card{{ if $isReference }} doc-card-reference{{ end }}" href="{{ $p.RelPermalink }}"><div class="doc-card-icon" aria-hidden="true">{{- if $isReference -}}<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>{{- else -}}<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>{{- end -}}</div><div class="doc-card-body"><div class="doc-card-kicker"><span class="doc-card-kind">{{ if $isReference }}Reference{{ else }}Guide{{ end }}</span>{{- with $p.Params.category -}}<span class="doc-card-sep" aria-hidden="true">·</span><span class="doc-card-category">{{ . }}</span>{{- end -}}</div><h4 class="doc-card-title">{{ $p.Title }}</h4>{{- with $p.Params.summary -}}<p class="doc-card-summary">{{ . }}</p>{{- end -}}{{- if or $p.Params.difficulty $minutes -}}<div class="doc-card-meta">{{- with $p.Params.difficulty -}}<span class="docs-difficulty docs-difficulty-{{ lower . }}">{{ . }}</span>{{- end -}}{{- if $minutes -}}<span class="doc-card-read">{{ $minutes }} min read</span>{{- end -}}</div>{{- end -}}</div><div class="doc-card-chev" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div></a>
+{{- else -}}
+{{- warnf "doc-card: page %q not found (from %q)" $path .Page.RelPermalink -}}
+{{- end -}}
