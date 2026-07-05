@@ -9,5 +9,6 @@ disableKinds = ['taxonomy', 'term', 'section', 'rss']
   # Peger på den DMG som release-flowet lægger i static/downloads/ (se RELEASING.md).
   # Indtil første release er uploadet kan den midlertidigt sættes tilbage til GitHub-releases-URL'en.
   downloadURL = '/downloads/HugoKit.dmg'
-  githubURL = 'https://github.com/andersmortensen/hugokit-source'
+  # Offentligt repo (releases/downloads). Kildekoden bor i hugokit-source, som ALDRIG linkes.
+  githubURL = 'https://github.com/andersmortensen/hugokit'
   feedbackEmail = 'kontakt@andersmortensen.com'

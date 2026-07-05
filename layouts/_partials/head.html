@@ -6,8 +6,8 @@
 <meta name="description" content="{{ $description }}">
 <link rel="canonical" href="{{ .Permalink }}">
 
-{{- /* Browser toolbar color — fallback for Chrome/Firefox; Safari Tahoe+ sampler html/body-baggrunden (sat i main.css). Sitet er mørkt i begge modes. */}}
-<meta name="theme-color" media="(prefers-color-scheme: light)" content="#0D0D0F">
+{{- /* Browser toolbar color — fallback for Chrome/Firefox; Safari Tahoe+ sampler html/body-baggrunden (sat i main.css). Sitet følger systemets farveskema. */}}
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#F2F0F4">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0D0D0F">
 
 <meta property="og:site_name" content="{{ site.Title }}">
@@ -23,7 +23,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@700;800&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 {{ with resources.Get "css/main.css" }}
   {{ $css := . | minify | fingerprint }}
