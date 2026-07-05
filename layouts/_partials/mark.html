@@ -4,12 +4,14 @@
         < 28 px → H-fri
         ≥ 28 px → fuld (med H)
       Klasserne mk-top/mk-left/mk-h/mk-q1…mk-q4 bruges af CSS-animationen
-      ("Samlingen") på hero-marken. */ -}}
+      ("Samlingen") på hero-marken.
+      Top-fladen følger farveskemaet via --mark-top (light: #E2DFE7 = brandets
+      light-surface-variant, dark: #F2F0F4) — sat i main.css. */ -}}
 {{- $size := .size | default 27 -}}
 {{- $class := .class | default "" -}}
 {{- $full := ge $size 28 -}}
 <svg{{ with $class }} class="{{ . }}"{{ end }} width="{{ $size }}" height="{{ $size }}" viewBox="0 0 100 100" aria-hidden="true">
-  <path class="mk-top" d="M50 4L91.43 27L50 50L8.57 27Z" fill="#F2F0F4"/>
+  <path class="mk-top" d="M50 4L91.43 27L50 50L8.57 27Z" fill="var(--mark-top, #F2F0F4)"/>
   <path class="mk-left" d="M8.57 27L50 50L50 96L8.57 73Z" fill="#26262B"/>
   {{- if $full }}
   <path class="mk-h" d="M21.39 44.77L25.65 47.14L25.65 55.89L32.92 59.93L32.92 51.17L37.18 53.54L37.18 75.93L32.92 73.56L32.92 64.18L25.65 60.15L25.65 69.53L21.39 67.16Z" fill="#F2F0F4"/>
