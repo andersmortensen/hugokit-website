@@ -1,0 +1,12 @@
+{{ define "body" }}
+<main id="main" class="notfound">
+  <div class="wrap notfound-inner">
+    {{ partial "mark.html" (dict "size" 72 "class" "notfound-mark") }}
+    <h1 class="notfound-heading">This page isn’t here.</h1>
+    <p class="section-body">Maybe it was a draft.</p>
+    <div class="cta-row centered-row">
+      <a class="btn" href="{{ "" | relURL }}">Back to the front page</a>
+    </div>
+  </div>
+</main>
+{{ end }}

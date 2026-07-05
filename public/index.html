@@ -1,521 +1,269 @@
-
-<!DOCTYPE html>
-<html lang="en" dir="ltr" class="is-splashing" data-page-start="peach">
+<!doctype html>
+<html lang="en">
 <head>
 	<meta name="generator" content="Hugo 0.159.1"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>HugoKit — Your Hugo sites, one click away.</title>
-  <meta name="description" content="A native macOS companion for Hugo. Manage sites, run servers, and deploy — no terminal needed.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>HugoKit</title>
+
+<meta name="description" content="HugoKit is the friendly Mac app that runs, previews and publishes your Hugo sites. No terminal, no fuss — one click each.">
+<link rel="canonical" href="http://localhost:1313/">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#0D0D0F">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0D0D0F">
+
+<meta property="og:site_name" content="HugoKit">
+<meta property="og:title" content="HugoKit">
+<meta property="og:description" content="HugoKit is the friendly Mac app that runs, previews and publishes your Hugo sites. No terminal, no fuss — one click each.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:1313/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HugoKit">
+<meta name="twitter:description" content="HugoKit is the friendly Mac app that runs, previews and publishes your Hugo sites. No terminal, no fuss — one click each.">
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
 
   
-  
-  
-  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F4DCC5">
-  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2a1c10">
+  <link rel="stylesheet" href="/css/main.min.774cc991bfe522ba0323954604c1f0f085215f995f52fbd50f33f7ea69cd3b31.css" integrity="sha256-d0zJkb/lIroDI5VGBMHw8IUhX5lfUvvVDzP36mnNOzE=">
 
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Serif:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
 
-  
-  
-  
-  
-  
-    <link rel="stylesheet" href="/css/main.css">
-  
-
-  
-  <script>
-    (function() {
-      var saved = localStorage.getItem('theme');
-      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      var isDark = saved === 'dark' || (saved !== 'light' && prefersDark);
-      if (saved) document.documentElement.setAttribute('data-theme', saved);
-      if (isDark) document.documentElement.classList.add('dark-active');
-    })();
-
-    
-
-    (function() {
-      var html = document.documentElement;
-      if (!html.classList.contains('is-splashing')) return;
-
-      var STORAGE_KEY = 'hk-splash-seen';
-      var alreadySeen = false;
-      try { alreadySeen = sessionStorage.getItem(STORAGE_KEY) === '1'; } catch (e) {}
-
-      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      if (alreadySeen || reduceMotion) {
-         
-        html.classList.remove('is-splashing');
-        return;
-      }
-
-      function release() {
-        
-
-        requestAnimationFrame(function() {
-          requestAnimationFrame(function() {
-            html.classList.remove('is-splashing');
-            try { sessionStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
-          });
-        });
-      }
-
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', release, { once: true });
-      } else {
-        release();
-      }
-    })();
-  </script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   
 
-
-
-<nav class="nav-pill" id="navPill">
-  <a href="/" class="nav-pill-brand">
-    
-
-
-
-
-<span class="brand-lockup " style="--lockup-size: 20px; --lockup-text: 11px; --lockup-gap: 5px;">
-  
-
-
-<svg class="brand-mark " width="20" height="20" viewBox="0 0 200 200" fill="currentColor" role="img" aria-label="HugoKit">
-  <polygon points="50,40 74,54 74,82 50,96 26,82 26,54"/>
-  <polygon points="150,40 174,54 174,82 150,96 126,82 126,54"/>
-  <polygon points="100,75 124,89 124,117 100,131 76,117 76,89"/>
-  <polygon points="50,110 74,124 74,152 50,166 26,152 26,124"/>
-  <polygon points="150,110 174,124 174,152 150,166 126,152 126,124"/>
+<nav class="site-nav">
+  <div class="wrap nav-inner">
+    <a class="lockup" href="/" aria-label="HugoKit — home">
+      <svg width="27" height="27" viewBox="0 0 100 100" aria-hidden="true">
+  <path class="mk-top" d="M50 4L91.43 27L50 50L8.57 27Z" fill="#F2F0F4"/>
+  <path class="mk-left" d="M8.57 27L50 50L50 96L8.57 73Z" fill="#26262B"/>
+  <path class="mk-q mk-q1" d="M50 50L70.72 38.5L70.72 61.5L50 73Z" fill="#FF4088"/>
+  <path class="mk-q mk-q2" d="M70.72 38.5L91.43 27L91.43 50L70.72 61.5Z" fill="#0594CB"/>
+  <path class="mk-q mk-q3" d="M50 73L70.72 61.5L70.72 84.5L50 96Z" fill="#33BA91"/>
+  <path class="mk-q mk-q4" d="M70.72 61.5L91.43 50L91.43 73L70.72 84.5Z" fill="#EBB951"/>
 </svg>
 
-  <span class="brand-wordmark">HugoKit</span>
-</span>
-
-  </a>
-  <div class="nav-pill-sep"></div>
-  <a href="#features" class="nav-pill-link" data-section="features">Features</a>
-  <a href="#faq" class="nav-pill-link" data-section="faq">FAQ</a>
-  <a href="/docs/" class="nav-pill-link" data-section="docs">Docs</a>
-  <a href="/whats-new/" class="nav-pill-link" data-section="whats-new">What's New</a>
-  <a href="#download" class="nav-pill-cta">
-    <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M8 12l-4-4h2.5V3h3v5H12L8 12z"/><path d="M14 14H2v-2h12v2z"/></svg>
-    Download
-  </a>
-  <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Skift mellem lys og mørk tilstand">
-    <svg class="icon-sun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-    </svg>
-    <svg class="icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-    </svg>
-  </button>
+      <span class="lockup-name">HugoKit</span>
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="#features">Features</a>
+      <a class="btn btn-sm" href="/downloads/HugoKit.dmg">Download</a>
+    </div>
+  </div>
 </nav>
 
-
-  <main id="spa-main">
-    
+<main id="main">
 
 
-<section class="hero" id="heroSection">
-  <div class="container">
-    <div class="hero-content hero-centered">
-      <a href="#download" class="hero-badge"><span class="dot"></span>0.1.0 — now available</a>
-      <h1>Your Hugo sites,<br><em>one click away</em></h1>
-      <p class="hero-sub">A native macOS companion for Hugo. Start servers, build sites, deploy to GitHub Pages — without the terminal.</p>
-      <div class="hero-actions">
-        <a href="#download" class="btn-primary-hero">
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 12l-4-4h2.5V3h3v5H12L8 12z"/><path d="M14 14H2v-2h12v2z"/></svg>
-          Download for macOS
-        </a>
-        <button class="btn-ghost-hero" onclick="document.getElementById('hugo-explainer-modal').classList.add('open')">
-          New to Hugo?
-        </button>
+<header class="hero">
+  <div class="wrap">
+    <span class="badge">Free for macOS</span>
+    <h1 class="hero-heading">Press <span class="hl">play</span> on your Hugo site.</h1>
+    <p class="hero-lead">HugoKit is the friendly Mac app that runs, previews and publishes your Hugo sites. No terminal, no fuss — one click each.</p>
+    <div class="cta-row">
+      <a class="btn" href="/downloads/HugoKit.dmg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg>
+        Download for macOS
+      </a>
+      <a class="link-ghost" href="https://github.com/andersmortensen/hugokit-source">View on GitHub →</a>
+    </div>
+    <p class="fine-meta">free · macOS 26 or later · no account, no cloud</p>
+
+    <figure class="window">
+      <div class="window-bar">
+        <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+        <span class="window-title">HugoKit</span>
       </div>
+      <div class="window-body">
+        
+        <svg class="window-mark" width="140" height="140" viewBox="0 0 100 100" aria-hidden="true">
+  <path class="mk-top" d="M50 4L91.43 27L50 50L8.57 27Z" fill="#F2F0F4"/>
+  <path class="mk-left" d="M8.57 27L50 50L50 96L8.57 73Z" fill="#26262B"/>
+  <path class="mk-h" d="M21.39 44.77L25.65 47.14L25.65 55.89L32.92 59.93L32.92 51.17L37.18 53.54L37.18 75.93L32.92 73.56L32.92 64.18L25.65 60.15L25.65 69.53L21.39 67.16Z" fill="#F2F0F4"/>
+  <path class="mk-q mk-q1" d="M50 50L70.72 38.5L70.72 61.5L50 73Z" fill="#FF4088"/>
+  <path class="mk-q mk-q2" d="M70.72 38.5L91.43 27L91.43 50L70.72 61.5Z" fill="#0594CB"/>
+  <path class="mk-q mk-q3" d="M50 73L70.72 61.5L70.72 84.5L50 96Z" fill="#33BA91"/>
+  <path class="mk-q mk-q4" d="M70.72 61.5L91.43 50L91.43 73L70.72 84.5Z" fill="#EBB951"/>
+</svg>
 
-      
-      <div class="hero-app-wrap">
-        <div class="app-frame">
-          <div class="app-titlebar">
-            <div class="app-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-            <span class="app-titlebar-name">andersmortensen-com</span>
-          </div>
-          <div class="app-body">
-            <div class="app-row">
-              <div class="app-row-left">
-                <div class="app-row-icon" style="background:var(--sage-soft);color:var(--sage);">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-  <circle cx="12" cy="12" r="9"/>
-  <line x1="3" y1="12" x2="21" y2="12"/>
-  <path d="M12 3c2.5 2.5 3.8 5.5 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.5-3.8-9s1.3-6.5 3.8-9z"/>
-</svg>
-                </div>Server
-              </div>
-              <span class="app-row-badge badge-run">Running :1314</span>
-            </div>
-            <div class="app-row">
-              <div class="app-row-left">
-                <div class="app-row-icon" style="background:var(--clay-soft);color:var(--clay);">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-  <line x1="22" y1="2" x2="11" y2="13"/>
-  <polygon points="22 2 15 22 11 13 2 9 22 2"/>
-</svg>
-                </div>Publish
-              </div>
-              <span class="app-row-badge badge-clay">GitHub Pages</span>
-            </div>
-            <div class="app-row">
-              <div class="app-row-left">
-                <div class="app-row-icon" style="background:rgba(138,130,116,0.08);color:var(--ink-faint);">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-  <rect x="4" y="13" width="3.5" height="7" rx="0.75"/>
-  <rect x="10.25" y="9" width="3.5" height="11" rx="0.75"/>
-  <rect x="16.5" y="5" width="3.5" height="15" rx="0.75"/>
-</svg>
-                </div>Content
-              </div>
-              <span class="app-row-badge badge-steel">81 pages</span>
-            </div>
-            <div class="app-row">
-              <div class="app-row-left">
-                <div class="app-row-icon" style="background:var(--clay-soft);color:var(--clay-deep);">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-  <circle cx="12" cy="12" r="3"/>
-  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-</svg>
-                </div>Configuration
-              </div>
-              <span class="app-row-badge" style="color:var(--ink-faint);font-size:0.625rem;font-family:var(--font-mono);">hugo.toml</span>
-            </div>
-          </div>
-          <div class="app-statusbar">
-            <span class="app-statusbar-dot">●</span>
-            Attached to Hugo server — port 1314
-          </div>
+        
+      </div>
+    </figure>
+  </div>
+</header>
+
+
+
+<section class="problem">
+  <div class="wrap problem-grid">
+    <div class="terminal-tilt">
+      <div class="terminal" role="img" aria-label="A terminal window with a long hugo server command.">
+        <div class="terminal-dots"><span></span><span></span><span></span></div>
+        <div class="terminal-body"><div><span class="t-prompt">$</span> hugo server --buildDrafts \</div><div>    --navigateToChanged \</div><div>    --disableFastRender --port 1313</div><div class="t-comment"># now keep this window open forever</div>
         </div>
       </div>
+    </div>
+    <div>
+      <p class="label">The problem</p>
+      <h2 class="section-heading">Hugo is wonderful. The black window it lives in is not.</h2>
+      <p class="section-body">HugoKit runs the commands, reads the logs, and turns the whole thing into buttons you can actually find. The terminal is still there — you just never have to look at it.</p>
     </div>
   </div>
 </section>
 
 
-<section id="features" class="section features-section">
-  <div class="container">
-    <div class="section-header" data-reveal>
-      <h2>Everything you need,<br>nothing you don't</h2>
-      <p>A focused set of tools for managing Hugo sites — designed to get out of your way.</p>
-    </div>
 
+<section class="features" id="features">
+  <div class="wrap">
+    <p class="label centered">What it does</p>
+    <h2 class="section-heading centered features-heading">Everything between <code class="heading-code">new site</code> and live.</h2>
     <div class="feature-grid">
       
-      <div class="feature-cell feature-cell--hero" data-feature="multisite">
-        <div class="feature-icon feature-icon--sage"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-  <rect x="7" y="7" width="14" height="14" rx="2.5"/>
-  <path d="M3 17V5.5A2.5 2.5 0 0 1 5.5 3H17"/>
-</svg></div>
-        <div>
-          <h3>Multi-site management</h3>
-          <p>All your Hugo sites in one sidebar. Isolated servers, configs, and deploys — switch context in a single click.</p>
-        </div>
+      <div class="feature">
+        <div class="chip"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><line x1="5" y1="7" x2="19" y2="7"/><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="17" x2="13" y2="17"/></svg></div>
+        <h3 class="feature-title">Every site in one window</h3>
+        <p class="feature-body">Add your sites one by one — or point HugoKit at a folder and it finds them itself.</p>
       </div>
-      <div class="feature-cell feature-cell--hero" data-feature="server">
-        <div class="feature-icon feature-icon--sage"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-  <circle cx="12" cy="12" r="9"/>
-  <line x1="3" y1="12" x2="21" y2="12"/>
-  <path d="M12 3c2.5 2.5 3.8 5.5 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.5-3.8-9s1.3-6.5 3.8-9z"/>
-</svg></div>
-        <div>
-          <h3>One-click server</h3>
-          <p>Start, stop, restart with live logs. Drafts, ports, and flags as simple switches — no terminal needed.</p>
-        </div>
-      </div>
-      <div class="feature-cell feature-cell--hero" data-feature="deploy">
-        <div class="feature-icon feature-icon--clay"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-  <line x1="22" y1="2" x2="11" y2="13"/>
-  <polygon points="22 2 15 22 11 13 2 9 22 2"/>
-</svg></div>
-        <div>
-          <h3>Deploy to GitHub Pages</h3>
-          <p>One-click publish. OAuth, Actions workflow, preflight validation — the entire pipeline automated.</p>
-        </div>
-      </div>
-      <div class="feature-cell feature-cell--hero" data-feature="config">
-        <div class="feature-icon feature-icon--clay"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-  <circle cx="12" cy="12" r="3"/>
-  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-</svg></div>
-        <div>
-          <h3>Easy config editor</h3>
-          <p>Edit hugo.toml with a form view or raw text. See a diff before saving — never break your site accidentally.</p>
-        </div>
-      </div>
-
       
-      <div class="feature-cell" data-feature="autodetect">
-        <div class="feature-icon feature-icon--clay"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-  <path d="M13 2L4.5 13.5h6L9 22l10-12.5h-6z"/>
-</svg></div>
-        <div>
-          <h3>Auto-detect Hugo</h3>
-          <p>Finds your Hugo binary on launch — or installs it for you. Zero config.</p>
-        </div>
+      <div class="feature">
+        <div class="chip"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5 L18 12 L8 18.5 Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></div>
+        <h3 class="feature-title">One-click preview</h3>
+        <p class="feature-body">Start and stop the server with a click. Drafts included, logs translated into plain language.</p>
       </div>
-      <div class="feature-cell" data-feature="themes">
-        <div class="feature-icon feature-icon--clay"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-  <rect x="3" y="3" width="7" height="7" rx="1.5"/>
-  <rect x="14" y="3" width="7" height="7" rx="1.5"/>
-  <rect x="3" y="14" width="7" height="7" rx="1.5"/>
-  <rect x="14" y="14" width="7" height="7" rx="1.5"/>
-</svg></div>
-        <div>
-          <h3>Theme gallery</h3>
-          <p>Browse, preview, and install Hugo themes from themes.gohugo.io — without leaving the app.</p>
-        </div>
+      
+      <div class="feature">
+        <div class="chip"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 18 V7 M6.5 12 L12 6.5 L17.5 12"/></svg></div>
+        <h3 class="feature-title">Publish anywhere</h3>
+        <p class="feature-body">GitHub Pages or your own host over SFTP. Or both at once, with one “Publish all”.</p>
       </div>
-      <div class="feature-cell" data-feature="overview">
-        <div class="feature-icon feature-icon--sage"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-  <rect x="4" y="13" width="3.5" height="7" rx="0.75"/>
-  <rect x="10.25" y="9" width="3.5" height="11" rx="0.75"/>
-  <rect x="16.5" y="5" width="3.5" height="15" rx="0.75"/>
-</svg></div>
-        <div>
-          <h3>Content overview</h3>
-          <p>Page counts, word counts, drafts, and front matter health at a glance.</p>
-        </div>
+      
+      <div class="feature">
+        <div class="chip"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.5 12.5 L10 17 L18.5 7.5"/></svg></div>
+        <h3 class="feature-title">Preflight auto-fix</h3>
+        <p class="feature-body">Broken links and subpath traps are caught before they ship — and fixed for you, diff first.</p>
       </div>
-      <div class="feature-cell" data-feature="reference">
-        <div class="feature-icon feature-icon--sage"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-</svg></div>
-        <div>
-          <h3>Built-in Hugo reference</h3>
-          <p>Searchable docs across 9 categories. Pin your most-used references.</p>
-        </div>
+      
+      <div class="feature">
+        <div class="chip"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="4.5" width="9" height="9" rx="2"/><rect x="10.5" y="10.5" width="9" height="9" rx="2"/></svg></div>
+        <h3 class="feature-title">Theme Gallery</h3>
+        <p class="feature-body">Browse the official theme gallery and install one with a click. No git clone required.</p>
       </div>
-      <div class="feature-cell" data-feature="menubar">
-        <div class="feature-icon feature-icon--sage"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-  <rect x="2" y="4" width="20" height="14" rx="2"/>
-  <line x1="2" y1="9" x2="22" y2="9"/>
-  <line x1="8" y1="21" x2="16" y2="21"/>
-  <line x1="12" y1="18" x2="12" y2="21"/>
-</svg></div>
-        <div>
-          <h3>Control from menu bar</h3>
-          <p>Live server status and quick controls without opening the main window.</p>
-        </div>
+      
+      <div class="feature">
+        <div class="chip"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 9 V6.5 A2.5 2.5 0 1 0 6.5 9 H9 Z M15 9 V6.5 A2.5 2.5 0 1 1 17.5 9 H15 Z M9 15 V17.5 A2.5 2.5 0 1 1 6.5 15 H9 Z M15 15 V17.5 A2.5 2.5 0 1 0 17.5 15 H15 Z M9 9 H15 V15 H9 Z"/></svg></div>
+        <h3 class="feature-title">Honestly native</h3>
+        <p class="feature-body">SwiftUI, menu bar, Keychain. No Electron, no account — nothing ever leaves your Mac.</p>
       </div>
-      <div class="feature-cell" data-feature="shortcuts">
-        <div class="feature-icon feature-icon--sage"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-  <rect x="2" y="5" width="20" height="14" rx="2"/>
-  <line x1="6" y1="9" x2="6" y2="9"/>
-  <line x1="10" y1="9" x2="10" y2="9"/>
-  <line x1="14" y1="9" x2="14" y2="9"/>
-  <line x1="18" y1="9" x2="18" y2="9"/>
-  <line x1="6" y1="13" x2="6" y2="13"/>
-  <line x1="18" y1="13" x2="18" y2="13"/>
-  <line x1="9" y1="16" x2="15" y2="16"/>
-</svg></div>
-        <div>
-          <h3>Full shortcut coverage</h3>
-          <p>⌘B Build · ⌘R Restart · ⌘. Stop · ⌘↩ Start — everything under your fingers.</p>
-        </div>
-      </div>
-      <div class="feature-cell" data-feature="editor">
-        <div class="feature-icon feature-icon--sage"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-</svg></div>
-        <div>
-          <h3>Works with any editor</h3>
-          <p>VS Code, Nova, Vim — whatever you prefer. HugoKit handles serving.</p>
-        </div>
-      </div>
-      <div class="feature-cell" data-feature="notifications">
-        <div class="feature-icon feature-icon--sage"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-  <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-</svg></div>
-        <div>
-          <h3>Native notifications</h3>
-          <p>Get notified when builds complete or deploys finish. Fully macOS-native.</p>
-        </div>
-      </div>
+      
     </div>
   </div>
 </section>
 
 
-<div class="modal-overlay" id="featureModal" role="dialog" aria-modal="true">
-  <div class="modal-dialog modal-wide feature-modal-dialog">
-    <button type="button" class="modal-close" id="featureModalClose" aria-label="Luk">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-      </svg>
-    </button>
-    <div class="feature-modal-header">
-      <div class="feature-modal-icon" id="fmIcon"></div>
-      <h2 id="fmTitle"></h2>
-    </div>
-    <div class="feature-modal-illustration">
-      <span class="feature-modal-illustration-label" id="fmIllustrationLabel"></span>
-    </div>
-    <div class="feature-modal-body" id="fmBody"></div>
-  </div>
-</div>
 
-
-<section id="faq" class="section faq">
-  <div class="container">
-    <div class="section-header">
-      <h2>FAQ</h2>
-    </div>
-
-    <div class="faq-list">
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">Is HugoKit free?<span class="arrow">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner"><p>Yes. HugoKit is free and open source under the MIT License. No accounts, no subscriptions, no telemetry.</p></div></div>
+<section class="loop">
+  <div class="wrap">
+    <p class="label centered">The whole loop</p>
+    <h2 class="section-heading centered">From folder to live site, one window.</h2>
+    <div class="loop-grid">
+      
+      <div class="loop-card">
+        <span class="loop-num">01</span>
+        <h3 class="loop-title">Find</h3>
+        <p class="loop-body">HugoKit finds Hugo on your Mac — or installs it for you.</p>
       </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">Does it replace the Hugo CLI?<span class="arrow">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner"><p>HugoKit wraps the Hugo CLI — it doesn't replace it. You still need Hugo installed (HugoKit can handle that), and the same commands run under the hood.</p></div></div>
+      
+      <div class="loop-card">
+        <span class="loop-num">02</span>
+        <h3 class="loop-title">Preview</h3>
+        <p class="loop-body">One click, live at localhost. Watch changes as you write.</p>
       </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">Which Hugo versions are supported?<span class="arrow">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner"><p>Any modern Hugo version. HugoKit auto-detects your installed binary or can install the latest via Homebrew or direct download.</p></div></div>
+      
+      <div class="loop-card">
+        <span class="loop-num">03</span>
+        <h3 class="loop-title">Write</h3>
+        <p class="loop-body">Drafts counted, content and config at a glance.</p>
       </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">Can I deploy somewhere other than GitHub Pages?<span class="arrow">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner"><p>Currently built-in deploy supports GitHub Pages with full automation. Support for Netlify, Vercel, and other hosts is on the roadmap.</p></div></div>
+      
+      <div class="loop-card">
+        <span class="loop-num">04</span>
+        <h3 class="loop-title">Publish</h3>
+        <p class="loop-body">Checked, fixed, pushed — and you get the link.</p>
       </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">Is HugoKit built natively?<span class="arrow">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner"><p>Yes. HugoKit is built with Swift 6 and SwiftUI — no Electron, no web views. It runs on macOS 15 (Sequoia) or later and uses the latest platform APIs for a fast, native experience.</p></div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">What macOS version do I need?<span class="arrow">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner"><p>macOS 15 (Sequoia) or later. Built with modern SwiftUI and the latest platform APIs.</p></div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">Does my data leave my machine?<span class="arrow">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner"><p>No. Sites are stored locally. The only network calls go to GitHub's API during deploy — credentials stored in macOS Keychain, not the app.</p></div></div>
+      
     </div>
   </div>
 </section>
 
 
-<div class="modal-overlay" id="hugo-explainer-modal" role="dialog" aria-modal="true" aria-labelledby="hugo-explainer-title">
-  <div class="modal-dialog modal-wide">
-    <button type="button" class="modal-close" id="hugo-explainer-close" aria-label="Luk">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="18" y1="6" x2="6" y2="18"/>
-        <line x1="6" y1="6" x2="18" y2="18"/>
-      </svg>
-    </button>
 
-    <h2 id="hugo-explainer-title">What is Hugo?</h2>
-    <p class="modal-lede"><a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a> is one of the world's most popular open-source static site generators.</p>
+<section class="download">
+  <svg class="download-mark" width="110" height="110" viewBox="0 0 100 100" aria-hidden="true">
+  <path class="mk-top" d="M50 4L91.43 27L50 50L8.57 27Z" fill="#F2F0F4"/>
+  <path class="mk-left" d="M8.57 27L50 50L50 96L8.57 73Z" fill="#26262B"/>
+  <path class="mk-h" d="M21.39 44.77L25.65 47.14L25.65 55.89L32.92 59.93L32.92 51.17L37.18 53.54L37.18 75.93L32.92 73.56L32.92 64.18L25.65 60.15L25.65 69.53L21.39 67.16Z" fill="#F2F0F4"/>
+  <path class="mk-q mk-q1" d="M50 50L70.72 38.5L70.72 61.5L50 73Z" fill="#FF4088"/>
+  <path class="mk-q mk-q2" d="M70.72 38.5L91.43 27L91.43 50L70.72 61.5Z" fill="#0594CB"/>
+  <path class="mk-q mk-q3" d="M50 73L70.72 61.5L70.72 84.5L50 96Z" fill="#33BA91"/>
+  <path class="mk-q mk-q4" d="M70.72 61.5L91.43 50L91.43 73L70.72 84.5Z" fill="#EBB951"/>
+</svg>
 
-    <div class="modal-highlight">
-      <strong>HugoKit</strong> is a native macOS app that wraps Hugo in a friendly interface — so you can manage sites, preview themes, and publish without ever opening Terminal.
+  <div class="wrap">
+    <h2 class="download-heading">Ready when you are.</h2>
+    <p class="section-body download-body">HugoKit is free, local, and quietly waiting in your menu bar. If it saves you an evening, tell a friend.</p>
+    <div class="cta-row centered-row">
+      <a class="btn btn-lg" href="/downloads/HugoKit.dmg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg>
+        Download for macOS
+      </a>
     </div>
-
-    <p class="modal-footer-link">New to Hugo? <a href="https://gohugo.io/getting-started/" target="_blank" rel="noopener" class="modal-link">Read the official getting started guide →</a></p>
+    <p class="fine-meta download-meta">free · macOS 26 or later · about a minute to set up</p>
   </div>
-</div>
+</section>
 
 
-  </main>
+</main>
 
-  
 
-<footer class="site-footer" data-theme-color="warm" id="download">
-  <div class="footer-cta-block">
-    <div class="container">
-      <div class="footer-cta-inner">
-        <p class="footer-eyebrow">
-          <span class="footer-eyebrow-dot"></span>
-          Built for macOS · Free
-        </p>
-
-        <h2 class="footer-cta-title">Ready to ditch the terminal?</h2>
-
-        <p class="footer-cta-sub">Your Hugo sites, one click away.</p>
-
-        <div class="footer-cta-actions">
-          <a href="#download" class="footer-cta-primary">
-            <svg class="footer-cta-icon-down" width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 12l-4-4h2.5V3h3v5H12L8 12z"/><path d="M14 14H2v-2h12v2z"/></svg>
-            <span>Download HugoKit</span>
-            <svg class="footer-cta-icon-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-          <a href="https://github.com/andersmortensen/HugoKit" class="footer-cta-secondary">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-  <path d="M12 2C6.48 2 2 6.58 2 12.22c0 4.5 2.87 8.32 6.84 9.67.5.09.68-.22.68-.49v-1.71c-2.78.62-3.37-1.21-3.37-1.21-.45-1.17-1.11-1.48-1.11-1.48-.91-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.55-1.13-4.55-5.03 0-1.11.39-2.02 1.03-2.73-.1-.26-.45-1.3.1-2.7 0 0 .84-.27 2.75 1.04.8-.22 1.65-.34 2.5-.34s1.7.12 2.5.34c1.91-1.31 2.75-1.04 2.75-1.04.55 1.4.2 2.44.1 2.7.64.71 1.03 1.62 1.03 2.73 0 3.91-2.34 4.77-4.57 5.02.36.32.68.94.68 1.9v2.82c0 .27.18.59.69.49A10.02 10.02 0 0 0 22 12.22C22 6.58 17.52 2 12 2z"/>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="lockup footer-lockup">
+          <svg width="32" height="32" viewBox="0 0 100 100" aria-hidden="true">
+  <path class="mk-top" d="M50 4L91.43 27L50 50L8.57 27Z" fill="#F2F0F4"/>
+  <path class="mk-left" d="M8.57 27L50 50L50 96L8.57 73Z" fill="#26262B"/>
+  <path class="mk-h" d="M21.39 44.77L25.65 47.14L25.65 55.89L32.92 59.93L32.92 51.17L37.18 53.54L37.18 75.93L32.92 73.56L32.92 64.18L25.65 60.15L25.65 69.53L21.39 67.16Z" fill="#F2F0F4"/>
+  <path class="mk-q mk-q1" d="M50 50L70.72 38.5L70.72 61.5L50 73Z" fill="#FF4088"/>
+  <path class="mk-q mk-q2" d="M70.72 38.5L91.43 27L91.43 50L70.72 61.5Z" fill="#0594CB"/>
+  <path class="mk-q mk-q3" d="M50 73L70.72 61.5L70.72 84.5L50 96Z" fill="#33BA91"/>
+  <path class="mk-q mk-q4" d="M70.72 61.5L91.43 50L91.43 73L70.72 84.5Z" fill="#EBB951"/>
 </svg>
-            View on GitHub
-          </a>
+
+          <span class="lockup-name footer-lockup-name">HugoKit</span>
         </div>
+        <p class="footer-tagline">Your Hugo sites, one click away.</p>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/andersmortensen/hugokit-source">GitHub</a>
+        <a href="mailto:kontakt@andersmortensen.com">Feedback</a>
+        <a href="https://gohugo.io">gohugo.io</a>
       </div>
     </div>
-
-    <div class="container">
-      <div class="footer-meta">
-        <div class="footer-brand">
-          
-
-
-
-
-<span class="brand-lockup " style="--lockup-size: 30px; --lockup-text: 16px; --lockup-gap: 8px;">
-  
-
-
-<svg class="brand-mark " width="30" height="30" viewBox="0 0 200 200" fill="currentColor" role="img" aria-label="HugoKit">
-  <polygon points="50,40 74,54 74,82 50,96 26,82 26,54"/>
-  <polygon points="150,40 174,54 174,82 150,96 126,82 126,54"/>
-  <polygon points="100,75 124,89 124,117 100,131 76,117 76,89"/>
-  <polygon points="50,110 74,124 74,152 50,166 26,152 26,124"/>
-  <polygon points="150,110 174,124 174,152 150,166 126,152 126,124"/>
-</svg>
-
-  <span class="brand-wordmark">HugoKit</span>
-</span>
-
-        </div>
-        <p class="footer-copyright">&copy; 2026 Anders Mortensen · 0.1.0</p>
-      </div>
+    <div class="footer-base">
+      <span>Made in Denmark by Anders Mortensen</span>
+      <span>This site runs on Hugo — and ships with HugoKit.</span>
     </div>
   </div>
 </footer>
 
 
-  
-  <script>
-    window.__basePath = "\/";
-    window.__spaRouterConfig = {
-      rootSelector: '#spa-main',
-      preload: true,
-      cacheSize: 30,
-      ignoreSelectors: ['[data-no-spa]', '[target=_blank]', '[download]']
-    };
-  </script>
-
-  
-  
-  
-  
-    <script src="/js/page-init.js" defer></script>
-    <script src="/js/spa-router.js" defer></script>
-  
 
 </body>
 </html>

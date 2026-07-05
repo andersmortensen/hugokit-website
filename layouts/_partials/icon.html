@@ -1,0 +1,15 @@
+{{- /* Feature-ikoner. Param: name (sites | play | publish | check | themes | native) */ -}}
+{{- $name := .name -}}
+{{- if eq $name "sites" -}}
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><line x1="5" y1="7" x2="19" y2="7"/><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="17" x2="13" y2="17"/></svg>
+{{- else if eq $name "play" -}}
+<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5 L18 12 L8 18.5 Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+{{- else if eq $name "publish" -}}
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 18 V7 M6.5 12 L12 6.5 L17.5 12"/></svg>
+{{- else if eq $name "check" -}}
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.5 12.5 L10 17 L18.5 7.5"/></svg>
+{{- else if eq $name "themes" -}}
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="4.5" width="9" height="9" rx="2"/><rect x="10.5" y="10.5" width="9" height="9" rx="2"/></svg>
+{{- else if eq $name "native" -}}
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 9 V6.5 A2.5 2.5 0 1 0 6.5 9 H9 Z M15 9 V6.5 A2.5 2.5 0 1 1 17.5 9 H15 Z M9 15 V17.5 A2.5 2.5 0 1 1 6.5 15 H9 Z M15 15 V17.5 A2.5 2.5 0 1 0 17.5 15 H15 Z M9 9 H15 V15 H9 Z"/></svg>
+{{- end -}}
