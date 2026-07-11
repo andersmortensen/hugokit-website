@@ -31,8 +31,10 @@ Sitet hoster altså ingen binærer længere; `static/downloads/` er ikke i brug.
 2. Udgiv GitHub-releasen med **begge** DMG-assets (versioneret + `HugoKit.dmg`).
    Det faste navn holder sitets download-knap stabil uden redirects.
 3. Kopiér `dist/sparkle/appcast.xml` → `static/appcast.xml` i dette repo.
-4. Skriv/redigér `content/changelog/X.Y.Z.md` og sørg for at appcast'ens
-   `releaseNotesLink` peger på `https://hugokit.com/changelog/X.Y.Z/`.
+4. Skriv/redigér `content/changelog/X.Y.Z.md`. Siden **skal** eksistere: scriptet
+   sætter selv appcast'ens `releaseNotesLink` til `https://hugokit.com/changelog/X.Y.Z/`
+   (`generate_appcast` kan kun bygge linket som `<prefix><dmg-navn>.html`, så
+   release.sh patcher XML'en bagefter — der genereres ingen HTML-notes længere).
 5. Byg og deploy sitet som normalt (`hugo` → upload af `public/`).
 6. Verificér: `https://hugokit.com/appcast.xml` svarer 200, download-knappen
    henter DMG'en fra GitHub, `/changelog/X.Y.Z/` renderer, og en ældre
