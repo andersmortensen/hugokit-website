@@ -1,0 +1,282 @@
+{{ define "body" }}
+
+{{- /* Orca-editorial layoutet: siden som indrammet, afrundet kanvas.
+      Kvartetten (pink/blå/grøn/guld fra mærket) bærer farverne —
+      why-kortene, USP-markørerne og Hugo-panelet. CTA'er forbliver
+      i utility-registret (ink-knappen). */}}
+<div class="canvas">
+
+  <div class="edge-marks" aria-hidden="true">
+    <span>HugoKit — Mac app for Hugo</span>
+    <span>macOS 26+ · free</span>
+  </div>
+
+  {{ partial "nav.html" . }}
+
+  <main id="main">
+
+  {{ with .Params.hero }}
+  <header class="hero">
+    {{- /* Wordmarket kant til kant — JS skalerer det til kanvasbredden.
+          Dekorativt; h1 nedenfor bærer budskabet. */}}
+    <div class="giant-wrap" aria-hidden="true">
+      <span class="giant" id="giant">HugoKit</span>
+    </div>
+    <div class="hero-row">
+      <div class="hero-copy">
+        <h1 class="hero-heading">{{ .heading }}</h1>
+        <p class="hero-lead">{{ .lead }}</p>
+        <div class="cta-buttons">
+          <a class="btn btn-lg" href="#download">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
+            Download for macOS
+          </a>
+          {{ with $.Params.whatishugo }}
+          <a class="btn-ghost" href="#hugo">{{ .cta }}</a>
+          {{ end }}
+        </div>
+        <span class="fine-meta">{{ $.Params.download.meta }}</span>
+      </div>
+      {{- /* App-vinduet stiger op i wordmarket — bevidst nedtonet:
+            kompakt, Publish som stille app-pill, ikke en site-CTA. */}}
+      <div class="hero-win" role="img" aria-label="The HugoKit main window: sidebar with sites and a dashboard for the selected site.">
+        <div class="hw-bar">
+          <span class="hw-tl hw-r"></span><span class="hw-tl hw-y"></span><span class="hw-tl hw-g"></span>
+          <span class="hw-title">HugoKit</span>
+        </div>
+        <div class="hw-body">
+          <div class="hw-side">
+            <div class="hw-row on"><span class="hw-dot live"></span><span class="hw-bar-line" style="width:58%"></span></div>
+            <div class="hw-row"><span class="hw-dot"></span><span class="hw-bar-line" style="width:44%"></span></div>
+            <div class="hw-row"><span class="hw-dot"></span><span class="hw-bar-line" style="width:66%"></span></div>
+            <div class="hw-row"><span class="hw-dot live"></span><span class="hw-bar-line" style="width:50%"></span></div>
+            <div class="hw-row"><span class="hw-dot"></span><span class="hw-bar-line" style="width:38%"></span></div>
+          </div>
+          <div class="hw-main">
+            <span class="hw-live"><span class="hw-dot live"></span>http://localhost:1326/</span>
+            <div class="hw-tiles">
+              <div class="hw-tile"><span class="hw-k">Server</span><span class="hw-v ok">Running</span></div>
+              <div class="hw-tile"><span class="hw-k">Content</span><span class="hw-v">148</span></div>
+              <div class="hw-tile"><span class="hw-k">Build</span><span class="hw-v">—</span></div>
+              <div class="hw-tile"><span class="hw-k">Hugo</span><span class="hw-v">v0.159</span></div>
+            </div>
+            <span class="hw-publish">Publish</span>
+          </div>
+        </div>
+      </div>
+      <div></div>
+    </div>
+  </header>
+  {{ end }}
+
+  {{ with .Params.facts }}
+  <section class="facts reveal" aria-label="Facts">
+    {{ range . }}
+    <div class="fact">
+      <span class="fact-ic" aria-hidden="true">
+        {{ if eq .glyph "free" }}
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v8H4v-8"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7c-1.5 0-4-.7-4-2.5S9.5 2 10.5 2C12 2 12 4.5 12 7zm0 0c1.5 0 4-.7 4-2.5S14.5 2 13.5 2C12 2 12 4.5 12 7z"/></svg>
+        {{ else if eq .glyph "window" }}
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 9h18"/></svg>
+        {{ else }}
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+        {{ end }}
+      </span>
+      <div>
+        <div class="fact-v">{{ .value }}</div>
+        <div class="fact-l">{{ .label }}</div>
+      </div>
+    </div>
+    {{ end }}
+  </section>
+  {{ end }}
+
+  {{- /* Why: sticky statement, kvartet-kortene scroller henover.
+        Kort = feature-items med accent-nøgle; resten står i "Also in HugoKit". */}}
+  {{ $cards := slice }}{{ $rest := slice }}
+  {{ range .Params.features.items }}
+    {{ if .accent }}{{ $cards = $cards | append . }}{{ else }}{{ $rest = $rest | append . }}{{ end }}
+  {{ end }}
+  <section class="why" id="why" aria-label="Why HugoKit">
+    <div class="why-sticky">
+      <span class="label-pill">Why HugoKit</span>
+      <h2 class="why-h">{{ .Params.about.intro }}</h2>
+    </div>
+    {{- /* Kolonnefordelingen følger kvartetten i mærket: venstre = q1 pink
+          øverst + q3 grøn nederst, højre = q2 blå øverst + q4 guld nederst.
+          (modBool er sand ved rest 0, dvs. lige indeks.) */}}
+    <div class="why-cards">
+      <div class="why-col">
+        {{ range $i, $c := $cards }}{{ if modBool $i 2 }}
+        <div class="wcard wc-{{ $c.accent }} reveal">
+          {{ partial "feature-glyph.html" (dict "glyph" $c.glyph) }}
+          <div class="wcard-copy">
+            <h3>{{ $c.name }}</h3>
+            <p>{{ $c.text }}</p>
+          </div>
+        </div>
+        {{ end }}{{ end }}
+      </div>
+      <div class="why-col why-col2">
+        {{ range $i, $c := $cards }}{{ if modBool $i 2 | not }}
+        <div class="wcard wc-{{ $c.accent }} reveal">
+          {{ partial "feature-glyph.html" (dict "glyph" $c.glyph) }}
+          <div class="wcard-copy">
+            <h3>{{ $c.name }}</h3>
+            <p>{{ $c.text }}</p>
+          </div>
+        </div>
+        {{ end }}{{ end }}
+      </div>
+    </div>
+  </section>
+
+  {{ with .Params.loop }}
+  {{- /* Tabbed loop: radio + CSS (virker uden JS, piletaster via native
+        radiogroup). Hvert moment = én tab med uddybende points og sit view;
+        Preflight har intet screenshot og viser wireframe-glyphen i stedet. */}}
+  <section class="loop reveal" id="loop" aria-label="Preview to publish">
+    <div class="loop-head">
+      <h2 class="loop-h">{{ .heading }}</h2>
+      <p class="loop-sub">{{ .sub }}</p>
+    </div>
+    {{ range $i, $m := $.Params.moments }}
+    <input class="loop-radio" type="radio" name="loop-tab" id="loop-t{{ $i }}"{{ if eq $i 0 }} checked{{ end }}>
+    {{ end }}
+    <div class="loop-tabs">
+      {{ range $i, $m := $.Params.moments }}
+      <label class="loop-tab" for="loop-t{{ $i }}">
+        <span class="loop-tab-n loop-tab-n-{{ add $i 1 }}">0{{ add $i 1 }}</span>{{ $m.label }}
+      </label>
+      {{ end }}
+    </div>
+    <div class="loop-panels">
+      {{ range $i, $m := $.Params.moments }}
+      <div class="loop-panel loop-panel-{{ $i }}">
+        <div class="loop-panel-copy">
+          <h3>{{ $m.heading }}</h3>
+          <p class="loop-panel-text">{{ $m.text }}</p>
+          {{ with $m.points }}
+          <ul class="loop-points">
+            {{ range . }}<li>{{ . }}</li>{{ end }}
+          </ul>
+          {{ end }}
+          <a class="btn btn-lg loop-cta" href="#download">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
+            Download for macOS
+          </a>
+        </div>
+        <div class="loop-panel-side">
+          {{ if $m.screenshot }}
+          {{ $l := imageConfig (printf "static%s" $m.screenshot) }}
+          <figure class="frame loop-frame">
+            <img class="shot" src="{{ $m.screenshot | relURL }}" alt="{{ $m.alt }}" width="{{ $l.Width }}" height="{{ $l.Height }}" loading="lazy">
+          </figure>
+          {{ else }}
+          <div class="loop-glyph-tile" role="img" aria-label="{{ $m.alt }}">
+            {{ partial "feature-glyph.html" (dict "glyph" $m.glyph) }}
+          </div>
+          {{ end }}
+        </div>
+      </div>
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+
+  {{ with .Params.whatishugo }}
+  {{- /* Hugo-panelet — pink er Hugos egen farve. Modalen er afløst af
+        panelet; indholdet er det samme front matter. */}}
+  <section class="hugo-panel reveal" id="hugo" aria-label="{{ .title }}">
+    <div class="hugo-left">
+      <div class="term" role="img" aria-label="Terminal running hugo server">
+        <div class="term-bar">
+          <span class="hw-tl hw-r"></span><span class="hw-tl hw-y"></span><span class="hw-tl hw-g"></span>
+        </div>
+        <div class="term-body">
+          <span class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">hugo server</span><span class="term-caret"></span></span>
+          <span class="term-out">Web Server is available at http://localhost:1313/</span>
+        </div>
+      </div>
+    </div>
+    <div class="hugo-right">
+      <h2 class="hugo-h">{{ .title }}</h2>
+      {{ range .body }}<p class="hugo-body">{{ . }}</p>{{ end }}
+      {{ with .usps }}
+      <p class="hugo-usp-label">{{ .label }}</p>
+      <ul class="usps">
+        {{ range $i, $u := .items }}
+        <li class="usp">
+          <span class="usp-tile"><span class="usp-fct usp-fct-{{ add $i 1 }}" aria-hidden="true"></span></span>
+          <b>{{ $u.name }}</b><span>{{ $u.text }}</span>
+        </li>
+        {{ end }}
+      </ul>
+      {{ end }}
+      {{ with .bridge }}<p class="hugo-bridge">{{ . }}</p>{{ end }}
+      <a class="hugo-link" href="https://gohugo.io">{{ .link }}</a>
+    </div>
+  </section>
+  {{ end }}
+
+  {{ if $rest }}
+  <section class="features reveal" id="features" aria-label="Features">
+    <span class="label-pill">{{ .Params.features.title }}</span>
+    <div class="feature-list">
+      {{ range $rest }}
+      <div class="feature-row">
+        {{ partial "feature-glyph.html" (dict "glyph" .glyph) }}
+        <h3 class="feature-name">{{ .name }}</h3>
+        <p class="feature-text">{{ .text }}</p>
+      </div>
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+
+  {{ with .Params.faq }}
+  <section class="faq reveal" id="faq" aria-label="Frequently asked questions">
+    <h2 class="faq-title">{{ .title }}</h2>
+    <div class="faq-list">
+      {{ range .items }}
+      <details class="faq-item">
+        <summary>{{ .q }}</summary>
+        <div class="faq-answer">{{ .a | markdownify }}</div>
+      </details>
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+
+  {{ with .Params.note }}
+  <section class="note reveal">
+    <p class="section-label">{{ .label }}</p>
+    <p class="note-text">{{ .text }}</p>
+  </section>
+  {{ end }}
+
+  {{ with .Params.download }}
+  <section class="get reveal" id="download">
+    <h2 class="get-heading">{{ .heading }}</h2>
+    <div class="get-foot">
+      <div class="cta-col">
+        <div class="cta-buttons">
+          <a class="btn btn-lg" href="{{ site.Params.downloadURL }}">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
+            {{ .cta }}
+          </a>
+        </div>
+        <span class="fine-meta">{{ .meta }}</span>
+      </div>
+      <p class="get-note">{{ .note }}</p>
+    </div>
+  </section>
+  {{ end }}
+
+  </main>
+
+  {{ partial "footer.html" . }}
+
+</div>
+
+{{ end }}

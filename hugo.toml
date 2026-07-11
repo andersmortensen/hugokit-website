@@ -2,13 +2,20 @@ baseURL = 'https://hugokit.com/'
 languageCode = 'en'
 title = 'HugoKit'
 timeZone = 'Europe/Copenhagen'
-disableKinds = ['taxonomy', 'term', 'section', 'rss']
+# Sitets layouts/assets bor i temaet — roden ejer kun content, config og static.
+theme = 'hugokit'
+# 'section' er aktiv igen: /changelog/ er en rigtig Hugo-sektion (Sparkle-kontrakten).
+disableKinds = ['taxonomy', 'term', 'rss']
 
 [params]
-  description = 'HugoKit is the friendly Mac app that runs, previews and publishes your Hugo sites. No terminal, no fuss — one click each.'
-  # Peger på den DMG som release-flowet lægger i static/downloads/ (se RELEASING.md).
-  # Indtil første release er uploadet kan den midlertidigt sættes tilbage til GitHub-releases-URL'en.
-  downloadURL = '/downloads/HugoKit.dmg'
+  description = 'A Mac app for Hugo: run the server, preview your pages and publish your site from one window. Free, native, no terminal – built by one person for his own sites.'
+  # Appens aktuelle version — bruges i JSON-LD (softwareVersion); bump ved release.
+  version = '0.1.0'
+  # GA4 measurement ID — gtag indsættes kun i production-builds (se head.html).
+  googleAnalyticsID = 'G-5MFTKS6PH9'
+  # DMG'en hostes som asset på det offentlige repos releases (se RELEASING.md).
+  # Kræver at hver release har en asset med det faste navn HugoKit.dmg.
+  downloadURL = 'https://github.com/andersmortensen/hugokit/releases/latest/download/HugoKit.dmg'
   # Offentligt repo (releases/downloads). Kildekoden bor i hugokit-source, som ALDRIG linkes.
   githubURL = 'https://github.com/andersmortensen/hugokit'
   feedbackEmail = 'kontakt@andersmortensen.com'

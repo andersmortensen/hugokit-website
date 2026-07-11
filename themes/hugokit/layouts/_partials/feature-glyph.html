@@ -1,0 +1,99 @@
+{{- /* Feature-glyphs: simplificerede wireframes af funktionaliteten, i sitets
+      streg — stage-flader, line-strokes, faint-detaljer, maks én accent-dot.
+      Param: glyph (preview/publish/preflight/sites/create/themes/templates/
+      content/config/reference/palette/menubar/hugo/private). */ -}}
+{{- $g := .glyph -}}
+<svg class="feature-glyph" viewBox="0 0 48 48" aria-hidden="true">
+{{- if eq $g "preview" }}
+  <rect x="5" y="9" width="38" height="30" rx="4" fill="var(--stage)" stroke="var(--line-strong)"/>
+  <line x1="5" y1="16.5" x2="43" y2="16.5" stroke="var(--line-strong)"/>
+  <circle cx="10.5" cy="12.8" r="1.8" fill="var(--green)"/>
+  <path d="M21 22.5v8.5l7.5-4.25z" fill="none" stroke="var(--faint)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+{{- else if eq $g "publish" }}
+  <line x1="24" y1="26" x2="24" y2="10" stroke="var(--faint)" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M18 15l6-6 6 6" fill="none" stroke="var(--faint)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M10 28v6a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4v-6" fill="none" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="35" cy="31" r="2" fill="var(--blue)"/>
+{{- else if eq $g "preflight" }}
+  <path d="M8 13.5l3 3 5-5.5" fill="none" stroke="var(--faint)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="21" y1="14" x2="40" y2="14" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M8 25.5l3 3 5-5.5" fill="none" stroke="var(--faint)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="21" y1="26" x2="36" y2="26" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="11.5" cy="38" r="2" fill="var(--pink)"/>
+  <line x1="21" y1="38" x2="38" y2="38" stroke="var(--faint)" stroke-width="2" stroke-linecap="round"/>
+{{- else if eq $g "sites" }}
+  <rect x="4" y="8" width="40" height="32" rx="4" fill="var(--stage)" stroke="var(--line-strong)"/>
+  <line x1="18" y1="8" x2="18" y2="40" stroke="var(--line-strong)"/>
+  <circle cx="9.5" cy="15" r="1.8" fill="var(--green)"/>
+  <line x1="8" y1="21" x2="14" y2="21" stroke="var(--faint)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="8" y1="27" x2="14" y2="27" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="8" y1="33" x2="14" y2="33" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="22" y1="16" x2="38" y2="16" stroke="var(--faint)" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="22" y1="24" x2="34" y2="24" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="22" y1="31" x2="36" y2="31" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+{{- else if eq $g "create" }}
+  <rect x="8" y="6" width="32" height="36" rx="4" fill="var(--stage)" stroke="var(--line-strong)"/>
+  <line x1="24" y1="16" x2="24" y2="26" stroke="var(--faint)" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="19" y1="21" x2="29" y2="21" stroke="var(--faint)" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="14" y1="33" x2="34" y2="33" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+{{- else if eq $g "themes" }}
+  <rect x="7" y="9" width="15" height="12" rx="2.5" fill="var(--stage)" stroke="var(--line-strong)"/>
+  <rect x="26" y="9" width="15" height="12" rx="2.5" fill="var(--stage)" stroke="var(--line-strong)"/>
+  <rect x="7" y="26" width="15" height="12" rx="2.5" fill="var(--stage)" stroke="var(--line-strong)"/>
+  <rect x="26" y="26" width="15" height="12" rx="2.5" fill="var(--stage)" stroke="var(--line-strong)"/>
+  <circle cx="37" cy="12.5" r="1.8" fill="var(--green)"/>
+{{- else if eq $g "templates" }}
+  <rect x="4" y="8" width="40" height="32" rx="4" fill="var(--stage)" stroke="var(--line-strong)"/>
+  <line x1="18" y1="8" x2="18" y2="40" stroke="var(--line-strong)"/>
+  <line x1="8" y1="15" x2="14" y2="15" stroke="var(--faint)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="10" y1="21" x2="14" y2="21" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="10" y1="27" x2="14" y2="27" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="24.5" cy="14.5" r="1.8" fill="var(--green)"/>
+  <line x1="22" y1="22" x2="38" y2="22" stroke="var(--faint)" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="22" y1="29" x2="34" y2="29" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="22" y1="35" x2="36" y2="35" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+{{- else if eq $g "content" }}
+  <rect x="7" y="20" width="9" height="18" rx="2" fill="var(--line-strong)"/>
+  <rect x="19.5" y="12" width="9" height="26" rx="2" fill="var(--faint)"/>
+  <rect x="32" y="25" width="9" height="13" rx="2" fill="var(--line-strong)"/>
+  <line x1="5" y1="42" x2="43" y2="42" stroke="var(--line-strong)" stroke-width="1.5" stroke-linecap="round"/>
+{{- else if eq $g "config" }}
+  <line x1="14" y1="10" x2="38" y2="10" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="9" cy="19" r="2" fill="var(--pink)"/>
+  <line x1="14" y1="19" x2="30" y2="19" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="9" cy="28" r="2" fill="var(--green)"/>
+  <line x1="14" y1="28" x2="34" y2="28" stroke="var(--faint)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="14" y1="37" x2="38" y2="37" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+{{- else if eq $g "reference" }}
+  <rect x="6" y="7" width="36" height="11" rx="5.5" fill="var(--stage)" stroke="var(--line-strong)"/>
+  <circle cx="13" cy="12.5" r="2.5" fill="none" stroke="var(--faint)" stroke-width="1.8"/>
+  <line x1="15" y1="14.5" x2="16.8" y2="16.3" stroke="var(--faint)" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="8" y1="27" x2="40" y2="27" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="8" y1="34" x2="32" y2="34" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="8" y1="41" x2="37" y2="41" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+{{- else if eq $g "palette" }}
+  <rect x="6" y="10" width="36" height="28" rx="5" fill="var(--stage)" stroke="var(--line-strong)"/>
+  <line x1="12" y1="18" x2="30" y2="18" stroke="var(--faint)" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="6" y1="23.5" x2="42" y2="23.5" stroke="var(--line-strong)"/>
+  <circle cx="14" cy="29.5" r="1.8" fill="var(--blue)"/>
+  <line x1="19" y1="29.5" x2="36" y2="29.5" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="19" y1="34.5" x2="30" y2="34.5" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+{{- else if eq $g "menubar" }}
+  <rect x="4" y="6" width="40" height="7" rx="2" fill="var(--stage)" stroke="var(--line-strong)"/>
+  <circle cx="38" cy="9.5" r="1.8" fill="var(--green)"/>
+  <rect x="24" y="16" width="18" height="22" rx="4" fill="var(--stage)" stroke="var(--line-strong)"/>
+  <line x1="28" y1="22" x2="38" y2="22" stroke="var(--faint)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="28" y1="28" x2="36" y2="28" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="28" y1="34" x2="38" y2="34" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+{{- else if eq $g "hugo" }}
+  <line x1="24" y1="8" x2="24" y2="24" stroke="var(--faint)" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M18 19l6 6 6-6" fill="none" stroke="var(--faint)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M10 28v6a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4v-6" fill="none" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="35" cy="31" r="2" fill="var(--green)"/>
+{{- else if eq $g "private" }}
+  <path d="M17 22v-5a7 7 0 0 1 14 0v5" fill="none" stroke="var(--line-strong)" stroke-width="2.2" stroke-linecap="round"/>
+  <rect x="13" y="22" width="22" height="18" rx="4.5" fill="var(--stage)" stroke="var(--line-strong)"/>
+  <circle cx="24" cy="30" r="2.2" fill="var(--faint)"/>
+  <line x1="24" y1="32" x2="24" y2="35.5" stroke="var(--faint)" stroke-width="2" stroke-linecap="round"/>
+{{- end }}
+</svg>

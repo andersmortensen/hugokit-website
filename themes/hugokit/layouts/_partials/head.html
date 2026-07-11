@@ -1,0 +1,145 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{{- /* Gemt mode-valg sættes FØR CSS'en parses — ingen tema-flash */}}
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('hk-theme');
+      if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  })();
+</script>
+{{- /* Google Analytics 4 (gtag.js) — kun i production-builds, så hugo server
+      og lokale previews ikke forurener data. ID'et bor i hugo.toml. */}}
+{{ if and hugo.IsProduction site.Params.googleAnalyticsID }}
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ site.Params.googleAnalyticsID }}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '{{ site.Params.googleAnalyticsID }}');
+</script>
+{{ end }}
+
+{{ $title := cond .IsHome site.Title (printf "%s · %s" .Title site.Title) }}
+<title>{{ $title }}</title>
+{{ $description := .Params.description | default site.Params.description }}
+<meta name="description" content="{{ $description }}">
+<link rel="canonical" href="{{ .Permalink }}">
+
+{{- /* Browser toolbar color — fallback for Chrome/Firefox; Safari Tahoe+ sampler html/body-baggrunden (sat i main.css). Sitet følger systemets farveskema. */}}
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#E2DFE7">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#060607">
+
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $description }}">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:image" content="{{ "og/hugokit-og.png" | absURL }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ $title }}">
+<meta name="twitter:description" content="{{ $description }}">
+<meta name="twitter:image" content="{{ "og/hugokit-og.png" | absURL }}">
+
+<link rel="icon" type="image/svg+xml" href="{{ "favicon.svg" | relURL }}">
+<link rel="apple-touch-icon" href="{{ "apple-touch-icon.png" | relURL }}">
+
+{{- /* Strukturerede data — kun forsiden: appen + FAQ (genereres fra samme
+      front matter som sektionen, så de aldrig driver fra hinanden). */}}
+{{ if .IsHome }}
+{{ $app := dict
+  "@context" "https://schema.org"
+  "@type" "SoftwareApplication"
+  "name" "HugoKit"
+  "operatingSystem" "macOS 26 or later"
+  "softwareVersion" (site.Params.version | default "0.1.0")
+  "applicationCategory" "DeveloperApplication"
+  "offers" (dict "@type" "Offer" "price" "0" "priceCurrency" "USD")
+  "url" .Permalink
+  "description" $description
+  "author" (dict "@type" "Person" "name" "Anders Mortensen")
+}}
+<script type="application/ld+json">{{ $app | jsonify | safeJS }}</script>
+{{ with .Params.faq }}
+{{ $qs := slice }}
+{{ range .items }}
+{{ $qs = $qs | append (dict "@type" "Question" "name" .q "acceptedAnswer" (dict "@type" "Answer" "text" (.a | markdownify | plainify))) }}
+{{ end }}
+<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@type" "FAQPage" "mainEntity" $qs | jsonify | safeJS }}</script>
+{{ end }}
+{{ end }}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@700;800&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+{{ with resources.Get "css/main.css" }}
+  {{ $css := . | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+{{ end }}
+
+{{- /* Stille reveals: .js sættes før paint (ingen flash), observer efter DOM.
+      Uden JS eller uden IntersectionObserver forbliver alt synligt. */}}
+<script>
+  document.documentElement.classList.add('js');
+  addEventListener('DOMContentLoaded', function () {
+    var all = document.querySelectorAll('.reveal');
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+      all.forEach(function (el) { el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    all.forEach(function (el) { io.observe(el); });
+
+    var mt = document.querySelector('.mode-toggle');
+    if (mt) mt.addEventListener('click', function () {
+      var apply = function () {
+        var root = document.documentElement;
+        var cur = root.dataset.theme;
+        var sysDark = matchMedia('(prefers-color-scheme: dark)').matches;
+        var next = cur ? (cur === 'dark' ? 'light' : 'dark') : (sysDark ? 'light' : 'dark');
+        root.dataset.theme = next;
+        try { localStorage.setItem('hk-theme', next); } catch (e) {}
+        var c = next === 'dark' ? '#060607' : '#E2DFE7';
+        document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) { m.content = c; });
+      };
+      // Blød crossfade hvor View Transitions findes; ellers øjeblikkeligt skift
+      if (document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.startViewTransition(apply);
+      } else {
+        apply();
+      }
+    });
+
+    // Wordmark: split i bogstav-spans (til entré-stagger) + fit til kanvasbredden
+    var g = document.getElementById('giant');
+    if (g) {
+      var text = g.textContent;
+      g.textContent = '';
+      text.split('').forEach(function (ch, i) {
+        var s = document.createElement('span');
+        s.className = 'gl';
+        s.style.setProperty('--gi', i);
+        s.textContent = ch;
+        g.appendChild(s);
+      });
+      g.classList.add('split');
+      var fit = function () {
+        var w = g.parentElement.clientWidth;
+        g.style.fontSize = '100px';
+        var natural = g.getBoundingClientRect().width;
+        if (natural > 0 && w > 0) g.style.fontSize = (100 * w / natural) + 'px';
+      };
+      addEventListener('resize', fit);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+      fit();
+    }
+  });
+</script>

@@ -1,0 +1,23 @@
+{{ define "body" }}
+{{- /* Release note — to forbrugere, én side: Sparkles releaseNotes-WebView
+      (kompakt, ingen site-nav) og almindelige web-læsere. Derfor minimal chrome. */}}
+<main id="main" class="release">
+  <div class="wrap release-wrap">
+    <header class="release-head">
+      <a class="lockup" href="{{ "" | relURL }}" aria-label="HugoKit — home">
+        {{ partial "mark.html" (dict "size" 22) }}
+        <span class="lockup-name lockup-name-sm">HugoKit</span>
+      </a>
+      <h1 class="release-version">{{ .Title }}</h1>
+      {{ with .Date }}<time class="release-date" datetime="{{ .Format "2006-01-02" }}">{{ .Format "2 January 2006" }}</time>{{ end }}
+    </header>
+    <article class="release-body">
+      {{ .Content }}
+    </article>
+    <footer class="release-foot">
+      <a href="{{ "changelog/" | relURL }}">All releases</a>
+      <a href="{{ "" | relURL }}">hugokit.com</a>
+    </footer>
+  </div>
+</main>
+{{ end }}

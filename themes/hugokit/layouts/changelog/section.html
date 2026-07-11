@@ -1,0 +1,151 @@
+{{ define "body" }}
+{{- /* Changelog-hub'en — sitets fulde layout (kanvas, nav, footer).
+      Release-noter loader DYNAMISK ind i hub'en: klik fetcher undersiden,
+      trækker .release-version/-date/-body ud og swapper view'et med en
+      view-transition + pushState — ingen browser-refresh. Hover prefetcher.
+      Uden JS navigeres der normalt til de kompakte release-sider, som
+      FORBLIVER minimale (Sparkle-kontrakten i RELEASING.md: releaseNotesLink
+      vises i update-vinduets WebView). */}}
+<div class="canvas">
+
+  <div class="edge-marks" aria-hidden="true">
+    <span>HugoKit — Mac app for Hugo</span>
+    <span>macOS 26+ · free</span>
+  </div>
+
+  {{ partial "nav.html" . }}
+
+  <main id="main" class="release-hub">
+    <header class="hub-head">
+      <h1 class="hub-title">Changelog</h1>
+      <p class="hub-sub">Release notes, newest first.</p>
+    </header>
+
+    <div id="release-list-view">
+      {{ if .Pages }}
+      <ul class="release-list hub-list">
+        {{ range .Pages.ByDate.Reverse }}
+        <li>
+          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+          {{ with .Date }}<time datetime="{{ .Format "2006-01-02" }}">{{ .Format "2 January 2006" }}</time>{{ end }}
+        </li>
+        {{ end }}
+      </ul>
+      {{ else }}
+      <p class="release-empty">No releases yet.</p>
+      {{ end }}
+    </div>
+
+    <article id="release-view" class="release-detail" hidden>
+      <a class="hub-back" href="{{ .RelPermalink }}">&larr; All releases</a>
+      <h2 class="release-version"></h2>
+      <time class="release-date"></time>
+      <div class="release-body"></div>
+    </article>
+  </main>
+
+  {{ partial "footer.html" . }}
+
+</div>
+
+<script>
+  (function () {
+    var list = document.getElementById('release-list-view');
+    var view = document.getElementById('release-view');
+    if (!list || !view || !window.fetch || !window.DOMParser) return;
+
+    var hubURL = {{ .RelPermalink | jsonify }};
+    var cache = {};
+
+    function load(url) {
+      if (!cache[url]) {
+        cache[url] = fetch(url).then(function (r) {
+          if (!r.ok) throw new Error(r.status);
+          return r.text();
+        }).then(function (t) {
+          var d = new DOMParser().parseFromString(t, 'text/html');
+          var v = d.querySelector('.release-version');
+          var dt = d.querySelector('.release-date');
+          var b = d.querySelector('.release-body');
+          if (!v || !b) throw new Error('unexpected page shape');
+          return {
+            title: v.textContent,
+            dateText: dt ? dt.textContent : '',
+            dateAttr: dt ? dt.getAttribute('datetime') : '',
+            body: b.innerHTML
+          };
+        });
+        cache[url].catch(function () { delete cache[url]; });
+      }
+      return cache[url];
+    }
+
+    function transition(fn) {
+      if (document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.startViewTransition(fn);
+      } else {
+        fn();
+      }
+    }
+
+    function showRelease(data, url, push) {
+      transition(function () {
+        view.querySelector('.release-version').textContent = data.title;
+        var time = view.querySelector('.release-date');
+        time.textContent = data.dateText;
+        if (data.dateAttr) time.setAttribute('datetime', data.dateAttr);
+        time.hidden = !data.dateText;
+        view.querySelector('.release-body').innerHTML = data.body;
+        list.hidden = true;
+        view.hidden = false;
+        document.title = data.title + ' · HugoKit';
+      });
+      if (push) history.pushState({ release: url }, '', url);
+      scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    function showList(push) {
+      transition(function () {
+        view.hidden = true;
+        list.hidden = false;
+        document.title = 'Changelog · HugoKit';
+      });
+      if (push) history.pushState({}, '', hubURL);
+    }
+
+    list.addEventListener('click', function (e) {
+      var a = e.target.closest('.release-list a');
+      if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      load(a.href).then(function (d) { showRelease(d, a.href, true); })
+        .catch(function () { location.href = a.href; });
+    });
+
+    // Prefetch ved hover/fokus — klikket føles øjeblikkeligt
+    list.addEventListener('mouseover', function (e) {
+      var a = e.target.closest('.release-list a');
+      if (a) load(a.href).catch(function () {});
+    });
+    list.addEventListener('focusin', function (e) {
+      var a = e.target.closest('.release-list a');
+      if (a) load(a.href).catch(function () {});
+    });
+
+    view.querySelector('.hub-back').addEventListener('click', function (e) {
+      if (e.metaKey || e.ctrlKey) return;
+      e.preventDefault();
+      showList(true);
+    });
+
+    history.replaceState({}, '', location.href);
+    addEventListener('popstate', function (e) {
+      if (e.state && e.state.release) {
+        load(e.state.release).then(function (d) { showRelease(d, e.state.release, false); })
+          .catch(function () { location.reload(); });
+      } else {
+        showList(false);
+      }
+    });
+  })();
+</script>
+{{ end }}

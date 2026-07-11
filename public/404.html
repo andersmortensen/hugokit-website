@@ -1,26 +1,42 @@
 <!doctype html>
 <html lang="en">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1515&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('hk-theme');
+      if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  })();
+</script>
+
+
 
 <title>404 Page not found · HugoKit</title>
 
-<meta name="description" content="HugoKit is the friendly Mac app that runs, previews and publishes your Hugo sites. No terminal, no fuss — one click each.">
-<link rel="canonical" href="http://localhost:1313/404.html">
-<meta name="theme-color" media="(prefers-color-scheme: light)" content="#F2F0F4">
-<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0D0D0F">
+<meta name="description" content="A Mac app for Hugo: run the server, preview your pages and publish your site from one window. Free, native, no terminal – built by one person for his own sites.">
+<link rel="canonical" href="http://localhost:1515/404.html">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#E2DFE7">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#060607">
 
 <meta property="og:site_name" content="HugoKit">
 <meta property="og:title" content="404 Page not found · HugoKit">
-<meta property="og:description" content="HugoKit is the friendly Mac app that runs, previews and publishes your Hugo sites. No terminal, no fuss — one click each.">
+<meta property="og:description" content="A Mac app for Hugo: run the server, preview your pages and publish your site from one window. Free, native, no terminal – built by one person for his own sites.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="http://localhost:1313/404.html">
-<meta name="twitter:card" content="summary">
+<meta property="og:url" content="http://localhost:1515/404.html">
+<meta property="og:image" content="http://localhost:1515/og/hugokit-og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="404 Page not found · HugoKit">
-<meta name="twitter:description" content="HugoKit is the friendly Mac app that runs, previews and publishes your Hugo sites. No terminal, no fuss — one click each.">
+<meta name="twitter:description" content="A Mac app for Hugo: run the server, preview your pages and publish your site from one window. Free, native, no terminal – built by one person for his own sites.">
+<meta name="twitter:image" content="http://localhost:1515/og/hugokit-og.png">
 
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,8 +44,68 @@
 
 
   
-  <link rel="stylesheet" href="/css/main.min.f88818afca7f2431d90fbea33a8a4a8f70751ce771175be40ea01dd245983a6f.css" integrity="sha256-&#43;IgYr8p/JDHZD76jOopKj3B1HOdxF1vkDqAd0kWYOm8=">
+  <link rel="stylesheet" href="/css/main.min.c1c500df1c2ba9b1c601e207056eef22442ff7aa5bc8571f93e153f3d19270cf.css" integrity="sha256-wcUA3xwrqbHGAeIHBW7vIkQv96pbyFcfk&#43;FT89GScM8=">
 
+<script>
+  document.documentElement.classList.add('js');
+  addEventListener('DOMContentLoaded', function () {
+    var all = document.querySelectorAll('.reveal');
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+      all.forEach(function (el) { el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    all.forEach(function (el) { io.observe(el); });
+
+    var mt = document.querySelector('.mode-toggle');
+    if (mt) mt.addEventListener('click', function () {
+      var apply = function () {
+        var root = document.documentElement;
+        var cur = root.dataset.theme;
+        var sysDark = matchMedia('(prefers-color-scheme: dark)').matches;
+        var next = cur ? (cur === 'dark' ? 'light' : 'dark') : (sysDark ? 'light' : 'dark');
+        root.dataset.theme = next;
+        try { localStorage.setItem('hk-theme', next); } catch (e) {}
+        var c = next === 'dark' ? '#060607' : '#E2DFE7';
+        document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) { m.content = c; });
+      };
+      
+      if (document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.startViewTransition(apply);
+      } else {
+        apply();
+      }
+    });
+
+    
+    var g = document.getElementById('giant');
+    if (g) {
+      var text = g.textContent;
+      g.textContent = '';
+      text.split('').forEach(function (ch, i) {
+        var s = document.createElement('span');
+        s.className = 'gl';
+        s.style.setProperty('--gi', i);
+        s.textContent = ch;
+        g.appendChild(s);
+      });
+      g.classList.add('split');
+      var fit = function () {
+        var w = g.parentElement.clientWidth;
+        g.style.fontSize = '100px';
+        var natural = g.getBoundingClientRect().width;
+        if (natural > 0 && w > 0) g.style.fontSize = (100 * w / natural) + 'px';
+      };
+      addEventListener('resize', fit);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+      fit();
+    }
+  });
+</script>
 
 </head>
 <body>
