@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<meta name="generator" content="Hugo 0.159.1"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1515&amp;path=livereload" data-no-instant defer></script>
+	<meta name="generator" content="Hugo 0.164.0">
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>
@@ -13,39 +13,46 @@
   })();
 </script>
 
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5MFTKS6PH9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-5MFTKS6PH9');
+</script>
 
 
-<title>HugoKit</title>
+<title>HugoKit — a Mac app for Hugo</title>
 
 <meta name="description" content="A Mac app for Hugo: run the server, preview your pages and publish your site from one window. Free, native, no terminal – built by one person for his own sites.">
-<link rel="canonical" href="http://localhost:1515/">
+<link rel="canonical" href="https://hugokit.com/">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#E2DFE7">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#060607">
 
 <meta property="og:site_name" content="HugoKit">
-<meta property="og:title" content="HugoKit">
+<meta property="og:title" content="HugoKit — a Mac app for Hugo">
 <meta property="og:description" content="A Mac app for Hugo: run the server, preview your pages and publish your site from one window. Free, native, no terminal – built by one person for his own sites.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="http://localhost:1515/">
-<meta property="og:image" content="http://localhost:1515/og/hugokit-og.png">
+<meta property="og:url" content="https://hugokit.com/">
+<meta property="og:image" content="https://hugokit.com/og/hugokit-og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="HugoKit — a Mac app for Hugo.">
+<meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="HugoKit">
+<meta name="twitter:title" content="HugoKit — a Mac app for Hugo">
 <meta name="twitter:description" content="A Mac app for Hugo: run the server, preview your pages and publish your site from one window. Free, native, no terminal – built by one person for his own sites.">
-<meta name="twitter:image" content="http://localhost:1515/og/hugokit-og.png">
+<meta name="twitter:image" content="https://hugokit.com/og/hugokit-og.png">
 
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
-
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","applicationCategory":"DeveloperApplication","author":{"@type":"Person","name":"Anders Mortensen"},"description":"A Mac app for Hugo: run the server, preview your pages and publish your site from one window. Free, native, no terminal – built by one person for his own sites.","name":"HugoKit","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"operatingSystem":"macOS 26 or later","softwareVersion":"0.1.0","url":"http://localhost:1515/"}</script>
-
-
+<link rel="preload" as="image" href="/images/app/dashboard-light.webp" media="(prefers-color-scheme: light)">
+<link rel="preload" as="image" href="/images/app/dashboard-dark.webp" media="(prefers-color-scheme: dark)">
 
 
 
-
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","applicationCategory":"DeveloperApplication","author":{"@type":"Person","name":"Anders Mortensen"},"description":"A Mac app for Hugo: run the server, preview your pages and publish your site from one window. Free, native, no terminal – built by one person for his own sites.","downloadUrl":"https://github.com/andersmortensen/hugokit/releases/latest/download/HugoKit.dmg","image":"https://hugokit.com/og/hugokit-og.png","name":"HugoKit","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"operatingSystem":"macOS 26 or later","softwareVersion":"0.1.0","url":"https://hugokit.com/"}</script>
 
 
 
@@ -57,7 +64,15 @@
 
 
 
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","acceptedAnswer":{"@type":"Answer","text":"Yes. HugoKit runs the Hugo you already use — point it at your site\u0026rsquo;s folder (or a folder full of sites) and it shows up in the sidebar. Nothing is converted, nothing is locked in; your site stays a plain Hugo site."},"name":"Does it work with my existing Hugo site?"},{"@type":"Question","acceptedAnswer":{"@type":"Answer","text":"No. HugoKit finds your Hugo install automatically — and if there isn\u0026rsquo;t one, it installs it for you."},"name":"Do I need Hugo installed first?"},{"@type":"Question","acceptedAnswer":{"@type":"Answer","text":"On your Mac, as the plain files Hugo already uses. There\u0026rsquo;s no account and no cloud — deploy credentials go in the macOS Keychain, and nothing ever leaves your machine."},"name":"Where does my content live?"},{"@type":"Question","acceptedAnswer":{"@type":"Answer","text":"GitHub Pages, and your own server over FTP/SFTP — one target or several, with one “Publish all”. Cloud hosts like Netlify or Vercel aren\u0026rsquo;t supported — if you deploy through them, their git integration already does this job."},"name":"Where can it publish to?"},{"@type":"Question","acceptedAnswer":{"@type":"Answer","text":"Yes — free to download, free to use, no account and no subscription. It\u0026rsquo;s a personal project, not a business."},"name":"Is it really free?"},{"@type":"Question","acceptedAnswer":{"@type":"Answer","text":"Any Mac running macOS 26 (Tahoe) or later."},"name":"Which Macs does it run on?"},{"@type":"Question","acceptedAnswer":{"@type":"Answer","text":"One person: me, Anders, in Denmark. HugoKit is something I built for my own sites and keep working on because I use it every day. There\u0026rsquo;s no company and no roadmap — if something\u0026rsquo;s broken or missing, email me."},"name":"Who's behind it?"}]}</script>
+
+
+
+
+
+
+
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","acceptedAnswer":{"@type":"Answer","text":"Yes. HugoKit runs the Hugo you already use — point it at your site\u0026rsquo;s folder (or a folder full of sites) and it shows up in the sidebar. Nothing is converted, nothing is locked in; your site stays a plain Hugo site."},"name":"Does it work with my existing Hugo site?"},{"@type":"Question","acceptedAnswer":{"@type":"Answer","text":"No — it sits beside it. HugoKit runs the server, the checks and the publish; the writing happens wherever you like. Your content is plain Markdown on disk, so your editor — or an AI coding agent working in the same folder — changes the files, and the preview reloads on save."},"name":"Does it replace my editor?"},{"@type":"Question","acceptedAnswer":{"@type":"Answer","text":"No. HugoKit finds your Hugo install automatically — and if there isn\u0026rsquo;t one, it installs it for you."},"name":"Do I need Hugo installed first?"},{"@type":"Question","acceptedAnswer":{"@type":"Answer","text":"On your Mac, as the plain files Hugo already uses. There\u0026rsquo;s no account and no cloud — deploy credentials go in the macOS Keychain, and nothing ever leaves your machine."},"name":"Where does my content live?"},{"@type":"Question","acceptedAnswer":{"@type":"Answer","text":"GitHub Pages, and your own server over FTP/SFTP — one target or several, with one “Publish all”. Cloud hosts like Netlify or Vercel aren\u0026rsquo;t supported — if you deploy through them, their git integration already does this job."},"name":"Where can it publish to?"},{"@type":"Question","acceptedAnswer":{"@type":"Answer","text":"Yes — free to download, free to use, no account and no subscription. It\u0026rsquo;s a personal project, not a business."},"name":"Is it really free?"},{"@type":"Question","acceptedAnswer":{"@type":"Answer","text":"Any Mac running macOS 26 (Tahoe) or later."},"name":"Which Macs does it run on?"},{"@type":"Question","acceptedAnswer":{"@type":"Answer","text":"One person: me, Anders, in Denmark. HugoKit is something I built for my own sites and keep working on because I use it every day. There\u0026rsquo;s no company and no roadmap — if something\u0026rsquo;s broken or missing, email me."},"name":"Who's behind it?"}]}</script>
 
 
 
@@ -67,7 +82,7 @@
 
 
   
-  <link rel="stylesheet" href="/css/main.min.c1c500df1c2ba9b1c601e207056eef22442ff7aa5bc8571f93e153f3d19270cf.css" integrity="sha256-wcUA3xwrqbHGAeIHBW7vIkQv96pbyFcfk&#43;FT89GScM8=">
+  <link rel="stylesheet" href="/css/main.min.517fda01290edca495b1d89e0caaeb4a21615da7b4e93734c86326e740edf0d1.css" integrity="sha256-UX/aASkO3KSVsdieDKrrSiFhXae06Tc0yGMm50Dt8NE=">
 
 <script>
   document.documentElement.classList.add('js');
@@ -84,6 +99,15 @@
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
     all.forEach(function (el) { io.observe(el); });
 
+    
+    
+    var syncPics = function (mode) {
+      document.querySelectorAll('picture.mode-pic source').forEach(function (s) {
+        s.media = mode === 'dark' ? 'all' : 'not all';
+      });
+    };
+    if (document.documentElement.dataset.theme) syncPics(document.documentElement.dataset.theme);
+
     var mt = document.querySelector('.mode-toggle');
     if (mt) mt.addEventListener('click', function () {
       var apply = function () {
@@ -95,6 +119,7 @@
         try { localStorage.setItem('hk-theme', next); } catch (e) {}
         var c = next === 'dark' ? '#060607' : '#E2DFE7';
         document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) { m.content = c; });
+        syncPics(next);
       };
       
       if (document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -136,11 +161,6 @@
   
 <div class="canvas">
 
-  <div class="edge-marks" aria-hidden="true">
-    <span>HugoKit — Mac app for Hugo</span>
-    <span>macOS 26+ · free</span>
-  </div>
-
   
 <nav class="site-nav" aria-label="Primary">
   <div class="nav-group">
@@ -157,9 +177,10 @@
       <span class="lockup-name">HugoKit</span>
     </a>
     <div class="nav-group nav-links-mid">
-      <a class="pill nav-link" href="/#why">Features</a>
+      <a class="pill nav-link" href="/#hugo">What?</a>
+      <a class="pill nav-link" href="/#why">Why?</a>
+      <a class="pill nav-link" href="/#features">Features</a>
       <a class="pill nav-link" href="/#faq">FAQ</a>
-      <a class="pill nav-link" href="/#hugo">What is Hugo?</a>
     </div>
   </div>
   <div class="nav-group">
@@ -188,36 +209,22 @@
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
             Download for macOS
           </a>
-          
-          <a class="btn-ghost" href="#hugo">What is Hugo?</a>
-          
+          <a class="btn-outline" href="#why">Learn more</a>
         </div>
         <span class="fine-meta">free · macOS 26 or later · no account, no cloud</span>
       </div>
-      <div class="hero-win" role="img" aria-label="The HugoKit main window: sidebar with sites and a dashboard for the selected site.">
-        <div class="hw-bar">
-          <span class="hw-tl hw-r"></span><span class="hw-tl hw-y"></span><span class="hw-tl hw-g"></span>
-          <span class="hw-title">HugoKit</span>
-        </div>
-        <div class="hw-body">
-          <div class="hw-side">
-            <div class="hw-row on"><span class="hw-dot live"></span><span class="hw-bar-line" style="width:58%"></span></div>
-            <div class="hw-row"><span class="hw-dot"></span><span class="hw-bar-line" style="width:44%"></span></div>
-            <div class="hw-row"><span class="hw-dot"></span><span class="hw-bar-line" style="width:66%"></span></div>
-            <div class="hw-row"><span class="hw-dot live"></span><span class="hw-bar-line" style="width:50%"></span></div>
-            <div class="hw-row"><span class="hw-dot"></span><span class="hw-bar-line" style="width:38%"></span></div>
-          </div>
-          <div class="hw-main">
-            <span class="hw-live"><span class="hw-dot live"></span>http://localhost:1326/</span>
-            <div class="hw-tiles">
-              <div class="hw-tile"><span class="hw-k">Server</span><span class="hw-v ok">Running</span></div>
-              <div class="hw-tile"><span class="hw-k">Content</span><span class="hw-v">148</span></div>
-              <div class="hw-tile"><span class="hw-k">Build</span><span class="hw-v">—</span></div>
-              <div class="hw-tile"><span class="hw-k">Hugo</span><span class="hw-v">v0.159</span></div>
-            </div>
-            <span class="hw-publish">Publish</span>
-          </div>
-        </div>
+      <div class="hero-media">
+        <figure class="hero-shot">
+          
+<picture class="mode-pic">
+  <source media="(prefers-color-scheme: dark)" srcset="/images/app/dashboard-dark.webp">
+  <img class="shot" src="/images/app/dashboard-light.webp" alt="The HugoKit main window: sidebar with sites on the left, and the selected site&#39;s dashboard with server, content, build and health cards." width="1072" height="764" fetchpriority="high">
+</picture>
+
+        </figure>
+        
+        <a class="btn-outline btn-sm hero-hugo-cta" href="#hugo">What is Hugo?</a>
+        
       </div>
       <div></div>
     </div>
@@ -242,12 +249,12 @@
     <div class="fact">
       <span class="fact-ic" aria-hidden="true">
         
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 9h18"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M7 9h6"/><path d="M7 13h4"/><path d="M15.5 10.5v6"/><path d="M14 10.5h3"/><path d="M14 16.5h3"/></svg>
         
       </span>
       <div>
-        <div class="fact-v">One window</div>
-        <div class="fact-l">every site in the same place</div>
+        <div class="fact-v">Any editor</div>
+        <div class="fact-l">works beside your editor and AI agents</div>
       </div>
     </div>
     
@@ -265,7 +272,59 @@
     
   </section>
   
+
   
+  <section class="hugo-panel reveal" id="hugo" aria-label="What is Hugo?">
+    <div class="hugo-left">
+      <div class="term" role="img" aria-label="Terminal running hugo server">
+        <div class="term-bar">
+          <span class="hw-tl hw-r"></span><span class="hw-tl hw-y"></span><span class="hw-tl hw-g"></span>
+        </div>
+        <div class="term-body">
+          <span class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">hugo server</span><span class="term-caret"></span></span>
+          <span class="term-out">Web Server is available at http://localhost:1313/</span>
+        </div>
+      </div>
+    </div>
+    <div class="hugo-right">
+      <h2 class="hugo-h">What is Hugo?</h2>
+      <p class="hugo-body">Hugo is a free, open-source static site generator — one of the most popular ways to build a website. You write your content as simple text files, pick a theme, and Hugo turns it into a complete site.</p>
+      
+      <p class="hugo-usp-label">Why people use it</p>
+      <ul class="usps">
+        
+        <li class="usp">
+          <span class="usp-tile"><span class="usp-fct usp-fct-1" aria-hidden="true"></span></span>
+          <b>Fast</b><span>Most sites build in under a second, and the live preview reloads as you save.</span>
+        </li>
+        
+        <li class="usp">
+          <span class="usp-tile"><span class="usp-fct usp-fct-2" aria-hidden="true"></span></span>
+          <b>Plain files</b><span>Content is Markdown text files — easy to edit, back up and move.</span>
+        </li>
+        
+        <li class="usp">
+          <span class="usp-tile"><span class="usp-fct usp-fct-3" aria-hidden="true"></span></span>
+          <b>Host anywhere</b><span>The output is plain HTML — no database, no server code.</span>
+        </li>
+        
+        <li class="usp">
+          <span class="usp-tile"><span class="usp-fct usp-fct-4" aria-hidden="true"></span></span>
+          <b>Free and open source</b><span>No cost, no license, no lock-in.</span>
+        </li>
+        
+      </ul>
+      
+      <p class="hugo-bridge">HugoKit runs Hugo for you — same sites, same files, just with buttons. Pair it with any editor, human or AI.</p>
+      <a class="hugo-link" href="https://gohugo.io">Learn more at gohugo.io</a>
+    </div>
+  </section>
+  
+  
+  
+    
+  
+    
   
     
   
@@ -311,7 +370,7 @@
 </svg>
 
           <div class="wcard-copy">
-            <h3>Every site in one window</h3>
+            <h3>All your sites</h3>
             <p>Add sites one by one, or point HugoKit at a folder and it finds them itself. Pin your favourites; give each site its own emoji.</p>
           </div>
         </div>
@@ -335,16 +394,17 @@
         
         <div class="wcard wc-blue reveal">
           <svg class="feature-glyph" viewBox="0 0 48 48" aria-hidden="true">
-  <rect x="7" y="9" width="15" height="12" rx="2.5" fill="var(--stage)" stroke="var(--line-strong)"/>
-  <rect x="26" y="9" width="15" height="12" rx="2.5" fill="var(--stage)" stroke="var(--line-strong)"/>
-  <rect x="7" y="26" width="15" height="12" rx="2.5" fill="var(--stage)" stroke="var(--line-strong)"/>
-  <rect x="26" y="26" width="15" height="12" rx="2.5" fill="var(--stage)" stroke="var(--line-strong)"/>
-  <circle cx="37" cy="12.5" r="1.8" fill="var(--green)"/>
+  <circle cx="17" cy="24" r="11" fill="var(--stage)" stroke="var(--line-strong)"/>
+  <path d="M17 13a11 11 0 0 1 7.8 18.8" fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="13" y1="24" x2="21" y2="24" stroke="var(--faint)" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="34" y1="17" x2="43" y2="17" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="34" y1="24" x2="43" y2="24" stroke="var(--faint)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="34" y1="31" x2="40" y2="31" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
 </svg>
 
           <div class="wcard-copy">
-            <h3>Theme Gallery</h3>
-            <p>Browse the official Hugo themes with screenshots, and install one with a click.</p>
+            <h3>Site health</h3>
+            <p>Every site gets a score: front matter checks, content stats and a build trend, with the issues listed out. ⇧⌘H from anywhere.</p>
           </div>
         </div>
         
@@ -370,7 +430,7 @@
   <section class="loop reveal" id="loop" aria-label="Preview to publish">
     <div class="loop-head">
       <h2 class="loop-h">The whole loop.</h2>
-      <p class="loop-sub">Preview, publish, and the checks in between.</p>
+      <p class="loop-sub">Preview, preflight, publish — in that order.</p>
     </div>
     
     <input class="loop-radio" type="radio" name="loop-tab" id="loop-t0" checked>
@@ -386,11 +446,11 @@
       </label>
       
       <label class="loop-tab" for="loop-t1">
-        <span class="loop-tab-n loop-tab-n-2">02</span>Publish
+        <span class="loop-tab-n loop-tab-n-2">02</span>Preflight
       </label>
       
       <label class="loop-tab" for="loop-t2">
-        <span class="loop-tab-n loop-tab-n-3">03</span>Preflight
+        <span class="loop-tab-n loop-tab-n-3">03</span>Publish
       </label>
       
     </div>
@@ -412,39 +472,19 @@
         </div>
         <div class="loop-panel-side">
           
-          
-          <figure class="frame loop-frame">
-            <img class="shot" src="/images/app/server.png" alt="The Server view: live URL, stop and restart actions, and toggles for drafts, future and expired content." width="960" height="652" loading="lazy">
+          <figure class="loop-shot">
+            
+<picture class="mode-pic">
+  <source media="(prefers-color-scheme: dark)" srcset="/images/app/server-dark.webp">
+  <img class="shot" src="/images/app/server-light.webp" alt="The Server view: live URL, stop and restart actions, and toggles for drafts, future and expired content." width="1072" height="764" loading="lazy">
+</picture>
+
           </figure>
           
         </div>
       </div>
       
       <div class="loop-panel loop-panel-1">
-        <div class="loop-panel-copy">
-          <h3>Publish where you already publish.</h3>
-          <p class="loop-panel-text">GitHub Pages, or your own server over FTP/SFTP. Set it up once per site — after that it&#39;s ⌘P.</p>
-          
-          <ul class="loop-points">
-            <li>GitHub Pages or your own server over FTP/SFTP — one target or several.</li><li>One “Publish all” ships every site at once; each site&#39;s setup is saved.</li><li>Deploy credentials go in the macOS Keychain, and ⌘P publishes from anywhere.</li>
-          </ul>
-          
-          <a class="btn btn-lg loop-cta" href="#download">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
-            Download for macOS
-          </a>
-        </div>
-        <div class="loop-panel-side">
-          
-          
-          <figure class="frame loop-frame">
-            <img class="shot" src="/images/app/deploy-setup.png" alt="The Deploy Setup sheet: choosing GitHub Pages or FTP/SFTP as the destination." width="960" height="652" loading="lazy">
-          </figure>
-          
-        </div>
-      </div>
-      
-      <div class="loop-panel loop-panel-2">
         <div class="loop-panel-copy">
           <h3>It checks before it publishes.</h3>
           <p class="loop-panel-text">Every publish runs a check first: build, config, assets, broken links and subpath traps. Fixes are shown as a diff you approve.</p>
@@ -475,61 +515,41 @@
         </div>
       </div>
       
-    </div>
-  </section>
-  
-
-  
-  <section class="hugo-panel reveal" id="hugo" aria-label="What is Hugo?">
-    <div class="hugo-left">
-      <div class="term" role="img" aria-label="Terminal running hugo server">
-        <div class="term-bar">
-          <span class="hw-tl hw-r"></span><span class="hw-tl hw-y"></span><span class="hw-tl hw-g"></span>
+      <div class="loop-panel loop-panel-2">
+        <div class="loop-panel-copy">
+          <h3>Publish where you already publish.</h3>
+          <p class="loop-panel-text">GitHub Pages, or your own server over FTP/SFTP. Set it up once per site — after that it&#39;s ⌘P.</p>
+          
+          <ul class="loop-points">
+            <li>GitHub Pages or your own server over FTP/SFTP — one target or several.</li><li>One “Publish all” ships every site at once; each site&#39;s setup is saved.</li><li>Deploy credentials go in the macOS Keychain, and ⌘P publishes from anywhere.</li>
+          </ul>
+          
+          <a class="btn btn-lg loop-cta" href="#download">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
+            Download for macOS
+          </a>
         </div>
-        <div class="term-body">
-          <span class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">hugo server</span><span class="term-caret"></span></span>
-          <span class="term-out">Web Server is available at http://localhost:1313/</span>
+        <div class="loop-panel-side">
+          
+          <figure class="loop-shot">
+            
+<picture class="mode-pic">
+  <source media="(prefers-color-scheme: dark)" srcset="/images/app/deploy-dark.webp">
+  <img class="shot" src="/images/app/deploy-light.webp" alt="The Deploy view: a configured deploy target with Add Deploy Target and a history of successful deploys." width="1072" height="764" loading="lazy">
+</picture>
+
+          </figure>
+          
         </div>
       </div>
-    </div>
-    <div class="hugo-right">
-      <h2 class="hugo-h">What is Hugo?</h2>
-      <p class="hugo-body">Hugo is a free, open-source static site generator — one of the most popular ways to build a website. You write your content as simple text files, pick a theme, and Hugo turns it into a complete site.</p>
       
-      <p class="hugo-usp-label">Why people use it</p>
-      <ul class="usps">
-        
-        <li class="usp">
-          <span class="usp-tile"><span class="usp-fct usp-fct-1" aria-hidden="true"></span></span>
-          <b>Fast</b><span>Most sites build in under a second.</span>
-        </li>
-        
-        <li class="usp">
-          <span class="usp-tile"><span class="usp-fct usp-fct-2" aria-hidden="true"></span></span>
-          <b>Plain files</b><span>Content is Markdown text files — easy to edit, back up and move.</span>
-        </li>
-        
-        <li class="usp">
-          <span class="usp-tile"><span class="usp-fct usp-fct-3" aria-hidden="true"></span></span>
-          <b>Host anywhere</b><span>The output is plain HTML — no database, no server code.</span>
-        </li>
-        
-        <li class="usp">
-          <span class="usp-tile"><span class="usp-fct usp-fct-4" aria-hidden="true"></span></span>
-          <b>Free and open source</b><span>No cost, no license, no lock-in.</span>
-        </li>
-        
-      </ul>
-      
-      <p class="hugo-bridge">HugoKit runs Hugo for you — same sites, same files, just with buttons.</p>
-      <a class="hugo-link" href="https://gohugo.io">Learn more at gohugo.io</a>
     </div>
   </section>
   
 
   
   <section class="features reveal" id="features" aria-label="Features">
-    <span class="label-pill">Also in HugoKit</span>
+    <h2 class="label-pill">Also in HugoKit</h2>
     <div class="feature-list">
       
       <div class="feature-row">
@@ -563,6 +583,19 @@
       
       <div class="feature-row">
         <svg class="feature-glyph" viewBox="0 0 48 48" aria-hidden="true">
+  <rect x="7" y="9" width="15" height="12" rx="2.5" fill="var(--stage)" stroke="var(--line-strong)"/>
+  <rect x="26" y="9" width="15" height="12" rx="2.5" fill="var(--stage)" stroke="var(--line-strong)"/>
+  <rect x="7" y="26" width="15" height="12" rx="2.5" fill="var(--stage)" stroke="var(--line-strong)"/>
+  <rect x="26" y="26" width="15" height="12" rx="2.5" fill="var(--stage)" stroke="var(--line-strong)"/>
+  <circle cx="37" cy="12.5" r="1.8" fill="var(--green)"/>
+</svg>
+
+        <h3 class="feature-name">Theme scaffolding</h3>
+        <p class="feature-text">See each site&#39;s installed themes, scaffold a blank one to build on, and preview its templates as you go.</p>
+      </div>
+      
+      <div class="feature-row">
+        <svg class="feature-glyph" viewBox="0 0 48 48" aria-hidden="true">
   <rect x="7" y="20" width="9" height="18" rx="2" fill="var(--line-strong)"/>
   <rect x="19.5" y="12" width="9" height="26" rx="2" fill="var(--faint)"/>
   <rect x="32" y="25" width="9" height="13" rx="2" fill="var(--line-strong)"/>
@@ -570,7 +603,7 @@
 </svg>
 
         <h3 class="feature-name">Content overview</h3>
-        <p class="feature-text">Pages, sections, word counts and images per site — plus a front matter health check across your content.</p>
+        <p class="feature-text">Pages, sections, word counts and images per site — plus quick edits built in. Real writing stays in your own editor.</p>
       </div>
       
       <div class="feature-row">
@@ -611,8 +644,8 @@
   <line x1="19" y1="34.5" x2="30" y2="34.5" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
 </svg>
 
-        <h3 class="feature-name">Command palette</h3>
-        <p class="feature-text">⌘K opens a keyboard-driven command search. Publish with ⌘P, preflight with ⇧⌘P.</p>
+        <h3 class="feature-name">Keyboard shortcuts</h3>
+        <p class="feature-text">Publish with ⌘P, preflight with ⇧⌘P, site health with ⇧⌘H, template preview with ⇧⌘T — and ⌘K opens the command palette.</p>
       </div>
       
       <div class="feature-row">
@@ -629,6 +662,18 @@
         <p class="feature-text">A dynamic menu bar icon with controls for your sites — without opening the window.</p>
       </div>
       
+      <div class="feature-row">
+        <svg class="feature-glyph" viewBox="0 0 48 48" aria-hidden="true">
+  <path d="M14 33v-9a10 10 0 0 1 20 0v9" fill="var(--stage)" stroke="var(--line-strong)" stroke-width="2" stroke-linejoin="round"/>
+  <line x1="10" y1="33" x2="38" y2="33" stroke="var(--faint)" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M21 38a3 3 0 0 0 6 0" fill="none" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="33" cy="12" r="2" fill="var(--green)"/>
+</svg>
+
+        <h3 class="feature-name">Notifications</h3>
+        <p class="feature-text">Native notifications when the server stops, a build fails or a publish finishes — every event has its own toggle.</p>
+      </div>
+      
     </div>
   </section>
   
@@ -639,38 +684,162 @@
     <div class="faq-list">
       
       <details class="faq-item">
-        <summary>Does it work with my existing Hugo site?</summary>
-        <div class="faq-answer">Yes. HugoKit runs the Hugo you already use — point it at your site&rsquo;s folder (or a folder full of sites) and it shows up in the sidebar. Nothing is converted, nothing is locked in; your site stays a plain Hugo site.</div>
+        <summary>
+          <span class="faq-ic" aria-hidden="true"><svg class="feature-glyph" viewBox="0 0 48 48" aria-hidden="true">
+  <rect x="4" y="8" width="40" height="32" rx="4" fill="var(--stage)" stroke="var(--line-strong)"/>
+  <line x1="18" y1="8" x2="18" y2="40" stroke="var(--line-strong)"/>
+  <circle cx="9.5" cy="15" r="1.8" fill="var(--green)"/>
+  <line x1="8" y1="21" x2="14" y2="21" stroke="var(--faint)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="8" y1="27" x2="14" y2="27" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="8" y1="33" x2="14" y2="33" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="22" y1="16" x2="38" y2="16" stroke="var(--faint)" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="22" y1="24" x2="34" y2="24" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="22" y1="31" x2="36" y2="31" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+</svg>
+</span>
+          <span class="faq-q">Does it work with my existing Hugo site?</span>
+        </summary>
+        <div class="faq-answer">
+          Yes. HugoKit runs the Hugo you already use — point it at your site&rsquo;s folder (or a folder full of sites) and it shows up in the sidebar. Nothing is converted, nothing is locked in; your site stays a plain Hugo site.
+          
+        </div>
       </details>
       
       <details class="faq-item">
-        <summary>Do I need Hugo installed first?</summary>
-        <div class="faq-answer">No. HugoKit finds your Hugo install automatically — and if there isn&rsquo;t one, it installs it for you.</div>
+        <summary>
+          <span class="faq-ic" aria-hidden="true"><svg class="feature-glyph" viewBox="0 0 48 48" aria-hidden="true">
+  <rect x="8" y="6" width="32" height="36" rx="4" fill="var(--stage)" stroke="var(--line-strong)"/>
+  <line x1="24" y1="16" x2="24" y2="26" stroke="var(--faint)" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="19" y1="21" x2="29" y2="21" stroke="var(--faint)" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="14" y1="33" x2="34" y2="33" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+</svg>
+</span>
+          <span class="faq-q">Does it replace my editor?</span>
+        </summary>
+        <div class="faq-answer">
+          No — it sits beside it. HugoKit runs the server, the checks and the publish; the writing happens wherever you like. Your content is plain Markdown on disk, so your editor — or an AI coding agent working in the same folder — changes the files, and the preview reloads on save.
+          
+          <ul class="faq-chips">
+            <li>Any editor</li><li>AI agents</li><li>Plain Markdown</li>
+          </ul>
+          
+        </div>
       </details>
       
       <details class="faq-item">
-        <summary>Where does my content live?</summary>
-        <div class="faq-answer">On your Mac, as the plain files Hugo already uses. There&rsquo;s no account and no cloud — deploy credentials go in the macOS Keychain, and nothing ever leaves your machine.</div>
+        <summary>
+          <span class="faq-ic" aria-hidden="true"><svg class="feature-glyph" viewBox="0 0 48 48" aria-hidden="true">
+  <line x1="24" y1="8" x2="24" y2="24" stroke="var(--faint)" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M18 19l6 6 6-6" fill="none" stroke="var(--faint)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M10 28v6a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4v-6" fill="none" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="35" cy="31" r="2" fill="var(--green)"/>
+</svg>
+</span>
+          <span class="faq-q">Do I need Hugo installed first?</span>
+        </summary>
+        <div class="faq-answer">
+          No. HugoKit finds your Hugo install automatically — and if there isn&rsquo;t one, it installs it for you.
+          
+          <ul class="faq-chips">
+            <li>Auto-install</li>
+          </ul>
+          
+        </div>
       </details>
       
       <details class="faq-item">
-        <summary>Where can it publish to?</summary>
-        <div class="faq-answer">GitHub Pages, and your own server over FTP/SFTP — one target or several, with one “Publish all”. Cloud hosts like Netlify or Vercel aren&rsquo;t supported — if you deploy through them, their git integration already does this job.</div>
+        <summary>
+          <span class="faq-ic" aria-hidden="true"><svg class="feature-glyph" viewBox="0 0 48 48" aria-hidden="true">
+  <path d="M17 22v-5a7 7 0 0 1 14 0v5" fill="none" stroke="var(--line-strong)" stroke-width="2.2" stroke-linecap="round"/>
+  <rect x="13" y="22" width="22" height="18" rx="4.5" fill="var(--stage)" stroke="var(--line-strong)"/>
+  <circle cx="24" cy="30" r="2.2" fill="var(--faint)"/>
+  <line x1="24" y1="32" x2="24" y2="35.5" stroke="var(--faint)" stroke-width="2" stroke-linecap="round"/>
+</svg>
+</span>
+          <span class="faq-q">Where does my content live?</span>
+        </summary>
+        <div class="faq-answer">
+          On your Mac, as the plain files Hugo already uses. There&rsquo;s no account and no cloud — deploy credentials go in the macOS Keychain, and nothing ever leaves your machine.
+          
+        </div>
       </details>
       
       <details class="faq-item">
-        <summary>Is it really free?</summary>
-        <div class="faq-answer">Yes — free to download, free to use, no account and no subscription. It&rsquo;s a personal project, not a business.</div>
+        <summary>
+          <span class="faq-ic" aria-hidden="true"><svg class="feature-glyph" viewBox="0 0 48 48" aria-hidden="true">
+  <line x1="24" y1="26" x2="24" y2="10" stroke="var(--faint)" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M18 15l6-6 6 6" fill="none" stroke="var(--faint)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M10 28v6a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4v-6" fill="none" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="35" cy="31" r="2" fill="var(--blue)"/>
+</svg>
+</span>
+          <span class="faq-q">Where can it publish to?</span>
+        </summary>
+        <div class="faq-answer">
+          GitHub Pages, and your own server over FTP/SFTP — one target or several, with one “Publish all”. Cloud hosts like Netlify or Vercel aren&rsquo;t supported — if you deploy through them, their git integration already does this job.
+          
+          <ul class="faq-chips">
+            <li>GitHub Pages</li><li>FTP / SFTP</li><li>Publish all</li>
+          </ul>
+          
+        </div>
       </details>
       
       <details class="faq-item">
-        <summary>Which Macs does it run on?</summary>
-        <div class="faq-answer">Any Mac running macOS 26 (Tahoe) or later.</div>
+        <summary>
+          <span class="faq-ic" aria-hidden="true"><svg class="feature-glyph" viewBox="0 0 48 48" aria-hidden="true">
+  <rect x="9" y="21" width="30" height="17" rx="3" fill="var(--stage)" stroke="var(--line-strong)" stroke-width="2"/>
+  <rect x="7" y="14" width="34" height="7" rx="2" fill="var(--stage)" stroke="var(--line-strong)" stroke-width="2"/>
+  <line x1="24" y1="21" x2="24" y2="38" stroke="var(--faint)" stroke-width="2"/>
+  <path d="M24 14c-2.5 0-7-1-7-4.2S19.5 6 21 6c3 0 3 5 3 8zm0 0c2.5 0 7-1 7-4.2S28.5 6 27 6c-3 0-3 5-3 8z" fill="none" stroke="var(--faint)" stroke-width="1.8"/>
+  <circle cx="24" cy="14" r="2" fill="var(--gold)"/>
+</svg>
+</span>
+          <span class="faq-q">Is it really free?</span>
+        </summary>
+        <div class="faq-answer">
+          Yes — free to download, free to use, no account and no subscription. It&rsquo;s a personal project, not a business.
+          
+        </div>
       </details>
       
       <details class="faq-item">
-        <summary>Who&#39;s behind it?</summary>
-        <div class="faq-answer">One person: me, Anders, in Denmark. HugoKit is something I built for my own sites and keep working on because I use it every day. There&rsquo;s no company and no roadmap — if something&rsquo;s broken or missing, email me.</div>
+        <summary>
+          <span class="faq-ic" aria-hidden="true"><svg class="feature-glyph" viewBox="0 0 48 48" aria-hidden="true">
+  <rect x="11" y="9" width="26" height="19" rx="2.5" fill="var(--stage)" stroke="var(--line-strong)" stroke-width="2"/>
+  <line x1="16" y1="15" x2="28" y2="15" stroke="var(--faint)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="16" y1="21" x2="32" y2="21" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="32" cy="14.5" r="1.8" fill="var(--green)"/>
+  <path d="M6 32h36l-3 5H9z" fill="var(--stage)" stroke="var(--line-strong)" stroke-width="2" stroke-linejoin="round"/>
+  <line x1="20" y1="32" x2="28" y2="32" stroke="var(--faint)" stroke-width="2" stroke-linecap="round"/>
+</svg>
+</span>
+          <span class="faq-q">Which Macs does it run on?</span>
+        </summary>
+        <div class="faq-answer">
+          Any Mac running macOS 26 (Tahoe) or later.
+          
+          <ul class="faq-chips">
+            <li>macOS 26&#43;</li>
+          </ul>
+          
+        </div>
+      </details>
+      
+      <details class="faq-item">
+        <summary>
+          <span class="faq-ic" aria-hidden="true"><svg class="feature-glyph" viewBox="0 0 48 48" aria-hidden="true">
+  <circle cx="24" cy="15.5" r="7" fill="var(--stage)" stroke="var(--line-strong)" stroke-width="2"/>
+  <path d="M10 40c1.5-8 7-12 14-12s12.5 4 14 12" fill="none" stroke="var(--line-strong)" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="35" cy="10" r="2" fill="var(--pink)"/>
+</svg>
+</span>
+          <span class="faq-q">Who&#39;s behind it?</span>
+        </summary>
+        <div class="faq-answer">
+          One person: me, Anders, in Denmark. HugoKit is something I built for my own sites and keep working on because I use it every day. There&rsquo;s no company and no roadmap — if something&rsquo;s broken or missing, email me.
+          
+        </div>
       </details>
       
     </div>
@@ -681,6 +850,13 @@
   <section class="note reveal">
     <p class="section-label">Why it exists</p>
     <p class="note-text">I write my own sites in Hugo, and I got tired of a terminal window, a browser tab and a deploy script for every small change. So I built HugoKit for myself — and kept building because I use it every day. It&#39;s a personal project, not a company.</p>
+    <p class="note-text note-extra">It&#39;s non-commercial and stays that way — nothing to buy, nothing to subscribe to. If you&#39;d like to help cover the running costs, you can:</p>
+    
+    <a class="btn-outline note-donate" href="https://buymeacoffee.com/andersmortensen" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 9h11v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"/><path d="M16 10h1.5a2.5 2.5 0 0 1 0 5H16"/><path d="M8.5 3.5v2M12 3.5v2"/></svg>
+      Buy me a coffee
+    </a>
+    
   </section>
   
 
@@ -712,7 +888,7 @@
     <nav class="footer-links" aria-label="Footer">
       <a href="/changelog/">Changelog</a>
       <a href="https://github.com/andersmortensen/hugokit">GitHub</a>
-      <a href="mailto:kontakt@andersmortensen.com">Feedback</a>
+      <a href="mailto:hello@hugokit.com">Feedback</a>
       <a href="https://gohugo.io">gohugo.io</a>
     </nav>
   </div>

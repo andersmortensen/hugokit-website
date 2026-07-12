@@ -8,6 +8,8 @@ theme = 'hugokit'
 disableKinds = ['taxonomy', 'term', 'rss']
 
 [params]
+  # Tagline — bruges i forsidens <title> (SERP) sammen med sitets navn.
+  tagline = 'a Mac app for Hugo'
   description = 'A Mac app for Hugo: run the server, preview your pages and publish your site from one window. Free, native, no terminal – built by one person for his own sites.'
   # Appens aktuelle version — bruges i JSON-LD (softwareVersion); bump ved release.
   version = '0.1.0'
@@ -18,4 +20,4 @@ disableKinds = ['taxonomy', 'term', 'rss']
   downloadURL = 'https://github.com/andersmortensen/hugokit/releases/latest/download/HugoKit.dmg'
   # Offentligt repo (releases/downloads). Kildekoden bor i hugokit-source, som ALDRIG linkes.
   githubURL = 'https://github.com/andersmortensen/hugokit'
-  feedbackEmail = 'kontakt@andersmortensen.com'
+  feedbackEmail = 'hello@hugokit.com'

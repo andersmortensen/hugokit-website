@@ -1,9 +1,9 @@
 {
   "files" : {
     "404.html" : {
-      "hash" : "sha256:fffffd80ee9af88a81698ae1a8aa303706cba26760373e0f0a8e0a2180f57790",
-      "modified" : "2026-07-11T16:30:56Z",
-      "size" : 4127
+      "hash" : "sha256:34dbbaf5e60e0c892b95e0a6d73b7ae07d8b48bfef6fa25c7b06dc7e84521979",
+      "modified" : "2026-07-11T22:39:31Z",
+      "size" : 5151
     },
     "apple-touch-icon.png" : {
       "hash" : "sha256:11f693bce7cdb7cc390af375fbd9b52888f3665065a3e543cc72936fbbf0895b",
@@ -40,10 +40,20 @@
       "modified" : "2026-07-05T14:09:07Z",
       "size" : 667
     },
+    "changelog\/0.1.0\/index.html" : {
+      "hash" : "sha256:96539b48d1673520a789e1d69d438b8a8602579cba1c401faf20512ba57e16cc",
+      "modified" : "2026-07-11T22:39:31Z",
+      "size" : 6334
+    },
+    "changelog\/_skabelon\/index.html" : {
+      "hash" : "sha256:31560127873f8d196ba62fce60a384c27194a33b362c040e69b0faaf0fa12f01",
+      "modified" : "2026-07-11T21:38:29Z",
+      "size" : 6287
+    },
     "changelog\/index.html" : {
-      "hash" : "sha256:31cffee3e2e4907c79b4143e70f1a390299b271477248c0a7f50d7d8f3cccbc6",
-      "modified" : "2026-07-11T16:30:56Z",
-      "size" : 3954
+      "hash" : "sha256:6cee1c3c1165dd02fac36b10ecd6562043089736026dad7ef9f6bc700b665285",
+      "modified" : "2026-07-11T22:39:31Z",
+      "size" : 8751
     },
     "css\/main.min.023d43f85cda3cf6ccb11b070642a43b34d40b1e1318d24c3fafb81191849160.css" : {
       "hash" : "sha256:023d43f85cda3cf6ccb11b070642a43b34d40b1e1318d24c3fafb81191849160",
@@ -55,10 +65,20 @@
       "modified" : "2026-07-10T22:59:01Z",
       "size" : 20498
     },
+    "css\/main.min.06d43f96ea0b8fa77269bf82bf6f5c8294b1192505fa1187c14fe3927df6ed64.css" : {
+      "hash" : "sha256:06d43f96ea0b8fa77269bf82bf6f5c8294b1192505fa1187c14fe3927df6ed64",
+      "modified" : "2026-07-11T21:24:15Z",
+      "size" : 24262
+    },
     "css\/main.min.0841838bdce0a177cf70e194e706e1ea660f914bb117872585f6a80a2dcb0900.css" : {
       "hash" : "sha256:0841838bdce0a177cf70e194e706e1ea660f914bb117872585f6a80a2dcb0900",
       "modified" : "2026-07-10T14:19:10Z",
       "size" : 16111
+    },
+    "css\/main.min.0db93588d305b71c9bbfe0fae44d357882e062271ff2dacb896ea5e778960f27.css" : {
+      "hash" : "sha256:0db93588d305b71c9bbfe0fae44d357882e062271ff2dacb896ea5e778960f27",
+      "modified" : "2026-07-11T21:24:07Z",
+      "size" : 24418
     },
     "css\/main.min.0e441a23847edaa0ab7b9ab20959152b23cb202cf8738a0b74a2103350a153a8.css" : {
       "hash" : "sha256:0e441a23847edaa0ab7b9ab20959152b23cb202cf8738a0b74a2103350a153a8",
@@ -75,6 +95,11 @@
       "modified" : "2026-07-10T14:00:00Z",
       "size" : 11854
     },
+    "css\/main.min.16a8eaacb9ee0a77bb40c94b1ee19c4d74372a3b3058575f3e24504e97a8a9ac.css" : {
+      "hash" : "sha256:16a8eaacb9ee0a77bb40c94b1ee19c4d74372a3b3058575f3e24504e97a8a9ac",
+      "modified" : "2026-07-11T20:58:13Z",
+      "size" : 21933
+    },
     "css\/main.min.1ab2c5c1fdffee9ebfb9b1804fe5b2b009d9381117d2bf9690af703d4f269989.css" : {
       "hash" : "sha256:1ab2c5c1fdffee9ebfb9b1804fe5b2b009d9381117d2bf9690af703d4f269989",
       "modified" : "2026-07-10T13:22:00Z",
@@ -84,6 +109,16 @@
       "hash" : "sha256:1efed9f000c9a02485dfb88c0cb7401a6dd5c032963b8c29360df7c8861d4323",
       "modified" : "2026-07-10T23:50:12Z",
       "size" : 20187
+    },
+    "css\/main.min.22c7c11260698fd3a219dc3ec453a2e6882a1f4f07dc422a0cc48c09c43d5a2c.css" : {
+      "hash" : "sha256:22c7c11260698fd3a219dc3ec453a2e6882a1f4f07dc422a0cc48c09c43d5a2c",
+      "modified" : "2026-07-11T18:09:13Z",
+      "size" : 21212
+    },
+    "css\/main.min.2467496d7ee7fa66aef7aa1f20d4d2c89744755595bc549d8a596f3d7542d78d.css" : {
+      "hash" : "sha256:2467496d7ee7fa66aef7aa1f20d4d2c89744755595bc549d8a596f3d7542d78d",
+      "modified" : "2026-07-11T21:22:01Z",
+      "size" : 24295
     },
     "css\/main.min.266dd5ce8d347ceeb373e7c336c6f67b9c57fe80680b0cab0cad0a95302c4715.css" : {
       "hash" : "sha256:266dd5ce8d347ceeb373e7c336c6f67b9c57fe80680b0cab0cad0a95302c4715",
@@ -99,6 +134,11 @@
       "hash" : "sha256:2dd05bc3517dd405d82871d78cd3955b7c294716af4b9b70c77c89739d1a966e",
       "modified" : "2026-07-10T14:16:31Z",
       "size" : 11951
+    },
+    "css\/main.min.30375dc0240ec8ff2143eb01fb9c37c7587231e19db1a9ed2e27454c9ce00125.css" : {
+      "hash" : "sha256:30375dc0240ec8ff2143eb01fb9c37c7587231e19db1a9ed2e27454c9ce00125",
+      "modified" : "2026-07-11T21:06:22Z",
+      "size" : 23972
     },
     "css\/main.min.3453af335985f8eb035b650135103b947d477ac23d3778a4fa4da3670aab1dd2.css" : {
       "hash" : "sha256:3453af335985f8eb035b650135103b947d477ac23d3778a4fa4da3670aab1dd2",
@@ -140,6 +180,11 @@
       "modified" : "2026-07-10T13:57:06Z",
       "size" : 9644
     },
+    "css\/main.min.438f629a81678ace6d41b7f80a7e85b3238188206d1c5c41549a8e164462d65b.css" : {
+      "hash" : "sha256:438f629a81678ace6d41b7f80a7e85b3238188206d1c5c41549a8e164462d65b",
+      "modified" : "2026-07-11T21:21:37Z",
+      "size" : 24106
+    },
     "css\/main.min.44f5ddfc9b65c0ed8cddc18b94341fd70719591264025a1df2002843e896f857.css" : {
       "hash" : "sha256:44f5ddfc9b65c0ed8cddc18b94341fd70719591264025a1df2002843e896f857",
       "modified" : "2026-07-10T23:49:30Z",
@@ -150,15 +195,35 @@
       "modified" : "2026-07-10T13:59:23Z",
       "size" : 11022
     },
+    "css\/main.min.4b36e54f4a201b28373d660f183f202e3ae3303dba940ef19513f66d8b9f69d7.css" : {
+      "hash" : "sha256:4b36e54f4a201b28373d660f183f202e3ae3303dba940ef19513f66d8b9f69d7",
+      "modified" : "2026-07-11T21:13:57Z",
+      "size" : 23423
+    },
     "css\/main.min.4d147a1eb6888502e615d2fbac90fe22b0bad0230023920e907363a21dcec557.css" : {
       "hash" : "sha256:4d147a1eb6888502e615d2fbac90fe22b0bad0230023920e907363a21dcec557",
       "modified" : "2026-07-11T00:02:25Z",
       "size" : 20284
     },
+    "css\/main.min.4f89cda86298c44cd4f46b4af0a6ab006e321aa94a552442070bdd6e8afaa876.css" : {
+      "hash" : "sha256:4f89cda86298c44cd4f46b4af0a6ab006e321aa94a552442070bdd6e8afaa876",
+      "modified" : "2026-07-11T18:08:38Z",
+      "size" : 21252
+    },
     "css\/main.min.522209b84f894bc6e6491e1831587168488dc42705cc4086fceb92ddc6d37baf.css" : {
       "hash" : "sha256:522209b84f894bc6e6491e1831587168488dc42705cc4086fceb92ddc6d37baf",
       "modified" : "2026-07-10T22:59:19Z",
       "size" : 20719
+    },
+    "css\/main.min.528ca6441ec266de2dcc4b5872fce28eaf13b2b56399132f5835bdbbb71a1a20.css" : {
+      "hash" : "sha256:528ca6441ec266de2dcc4b5872fce28eaf13b2b56399132f5835bdbbb71a1a20",
+      "modified" : "2026-07-11T21:11:56Z",
+      "size" : 23850
+    },
+    "css\/main.min.53aad7b2fe7f8113f4597dd5d691a17b1d350b610fd321d6d74991aec53750fb.css" : {
+      "hash" : "sha256:53aad7b2fe7f8113f4597dd5d691a17b1d350b610fd321d6d74991aec53750fb",
+      "modified" : "2026-07-11T20:48:00Z",
+      "size" : 19163
     },
     "css\/main.min.541d79a6a64b5a46b4e8ad0eb5b817ea382b455bf3c473f5b30e3d56ab1f1cf2.css" : {
       "hash" : "sha256:541d79a6a64b5a46b4e8ad0eb5b817ea382b455bf3c473f5b30e3d56ab1f1cf2",
@@ -170,10 +235,20 @@
       "modified" : "2026-07-10T22:59:00Z",
       "size" : 20481
     },
+    "css\/main.min.586fcbf49dffb8563ea0ae8c068620d38b2ebf778fa9600919b4b36a692d891f.css" : {
+      "hash" : "sha256:586fcbf49dffb8563ea0ae8c068620d38b2ebf778fa9600919b4b36a692d891f",
+      "modified" : "2026-07-11T21:17:09Z",
+      "size" : 23758
+    },
     "css\/main.min.5b652b8b035e6b26b45953204cdea0bb34e24ea01469ee894f83b6c7c0671a9d.css" : {
       "hash" : "sha256:5b652b8b035e6b26b45953204cdea0bb34e24ea01469ee894f83b6c7c0671a9d",
       "modified" : "2026-07-10T14:18:08Z",
       "size" : 15450
+    },
+    "css\/main.min.6151a0a3a412f119a7d50fd0e583b0351a14a39159ffb1e6c2e6503f3cedb374.css" : {
+      "hash" : "sha256:6151a0a3a412f119a7d50fd0e583b0351a14a39159ffb1e6c2e6503f3cedb374",
+      "modified" : "2026-07-11T21:28:37Z",
+      "size" : 25057
     },
     "css\/main.min.616147c0d4e240d8c7f26931ce9d5d8f45fd771bbbdc40d5f224a7cd0cc8c85d.css" : {
       "hash" : "sha256:616147c0d4e240d8c7f26931ce9d5d8f45fd771bbbdc40d5f224a7cd0cc8c85d",
@@ -184,6 +259,11 @@
       "hash" : "sha256:662abc5225625a140054dadd15ff4b6828c27b0af2a9ca27e3b42b416820358f",
       "modified" : "2026-07-10T14:20:12Z",
       "size" : 17296
+    },
+    "css\/main.min.6777f870bc39a2bd951956523d0439d13f991608af8e61f74da272480e5cfdbc.css" : {
+      "hash" : "sha256:6777f870bc39a2bd951956523d0439d13f991608af8e61f74da272480e5cfdbc",
+      "modified" : "2026-07-11T21:21:31Z",
+      "size" : 23788
     },
     "css\/main.min.691ff0a531f5f750bc98ec43b1bf3fe1d1b3950c7f51e7db70edf74f88001e8f.css" : {
       "hash" : "sha256:691ff0a531f5f750bc98ec43b1bf3fe1d1b3950c7f51e7db70edf74f88001e8f",
@@ -205,6 +285,11 @@
       "modified" : "2026-07-10T23:49:24Z",
       "size" : 21428
     },
+    "css\/main.min.70a4ce52c54676a2534edaba334ef5a38eda22262cdef1712dbac5e106e11051.css" : {
+      "hash" : "sha256:70a4ce52c54676a2534edaba334ef5a38eda22262cdef1712dbac5e106e11051",
+      "modified" : "2026-07-11T20:45:54Z",
+      "size" : 21287
+    },
     "css\/main.min.70d186e199fbb25fcde0c6d60c82f2606952aa6b7da8a77d92c07e99c10d877f.css" : {
       "hash" : "sha256:70d186e199fbb25fcde0c6d60c82f2606952aa6b7da8a77d92c07e99c10d877f",
       "modified" : "2026-07-10T13:22:21Z",
@@ -214,6 +299,11 @@
       "hash" : "sha256:713f4938be69aa09261912cb262c653970952201dae2fc2a67c010961e1a6d7f",
       "modified" : "2026-07-10T13:59:17Z",
       "size" : 11295
+    },
+    "css\/main.min.71d54be1a9cf48066fdd643620950084e54231e844fa587cc825446cd6a9c33c.css" : {
+      "hash" : "sha256:71d54be1a9cf48066fdd643620950084e54231e844fa587cc825446cd6a9c33c",
+      "modified" : "2026-07-11T21:04:43Z",
+      "size" : 21978
     },
     "css\/main.min.72b7592b578df2214f9ae3c1151ca164ff2ded902b3df8d1f8581257e24625cc.css" : {
       "hash" : "sha256:72b7592b578df2214f9ae3c1151ca164ff2ded902b3df8d1f8581257e24625cc",
@@ -239,6 +329,11 @@
       "hash" : "sha256:77cf30b7ad2c795f398cfde501cb50e98a7090c56f74dfd518a9f83b96465f05",
       "modified" : "2026-07-05T16:43:19Z",
       "size" : 5605
+    },
+    "css\/main.min.78f54161152e228d35079674b31b4f47f459a8f9c66a8a54258ba358bdf91853.css" : {
+      "hash" : "sha256:78f54161152e228d35079674b31b4f47f459a8f9c66a8a54258ba358bdf91853",
+      "modified" : "2026-07-11T16:49:22Z",
+      "size" : 21115
     },
     "css\/main.min.7e25fab4e2130059c3f22cdfb6e613b4de6ac30d30a5c336d5072b479eb385cb.css" : {
       "hash" : "sha256:7e25fab4e2130059c3f22cdfb6e613b4de6ac30d30a5c336d5072b479eb385cb",
@@ -285,6 +380,11 @@
       "modified" : "2026-07-11T14:45:04Z",
       "size" : 17733
     },
+    "css\/main.min.917216999a76d0744745f334d769f3777139a33ec3e3f4ee9fd21aae06cb9cd2.css" : {
+      "hash" : "sha256:917216999a76d0744745f334d769f3777139a33ec3e3f4ee9fd21aae06cb9cd2",
+      "modified" : "2026-07-11T21:33:14Z",
+      "size" : 25088
+    },
     "css\/main.min.96eba5d93e1175aadb4de9255ee249602df050ca78fc8ddac023aca23e69ca88.css" : {
       "hash" : "sha256:96eba5d93e1175aadb4de9255ee249602df050ca78fc8ddac023aca23e69ca88",
       "modified" : "2026-07-10T22:59:17Z",
@@ -294,6 +394,11 @@
       "hash" : "sha256:981cd471b64d85e6db32018aa61d5a20f3e084861bc253e56ded12922a1ca660",
       "modified" : "2026-07-10T14:17:24Z",
       "size" : 15292
+    },
+    "css\/main.min.99425043c43b07802809028c94cb436269b191bac4ec19cb3689e0c444e9e23f.css" : {
+      "hash" : "sha256:99425043c43b07802809028c94cb436269b191bac4ec19cb3689e0c444e9e23f",
+      "modified" : "2026-07-11T18:09:08Z",
+      "size" : 20843
     },
     "css\/main.min.9b477ee7ab6dcb17a012a8f4efcd726729b79a12f93c58a247c865d7b75f44ec.css" : {
       "hash" : "sha256:9b477ee7ab6dcb17a012a8f4efcd726729b79a12f93c58a247c865d7b75f44ec",
@@ -310,10 +415,20 @@
       "modified" : "2026-07-10T13:59:56Z",
       "size" : 11945
     },
+    "css\/main.min.a63a116c63a22e81767f9abfceb5a17564fc29d04f6cf112b2d099d1019a82dd.css" : {
+      "hash" : "sha256:a63a116c63a22e81767f9abfceb5a17564fc29d04f6cf112b2d099d1019a82dd",
+      "modified" : "2026-07-11T16:49:09Z",
+      "size" : 20739
+    },
     "css\/main.min.a9a02f977c46fedde291ec4d4b109a7c991e01ab0aac6691fd6b7b3b989132b9.css" : {
       "hash" : "sha256:a9a02f977c46fedde291ec4d4b109a7c991e01ab0aac6691fd6b7b3b989132b9",
       "modified" : "2026-07-10T14:20:24Z",
       "size" : 17320
+    },
+    "css\/main.min.a9e6581513dec04899c0991e0d87e2efe9d22c812c360017809288a9143fb7cf.css" : {
+      "hash" : "sha256:a9e6581513dec04899c0991e0d87e2efe9d22c812c360017809288a9143fb7cf",
+      "modified" : "2026-07-11T21:22:04Z",
+      "size" : 24297
     },
     "css\/main.min.ab8fe65b4e42d7f09282ac1120b1396cb3535bbdb22d849104201ee07b81aff2.css" : {
       "hash" : "sha256:ab8fe65b4e42d7f09282ac1120b1396cb3535bbdb22d849104201ee07b81aff2",
@@ -357,13 +472,23 @@
     },
     "css\/main.min.bbf28a97d79d07b2ee1204e560e6e78a4584b7ee312cdecf07bc7ecb5b87a88e.css" : {
       "hash" : "sha256:bbf28a97d79d07b2ee1204e560e6e78a4584b7ee312cdecf07bc7ecb5b87a88e",
-      "modified" : "2026-07-11T16:30:56Z",
+      "modified" : "2026-07-11T16:48:42Z",
       "size" : 21228
     },
     "css\/main.min.bd1072294266f3e3c2f3e0aa51ea7d777715a8c68128a5a7971c9d94c64c1bc8.css" : {
       "hash" : "sha256:bd1072294266f3e3c2f3e0aa51ea7d777715a8c68128a5a7971c9d94c64c1bc8",
       "modified" : "2026-07-10T23:00:13Z",
       "size" : 21112
+    },
+    "css\/main.min.be1e3cf0feba9ff6b96143819d5fdd1994cc9e6b123bc91cdb8e67af4a7e70ed.css" : {
+      "hash" : "sha256:be1e3cf0feba9ff6b96143819d5fdd1994cc9e6b123bc91cdb8e67af4a7e70ed",
+      "modified" : "2026-07-11T21:21:53Z",
+      "size" : 24254
+    },
+    "css\/main.min.c1c500df1c2ba9b1c601e207056eef22442ff7aa5bc8571f93e153f3d19270cf.css" : {
+      "hash" : "sha256:c1c500df1c2ba9b1c601e207056eef22442ff7aa5bc8571f93e153f3d19270cf",
+      "modified" : "2026-07-11T22:39:31Z",
+      "size" : 26110
     },
     "css\/main.min.c2184d33096fa7a4a6e3619bed0ed2c2d279877cbd3f0509cce69225a33eaa96.css" : {
       "hash" : "sha256:c2184d33096fa7a4a6e3619bed0ed2c2d279877cbd3f0509cce69225a33eaa96",
@@ -400,10 +525,25 @@
       "modified" : "2026-07-10T23:49:34Z",
       "size" : 21290
     },
+    "css\/main.min.d3ebbb0bda9a32cc38569b11a8d448ee76c5a0464ed706cb1254baebb13cf8f6.css" : {
+      "hash" : "sha256:d3ebbb0bda9a32cc38569b11a8d448ee76c5a0464ed706cb1254baebb13cf8f6",
+      "modified" : "2026-07-11T21:13:50Z",
+      "size" : 23759
+    },
     "css\/main.min.d4ff19a72bb5b5ebafa336f34da1e66c50160840edd5f668f1c0c09147d0f4e1.css" : {
       "hash" : "sha256:d4ff19a72bb5b5ebafa336f34da1e66c50160840edd5f668f1c0c09147d0f4e1",
       "modified" : "2026-07-10T13:21:53Z",
       "size" : 9826
+    },
+    "css\/main.min.d6fda3fac6eb301d8599678e2b998a8257b4fbb3ec7bba57714da51b3d8b2a57.css" : {
+      "hash" : "sha256:d6fda3fac6eb301d8599678e2b998a8257b4fbb3ec7bba57714da51b3d8b2a57",
+      "modified" : "2026-07-11T21:24:24Z",
+      "size" : 24138
+    },
+    "css\/main.min.d9cc84d7c00e30df30c9115c8552a20f239cfbb28957877af6ba319e0c2e2676.css" : {
+      "hash" : "sha256:d9cc84d7c00e30df30c9115c8552a20f239cfbb28957877af6ba319e0c2e2676",
+      "modified" : "2026-07-11T18:09:16Z",
+      "size" : 21259
     },
     "css\/main.min.dc877f139fe562a3f6d32ed02e599f7d9c26c9bbc4d6b32d5cdb608e2bd47ef5.css" : {
       "hash" : "sha256:dc877f139fe562a3f6d32ed02e599f7d9c26c9bbc4d6b32d5cdb608e2bd47ef5",
@@ -415,10 +555,20 @@
       "modified" : "2026-07-10T23:50:23Z",
       "size" : 20271
     },
+    "css\/main.min.e167a0db90a049aa28b55a024a8dc61944e591dd34ba7a643676c422aa6d1e1c.css" : {
+      "hash" : "sha256:e167a0db90a049aa28b55a024a8dc61944e591dd34ba7a643676c422aa6d1e1c",
+      "modified" : "2026-07-11T21:28:31Z",
+      "size" : 24242
+    },
     "css\/main.min.e90d3c0dd29fb9d2ea7e1226380aa45859d013cacca0adbb8347dca8e7e6bb23.css" : {
       "hash" : "sha256:e90d3c0dd29fb9d2ea7e1226380aa45859d013cacca0adbb8347dca8e7e6bb23",
       "modified" : "2026-07-10T23:50:04Z",
       "size" : 21381
+    },
+    "css\/main.min.e9fa72c3b6476632130b64cff00ffc52c3f0719146639d5f136d69730236046d.css" : {
+      "hash" : "sha256:e9fa72c3b6476632130b64cff00ffc52c3f0719146639d5f136d69730236046d",
+      "modified" : "2026-07-11T21:24:20Z",
+      "size" : 24138
     },
     "css\/main.min.f0e5c662efed23be3028e2f4769e51bb7c9272352982bd17474fa37de2a55227.css" : {
       "hash" : "sha256:f0e5c662efed23be3028e2f4769e51bb7c9272352982bd17474fa37de2a55227",
@@ -450,6 +600,11 @@
       "modified" : "2026-07-10T13:59:03Z",
       "size" : 11017
     },
+    "css\/main.min.fe4319a7476aaa0b1b0eba66cd82fbfde0586e3d8b1ea4dec6719528fb1679fc.css" : {
+      "hash" : "sha256:fe4319a7476aaa0b1b0eba66cd82fbfde0586e3d8b1ea4dec6719528fb1679fc",
+      "modified" : "2026-07-11T21:13:55Z",
+      "size" : 23430
+    },
     "css\/main.min.fe6b31f180258f1d15a52bc3b811cfa696100a171ded867f75374bdcef3869bc.css" : {
       "hash" : "sha256:fe6b31f180258f1d15a52bc3b811cfa696100a171ded867f75374bdcef3869bc",
       "modified" : "2026-07-10T22:58:54Z",
@@ -465,15 +620,50 @@
       "modified" : "2026-07-05T14:09:07Z",
       "size" : 492
     },
+    "images\/app\/all-sites-grid.png" : {
+      "hash" : "sha256:6f2575eb4db095a246a733b500b5368257dcfe828acec0526174b5552efa2477",
+      "modified" : "2026-07-11T17:55:37Z",
+      "size" : 89450
+    },
+    "images\/app\/config-editor.png" : {
+      "hash" : "sha256:3d11a1d119e83f96291e18c2462a6c21db079aa00baeaff1a0d54643d92ce5d7",
+      "modified" : "2026-07-11T17:55:37Z",
+      "size" : 119182
+    },
+    "images\/app\/content.png" : {
+      "hash" : "sha256:a23766ceee5525803b543ec06073cd13c52743019706796ac6c4fb8be5117712",
+      "modified" : "2026-07-11T17:55:37Z",
+      "size" : 84748
+    },
+    "images\/app\/dashboard.png" : {
+      "hash" : "sha256:303df6451f8e1066b870673e58a251e87e5f042557b39bb64c7af2bcc9645eff",
+      "modified" : "2026-07-11T17:55:36Z",
+      "size" : 85477
+    },
+    "images\/app\/deploy-setup.png" : {
+      "hash" : "sha256:af789911952403c3415a0c6336eee262f9e01b4fa22d8ab3ab2ed8e116ab7e3a",
+      "modified" : "2026-07-11T17:55:37Z",
+      "size" : 103633
+    },
+    "images\/app\/server.png" : {
+      "hash" : "sha256:4898c8e2227adbad3c2bcbc0d6426311b0aac86f725e00c17298d5ec6b597100",
+      "modified" : "2026-07-11T17:55:37Z",
+      "size" : 84110
+    },
+    "images\/app\/template-preview.png" : {
+      "hash" : "sha256:74ddeeb4574e62fd5de9906cfa77bc8aef0765ab88e26dafd529363c036e59a3",
+      "modified" : "2026-07-11T17:55:37Z",
+      "size" : 112594
+    },
     "index.html" : {
-      "hash" : "sha256:ad4cdefd5659409cac5c5aa853006d4d0c02e9602a96f125ea9e3bf923109ef2",
-      "modified" : "2026-07-11T16:30:56Z",
-      "size" : 37458
+      "hash" : "sha256:6ad17e996a8d15be19122d7bb103eaf3ea3b75e6c827815886cd3af36e4e0a16",
+      "modified" : "2026-07-11T22:39:31Z",
+      "size" : 30678
     },
     "og\/hugokit-og.png" : {
-      "hash" : "sha256:09531d676394027797825bec17ec456ad318e01cbd33558e89dfe13c59ab0803",
-      "modified" : "2026-07-10T13:09:41Z",
-      "size" : 22270
+      "hash" : "sha256:000a4b7fc5a64657700f707a47695556e109a4d0dabe407bff00a780c01f4d99",
+      "modified" : "2026-07-11T21:00:27Z",
+      "size" : 34593
     },
     "robots.txt" : {
       "hash" : "sha256:47b4690061e925f05deadf04f4ce9edadba88855fa40c4a2184bfbc447c008ed",
@@ -481,12 +671,12 @@
       "size" : 65
     },
     "sitemap.xml" : {
-      "hash" : "sha256:9fbc5069e0ce79db323d1fa6828fa24da2e248a19adc5fc9720e68561ebef4c0",
-      "modified" : "2026-07-11T16:30:56Z",
-      "size" : 261
+      "hash" : "sha256:970cf03e6678c8568df636bf8a068aebdb157610b301ac821e5fa9210c2d8f86",
+      "modified" : "2026-07-11T22:39:31Z",
+      "size" : 451
     }
   },
-  "lastSync" : "2026-07-11T16:31:55Z",
-  "remotePath" : "\/public_html\/hugokit-website",
-  "targetHost" : "linux15.unoeuro.com"
+  "lastSync" : "2026-07-11T22:39:33Z",
+  "remotePath" : "\/public_html",
+  "targetHost" : "linux228.unoeuro.com"
 }

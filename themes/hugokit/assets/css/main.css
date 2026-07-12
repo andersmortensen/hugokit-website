@@ -207,6 +207,23 @@ a { color: inherit; }
 }
 .btn-ghost:hover { color: var(--ink); }
 
+/* Sekundær knap — plate-flade med streg, samme geometri som .btn */
+.btn-outline {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  background: var(--plate);
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+  font-size: 14px; font-weight: 500;
+  text-decoration: none;
+  padding: 11px 23px;
+  border-radius: 999px;
+  transition: background-color 160ms ease;
+}
+.btn-outline:hover { background: var(--stage); }
+.btn-outline svg { width: 15px; height: 15px; }
+.btn-outline.btn-lg { padding: 14px 29px; font-size: 15px; }
+.btn-outline.btn-sm { padding: 8px 17px; font-size: 13px; }
+
 .cta-row { display: flex; align-items: center; gap: 22px; }
 .centered-row { justify-content: center; }
 .cta-buttons { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
@@ -294,12 +311,18 @@ a.pill { text-decoration: none; }
 
 .hero-row {
   display: grid;
-  grid-template-columns: minmax(280px, 1.05fr) auto minmax(0, 0.9fr);
+  /* Spacer-kolonnen (3) holdes smal, så copy-kolonnen kan bære
+     Download + Learn more på samme række ved almindelige vinduesbredder */
+  grid-template-columns: minmax(280px, 1.05fr) auto minmax(0, 0.45fr);
   gap: clamp(20px, 3vw, 48px);
   align-items: start;
 }
 
-.hero-copy { padding-top: clamp(10px, 2.5vw, 40px); max-width: 420px; }
+.hero-copy { padding-top: clamp(10px, 2.5vw, 40px); max-width: 440px; }
+.hero-copy .cta-buttons { gap: 14px; flex-wrap: nowrap; }
+@media (max-width: 1260px) {
+  .hero-copy .cta-buttons { flex-wrap: wrap; }
+}
 
 .hero-heading {
   font-family: var(--display);
@@ -320,80 +343,22 @@ a.pill { text-decoration: none; }
 
 .hero-copy .fine-meta { display: block; margin-top: 14px; }
 
-/* App-vinduet — nedtonet: kompakt, stille Publish-pill (app-UI, ikke site-CTA) */
-.hero-win {
-  width: min(430px, 86vw);
+/* Hero-mediet — rigtigt app-screenshot (frame, traffic lights og skygge er
+   bagt ind i filen, så ingen ekstra chrome her). Video-klar: en <video> i
+   samme .hero-shot arver dimensionerne 1:1. */
+.hero-media {
+  width: min(500px, 88vw);
   margin-top: clamp(-96px, -5.6vw, -26px);
-  background: #17171B;
-  border: 1px solid rgba(242, 240, 244, 0.10);
-  border-radius: 13px;
-  box-shadow: 0 22px 60px rgba(13, 13, 15, 0.22);
-  overflow: hidden;
   position: relative; z-index: 2;
+  display: flex; flex-direction: column; align-items: flex-end;
+  gap: 2px;
 }
+.hero-shot { margin: 0; width: 100%; }
+.hero-shot .shot { width: 100%; height: auto; }
 
-.hw-bar {
-  display: flex; align-items: center; gap: 7px;
-  padding: 9px 13px;
-  border-bottom: 1px solid rgba(242, 240, 244, 0.08);
-}
+/* Traffic lights i terminal-mockuppen (Hugo-panelet) */
 .hw-tl { width: 11px; height: 11px; border-radius: 50%; }
 .hw-r { background: #FF5F57; } .hw-y { background: #FEBC2E; } .hw-g { background: #28C840; }
-.hw-title {
-  font-family: var(--mono);
-  font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase;
-  color: #5F5C66;
-  margin-left: 7px;
-}
-
-.hw-body { display: grid; grid-template-columns: 118px 1fr; }
-.hw-side {
-  border-right: 1px solid rgba(242, 240, 244, 0.08);
-  padding: 11px 9px;
-  display: flex; flex-direction: column; gap: 3px;
-}
-.hw-row { display: flex; align-items: center; gap: 7px; padding: 6px 8px; border-radius: 6px; }
-.hw-row.on { background: rgba(242, 240, 244, 0.07); }
-.hw-dot { width: 5.5px; height: 5.5px; border-radius: 50%; background: #3A3A40; flex: none; }
-.hw-dot.live { background: var(--green); }
-.hw-bar-line { height: 5.5px; border-radius: 3px; background: #3A3A40; }
-.hw-row.on .hw-bar-line { background: #6A6A72; }
-
-.hw-main { padding: 12px; }
-.hw-live {
-  display: inline-flex; align-items: center; gap: 7px;
-  font-family: var(--mono);
-  font-size: 10px;
-  color: #9B98A3;
-  border: 1px solid rgba(242, 240, 244, 0.12);
-  border-radius: 999px;
-  padding: 4px 10px;
-  margin-bottom: 10px;
-}
-.hw-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
-.hw-tile {
-  background: #101013;
-  border: 1px solid rgba(242, 240, 244, 0.07);
-  border-radius: 8px;
-  padding: 8px 10px;
-}
-.hw-k {
-  font-family: var(--mono);
-  font-size: 8.5px; letter-spacing: 0.1em; text-transform: uppercase;
-  color: #5F5C66;
-  display: block; margin-bottom: 2px;
-}
-.hw-v { font-family: var(--display); font-weight: 700; font-size: 13px; color: #F2F0F4; }
-.hw-v.ok { color: var(--green); }
-.hw-publish {
-  display: inline-block;
-  margin-top: 10px;
-  font-size: 11px; font-weight: 500;
-  color: #C9C6D0;
-  background: rgba(242, 240, 244, 0.10);
-  border-radius: 999px;
-  padding: 5px 14px;
-}
 
 /* ── Fakta-båndet ─────────────────────────────────────────────────────────── */
 
@@ -464,7 +429,10 @@ a.pill { text-decoration: none; }
   border: 1px solid var(--line);
 }
 /* Glyphen i ink-streger på neutral flade; accent-prikken i glyphen
-   følger kortets kvartet-farve (--wc-accent) */
+   følger kortets kvartet-farve (--wc-accent). non-scaling-stroke holder
+   stregerne på deres px-bredde når glyphen skaleres op — finere håndværk
+   ved kortstørrelse i stedet for opblæste streger. */
+.wcard .feature-glyph :is(rect, line, path, circle) { vector-effect: non-scaling-stroke; }
 .wcard .feature-glyph {
   width: clamp(56px, 6vw, 84px);
   height: auto;
@@ -528,22 +496,30 @@ a.pill { text-decoration: none; }
 /* Radios: visuelt skjult, men fokusérbare — piletaster skifter tab natively */
 .loop-radio { position: absolute; opacity: 0; pointer-events: none; }
 
+/* Segmented tab-bar — én tydelig kontrol frem for løse pills. Grid'et gør
+   de tre trin lige brede; det valgte segment er fyldt. */
 .loop-tabs {
-  display: flex; gap: 8px; flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  max-width: 640px;
+  background: #101013;
+  border: 1px solid rgba(242, 240, 244, 0.12);
+  border-radius: 14px;
+  padding: 5px;
   margin-bottom: clamp(24px, 2.6vw, 36px);
 }
 .loop-tab {
-  display: inline-flex; align-items: center; gap: 9px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
   font-family: var(--mono);
-  font-size: 12px; font-weight: 500; letter-spacing: 0.02em;
+  font-size: 12.5px; font-weight: 500; letter-spacing: 0.02em;
   color: #9B98A3;
-  border: 1px solid rgba(242, 240, 244, 0.14);
-  border-radius: 999px;
-  padding: 9px 17px;
+  border-radius: 10px;
+  padding: 11px 10px;
   cursor: pointer;
-  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+  transition: background-color 160ms ease, color 160ms ease;
 }
-.loop-tab:hover { background: rgba(242, 240, 244, 0.06); }
+.loop-tab:hover { background: rgba(242, 240, 244, 0.06); color: #C9C6D0; }
 .loop-tab-n-1 { color: var(--pink); }
 .loop-tab-n-2 { color: var(--blue); }
 .loop-tab-n-3 { color: var(--green); }
@@ -552,7 +528,6 @@ a.pill { text-decoration: none; }
 #loop-t1:checked ~ .loop-tabs label[for="loop-t1"],
 #loop-t2:checked ~ .loop-tabs label[for="loop-t2"] {
   background: #F2F0F4;
-  border-color: #F2F0F4;
   color: #0D0D0F;
 }
 #loop-t0:focus-visible ~ .loop-tabs label[for="loop-t0"],
@@ -609,7 +584,9 @@ a.pill { text-decoration: none; }
 .loop .btn:hover { background: #DEDBE3; }
 
 .loop-panel-side { min-width: 0; }
-.loop-frame { border-color: rgba(242, 240, 244, 0.10); }
+/* Screenshottet bærer sin egen window-frame og skygge — ingen ekstra ramme */
+.loop-shot { margin: 0; }
+.loop-shot .shot { width: 100%; height: auto; }
 
 /* Preflight har intet view endnu — wireframe-glyphen på stille flade,
    med glyph-tokens overstyret til den mørke kontekst */
@@ -790,12 +767,24 @@ a.pill { text-decoration: none; }
   list-style: none;
   cursor: pointer;
   position: relative;
-  padding: 15px 30px 15px 0;
+  display: flex; align-items: center; gap: 14px;
+  padding: 13px 30px 13px 0;
   font-size: 15px;
   font-weight: 500;
   color: var(--ink);
   transition: color 160ms ease;
 }
+
+/* Spørgsmålets glyph-flise — samme wireframe-register som feature-listen */
+.faq-ic {
+  width: 34px; height: 34px; flex: none;
+  border-radius: 10px;
+  background: var(--stage);
+  border: 1px solid var(--line);
+  display: grid; place-items: center;
+}
+.faq-ic .feature-glyph { width: 22px; height: 22px; }
+.faq-q { flex: 1; }
 .faq-item summary::-webkit-details-marker { display: none; }
 .faq-item summary::after {
   content: "+";
@@ -809,12 +798,29 @@ a.pill { text-decoration: none; }
 .faq-item[open] summary::after { transform: translateY(-50%) rotate(45deg); color: var(--ink); }
 .faq-item summary:hover::after { color: var(--ink); }
 .faq-answer {
-  padding: 0 30px 16px 0;
+  padding: 0 30px 18px 48px; /* indrykket til spørgsmålsteksten (flise + gap) */
   font-size: 14.5px;
   color: var(--muted);
-  max-width: 560px;
+  max-width: 620px;
 }
 .faq-answer p + p { margin-top: 8px; }
+
+/* Fakta-chips under svaret — scanbare nøgleord i mono-registret */
+.faq-chips {
+  list-style: none;
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-top: 12px;
+}
+.faq-chips li {
+  font-family: var(--mono);
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--muted);
+  background: var(--stage);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 5px 12px;
+}
 
 @supports (interpolate-size: allow-keywords) {
   :root { interpolate-size: allow-keywords; }
@@ -843,6 +849,8 @@ a.pill { text-decoration: none; }
   color: var(--ink);
   max-width: 620px;
 }
+.note-extra { color: var(--muted); font-size: 15px; }
+.note-donate { margin-top: 20px; }
 
 /* ── Download — den store afslutning ──────────────────────────────────────── */
 
@@ -1132,7 +1140,7 @@ a.pill { text-decoration: none; }
   }
 
   html.js .hero-copy { animation: rise-in 720ms cubic-bezier(0.19, 1, 0.22, 1) 430ms both; }
-  html.js .hero-win { animation: rise-in 720ms cubic-bezier(0.19, 1, 0.22, 1) 560ms both; }
+  html.js .hero-media { animation: rise-in 720ms cubic-bezier(0.19, 1, 0.22, 1) 560ms both; }
 }
 
 @keyframes glyph-rise {
@@ -1159,10 +1167,7 @@ a.pill { text-decoration: none; }
       0 10px 34px rgba(255, 64, 136, 0.10),
       0 4px 30px rgba(5, 148, 203, 0.09);
   }
-  .hw-dot.live { animation: dot-pulse 2.6s ease-in-out infinite; }
 }
-
-@keyframes dot-pulse { 50% { opacity: 0.35; } }
 
 .btn-ghost { transition: color 160ms ease, text-decoration-color 160ms ease; }
 .btn-ghost:hover { text-decoration-color: currentColor; }
@@ -1189,7 +1194,7 @@ a.pill { text-decoration: none; }
 
 @media (max-width: 1020px) {
   .hero-row { grid-template-columns: 1fr; }
-  .hero-win { order: -1; margin: clamp(-64px, -8vw, -20px) auto 0; }
+  .hero-media { order: -1; margin: clamp(-64px, -8vw, -20px) auto 0; }
   .hero-copy { max-width: 52ch; padding-top: 28px; }
   .loop, .hugo-panel { grid-template-columns: 1fr; }
   .why-sticky { position: static; }
@@ -1213,6 +1218,9 @@ a.pill { text-decoration: none; }
 
   .usp { grid-template-columns: 30px 1fr; }
   .usp span { grid-column: 2; }
+
+  .loop-tab { font-size: 11.5px; padding: 10px 6px; gap: 6px; }
+  .faq-answer { padding-left: 0; }
 
   .feature-row { grid-template-columns: 44px 1fr; gap: 4px 18px; align-items: start; }
   .feature-name { grid-column: 2; }

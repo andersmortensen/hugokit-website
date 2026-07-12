@@ -6,11 +6,6 @@
       i utility-registret (ink-knappen). */}}
 <div class="canvas">
 
-  <div class="edge-marks" aria-hidden="true">
-    <span>HugoKit — Mac app for Hugo</span>
-    <span>macOS 26+ · free</span>
-  </div>
-
   {{ partial "nav.html" . }}
 
   <main id="main">
@@ -31,38 +26,23 @@
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
             Download for macOS
           </a>
-          {{ with $.Params.whatishugo }}
-          <a class="btn-ghost" href="#hugo">{{ .cta }}</a>
-          {{ end }}
+          {{- /* Bevidst ét nummer mindre end Download-knappen, så begge kan stå
+                på samme række inden for hero-kolonnens bredde. */}}
+          <a class="btn-outline" href="#why">{{ .more }}</a>
         </div>
         <span class="fine-meta">{{ $.Params.download.meta }}</span>
       </div>
-      {{- /* App-vinduet stiger op i wordmarket — bevidst nedtonet:
-            kompakt, Publish som stille app-pill, ikke en site-CTA. */}}
-      <div class="hero-win" role="img" aria-label="The HugoKit main window: sidebar with sites and a dashboard for the selected site.">
-        <div class="hw-bar">
-          <span class="hw-tl hw-r"></span><span class="hw-tl hw-y"></span><span class="hw-tl hw-g"></span>
-          <span class="hw-title">HugoKit</span>
-        </div>
-        <div class="hw-body">
-          <div class="hw-side">
-            <div class="hw-row on"><span class="hw-dot live"></span><span class="hw-bar-line" style="width:58%"></span></div>
-            <div class="hw-row"><span class="hw-dot"></span><span class="hw-bar-line" style="width:44%"></span></div>
-            <div class="hw-row"><span class="hw-dot"></span><span class="hw-bar-line" style="width:66%"></span></div>
-            <div class="hw-row"><span class="hw-dot live"></span><span class="hw-bar-line" style="width:50%"></span></div>
-            <div class="hw-row"><span class="hw-dot"></span><span class="hw-bar-line" style="width:38%"></span></div>
-          </div>
-          <div class="hw-main">
-            <span class="hw-live"><span class="hw-dot live"></span>http://localhost:1326/</span>
-            <div class="hw-tiles">
-              <div class="hw-tile"><span class="hw-k">Server</span><span class="hw-v ok">Running</span></div>
-              <div class="hw-tile"><span class="hw-k">Content</span><span class="hw-v">148</span></div>
-              <div class="hw-tile"><span class="hw-k">Build</span><span class="hw-v">—</span></div>
-              <div class="hw-tile"><span class="hw-k">Hugo</span><span class="hw-v">v0.159</span></div>
-            </div>
-            <span class="hw-publish">Publish</span>
-          </div>
-        </div>
+      {{- /* Hero-mediet: rigtigt app-screenshot (window frame + traffic lights
+            bagt ind). Video-klar slot — swap <picture> til
+            <video autoplay muted loop playsinline> i samme figur, når
+            optagelsen er klar. Light/dark følger sitets mode. */}}
+      <div class="hero-media">
+        <figure class="hero-shot">
+          {{ partial "shot.html" (dict "light" .screenshot "dark" .screenshotDark "alt" .alt "eager" true) }}
+        </figure>
+        {{ with $.Params.whatishugo }}
+        <a class="btn-outline btn-sm hero-hugo-cta" href="#hugo">{{ .cta }}</a>
+        {{ end }}
       </div>
       <div></div>
     </div>
@@ -76,8 +56,8 @@
       <span class="fact-ic" aria-hidden="true">
         {{ if eq .glyph "free" }}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v8H4v-8"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7c-1.5 0-4-.7-4-2.5S9.5 2 10.5 2C12 2 12 4.5 12 7zm0 0c1.5 0 4-.7 4-2.5S14.5 2 13.5 2C12 2 12 4.5 12 7z"/></svg>
-        {{ else if eq .glyph "window" }}
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 9h18"/></svg>
+        {{ else if eq .glyph "editor" }}
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M7 9h6"/><path d="M7 13h4"/><path d="M15.5 10.5v6"/><path d="M14 10.5h3"/><path d="M14 16.5h3"/></svg>
         {{ else }}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
         {{ end }}
@@ -88,6 +68,41 @@
       </div>
     </div>
     {{ end }}
+  </section>
+  {{ end }}
+
+  {{ with .Params.whatishugo }}
+  {{- /* Hugo-panelet — flyttet op mellem Facts og Why: "What?" besvares
+        før "Why?". Pink er Hugos egen farve. */}}
+  <section class="hugo-panel reveal" id="hugo" aria-label="{{ .title }}">
+    <div class="hugo-left">
+      <div class="term" role="img" aria-label="Terminal running hugo server">
+        <div class="term-bar">
+          <span class="hw-tl hw-r"></span><span class="hw-tl hw-y"></span><span class="hw-tl hw-g"></span>
+        </div>
+        <div class="term-body">
+          <span class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">hugo server</span><span class="term-caret"></span></span>
+          <span class="term-out">Web Server is available at http://localhost:1313/</span>
+        </div>
+      </div>
+    </div>
+    <div class="hugo-right">
+      <h2 class="hugo-h">{{ .title }}</h2>
+      {{ range .body }}<p class="hugo-body">{{ . }}</p>{{ end }}
+      {{ with .usps }}
+      <p class="hugo-usp-label">{{ .label }}</p>
+      <ul class="usps">
+        {{ range $i, $u := .items }}
+        <li class="usp">
+          <span class="usp-tile"><span class="usp-fct usp-fct-{{ add $i 1 }}" aria-hidden="true"></span></span>
+          <b>{{ $u.name }}</b><span>{{ $u.text }}</span>
+        </li>
+        {{ end }}
+      </ul>
+      {{ end }}
+      {{ with .bridge }}<p class="hugo-bridge">{{ . }}</p>{{ end }}
+      <a class="hugo-link" href="https://gohugo.io">{{ .link }}</a>
+    </div>
   </section>
   {{ end }}
 
@@ -168,9 +183,8 @@
         </div>
         <div class="loop-panel-side">
           {{ if $m.screenshot }}
-          {{ $l := imageConfig (printf "static%s" $m.screenshot) }}
-          <figure class="frame loop-frame">
-            <img class="shot" src="{{ $m.screenshot | relURL }}" alt="{{ $m.alt }}" width="{{ $l.Width }}" height="{{ $l.Height }}" loading="lazy">
+          <figure class="loop-shot">
+            {{ partial "shot.html" (dict "light" $m.screenshot "dark" $m.screenshotDark "alt" $m.alt) }}
           </figure>
           {{ else }}
           <div class="loop-glyph-tile" role="img" aria-label="{{ $m.alt }}">
@@ -184,44 +198,9 @@
   </section>
   {{ end }}
 
-  {{ with .Params.whatishugo }}
-  {{- /* Hugo-panelet — pink er Hugos egen farve. Modalen er afløst af
-        panelet; indholdet er det samme front matter. */}}
-  <section class="hugo-panel reveal" id="hugo" aria-label="{{ .title }}">
-    <div class="hugo-left">
-      <div class="term" role="img" aria-label="Terminal running hugo server">
-        <div class="term-bar">
-          <span class="hw-tl hw-r"></span><span class="hw-tl hw-y"></span><span class="hw-tl hw-g"></span>
-        </div>
-        <div class="term-body">
-          <span class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">hugo server</span><span class="term-caret"></span></span>
-          <span class="term-out">Web Server is available at http://localhost:1313/</span>
-        </div>
-      </div>
-    </div>
-    <div class="hugo-right">
-      <h2 class="hugo-h">{{ .title }}</h2>
-      {{ range .body }}<p class="hugo-body">{{ . }}</p>{{ end }}
-      {{ with .usps }}
-      <p class="hugo-usp-label">{{ .label }}</p>
-      <ul class="usps">
-        {{ range $i, $u := .items }}
-        <li class="usp">
-          <span class="usp-tile"><span class="usp-fct usp-fct-{{ add $i 1 }}" aria-hidden="true"></span></span>
-          <b>{{ $u.name }}</b><span>{{ $u.text }}</span>
-        </li>
-        {{ end }}
-      </ul>
-      {{ end }}
-      {{ with .bridge }}<p class="hugo-bridge">{{ . }}</p>{{ end }}
-      <a class="hugo-link" href="https://gohugo.io">{{ .link }}</a>
-    </div>
-  </section>
-  {{ end }}
-
   {{ if $rest }}
   <section class="features reveal" id="features" aria-label="Features">
-    <span class="label-pill">{{ .Params.features.title }}</span>
+    <h2 class="label-pill">{{ .Params.features.title }}</h2>
     <div class="feature-list">
       {{ range $rest }}
       <div class="feature-row">
@@ -240,8 +219,18 @@
     <div class="faq-list">
       {{ range .items }}
       <details class="faq-item">
-        <summary>{{ .q }}</summary>
-        <div class="faq-answer">{{ .a | markdownify }}</div>
+        <summary>
+          <span class="faq-ic" aria-hidden="true">{{ partial "feature-glyph.html" (dict "glyph" .glyph) }}</span>
+          <span class="faq-q">{{ .q }}</span>
+        </summary>
+        <div class="faq-answer">
+          {{ .a | markdownify }}
+          {{ with .chips }}
+          <ul class="faq-chips">
+            {{ range . }}<li>{{ . }}</li>{{ end }}
+          </ul>
+          {{ end }}
+        </div>
       </details>
       {{ end }}
     </div>
@@ -252,6 +241,13 @@
   <section class="note reveal">
     <p class="section-label">{{ .label }}</p>
     <p class="note-text">{{ .text }}</p>
+    {{ with .extra }}<p class="note-text note-extra">{{ . }}</p>{{ end }}
+    {{ with .donate }}
+    <a class="btn-outline note-donate" href="{{ .url }}" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 9h11v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"/><path d="M16 10h1.5a2.5 2.5 0 0 1 0 5H16"/><path d="M8.5 3.5v2M12 3.5v2"/></svg>
+      {{ .label }}
+    </a>
+    {{ end }}
   </section>
   {{ end }}
 

@@ -21,7 +21,9 @@
 </script>
 {{ end }}
 
-{{ $title := cond .IsHome site.Title (printf "%s · %s" .Title site.Title) }}
+{{- /* Forsiden får tagline i title-tagget (søgeord + SERP-læsbarhed);
+      undersider beholder "Side · HugoKit". */}}
+{{ $title := cond .IsHome (printf "%s — %s" site.Title site.Params.tagline) (printf "%s · %s" .Title site.Title) }}
 <title>{{ $title }}</title>
 {{ $description := .Params.description | default site.Params.description }}
 <meta name="description" content="{{ $description }}">
@@ -39,6 +41,8 @@
 <meta property="og:image" content="{{ "og/hugokit-og.png" | absURL }}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="HugoKit — a Mac app for Hugo.">
+<meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ $title }}">
 <meta name="twitter:description" content="{{ $description }}">
@@ -46,6 +50,12 @@
 
 <link rel="icon" type="image/svg+xml" href="{{ "favicon.svg" | relURL }}">
 <link rel="apple-touch-icon" href="{{ "apple-touch-icon.png" | relURL }}">
+
+{{- /* Hero-screenshottet er LCP — preload den variant systemskemaet vælger */}}
+{{ if .IsHome }}{{ with .Params.hero }}{{ if .screenshot }}
+<link rel="preload" as="image" href="{{ .screenshot | relURL }}" media="(prefers-color-scheme: light)">
+{{ with .screenshotDark }}<link rel="preload" as="image" href="{{ . | relURL }}" media="(prefers-color-scheme: dark)">{{ end }}
+{{ end }}{{ end }}{{ end }}
 
 {{- /* Strukturerede data — kun forsiden: appen + FAQ (genereres fra samme
       front matter som sektionen, så de aldrig driver fra hinanden). */}}
@@ -60,6 +70,8 @@
   "offers" (dict "@type" "Offer" "price" "0" "priceCurrency" "USD")
   "url" .Permalink
   "description" $description
+  "image" ("og/hugokit-og.png" | absURL)
+  "downloadUrl" site.Params.downloadURL
   "author" (dict "@type" "Person" "name" "Anders Mortensen")
 }}
 <script type="application/ld+json">{{ $app | jsonify | safeJS }}</script>
@@ -98,6 +110,15 @@
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
     all.forEach(function (el) { io.observe(el); });
 
+    // App-screenshots (light/dark <picture>): manuel mode-overstyring flipper
+    // source-media, så billedvalget følger toggle'n og ikke kun systemet.
+    var syncPics = function (mode) {
+      document.querySelectorAll('picture.mode-pic source').forEach(function (s) {
+        s.media = mode === 'dark' ? 'all' : 'not all';
+      });
+    };
+    if (document.documentElement.dataset.theme) syncPics(document.documentElement.dataset.theme);
+
     var mt = document.querySelector('.mode-toggle');
     if (mt) mt.addEventListener('click', function () {
       var apply = function () {
@@ -109,6 +130,7 @@
         try { localStorage.setItem('hk-theme', next); } catch (e) {}
         var c = next === 'dark' ? '#060607' : '#E2DFE7';
         document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) { m.content = c; });
+        syncPics(next);
       };
       // Blød crossfade hvor View Transitions findes; ellers øjeblikkeligt skift
       if (document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
