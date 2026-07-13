@@ -52,6 +52,12 @@
     0 1px 2px light-dark(rgba(38, 38, 43, 0.05), rgba(0, 0, 0, 0.35)),
     0 10px 30px light-dark(rgba(38, 38, 43, 0.07), rgba(0, 0, 0, 0.42));
 
+  /* Glassets løft – bruges af det flydende consent-kort, som svæver frit over
+     siden og derfor skal bære en tungere skygge end de indlejrede kort. */
+  --glass-lift:
+    0 1px 2px light-dark(rgba(38, 38, 43, 0.06), rgba(0, 0, 0, 0.40)),
+    0 16px 40px -12px light-dark(rgba(38, 38, 43, 0.18), rgba(0, 0, 0, 0.65));
+
   /* Kortenes løft – to lag: en tæt kontaktskygge + en blød bæreskygge. Dybde
      uden kant; det er dette lag der bærer why-kortene, ikke en border. */
   --panel-lift:
@@ -1092,6 +1098,32 @@ a { color: inherit; }
   text-align: right;
 }
 
+/* Download-fakta: hvad filen faktisk er. Mono-registret, hairline over, felterne
+   deler bredden – det er en specifikation, ikke en sælgende blok. */
+.get-facts {
+  display: grid;
+  grid-template-columns: repeat(5, auto);
+  justify-content: start;
+  gap: 14px clamp(28px, 4vw, 64px);
+  margin-top: clamp(36px, 4vw, 56px);
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+.get-facts dt {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 6px;
+}
+.get-facts dd {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
 /* ── Vindues-/billedrammen (bruges af loop + changelog-billeder) ──────────── */
 
 .frame {
@@ -1118,6 +1150,15 @@ a { color: inherit; }
   flex-wrap: wrap;
 }
 .footer-made { font-size: 13px; color: var(--muted); }
+/* Navnet er et link, ikke en signatur: understregningen bærer det, farven svarer */
+.footer-author {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--line-strong);
+  transition: text-decoration-color 160ms ease;
+}
+.footer-author:hover { text-decoration-color: var(--ink); }
 .footer-links { display: flex; gap: 22px; }
 /* Cookies-knappen er et <button> (den navigerer ikke, den genåbner banneret),
    men skal læses som de øvrige footer-links – derfor samme regel, plus reset af
@@ -1455,6 +1496,13 @@ a { color: inherit; }
   .why-cards { grid-template-columns: 1fr; }
   .wcard { min-height: 0; }
 
+  .get-facts { grid-template-columns: 1fr 1fr; gap: 18px 24px; }
+  .get-facts dd { white-space: normal; }
+
+  .page-head { grid-template-columns: 1fr; align-items: start; gap: 14px; }
+  .page-glance { grid-template-columns: 1fr; }
+  .def-row { grid-template-columns: 1fr; gap: 4px; }
+
   .cta-buttons { flex-direction: column; align-items: flex-start; gap: 16px; }
   .cta-row { flex-direction: column; align-items: flex-start; gap: 16px; }
   .centered-row { align-items: center; }
@@ -1643,6 +1691,118 @@ a { color: inherit; }
 }
 .doc-nav-frag a:hover { color: var(--ink); }
 
+/* Enkeltstående rodside (fx /privacy/): samme prosa-register som docs, men
+   centreret på kanvassen – der er ingen sektions-nav at balancere imod. */
+.page { padding: clamp(30px, 4vw, 56px) 0 clamp(64px, 7vw, 110px); }
+.page-article { max-width: 780px; margin: 0 auto; }
+
+/* Hovedet: titlen til venstre, datoen i sit eget spor til højre – den skal kunne
+   aflæses uden at bryde læselinjen. */
+.page-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+.page-head .doc-updated { margin-top: 0; white-space: nowrap; }
+.page-eyebrow {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 16px;
+}
+.page-eyebrow::before { content: ""; width: 18px; height: 1px; background: var(--line-strong); }
+.page-title {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(30px, 3.6vw, 44px);
+  line-height: 1.04;
+  letter-spacing: -0.024em;
+}
+.page-lead {
+  margin-top: 14px;
+  font-size: 16px; line-height: 1.55;
+  color: var(--muted);
+  max-width: 52ch;
+}
+
+/* Kvitteringen: de faktuelle linjer står før prosaen, så svaret ikke skal læses
+   frem. Tre kort på plate-fladen, symbolet i sin rigtige størrelse. */
+.page-glance {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 26px;
+}
+.page-glance li {
+  display: flex; align-items: center; gap: 11px;
+  background: var(--plate);
+  border-radius: 12px;
+  padding: 14px 16px;
+  box-shadow: 0 1px 2px light-dark(rgba(38, 38, 43, 0.05), rgba(0, 0, 0, 0.32));
+  font-size: 13px; line-height: 1.35;
+  color: var(--ink);
+}
+.page-glance-ic {
+  flex: none;
+  width: 30px; height: 30px;
+  border-radius: 9px;
+  display: grid; place-items: center;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--ink) 7%, transparent);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.page-glance-ic .feature-glyph { width: 16px; height: 16px; color: inherit; }
+
+/* Sektionerne nummereres af CSS – markdown'en skal ikke bære et nummer der kan
+   komme ud af trit med rækkefølgen. */
+.page-body { counter-reset: sec; }
+.page-body h2 {
+  counter-increment: sec;
+  display: flex; align-items: baseline; gap: 14px;
+  font-weight: 700;
+  font-size: 21px;
+  letter-spacing: -0.018em;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+.page-body h2::before {
+  content: counter(sec, decimal-leading-zero);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  color: var(--faint);
+}
+.page-body p { max-width: 68ch; }
+
+/* Definitions-rækker (def-shortcode): term i venstre spor, forklaring i højre */
+.def-row {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 20px;
+  align-items: start;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+}
+.def-row + .def-row { margin-top: 0; }
+.page-body .def-row:last-of-type { border-bottom: 1px solid var(--line); }
+.def-row b {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 14.5px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.def-row span { font-size: 14px; line-height: 1.6; color: var(--muted); }
+.def-row p { margin: 0; }
+
 .doc-article { max-width: 720px; min-width: 0; }
 .doc-head { padding-bottom: 22px; border-bottom: 1px solid var(--line); }
 .doc-head .section-label { display: block; margin-bottom: 14px; }
@@ -1828,29 +1988,71 @@ a { color: inherit; }
    ØVERST til toolbar-farven, og en plate-flade deroppe ville overskrive
    kanvassens tone. z-index 80 lægger den over nav'en (60), under skip-link (100).
    Knapperne er sitets egne (.btn / .btn-outline) – intet nyt visuelt register. */
+/* Hjørnekortet: en dialog i venstre hjørne, ikke en compliance-bjælke på tværs
+   af siden. Samme frostede glas som nav-baren – identisk opskrift, så sitet kun
+   har ét materiale: halvgennemsigtig flade, blur + mætning af alt bagved. */
 .consent {
   position: fixed;
-  left: 14px; right: 14px; bottom: 14px;
+  left: 14px; bottom: 14px;
   z-index: 80;
-  margin: 0 auto;
-  max-width: 640px;
-  display: flex; align-items: center; flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 14px 20px;
-  padding: 16px 18px;
-  background: var(--plate);
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius);
-  box-shadow: 0 12px 34px light-dark(rgba(13, 13, 15, 0.14), rgba(0, 0, 0, 0.50));
+  width: 340px;
+  max-width: calc(100% - 28px);
+  display: flex; flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--glass-lift);
+
+  background: var(--nav-glass);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+}
+/* Uden backdrop-filter: opak flade frem for læselig tekst bagved (som nav-baren) */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .consent { background: var(--plate); }
 }
 /* display: flex ville ellers slå [hidden] ihjel */
 .consent[hidden] { display: none; }
 
+.consent-head { display: flex; align-items: center; gap: 11px; }
+.consent-ic {
+  flex: none;
+  width: 32px; height: 32px;
+  border-radius: 9px;
+  display: grid; place-items: center;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--ink) 7%, transparent);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.consent-ic .feature-glyph { width: 17px; height: 17px; color: inherit; }
+.consent-title {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+/* Knapperne deler bredden – kortet er smalt nok til at et valg skal være ét klik */
+.consent-actions .btn,
+.consent-actions .btn-outline { flex: 1; }
+
+/* flex: none — kortet er en kolonne, så en flex-basis her ville blive til højde
+   (den gamle vandrette bjælke havde 1 1 260px, og det gav 260px tomrum) */
 .consent-text {
-  flex: 1 1 260px;
+  flex: none;
   font-size: 13px; line-height: 1.55;
   color: var(--muted);
 }
+/* Banneret må ikke bede om et valg uden at vise hvad valget dækker */
+.consent-text a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--line-strong);
+}
+.consent-text a:hover { text-decoration-color: var(--ink); }
 .consent-actions { display: flex; align-items: center; gap: 10px; }
 
 @media (prefers-reduced-motion: no-preference) {

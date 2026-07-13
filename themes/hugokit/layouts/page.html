@@ -1,0 +1,43 @@
+{{ define "body" }}
+{{- /* Enkeltstående side i roden (fx /privacy/) – ikke docs, ikke changelog.
+      Hovedet bærer eyebrow, titel, lead og dato; derunder en valgfri "kvittering"
+      (glance i front matter): de faktuelle linjer, så svaret står før prosaen.
+      Docs- og changelog-sider har deres egne templates og rammes ikke af denne. */}}
+<div class="canvas">
+
+  {{ partial "nav.html" . }}
+
+  <main id="main" class="page">
+    <article class="page-article">
+      <header class="page-head">
+        <div class="page-head-copy">
+          <p class="page-eyebrow">{{ site.Title }}</p>
+          <h1 class="page-title">{{ .Title }}</h1>
+          {{ with .Description }}<p class="page-lead">{{ . }}</p>{{ end }}
+        </div>
+        {{ partial "doc-updated.html" (dict "page" . "format" "page") }}
+      </header>
+
+      {{- /* Kvitteringen: hvert punkt er en glyph-nøgle + en linje. Findes den ikke
+            i front matter, renderes intet – ingen tom stribe. */}}
+      {{ with .Params.glance }}
+      <ul class="page-glance">
+        {{ range . }}
+        <li>
+          <span class="page-glance-ic" aria-hidden="true">{{ partial "feature-glyph.html" (dict "glyph" .glyph) }}</span>
+          <span>{{ .text }}</span>
+        </li>
+        {{ end }}
+      </ul>
+      {{ end }}
+
+      <div class="doc-body page-body">
+        {{ .Content }}
+      </div>
+    </article>
+  </main>
+
+  {{ partial "footer.html" . }}
+
+</div>
+{{ end }}

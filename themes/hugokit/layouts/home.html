@@ -222,10 +222,22 @@
             {{ .cta }}
           </a>
         </div>
-        <span class="fine-meta">{{ .meta }}</span>
       </div>
       <p class="get-note">{{ .note }}</p>
     </div>
+    {{- /* Download-fakta: hvad der faktisk hentes. Erstatter fine-meta-linjen her
+          (den bliver stående i hero'en) – "free · macOS 26 or later" stod ellers
+          to gange inden for 40 px. Selv-distribueret download uden
+          App Store betyder at brugeren selv skal kunne se hvad filen er, før den
+          åbnes – version, størrelse, arkitektur, krav og dato. Tallene bor i
+          hugo.toml og skal matche den DMG appcast'en peger på. */}}
+    <dl class="get-facts">
+      <div><dt>Version</dt><dd>{{ site.Params.version }}</dd></div>
+      <div><dt>Size</dt><dd>{{ site.Params.dmgSize }}</dd></div>
+      <div><dt>Architecture</dt><dd>{{ site.Params.architecture }}</dd></div>
+      <div><dt>Requires</dt><dd>{{ site.Params.requires }}</dd></div>
+      <div><dt>Released</dt><dd>{{ (time.AsTime site.Params.releaseDate).Format "2 January 2006" }}</dd></div>
+    </dl>
   </section>
   {{ end }}
 

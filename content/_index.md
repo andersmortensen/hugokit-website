@@ -310,6 +310,8 @@ download:
   note: "No newsletter, no upsell. If something breaks, email me."
 
 footer:
-  made: "Made in Denmark by Anders Mortensen"
-  note: "This site runs on Hugo – and ships with HugoKit."
+  made: "Made in Denmark by"
+  author: "Anders Mortensen"
+  authorURL: "https://andersmortensen.com"
+  note: "This site runs on Hugo."
 ---

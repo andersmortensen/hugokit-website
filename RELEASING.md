@@ -35,10 +35,22 @@ Sitet hoster altså ingen binærer længere; `static/downloads/` er ikke i brug.
    sætter selv appcast'ens `releaseNotesLink` til `https://hugokit.com/changelog/X.Y.Z/`
    (`generate_appcast` kan kun bygge linket som `<prefix><dmg-navn>.html`, så
    release.sh patcher XML'en bagefter — der genereres ingen HTML-notes længere).
-5. Byg og deploy sitet som normalt (`hugo` → upload af `public/`).
-6. Verificér: `https://hugokit.com/appcast.xml` svarer 200, download-knappen
-   henter DMG'en fra GitHub, `/changelog/X.Y.Z/` renderer, og en ældre
-   app-installation tilbyder opdateringen (Sparkle: "Check for Updates…").
+5. Bump download-fakta i `hugo.toml` (`[params]`) — de står under download-knappen
+   på forsiden og skal matche den DMG appcast'en peger på:
+
+   | Param | Kilde |
+   |---|---|
+   | `version` | `sparkle:shortVersionString` i appcast'en |
+   | `dmgSize` | `enclosure length` i appcast'en (bytes → MB) |
+   | `releaseDate` | `pubDate` i appcast'en (ISO-dato) |
+   | `architecture` | `file dist/export/HugoKit.app/Contents/MacOS/HugoKit` |
+   | `requires` | `sparkle:minimumSystemVersion` i appcast'en |
+
+6. Byg og deploy sitet som normalt (`hugo` → upload af `public/`).
+7. Verificér: `https://hugokit.com/appcast.xml` svarer 200, download-knappen
+   henter DMG'en fra GitHub, `/changelog/X.Y.Z/` renderer, download-fakta under
+   knappen matcher den nye DMG, og en ældre app-installation tilbyder
+   opdateringen (Sparkle: "Check for Updates…").
 
 ## Noter
 
