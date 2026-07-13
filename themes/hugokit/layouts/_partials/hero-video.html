@@ -1,0 +1,73 @@
+{{- /* Hero-videoen: loopende app-optagelse i light/dark, samme geometri som
+      app-screenshottene (1072×764 – vinduesramme og skygge er komponeret ind i
+      filen, så .shot-reglerne gælder uændret).
+
+      <video> kan ikke vælge kilde efter farveskema, som <picture> kan (media på
+      <source> ignoreres i video). Derfor står elementet uden kilder i markup'en,
+      og scriptet lige under indsætter dem for den mode der faktisk gælder – ét
+      sæt hentes, aldrig begge. Samme sandhed som .mode-pic: data-theme (den
+      manuelle toggle) vinder over systemets prefers-color-scheme.
+
+      prefers-reduced-motion: ingen autoplay, ingen video-download – poster-framen
+      står som stillbillede (samme første frame som klippet starter på).
+
+      Uden JS: <noscript> falder tilbage til det statiske screenshot.
+
+      Params: v (dict med kilder + posters) · alt · light/dark (noscript-fallback) */ -}}
+{{- $v := .v }}{{ $alt := .alt }}
+<video class="shot hero-vid" id="hero-video"
+       width="1072" height="764"
+       muted loop playsinline autoplay preload="auto"
+       poster="{{ $v.posterLight | relURL }}"
+       aria-label="{{ $alt }}"
+       data-light-mp4="{{ $v.lightMp4 | relURL }}"
+       data-dark-mp4="{{ $v.darkMp4 | relURL }}"
+       data-poster-light="{{ $v.posterLight | relURL }}"
+       data-poster-dark="{{ $v.posterDark | relURL }}"></video>
+<script>
+  (function () {
+    var v = document.getElementById('hero-video');
+    if (!v) return;
+    var root = document.documentElement;
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var isDark = function () {
+      return root.dataset.theme
+        ? root.dataset.theme === 'dark'
+        : matchMedia('(prefers-color-scheme: dark)').matches;
+    };
+
+    var apply = function () {
+      var dark = isDark();
+      v.poster = dark ? v.dataset.posterDark : v.dataset.posterLight;
+      if (reduce) return; // stillbillede – hent aldrig videoen
+      var src = dark ? v.dataset.darkMp4 : v.dataset.lightMp4;
+      if (v.dataset.current === src) return;
+      v.dataset.current = src;
+      v.innerHTML = '';
+      var s = document.createElement('source');
+      s.type = 'video/mp4';
+      s.src = src;
+      v.appendChild(s);
+      v.load();
+      var p = v.play();
+      if (p && p.catch) p.catch(function () {});
+    };
+
+    if (reduce) {
+      v.removeAttribute('autoplay');
+      v.preload = 'none';
+    }
+    apply();
+
+    // Systemets skema skifter (kun når brugeren ikke har valgt manuelt)
+    matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () {
+      if (!root.dataset.theme) apply();
+    });
+    // Mode-toggle'n i nav'en skriver data-theme på <html>
+    new MutationObserver(apply).observe(root, { attributeFilter: ['data-theme'] });
+  })();
+</script>
+<noscript>
+  {{ partial "shot.html" (dict "light" .light "dark" .dark "alt" $alt "eager" true) }}
+</noscript>

@@ -32,13 +32,16 @@
         </div>
         <span class="fine-meta">{{ $.Params.download.meta }}</span>
       </div>
-      {{- /* Hero-mediet: rigtigt app-screenshot (window frame + traffic lights
-            bagt ind). Video-klar slot – swap <picture> til
-            <video autoplay muted loop playsinline> i samme figur, når
-            optagelsen er klar. Light/dark følger sitets mode. */}}
+      {{- /* Hero-mediet: loopende app-optagelse (window frame + traffic lights
+            bagt ind, samme 1072×764 som screenshottene). Light/dark følger
+            sitets mode; uden hero.video – eller uden JS – vises screenshottet. */}}
       <div class="hero-media">
         <figure class="hero-shot">
+          {{ if .video }}
+          {{ partial "hero-video.html" (dict "v" .video "alt" .alt "light" .screenshot "dark" .screenshotDark) }}
+          {{ else }}
           {{ partial "shot.html" (dict "light" .screenshot "dark" .screenshotDark "alt" .alt "eager" true) }}
+          {{ end }}
         </figure>
         {{ with $.Params.whatishugo }}
         <a class="btn-outline btn-sm hero-hugo-cta" href="#hugo">{{ .cta }}</a>

@@ -6,5 +6,9 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   {{ block "body" . }}{{ end }}
+  {{- /* Begge sidst i body: DOM'en er parset, så tracking og banner kan binde
+        sig direkte uden at vente på DOMContentLoaded. */}}
+  {{ partial "consent.html" . }}
+  {{ partial "analytics.html" . }}
 </body>
 </html>

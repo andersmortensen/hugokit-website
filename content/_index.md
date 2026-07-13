@@ -6,11 +6,16 @@ hero:
   heading: "Hugo, without the terminal."
   lead: "HugoKit is a Mac app that runs, previews and publishes the Hugo sites you already have. Same Hugo, same files – no terminal."
   more: "Learn more"
-  # Hero-mediet: statisk screenshot nu – udskiftes 1:1 med looping video
-  # i samme slot (se hero-media i home.html) når optagelsen er klar.
+  # Hero-mediet: loopende app-optagelse. Screenshottene bliver stående som
+  # fallback (noscript) og som kilde til vinduesramme + skygge i videofilerne.
   screenshot: "/images/app/dashboard-light.webp"
   screenshotDark: "/images/app/dashboard-dark.webp"
-  alt: "The HugoKit main window: sidebar with sites on the left, and the selected site's dashboard with server, content, build and health cards."
+  alt: "The HugoKit main window: starting the server, checking the site, editing content, watching the build log and publishing – all from one window."
+  video:
+    lightMp4: "/video/hero-light.mp4"
+    darkMp4: "/video/hero-dark.mp4"
+    posterLight: "/video/hero-poster-light.webp"
+    posterDark: "/video/hero-poster-dark.webp"
 
 about:
   intro: "The same Hugo you already use – run, preview and publish, all from one window."

@@ -9,6 +9,9 @@
       <a href="{{ site.Params.githubURL }}" target="_blank" rel="noopener">GitHub</a>
       <a href="mailto:{{ site.Params.feedbackEmail }}">Feedback</a>
       <a href="https://gohugo.io" target="_blank" rel="noopener">gohugo.io</a>
+      {{- /* Genåbner consent-banneret. Uden det kan et givet samtykke ikke
+            trækkes tilbage – og det skal være lige så let som at give det. */}}
+      <button type="button" data-consent-reopen>Cookies</button>
     </nav>
   </div>
   <p class="footer-note">{{ .note }}</p>

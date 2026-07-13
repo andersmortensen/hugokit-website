@@ -169,14 +169,21 @@ a { color: inherit; }
 
 /* ── Knapper ──────────────────────────────────────────────────────────────── */
 
+/* Bruges på både <a> og <button> (consent-banneret). Browserens egen knap-kant
+   og -font SKAL nulstilles her: `*`-resettet rører kun margin/padding, så et
+   <button> ville ellers beholde Safaris bevel-kant. På <a> er de tre linjer
+   virkningsløse. */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 9px;
   background: var(--btn-bg);
   color: var(--btn-fg);
+  font-family: inherit;
   font-size: 14px; font-weight: 500;
   text-decoration: none;
   padding: 12px 24px;
+  border: 0;
   border-radius: 999px;
+  cursor: pointer;
   transition: background-color 160ms ease;
 }
 .btn:hover { background: var(--btn-bg-hover); }
@@ -203,10 +210,12 @@ a { color: inherit; }
   background: var(--plate);
   color: var(--ink);
   border: 1px solid var(--line-strong);
+  font-family: inherit;
   font-size: 14px; font-weight: 500;
   text-decoration: none;
   padding: 11px 23px;
   border-radius: 999px;
+  cursor: pointer;
   transition: background-color 160ms ease;
 }
 .btn-outline:hover { background: var(--stage); }
@@ -286,7 +295,10 @@ a.pill { text-decoration: none; }
 
 .hero { padding-top: clamp(36px, 5vw, 72px); }
 
-.giant-wrap { overflow: hidden; }
+/* Kun vandret klipning: line-height 0.94 gør line-boxen lavere end glyfferne, så
+   `overflow: hidden` skar descenderen af g'et. `overflow-x: clip` holder
+   wordmarket fra at give vandret scroll, men lader halen hænge frit ned. */
+.giant-wrap { overflow-x: clip; }
 .giant {
   font-family: var(--display);
   font-weight: 700; /* wordmark-vægten */
@@ -345,6 +357,24 @@ a.pill { text-decoration: none; }
 }
 .hero-shot { margin: 0; width: 100%; }
 .hero-shot .shot { width: 100%; height: auto; }
+
+/* Hero-videoen bærer kun selve app-vinduet (958×652). Screenshottet har
+   transparent baggrund, så wordmarket skinner igennem omkring vinduet – det kan
+   en mp4 ikke: en plade ville dække bogstaverne bag. Derfor er ramme og skygge
+   flyttet ud i CSS, og videoen får præcis screenshottets fodaftryk:
+   vinduet er 960/1072 = 89.55 % af figuren, indrykket 56/1072 = 5.22 %.
+   Radius i procent (ikke px), så hjørnerne forbliver cirkulære (12px i filens
+   egen skala) uanset hvor bredt elementet skaleres. Skyggen er målt på
+   dashboard-*.webp og skaleret til visningsstørrelsen. */
+.hero-shot .hero-vid {
+  display: block;
+  width: 89.55%;
+  margin: 3.54% 5.22% 6.9%;
+  border-radius: 1.25% / 1.84%;
+  box-shadow:
+    0 8px 19px light-dark(rgba(0, 0, 0, 0.34), rgba(0, 0, 0, 0.82)),
+    0 1px 3px light-dark(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.45));
+}
 
 /* Traffic lights i terminal-mockuppen (Hugo-panelet) */
 .hw-tl { width: 11px; height: 11px; border-radius: 50%; }
@@ -897,13 +927,24 @@ a.pill { text-decoration: none; }
 }
 .footer-made { font-size: 13px; color: var(--muted); }
 .footer-links { display: flex; gap: 22px; }
-.footer-links a {
+/* Cookies-knappen er et <button> (den navigerer ikke, den genåbner banneret),
+   men skal læses som de øvrige footer-links – derfor samme regel, plus reset af
+   browserens egen knap-flade. */
+.footer-links a,
+.footer-links button {
   font-family: var(--mono);
   font-size: 12px;
   color: var(--muted); text-decoration: none;
   transition: color 160ms ease;
 }
-.footer-links a:hover { color: var(--ink); }
+.footer-links button {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+.footer-links a:hover,
+.footer-links button:hover { color: var(--ink); }
 .footer-note {
   font-family: var(--mono);
   font-size: 11px;
@@ -1491,4 +1532,47 @@ a.pill { text-decoration: none; }
   .doc-body { font-size: 15px; }
   .doc-body table { display: block; overflow-x: auto; }
   .doc-foot { flex-direction: column; gap: 12px; }
+}
+
+/* ── Consent-banner ───────────────────────────────────────────────────────── */
+/* Fast i bunden – ikke toppen: Safari Tahoe sampler sticky/fixed elementer
+   ØVERST til toolbar-farven, og en plate-flade deroppe ville overskrive
+   kanvassens tone. z-index 80 lægger den over nav'en (60), under skip-link (100).
+   Knapperne er sitets egne (.btn / .btn-outline) – intet nyt visuelt register. */
+.consent {
+  position: fixed;
+  left: 14px; right: 14px; bottom: 14px;
+  z-index: 80;
+  margin: 0 auto;
+  max-width: 640px;
+  display: flex; align-items: center; flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 14px 20px;
+  padding: 16px 18px;
+  background: var(--plate);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  box-shadow: 0 12px 34px light-dark(rgba(13, 13, 15, 0.14), rgba(0, 0, 0, 0.50));
+}
+/* display: flex ville ellers slå [hidden] ihjel */
+.consent[hidden] { display: none; }
+
+.consent-text {
+  flex: 1 1 260px;
+  font-size: 13px; line-height: 1.55;
+  color: var(--muted);
+}
+.consent-actions { display: flex; align-items: center; gap: 10px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .consent { animation: consent-in 320ms cubic-bezier(0.2, 0.7, 0.3, 1) both; }
+  @keyframes consent-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: none; }
+  }
+}
+
+@media (max-width: 520px) {
+  .consent { flex-direction: column; align-items: stretch; }
+  .consent-actions { justify-content: flex-end; }
 }

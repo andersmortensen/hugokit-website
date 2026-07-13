@@ -9,13 +9,41 @@
     } catch (e) {}
   })();
 </script>
-{{- /* Google Analytics 4 (gtag.js) – kun i production-builds, så hugo server
-      og lokale previews ikke forurener data. ID'et bor i hugo.toml. */}}
-{{ if and hugo.IsProduction site.Params.googleAnalyticsID }}
-<script async src="https://www.googletagmanager.com/gtag/js?id={{ site.Params.googleAnalyticsID }}"></script>
+{{- /* Google Analytics 4 (gtag.js) + Consent Mode v2.
+
+      dataLayer og gtag() defineres ALTID – også uden for production. gtag() er
+      blot en kø der skubber ind i dataLayer, så uden GA-scriptet sker der intet
+      andet end at eventet lander i window.dataLayer. Det gør tracking
+      verificérbar lokalt (`window.dataLayer` i konsollen) ad præcis den samme
+      kodesti som i produktion. Selve gtag.js hentes fortsat kun i
+      production-builds, så hugo server ikke forurener data. ID'et bor i hugo.toml.
+
+      Consent Mode v2: alt starter på 'denied', og defaulten SKAL stå før gtag.js
+      hentes – ellers når GA at sætte cookies. Banneret (consent.html) sender
+      'update' → granted når brugeren accepterer; valget huskes i localStorage og
+      gensendes her ved næste besøg, før GA loader. Uden samtykke sætter GA4 ingen
+      cookies og sender kun cookieløse pings (modellerede, ikke-identificerende tal). */}}
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+
+  gtag('consent', 'default', {
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    analytics_storage: 'denied',
+    wait_for_update: 500
+  });
+
+  try {
+    if (localStorage.getItem('hk-consent') === 'granted') {
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+    }
+  } catch (e) {}
+</script>
+{{ if and hugo.IsProduction site.Params.googleAnalyticsID }}
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ site.Params.googleAnalyticsID }}"></script>
+<script>
   gtag('js', new Date());
   gtag('config', '{{ site.Params.googleAnalyticsID }}');
 </script>
@@ -51,10 +79,15 @@
 <link rel="icon" type="image/svg+xml" href="{{ "favicon.svg" | relURL }}">
 <link rel="apple-touch-icon" href="{{ "apple-touch-icon.png" | relURL }}">
 
-{{- /* Hero-screenshottet er LCP – preload den variant systemskemaet vælger */}}
-{{ if .IsHome }}{{ with .Params.hero }}{{ if .screenshot }}
-<link rel="preload" as="image" href="{{ .screenshot | relURL }}" media="(prefers-color-scheme: light)">
-{{ with .screenshotDark }}<link rel="preload" as="image" href="{{ . | relURL }}" media="(prefers-color-scheme: dark)">{{ end }}
+{{- /* Hero-mediet er LCP – preload den variant systemskemaet vælger. Med video
+      er poster-framen det billede der males først (videoen selv hentes af
+      hero-video.html, som også respekterer reduced-motion). */}}
+{{ if .IsHome }}{{ with .Params.hero }}
+{{ $light := .screenshot }}{{ $dark := .screenshotDark }}
+{{ with .video }}{{ $light = .posterLight }}{{ $dark = .posterDark }}{{ end }}
+{{ if $light }}
+<link rel="preload" as="image" href="{{ $light | relURL }}" media="(prefers-color-scheme: light)">
+{{ with $dark }}<link rel="preload" as="image" href="{{ . | relURL }}" media="(prefers-color-scheme: dark)">{{ end }}
 {{ end }}{{ end }}{{ end }}
 
 {{- /* Strukturerede data – kun forsiden: appen + FAQ (genereres fra samme
@@ -81,6 +114,45 @@
 {{ $qs = $qs | append (dict "@type" "Question" "name" .q "acceptedAnswer" (dict "@type" "Answer" "text" (.a | markdownify | plainify))) }}
 {{ end }}
 <script type="application/ld+json">{{ dict "@context" "https://schema.org" "@type" "FAQPage" "mainEntity" $qs | jsonify | safeJS }}</script>
+{{ end }}
+{{ end }}
+
+{{- /* Docs – breadcrumbs på hub og sider, TechArticle kun på artiklerne.
+      Breadcrumbs er den med synlig effekt (Google renderer dem i resultatet);
+      TechArticle er semantik, som søgemaskiner og AI-crawlere læser.
+      dateModified kommer fra git (enableGitInfo i hugo.toml) – ingen dato at
+      vedligeholde i front matter, og den kan aldrig lyve. */}}
+{{ if eq .Section "docs" }}
+{{ $docs := site.GetPage "/docs" }}
+{{ $crumbs := slice
+  (dict "@type" "ListItem" "position" 1 "name" site.Title "item" site.Home.Permalink)
+  (dict "@type" "ListItem" "position" 2 "name" $docs.Title "item" $docs.Permalink)
+}}
+{{ if not .IsSection }}
+  {{ $crumbs = $crumbs | append (dict "@type" "ListItem" "position" 3 "name" (.Title | plainify) "item" .Permalink) }}
+{{ end }}
+<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@type" "BreadcrumbList" "itemListElement" $crumbs | jsonify | safeJS }}</script>
+
+{{ if not .IsSection }}
+{{ $article := dict
+  "@context" "https://schema.org"
+  "@type" "TechArticle"
+  "headline" (.Title | plainify)
+  "description" $description
+  "url" .Permalink
+  "image" ("og/hugokit-og.png" | absURL)
+  "inLanguage" "en"
+  "author" (dict "@type" "Person" "name" "Anders Mortensen" "url" site.Home.Permalink)
+  "publisher" (dict "@type" "Organization" "name" site.Title "url" site.Home.Permalink)
+  "isPartOf" (dict "@type" "WebSite" "name" site.Title "url" site.Home.Permalink)
+  "about" (dict "@type" "SoftwareApplication" "name" "Hugo" "url" "https://gohugo.io/")
+  "proficiencyLevel" "Beginner"
+}}
+{{ $lastmod := .Lastmod }}
+{{ if not $lastmod.IsZero }}
+  {{ $article = merge $article (dict "dateModified" ($lastmod.Format "2006-01-02")) }}
+{{ end }}
+<script type="application/ld+json">{{ $article | jsonify | safeJS }}</script>
 {{ end }}
 {{ end }}
 

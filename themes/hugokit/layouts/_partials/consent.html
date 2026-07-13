@@ -1,0 +1,73 @@
+{{- /* Consent-banner (Consent Mode v2).
+
+      Defaulten står i head.html og er 'denied' – banneret her er kun det sted
+      brugeren kan ændre den. Valget huskes i localStorage ('hk-consent'), og
+      head.html gensender det ved næste besøg, før GA loader.
+
+      Banneret starter [hidden] og vises kun hvis der ikke allerede står et
+      valg: ingen flash for brugere der har svaret.
+
+      Rollback: slet denne fil, dens kald i baseof.html og .consent-blokken i
+      main.css. Consent-defaulten i head.html skal så også fjernes – ellers
+      måler GA ingenting, fordi ingen kan give samtykke. */}}
+<div class="consent" id="consent" role="region" aria-label="Analytics consent" hidden>
+  <p class="consent-text">
+    This site uses cookies to count visits and downloads.
+  </p>
+  <div class="consent-actions">
+    <button class="btn-outline btn-sm" type="button" data-consent="denied">Decline</button>
+    <button class="btn btn-sm" type="button" data-consent="granted">Accept</button>
+  </div>
+</div>
+<script>
+  (function () {
+    var el = document.getElementById('consent');
+    if (!el) return;
+
+    var stored = null;
+    try { stored = localStorage.getItem('hk-consent'); } catch (e) {}
+
+    // Førstegangsbesøg – intet svar endnu. Er der svaret, forbliver banneret
+    // skjult, men listenerne nedenfor bindes ALTID: footer-linket skal kunne
+    // kalde det frem igen.
+    if (stored !== 'granted' && stored !== 'denied') el.hidden = false;
+
+    // Trukket samtykke: GA holder op med at skrive cookies, men dem den allerede
+    // har sat bliver liggende. De ryddes her – ellers er tilbagetrækningen kun
+    // halv. Sættes på både host og .host, da GA bruger domænet med prikken.
+    var clearGa = function () {
+      document.cookie.split(';').forEach(function (c) {
+        var name = c.split('=')[0].trim();
+        if (name.indexOf('_ga') !== 0) return;
+        document.cookie = name + '=; Max-Age=0; path=/';
+        document.cookie = name + '=; Max-Age=0; path=/; domain=' + location.hostname;
+        document.cookie = name + '=; Max-Age=0; path=/; domain=.' + location.hostname;
+      });
+    };
+
+    // Footer-linket ("Cookies") kalder banneret frem igen.
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('[data-consent-reopen]')) return;
+      el.hidden = false;
+      var first = el.querySelector('button[data-consent]');
+      if (first) first.focus();
+    });
+
+    el.addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-consent]');
+      if (!b) return;
+      var choice = b.dataset.consent;
+
+      try { localStorage.setItem('hk-consent', choice); } catch (e) {}
+
+      if (typeof gtag === 'function') {
+        gtag('consent', 'update', {
+          analytics_storage: choice === 'granted' ? 'granted' : 'denied'
+        });
+      }
+      if (choice === 'denied') clearGa();
+
+      el.hidden = true;
+    });
+  })();
+</script>

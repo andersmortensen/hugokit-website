@@ -6,6 +6,10 @@ timeZone = 'Europe/Copenhagen'
 theme = 'hugokit'
 # 'section' er aktiv igen: /changelog/ er en rigtig Hugo-sektion (Sparkle-kontrakten).
 disableKinds = ['taxonomy', 'term', 'rss']
+# Git-commit-datoen bliver sidens .Lastmod (Hugos lastmod-default har ':git' først).
+# Docs' JSON-LD (TechArticle → dateModified) læser den – ingen dato i front matter,
+# ingen dato der kan drive fra virkeligheden. Rollback: slet denne linje.
+enableGitInfo = true
 
 [markup]
   [markup.highlight]
