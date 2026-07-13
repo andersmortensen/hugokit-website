@@ -18,6 +18,8 @@
 ## Documentation
 
 Written for two readers: people using HugoKit, and people with a Hugo problem who have never heard of it. The "Fixing common Hugo problems" pages are standalone Hugo troubleshooting and apply whether or not you use the app.
+
+Every page below is also published as plain Markdown: append `index.md` to any URL – for example https://hugokit.com/docs/preflight/index.md.
 {{- $pages := .RegularPages }}
 {{- $placed := slice }}
 {{- range $group := .Params.groups }}

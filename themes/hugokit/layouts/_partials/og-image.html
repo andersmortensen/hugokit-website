@@ -1,0 +1,81 @@
+{{- /* Per-side OG-kort – genereres ved build, ét pr. side.
+
+      Forsiden beholder det designede kort i static/og/hugokit-og.png (kæmpe-
+      wordmark + tagline). Alle andre sider får dette: samme plade (assets/og/
+      plate.png – baggrund #0D0D0F, mærket i samme geometri som forsidens kort,
+      "macOS 26+ · free" nederst til højre), med sidens EGEN titel sat i Hanken
+      Grotesk oven på. Ingen håndlavede billeder at vedligeholde: en ny docs-side
+      får sit kort af sig selv.
+
+      Titlen ombrydes her i templaten, fordi images.Text ikke ombryder selv – der
+      findes ingen bredde-parameter, kun x/y. Loftet er tre linjer; en titel der
+      ikke kan være der, klippes med et ellipsetegn frem for at løbe ud over
+      kanten. Vil du justere kortets rytme, er det de fire konstanter nedenfor.
+
+      Returnerer den absolutte URL som en streng. Fejler en af ressourcerne
+      (font eller plade), returneres tom streng, og head.html falder tilbage til
+      forsidens kort – et manglende OG-billede er værre end et generisk. */ -}}
+
+{{- $wrap := 26 -}}{{- /* tegn pr. titel-linje */ -}}
+{{- $size := 60 -}}{{- /* titlens punktstørrelse */ -}}
+{{- $lead := 76 -}}{{- /* linjeafstand i titlen */ -}}
+{{- $top := 244 -}}{{- /* titlens første linje, y */ -}}
+
+{{- $plate := resources.Get "og/plate.png" -}}
+{{- $display := resources.Get "fonts/HankenGrotesk-Bold.ttf" -}}
+{{- $mono := resources.Get "fonts/JetBrainsMono-Medium.ttf" -}}
+
+{{- if and $plate $display $mono -}}
+
+  {{- /* Ombrydning: læg ord på den aktuelle linje så længe den holder sig under
+        loftet. Et enkelt ord der er længere end loftet får sin egen linje – det
+        er stadig pænere end at klippe midt i et ord. */ -}}
+  {{- $lines := slice -}}
+  {{- $cur := "" -}}
+  {{- range $word := split (.Title | plainify) " " -}}
+    {{- $try := cond (eq $cur "") $word (printf "%s %s" $cur $word) -}}
+    {{- if le (len $try) $wrap -}}
+      {{- $cur = $try -}}
+    {{- else -}}
+      {{- with $cur }}{{ $lines = $lines | append . }}{{ end -}}
+      {{- $cur = $word -}}
+    {{- end -}}
+  {{- end -}}
+  {{- with $cur }}{{ $lines = $lines | append . }}{{ end -}}
+  {{- if gt (len $lines) 3 -}}
+    {{- $lines = (first 3 $lines) -}}
+    {{- $last := printf "%s…" (index $lines 2) -}}
+    {{- $lines = (first 2 $lines) | append $last -}}
+  {{- end -}}
+
+  {{- $filters := slice -}}
+
+  {{- /* Kicker: samme gruppe som docs-hub'en og sidenavigationen bruger, så
+        kortet siger hvor i sitet siden hører til. Changelog har ingen gruppe –
+        der står sektionen i stedet. */ -}}
+  {{- $label := .Params.group | default (.Section | humanize) -}}
+  {{- with $label -}}
+    {{- $filters = $filters | append (images.Text (upper .) (dict
+      "color" "#9B98A3" "size" 20 "x" 64 "y" 186 "font" $mono)) -}}
+  {{- end -}}
+
+  {{- /* Titel-blokken hænger ikke i toppen: en kort titel skubbes ned, så
+        blokkens tyngdepunkt lander samme sted uanset om den fylder én eller tre
+        linjer. Halvdelen af de sparede linjer – resten bliver luft nedenunder. */ -}}
+  {{- $y := add $top (mul (sub 3 (len $lines)) (div $lead 2)) -}}
+  {{- range $lines -}}
+    {{- $filters = $filters | append (images.Text . (dict
+      "color" "#F2F0F4" "size" $size "x" 62 "y" $y "font" $display)) -}}
+    {{- $y = add $y $lead -}}
+  {{- end -}}
+
+  {{- /* Nederst til venstre: sidens egen adresse, så kortet kan læses uden at
+        klikke. Modvægt til "macOS 26+ · free", der er malet ind i pladen. */ -}}
+  {{- $filters = $filters | append (images.Text (printf "hugokit.com%s" .RelPermalink) (dict
+    "color" "#5F5C66" "size" 21 "x" 64 "y" 538 "font" $mono)) -}}
+
+  {{- with $plate.Filter $filters -}}
+    {{- .Permalink -}}
+  {{- end -}}
+
+{{- end -}}

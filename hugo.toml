@@ -29,8 +29,21 @@ enableGitInfo = true
     # Ikke et alternativt view af forsiden – skal aldrig i <link rel=alternate>.
     notAlternative = true
 
+  # Markdown-udgaven af hver side: /docs/preflight/index.md ved siden af HTML'en.
+  # Til AI-crawlere og til folk der bare vil have kilden. Templaten er
+  # themes/hugokit/layouts/page.md, og head.html udstiller den som
+  # <link rel="alternate" type="text/markdown"> – derfor IKKE notAlternative.
+  [outputFormats.md]
+    mediaType = 'text/markdown'
+    baseName = 'index'
+    isPlainText = true
+    permalinkable = false
+
 [outputs]
   home = ['html', 'llms']
+  # Gælder alle enkeltsider – docs og changelog. Sektionsforsider beholder
+  # Hugos default (kun html).
+  page = ['html', 'md']
 
 [markup]
   [markup.highlight]
