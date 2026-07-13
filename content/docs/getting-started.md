@@ -108,6 +108,23 @@ Every publish runs [preflight](/docs/preflight/) first: it builds the site, then
 
 The full walkthroughs: [Publishing to GitHub Pages](/docs/publishing-to-github-pages/) · [Publishing over SFTP](/docs/publishing-over-sftp/).
 
+## Your content
+
+The **Content** page counts what's in the site – pages, sections, words and images – and lists the files. Open one and you get a preview, plus a **Raw** tab: a plain monospaced editor with an explicit **Save** (`⌘S`), a line count and an *edited* marker while you have unsaved changes. Close it with changes pending and HugoKit asks first.
+
+It's for a typo, a front matter field, a date. Real writing stays in your own editor – there's an **Open in editor** button one click away, and the dev server reloads on save either way.
+
+## Outside the window
+
+HugoKit doesn't need its window open to be useful.
+
+- **Menu bar icon** – every site, its status, and start/stop without opening the window. The status dot follows the server: green running, amber busy, red failed, grey idle. Turn it off in **Settings → General**.
+- **Notifications** – native macOS notifications for six events, each with its own toggle in **Settings → Notifications**: server started, server stopped unexpectedly, build succeeded, build failed, publish succeeded, publish failed. If you've denied notification permission, HugoKit says so and links straight to System Settings.
+
+## Hugo Reference
+
+`⌘2` opens a searchable copy of Hugo's reference material inside the app: **195 entries** across twelve categories – functions, methods, page and site variables, templates, partials, shortcodes, front matter, config, content, build and performance. It's there so a forgotten function name doesn't cost you a browser tab.
+
 ## Shortcuts worth knowing
 
 | Shortcut | Action |

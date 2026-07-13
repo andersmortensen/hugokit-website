@@ -26,9 +26,7 @@
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
             Download for macOS
           </a>
-          {{- /* Bevidst ét nummer mindre end Download-knappen, så begge kan stå
-                på samme række inden for hero-kolonnens bredde. */}}
-          <a class="btn-outline" href="#why">{{ .more }}</a>
+          <a class="btn-outline btn-lg" href="#why">{{ .more }}</a>
         </div>
         <span class="fine-meta">{{ $.Params.download.meta }}</span>
       </div>
@@ -118,7 +116,16 @@
   <section class="why" id="why" aria-label="Why HugoKit">
     <div class="why-sticky">
       <span class="label-pill">Why HugoKit</span>
-      <h2 class="why-h">{{ .Params.about.intro }}</h2>
+      {{- /* Statementet afsløres ord for ord mens kvartet-kortene scroller forbi:
+            hvert ord er et span med sit indeks, og en scroll-drevet view-timeline
+            på sektionen flytter det fra --faint til --ink. Ren CSS – uden
+            scroll-driven animations (eller ved reduceret bevægelse) står hele
+            sætningen bare i --ink fra start. */}}
+      <h2 class="why-h">
+        {{- range $i, $w := split .Params.about.intro " " -}}
+        <span class="ww" style="--wi:{{ $i }}">{{ $w }} </span>
+        {{- end -}}
+      </h2>
     </div>
     {{- /* Kolonnefordelingen følger kvartetten i mærket: venstre = q1 pink
           øverst + q3 grøn nederst, højre = q2 blå øverst + q4 guld nederst.
@@ -131,6 +138,7 @@
           <div class="wcard-copy">
             <h3>{{ $c.name }}</h3>
             <p>{{ $c.text }}</p>
+            {{ with $c.docs }}<span class="feature-docs wcard-docs">{{ partial "doc-links.html" . }}</span>{{ end }}
           </div>
         </div>
         {{ end }}{{ end }}
@@ -142,6 +150,7 @@
           <div class="wcard-copy">
             <h3>{{ $c.name }}</h3>
             <p>{{ $c.text }}</p>
+            {{ with $c.docs }}<span class="feature-docs wcard-docs">{{ partial "doc-links.html" . }}</span>{{ end }}
           </div>
         </div>
         {{ end }}{{ end }}
@@ -149,68 +158,23 @@
     </div>
   </section>
 
-  {{ with .Params.loop }}
-  {{- /* Tabbed loop: radio + CSS (virker uden JS, piletaster via native
-        radiogroup). Hvert moment = én tab med uddybende points og sit view;
-        Preflight har intet screenshot og viser wireframe-glyphen i stedet. */}}
-  <section class="loop reveal" id="loop" aria-label="Preview to publish">
-    <div class="loop-head">
-      <h2 class="loop-h">{{ .heading }}</h2>
-      <p class="loop-sub">{{ .sub }}</p>
-    </div>
-    {{ range $i, $m := $.Params.moments }}
-    <input class="loop-radio" type="radio" name="loop-tab" id="loop-t{{ $i }}"{{ if eq $i 0 }} checked{{ end }}>
-    {{ end }}
-    <div class="loop-tabs">
-      {{ range $i, $m := $.Params.moments }}
-      <label class="loop-tab" for="loop-t{{ $i }}">
-        <span class="loop-tab-n loop-tab-n-{{ add $i 1 }}">0{{ add $i 1 }}</span>{{ $m.label }}
-      </label>
-      {{ end }}
-    </div>
-    <div class="loop-panels">
-      {{ range $i, $m := $.Params.moments }}
-      <div class="loop-panel loop-panel-{{ $i }}">
-        <div class="loop-panel-copy">
-          <h3>{{ $m.heading }}</h3>
-          <p class="loop-panel-text">{{ $m.text }}</p>
-          {{ with $m.points }}
-          <ul class="loop-points">
-            {{ range . }}<li>{{ . }}</li>{{ end }}
-          </ul>
-          {{ end }}
-          <a class="btn btn-lg loop-cta" href="#download">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
-            Download for macOS
-          </a>
-        </div>
-        <div class="loop-panel-side">
-          {{ if $m.screenshot }}
-          <figure class="loop-shot">
-            {{ partial "shot.html" (dict "light" $m.screenshot "dark" $m.screenshotDark "alt" $m.alt) }}
-          </figure>
-          {{ else }}
-          <div class="loop-glyph-tile" role="img" aria-label="{{ $m.alt }}">
-            {{ partial "feature-glyph.html" (dict "glyph" $m.glyph) }}
-          </div>
-          {{ end }}
-        </div>
-      </div>
-      {{ end }}
-    </div>
-  </section>
-  {{ end }}
-
-  {{ if $rest }}
+  {{ if .Params.features.items }}
+  {{- /* Features: sidens fulde overblik. Løkkens tre trin (Preview, Preflight,
+        Publish) står øverst, derefter HELE feature-listen – også de fire med
+        accent, som samtidig optræder som kvartet-kort i Why. Kortene er
+        teaseren; listen er stedet hvor alt står. */}}
   <section class="features reveal" id="features" aria-label="Features">
     <h2 class="label-pill">{{ .Params.features.title }}</h2>
+    {{- /* Hver feature er en <details>: den lukkede række er altid 76px høj og
+          bærer den korte tekst; det udfoldede felt bærer prosa, punkter og en
+          meta-linje med genvej + link til dokumentationen. Ingen JS – ::details-content
+          animeres i CSS (samme mønster som FAQ'en). */}}
     <div class="feature-list">
-      {{ range $rest }}
-      <div class="feature-row">
-        {{ partial "feature-glyph.html" (dict "glyph" .glyph) }}
-        <h3 class="feature-name">{{ .name }}</h3>
-        <p class="feature-text">{{ .text }}</p>
-      </div>
+      {{ range .Params.moments }}
+      {{ partial "feature-item.html" (dict "name" .label "glyph" .glyph "text" .text "detail" .detail "points" .points "shortcut" .shortcut "docs" .docs) }}
+      {{ end }}
+      {{ range .Params.features.items }}
+      {{ partial "feature-item.html" (dict "name" .name "glyph" .glyph "text" .text "detail" .detail "points" .points "shortcut" .shortcut "docs" .docs) }}
       {{ end }}
     </div>
   </section>
@@ -241,16 +205,22 @@
   {{ end }}
 
   {{ with .Params.note }}
+  {{- /* Hairline-split: regel-linje over, eyebrow i venstre kolonne, prosaen
+        til højre bag en neutral lodret hairline (samme deler som fakta-båndet). */}}
   <section class="note reveal">
-    <p class="section-label">{{ .label }}</p>
-    <p class="note-text">{{ .text }}</p>
-    {{ with .extra }}<p class="note-text note-extra">{{ . }}</p>{{ end }}
-    {{ with .donate }}
-    <a class="btn-outline note-donate" href="{{ .url }}" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 9h11v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"/><path d="M16 10h1.5a2.5 2.5 0 0 1 0 5H16"/><path d="M8.5 3.5v2M12 3.5v2"/></svg>
-      {{ .label }}
-    </a>
-    {{ end }}
+    <div class="note-split">
+      <p class="section-label note-label">{{ .label }}</p>
+      <div class="note-body">
+        <p class="note-text">{{ .text }}</p>
+        {{ with .extra }}<p class="note-text note-extra">{{ . }}</p>{{ end }}
+        {{ with .donate }}
+        <a class="btn-outline note-donate" href="{{ .url }}" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 9h11v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"/><path d="M16 10h1.5a2.5 2.5 0 0 1 0 5H16"/><path d="M8.5 3.5v2M12 3.5v2"/></svg>
+          {{ .label }}
+        </a>
+        {{ end }}
+      </div>
+    </div>
   </section>
   {{ end }}
 

@@ -15,8 +15,10 @@
   color-scheme: light dark;
 
   /* surround = fladen bag kanvassen (browser-toolbar-tonen) · canvas = selve siden */
-  --surround: light-dark(#E2DFE7, #060607);
-  --canvas: light-dark(#F2F0F4, #101013);
+  /* Sidefladen: eggshell – varm off-white, lav chroma, så de hvide plate-flader
+     stadig løfter sig fra den. Dark mode uændret. */
+  --surround: light-dark(#F4F1EA, #060607);
+  --canvas: light-dark(#F4F1EA, #101013);
   --bg: var(--canvas);
   --plate: light-dark(#FFFFFF, #17171B);
   --stage: light-dark(#FAF9FB, #141419);
@@ -40,6 +42,15 @@
 
   /* Browser toolbar color – Safari Tahoe+ sampler html/body (jf. brand-reglen) */
   --toolbar-color: var(--surround);
+
+  /* Nav-barens frostede flade – lav nok opacitet til at indholdet anes bagved,
+     høj nok til at mono-linkene holder kontrast oven på hvad som helst */
+  --nav-glass: light-dark(rgba(255, 255, 255, 0.72), rgba(23, 23, 27, 0.62));
+
+  /* Nav-barens løft – to lag: en tæt kontaktskygge + en blød bæreskygge */
+  --nav-shadow:
+    0 1px 2px light-dark(rgba(38, 38, 43, 0.05), rgba(0, 0, 0, 0.35)),
+    0 10px 30px light-dark(rgba(38, 38, 43, 0.07), rgba(0, 0, 0, 0.42));
 
   /* Mode-toggle: månen vises i light, solen i dark (light-dark styrer synlighed) */
   --icon-moon: light-dark(#5F5C66, transparent);
@@ -117,8 +128,6 @@ a { color: inherit; }
 /* ── Kanvassen – siden som indrammet, afrundet flade ─────────────────────── */
 
 .canvas {
-  background: var(--canvas);
-  border: 1px solid var(--line);
   border-radius: 26px;
   max-width: var(--canvas-max);
   margin: 0 auto;
@@ -190,7 +199,9 @@ a { color: inherit; }
 .btn svg { width: 14px; height: 14px; }
 
 .btn-sm { padding: 9px 18px; font-size: 13px; }
-.btn-lg { padding: 15px 30px; font-size: 15px; gap: 11px; }
+/* Fast højde frem for padding: .btn og .btn-outline har forskellig font-size og
+   kant, så padding alene gav to forskellige højder side om side i heroen */
+.btn-lg { height: 54px; padding: 0 30px; font-size: 15px; gap: 11px; }
 .btn-lg svg { width: 16px; height: 16px; }
 
 .btn-ghost {
@@ -220,7 +231,7 @@ a { color: inherit; }
 }
 .btn-outline:hover { background: var(--stage); }
 .btn-outline svg { width: 15px; height: 15px; }
-.btn-outline.btn-lg { padding: 14px 29px; font-size: 15px; }
+.btn-outline.btn-lg { height: 54px; padding: 0 29px; font-size: 15px; }
 .btn-outline.btn-sm { padding: 8px 17px; font-size: 13px; }
 
 .cta-row { display: flex; align-items: center; gap: 22px; }
@@ -229,47 +240,72 @@ a { color: inherit; }
 .cta-col { display: flex; flex-direction: column; align-items: flex-start; }
 .cta-col .fine-meta { margin-top: 14px; }
 
-/* ── Nav – pill-række øverst i kanvassen ──────────────────────────────────── */
+/* ── Nav – én flydende bar øverst i kanvassen ─────────────────────────────── */
 
+/* Skallen bærer sticky-positionen og luften over baren; .nav-bar er selve
+   fladen. Baren er opak, så indholdet må gerne rulle ind under den. */
+/* Luften over baren ligger i margin – ikke padding – så sticky-boksen ER baren.
+   top: 14px = body's egen gutter: når baren klæber, flugter dens luft med
+   rammen omkring kanvassen, og indholdet ruller ind under den. */
 .site-nav {
-  display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  position: sticky; top: 0; z-index: 60;
-  margin: 0 -8px;
-  padding: 12px 8px 10px;
-  background: linear-gradient(var(--canvas) 76%, transparent);
+  position: sticky; top: 14px; z-index: 60;
+  margin-top: 14px;
 }
 
-.nav-group { display: flex; align-items: center; gap: 8px; }
-
-.pill {
-  display: inline-flex; align-items: center; gap: 9px;
-  height: 38px;
-  padding: 0 15px;
-  background: var(--plate);
-  border: 1px solid var(--line-strong);
+.nav-bar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr; /* links står centreret i baren, uanset
+                                          hvor brede logo og actions bliver */
+  align-items: center;
+  gap: 16px;
+  height: 54px;
+  padding: 0 7px 0 14px;
+  border: 1px solid var(--line);
   border-radius: 999px;
-  transition: background-color 160ms ease;
+  box-shadow: var(--nav-shadow);
+
+  /* Frosted glass: fladen er halvgennemsigtig, og alt bagved sløres og mættes,
+     så indholdet under baren anes som farve og bevægelse – ikke som tekst */
+  background: var(--nav-glass);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
 }
-a.pill { text-decoration: none; }
-.pill:hover { background: var(--stage); }
+
+/* Browsere uden backdrop-filter må ikke ende med en gennemsigtig bar med
+   læselig tekst bagved – de får den opake plate-flade i stedet */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .nav-bar { background: var(--plate); }
+}
+
+.nav-links-mid {
+  display: flex; align-items: center;
+  gap: 4px;
+  justify-self: center;
+}
+
+.nav-actions {
+  display: flex; align-items: center; gap: 4px;
+  justify-self: end;
+}
 
 .nav-link {
-  font-family: var(--mono);
-  font-size: 12px; font-weight: 500;
-  letter-spacing: 0.02em;
-  color: var(--ink);
+  display: inline-flex; align-items: center;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-family: var(--display); /* samme skrift og vægt som lockup'et */
+  font-size: 14px; font-weight: 700;
+  letter-spacing: -0.005em;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 160ms ease, background-color 160ms ease;
 }
+.nav-link:hover { color: var(--ink); background: var(--stage); }
 
 .lockup {
   display: inline-flex; align-items: center; gap: 10px;
   text-decoration: none;
 }
-.site-nav .lockup {
-  border-color: transparent;
-  background: transparent;
-  padding-left: 2px;
-}
-.site-nav .lockup:hover { background: transparent; }
 .lockup-name {
   font-family: var(--display);
   font-weight: 700; /* wordmark-vægten, altid */
@@ -280,14 +316,24 @@ a.pill { text-decoration: none; }
 
 .mode-toggle {
   position: relative;
-  width: 38px;
+  display: inline-flex;
+  width: 36px; height: 36px;
   padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
   cursor: pointer;
+  transition: background-color 160ms ease;
 }
+.mode-toggle:hover { background: var(--stage); }
 .mode-toggle svg {
   position: absolute; inset: 9px;
   width: 18px; height: 18px;
 }
+
+/* CTA'en sidder som en indfattet pille i barens højre ende – 7px luft hele vejen
+   rundt (54 − 40 = 14), samme mål som .nav-bar's højre padding */
+.nav-actions .btn { height: 40px; padding: 0 18px; }
 .i-moon { color: var(--icon-moon); }
 .i-sun { color: var(--icon-sun); }
 
@@ -382,30 +428,40 @@ a.pill { text-decoration: none; }
 
 /* ── Fakta-båndet ─────────────────────────────────────────────────────────── */
 
+/* Én indfattet flade delt af hairlines – de tre fakta læses som ét udsagn,
+   ikke som tre løse rækker der svæver på siden */
 .facts {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: clamp(20px, 3vw, 48px);
-  padding: clamp(72px, 8vw, 128px) 0 clamp(40px, 5vw, 72px);
-}
-.fact { display: flex; align-items: center; gap: 17px; }
-.fact-ic {
-  width: 50px; height: 50px; flex: none;
-  border-radius: 14px;
+  margin: clamp(72px, 8vw, 128px) 0 clamp(40px, 5vw, 72px);
   background: var(--plate);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  overflow: clip;
+}
+.fact {
+  display: flex; align-items: center; gap: 15px;
+  padding: clamp(22px, 2.4vw, 30px);
+}
+.fact + .fact { border-left: 1px solid var(--line); }
+
+.fact-ic {
+  width: 42px; height: 42px; flex: none;
+  border-radius: 11px;
+  background: var(--stage);
   border: 1px solid var(--line);
   display: grid; place-items: center;
   color: var(--muted);
 }
-.fact-ic svg { width: 21px; height: 21px; }
+.fact-ic svg { width: 19px; height: 19px; }
 .fact-v {
   font-family: var(--display);
   font-weight: 800;
-  font-size: clamp(23px, 2.3vw, 31px);
+  font-size: clamp(19px, 1.7vw, 23px);
   letter-spacing: -0.018em;
-  line-height: 1.15;
+  line-height: 1.2;
 }
-.fact-l { font-size: 13px; color: var(--muted); }
+.fact-l { font-size: 13px; color: var(--muted); line-height: 1.45; }
 
 /* ── Why – sticky statement, kvartet-kortene scroller henover ─────────────── */
 
@@ -426,6 +482,33 @@ a.pill { text-decoration: none; }
   line-height: 1.02;
   letter-spacing: -0.018em;
 }
+
+/* Ordafsløring: statementet tændes ord for ord mens kvartet-kortene scroller
+   forbi det fastlåste sticky-hoved. Timelinen er sektionens egen view-progress
+   (--why-line, navngivet på .why så ordene arver den); hvert ord forskyder sit
+   animation-range med sit indeks (--wi). Ingen JS, ingen scroll-listener.
+   Vinduet er målt, ikke gættet: sektionens cover-range løber over H + viewport,
+   og sticky-hovedet står fast fra ~cover 33 % til ~75 %. Ordene tændes inden
+   for netop det vindue, så første og sidste ord begge falder mens statementet
+   holder stille. Kun ≥1021px, hvor sticky faktisk holder – og kun med
+   motion-accept og scroll-driven support. Ellers står sætningen i --ink. */
+.why-h .ww { color: inherit; }
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 1021px) {
+    .why { view-timeline: --why-line block; }
+
+    .why-h .ww {
+      color: var(--faint);
+      animation: word-lit linear both;
+      animation-timeline: --why-line;
+      animation-range:
+        cover calc(34% + var(--wi, 0) * 2.4%)
+        cover calc(42% + var(--wi, 0) * 2.4%);
+    }
+  }
+}
+@keyframes word-lit { to { color: var(--ink); } }
 
 /* Murværket fra mærket: fire ens, kvadratiske fliser kant mod kant –
    smal fuge, næsten skarpe hjørner, ingen forskydning. */
@@ -485,152 +568,22 @@ a.pill { text-decoration: none; }
 }
 .wcard p { font-size: 14px; line-height: 1.5; color: var(--muted); max-width: 32ch; }
 
+/* Docs-link på kvartet-kortet: samme mono-henvisning som i feature-listen, men
+   venstrestillet under teksten (i listen ligger den i et højre-spor). Kortet er
+   kvadratisk, så linket kan ikke ændre højden. Selektoren skal bære .wcard for
+   at slå .feature-docs' højrestilling, som står senere i filen. */
+.wcard .feature-docs {
+  margin-left: 0;
+  margin-top: 14px;
+  text-align: left;
+  align-items: flex-start; /* chippen skal have sin egen bredde, ikke kortets */
+}
+
 /* Kvartetten fra mærket – kun som accent (flise + glyph-prik), fladen er neutral */
 .wc-pink { --wc-accent: var(--pink); }
 .wc-blue { --wc-accent: var(--blue); }
 .wc-green { --wc-accent: var(--green); }
 .wc-gold { --wc-accent: var(--gold); }
-
-/* ── Loop – mørkt panel: tabs (radio + CSS, ingen JS) med uddybning pr. trin ─ */
-
-.loop {
-  background: #17171B;
-  color: #F2F0F4;
-  border: 1px solid var(--line);
-  border-radius: 24px;
-  margin-bottom: clamp(72px, 8vw, 120px);
-  padding: clamp(28px, 3.5vw, 56px);
-}
-
-.loop-head { max-width: 620px; }
-.loop-h {
-  font-family: var(--display);
-  font-weight: 800;
-  font-size: clamp(34px, 4.2vw, 60px);
-  line-height: 1.0;
-  letter-spacing: -0.018em;
-  margin-bottom: 14px;
-}
-.loop-sub { color: #9B98A3; font-size: 14px; max-width: 40ch; margin-bottom: 30px; }
-
-/* Radios: visuelt skjult, men fokusérbare – piletaster skifter tab natively */
-.loop-radio { position: absolute; opacity: 0; pointer-events: none; }
-
-/* Segmented tab-bar – én tydelig kontrol frem for løse pills. Grid'et gør
-   de tre trin lige brede; det valgte segment er fyldt. */
-.loop-tabs {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 5px;
-  max-width: 640px;
-  background: #101013;
-  border: 1px solid rgba(242, 240, 244, 0.12);
-  border-radius: 14px;
-  padding: 5px;
-  margin-bottom: clamp(24px, 2.6vw, 36px);
-}
-.loop-tab {
-  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
-  font-family: var(--mono);
-  font-size: 12.5px; font-weight: 500; letter-spacing: 0.02em;
-  color: #9B98A3;
-  border-radius: 10px;
-  padding: 11px 10px;
-  cursor: pointer;
-  transition: background-color 160ms ease, color 160ms ease;
-}
-.loop-tab:hover { background: rgba(242, 240, 244, 0.06); color: #C9C6D0; }
-.loop-tab-n-1 { color: var(--pink); }
-.loop-tab-n-2 { color: var(--blue); }
-.loop-tab-n-3 { color: var(--green); }
-
-#loop-t0:checked ~ .loop-tabs label[for="loop-t0"],
-#loop-t1:checked ~ .loop-tabs label[for="loop-t1"],
-#loop-t2:checked ~ .loop-tabs label[for="loop-t2"] {
-  background: #F2F0F4;
-  color: #0D0D0F;
-}
-#loop-t0:focus-visible ~ .loop-tabs label[for="loop-t0"],
-#loop-t1:focus-visible ~ .loop-tabs label[for="loop-t1"],
-#loop-t2:focus-visible ~ .loop-tabs label[for="loop-t2"] {
-  outline: 2px solid #F2F0F4;
-  outline-offset: 3px;
-}
-
-.loop-panel {
-  display: none;
-  grid-template-columns: minmax(300px, 0.92fr) 1.08fr;
-  gap: clamp(28px, 4vw, 72px);
-  align-items: center;
-}
-#loop-t0:checked ~ .loop-panels .loop-panel-0 { display: grid; }
-#loop-t1:checked ~ .loop-panels .loop-panel-1 { display: grid; }
-#loop-t2:checked ~ .loop-panels .loop-panel-2 { display: grid; }
-
-.loop-panel h3 {
-  font-family: var(--display);
-  font-weight: 700;
-  font-size: clamp(21px, 2.2vw, 29px);
-  letter-spacing: -0.014em;
-  margin-bottom: 10px;
-}
-.loop-panel-text { font-size: 14px; color: #9B98A3; max-width: 44ch; }
-
-.loop-points { list-style: none; margin-top: 16px; }
-.loop-points li {
-  position: relative;
-  padding: 10px 0 10px 24px;
-  font-size: 13.5px;
-  line-height: 1.55;
-  color: #C9C6D0;
-  border-top: 1px solid rgba(242, 240, 244, 0.09);
-}
-.loop-points li::before {
-  content: "";
-  position: absolute;
-  left: 3px; top: 50%;
-  width: 7px; height: 7px;
-  border-radius: 2px;
-  transform: translateY(-50%) rotate(45deg);
-}
-/* Punkt-markørerne følger tabbens kvartet-farve */
-.loop-panel-0 .loop-points li::before { background: var(--pink); }
-.loop-panel-1 .loop-points li::before { background: var(--blue); }
-.loop-panel-2 .loop-points li::before { background: var(--green); }
-
-.loop-cta { margin-top: 26px; width: 100%; }
-/* Ink-knappen på mørk flade: altid den inverterede variant */
-.loop .btn { background: #F2F0F4; color: #0D0D0F; }
-.loop .btn:hover { background: #DEDBE3; }
-
-.loop-panel-side { min-width: 0; }
-/* Screenshottet bærer sin egen window-frame og skygge – ingen ekstra ramme */
-.loop-shot { margin: 0; }
-.loop-shot .shot { width: 100%; height: auto; }
-
-/* Preflight har intet view endnu – wireframe-glyphen på stille flade,
-   med glyph-tokens overstyret til den mørke kontekst */
-.loop-glyph-tile {
-  background: #101013;
-  border: 1px solid rgba(242, 240, 244, 0.09);
-  border-radius: 14px;
-  display: grid; place-items: center;
-  aspect-ratio: 4 / 3;
-  --stage: #17171B;
-  --line: rgba(242, 240, 244, 0.08);
-  --line-strong: rgba(242, 240, 244, 0.22);
-  --faint: #8C8994;
-}
-.loop-glyph-tile .feature-glyph { width: clamp(96px, 11vw, 150px); height: auto; }
-
-/* Blødt panel-skift */
-@media (prefers-reduced-motion: no-preference) {
-  .loop-panel { animation: panel-in 340ms cubic-bezier(0.19, 1, 0.22, 1); }
-}
-@keyframes panel-in {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: none; }
-}
 
 /* ── Hugo-panelet – pink split: terminalen + USP'erne ─────────────────────── */
 
@@ -744,17 +697,157 @@ a.pill { text-decoration: none; }
 
 /* ── Features – resten af værktøjskassen som kompakte tabel-rækker ────────── */
 
-.features { padding: 0 0 clamp(72px, 8vw, 120px); }
+/* Sektionen er smallere end kanvassen og står midt i den – listen skal læses,
+   ikke spændes ud over hele skærmen. */
+.features {
+  padding: 0 0 clamp(72px, 8vw, 120px);
+  max-width: 1000px;
+  margin-inline: auto;
+}
 .features .label-pill { margin-bottom: 26px; }
 
 .feature-list { border-bottom: 1px solid var(--line); }
+
+/* Hver feature er en <details>. Den lukkede række bærer kun glyph, navn og
+   discloser – beskrivelsen hører til det udfoldede felt, så listen kan skimmes
+   på titlerne alene. */
+.feature-item { border-top: 1px solid var(--line); }
+
 .feature-row {
   display: grid;
-  grid-template-columns: 44px minmax(0, 0.9fr) minmax(0, 1.5fr);
+  grid-template-columns: 44px minmax(0, 1fr) 24px;
   gap: 0 clamp(20px, 3vw, 48px);
   align-items: center;
-  border-top: 1px solid var(--line);
   padding: 15px 0;
+  min-height: 76px;
+  list-style: none;
+  cursor: pointer;
+}
+
+/* Beskrivelsen: skjult i den lukkede række, til stede når rækken er åben. */
+.feature-item:not([open]) .feature-copy { display: none; }
+.feature-item[open] .feature-row {
+  grid-template-columns: 44px minmax(0, 0.9fr) minmax(0, 1.5fr) 24px;
+}
+.feature-row::-webkit-details-marker { display: none; }
+.feature-item-static .feature-row { cursor: default; }
+/* Uden discloser skal teksten ikke efterlade en tom fjerde kolonne */
+.feature-item-static .feature-row { grid-template-columns: 44px minmax(0, 0.9fr) minmax(0, 1.5fr); }
+
+/* Discloseren – samme "+" som FAQ'ens, roterer til "×" når rækken er åben */
+.feature-plus {
+  position: relative;
+  width: 24px; height: 24px;
+  justify-self: end;
+}
+.feature-plus::before,
+.feature-plus::after {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%;
+  background: var(--faint);
+  transition: transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1), background-color 160ms ease;
+}
+.feature-plus::before { width: 11px; height: 1.5px; transform: translate(-50%, -50%); }
+.feature-plus::after  { width: 1.5px; height: 11px; transform: translate(-50%, -50%); }
+
+.feature-row:hover .feature-plus::before,
+.feature-row:hover .feature-plus::after { background: var(--ink); }
+
+.feature-item[open] .feature-plus::before { transform: translate(-50%, -50%) rotate(180deg); }
+.feature-item[open] .feature-plus::after  { transform: translate(-50%, -50%) rotate(90deg); }
+.feature-item[open] .feature-plus::before,
+.feature-item[open] .feature-plus::after { background: var(--ink); }
+
+/* ── Det udfoldede felt ──────────────────────────────────────────────────── */
+
+/* Åben række: den korte tekst forsvinder – detaljen erstatter den, og de to
+   skal ikke stå og sige det samme oven på hinanden. */
+.feature-item[open] .feature-text { display: none; }
+
+.feature-detail {
+  /* Flugter med navne-kolonnen: glyph-bredde + gab */
+  padding: 2px 0 30px calc(44px + clamp(20px, 3vw, 48px));
+  max-width: 700px;
+}
+.feature-lead {
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: var(--ink);
+  max-width: 52ch;
+}
+
+.feature-points {
+  list-style: none;
+  margin-top: 18px;
+  border-top: 1px solid var(--line);
+  max-width: 56ch;
+}
+.feature-points li {
+  position: relative;
+  padding: 9px 0 9px 22px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+}
+.feature-points li::before {
+  content: "";
+  position: absolute;
+  left: 2px; top: 50%;
+  width: 6px; height: 6px;
+  border-radius: 1.5px;
+  background: var(--line-strong);
+  transform: translateY(-50%) rotate(45deg);
+}
+
+/* Meta-linjen bærer kun docs-knappen – genvejen bor inline i prosaen */
+.feature-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+/* Genvejstaster: skrevet som `⌘P` i indholdet, renderet som <code> – samme
+   pille som før, men nu inline dér hvor sætningen nævner dem. */
+.feature-lead code,
+.feature-points code {
+  display: inline-block;
+  vertical-align: baseline;
+  font-family: var(--mono);
+  font-size: 0.78em;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  color: var(--muted);
+  background: var(--stage);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 2px 9px;
+}
+/* Docs-knapperne ligger vandret her, ikke i rækkens højre spor */
+.feature-meta .feature-docs {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-left: 0;
+  text-align: left;
+}
+
+/* Blød udfoldning – samme mekanik som FAQ'en (interpolate-size er sat der) */
+.feature-item::details-content {
+  opacity: 0;
+  block-size: 0;
+  overflow-y: clip;
+  transition:
+    content-visibility 340ms allow-discrete,
+    opacity 340ms ease,
+    block-size 340ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.feature-item[open]::details-content {
+  opacity: 1;
+  block-size: auto;
 }
 .feature-glyph { width: 44px; height: 44px; stroke-width: 1; }
 .feature-name {
@@ -763,7 +856,65 @@ a.pill { text-decoration: none; }
   font-size: clamp(16px, 1.7vw, 20px);
   letter-spacing: -0.014em;
 }
+/* Tekst + docs-links side om side: teksten bestemmer rækkens højde, linkene
+   lægger sig i sporet ved siden af og fylder aldrig lodret. */
+.feature-copy {
+  display: flex;
+  align-items: center;
+  gap: clamp(18px, 2.4vw, 40px);
+  min-width: 0;
+}
 .feature-text { font-size: 14px; color: var(--muted); max-width: 560px; }
+
+/* Docs-links – kun på de features der faktisk er beskrevet i dokumentationen.
+   Mono-registret holder det som en henvisning, ikke en CTA; flere links stables
+   i deres eget spor. Kun farve/understregning på hover (ingen bevægelse). */
+.feature-docs {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-left: auto;
+  text-align: right;
+}
+/* Docs-linket som chip: ikon + "Docs"-kicker + sidens titel + pil. Det skal
+   kunne læses som "her ligger den tekniske beskrivelse", ikke som endnu en
+   linje brødtekst. Kun farve/flade/kant ændrer sig på hover – ingen bevægelse. */
+.feature-doc {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px 8px 12px;
+  background: var(--btn-bg);
+  border: 1px solid transparent;
+  border-radius: 999px;
+  /* Samme skrift som nav'en og sidens øvrige knapper – ikke mono */
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--btn-fg);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 160ms ease;
+}
+.feature-doc-ic {
+  width: 14px; height: 14px;
+  flex: none;
+  color: color-mix(in srgb, var(--btn-fg) 62%, transparent);
+}
+.feature-doc-kicker {
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--btn-fg);
+}
+.feature-doc-sep,
+.feature-doc-title,
+.feature-doc-arrow { color: color-mix(in srgb, var(--btn-fg) 72%, transparent); }
+
+.feature-doc:hover { background: var(--btn-bg-hover); }
 
 /* ── FAQ – details/summary, kun farve skifter på hover ────────────────────── */
 
@@ -862,13 +1013,29 @@ a.pill { text-decoration: none; }
 /* ── Personlig note ───────────────────────────────────────────────────────── */
 
 .note { padding: 0 0 clamp(72px, 8vw, 120px); }
+
+/* Hairline-split: regel-linjen over, eyebrow'en i venstre kolonne, prosaen bag
+   en neutral lodret deler – samme greb som fakta-båndets kolonner. */
+.note-split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.3fr) minmax(0, 1fr);
+  border-top: 1px solid var(--line-strong);
+  padding-top: clamp(20px, 2.4vw, 30px);
+}
+.note-label { padding-top: 5px; } /* optisk linje med prosaens første linje */
+.note-body {
+  border-left: 1px solid var(--line);
+  padding-left: clamp(24px, 3.6vw, 56px);
+  max-width: 660px;
+}
+
 .note-text {
-  margin-top: 12px;
   font-size: 16.5px;
   line-height: 1.65;
   color: var(--ink);
   max-width: 620px;
 }
+.note-text + .note-text { margin-top: 12px; }
 .note-extra { color: var(--muted); font-size: 15px; }
 .note-donate { margin-top: 20px; }
 
@@ -1128,7 +1295,7 @@ a.pill { text-decoration: none; }
 
   /* Sektioner med barne-stagger: forælderen fader kun, børnene rejser sig
      forskudt – ét cascade-lag, ikke to bevægelser oven på hinanden. */
-  html.js .facts.reveal, html.js .loop.reveal,
+  html.js .facts.reveal,
   html.js .hugo-panel.reveal, html.js .features.reveal { transform: none; }
 
   html.js .facts.reveal .fact,
@@ -1226,7 +1393,9 @@ a.pill { text-decoration: none; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .faq-item::details-content { transition: none; }
-  .btn, .btn-ghost, .nav-link, .footer-links a, .faq-item summary, .faq-item summary::after, .pill { transition: none; }
+  .feature-item::details-content { transition: none; }
+  .feature-plus::before, .feature-plus::after { transition: none; }
+  .btn, .btn-ghost, .nav-link, .mode-toggle, .footer-links a, .faq-item summary, .faq-item summary::after { transition: none; }
   .term-caret { animation: none; }
 }
 
@@ -1236,7 +1405,7 @@ a.pill { text-decoration: none; }
   .hero-row { grid-template-columns: 1fr; }
   .hero-media { order: -1; margin: clamp(-64px, -8vw, -20px) auto 0; }
   .hero-copy { max-width: 52ch; padding-top: 28px; }
-  .loop, .hugo-panel { grid-template-columns: 1fr; }
+  .hugo-panel { grid-template-columns: 1fr; }
   .why-sticky { position: static; }
   .why-cards { width: 100%; margin-top: 44px; }
 }
@@ -1246,8 +1415,17 @@ a.pill { text-decoration: none; }
   body { padding: 8px; }
 
   .nav-links-mid { display: none; }
+  /* Uden midterkolonnen skal baren kun bære logo ⇄ actions */
+  .nav-bar {
+    grid-template-columns: 1fr auto;
+    height: 50px;
+    padding: 0 6px 0 12px;
+  }
+  .nav-actions .btn { height: 38px; padding: 0 16px; }
 
-  .facts { grid-template-columns: 1fr; gap: 22px; }
+  /* Stablet: deleren flytter fra siden til toppen, så fladen forbliver hel */
+  .facts { grid-template-columns: 1fr; }
+  .fact + .fact { border-left: 0; border-top: 1px solid var(--line); }
 
   .why-cards { grid-template-columns: 1fr; }
   .wcard { aspect-ratio: auto; min-height: 220px; }
@@ -1259,12 +1437,20 @@ a.pill { text-decoration: none; }
   .usp { grid-template-columns: 30px 1fr; }
   .usp span { grid-column: 2; }
 
-  .loop-tab { font-size: 11.5px; padding: 10px 6px; gap: 6px; }
+  /* Splittet stables: eyebrow over prosaen, ingen lodret deler */
+  .note-split { grid-template-columns: 1fr; }
+  .note-body { border-left: 0; padding-left: 0; margin-top: 14px; }
+
   .faq-answer { padding-left: 0; }
 
-  .feature-row { grid-template-columns: 44px 1fr; gap: 4px 18px; align-items: start; }
+  .feature-row { grid-template-columns: 44px 1fr 24px; gap: 4px 18px; align-items: start; min-height: 0; }
   .feature-name { grid-column: 2; }
-  .feature-text { grid-column: 2; }
+  .feature-copy { grid-column: 2; flex-direction: column; align-items: flex-start; gap: 6px; }
+  .feature-plus { grid-column: 3; grid-row: 1 / span 2; align-self: center; }
+  .feature-item-static .feature-row { grid-template-columns: 44px 1fr; }
+  .feature-docs { margin-left: 0; text-align: left; }
+  /* Detaljen bruger hele bredden – der er ikke plads til at flugte med navnet */
+  .feature-detail { padding-left: 0; }
 
   .get-foot { flex-direction: column; align-items: flex-start; gap: 26px; }
   .get-note { text-align: left; }
@@ -1280,24 +1466,72 @@ a.pill { text-decoration: none; }
 /* Hub – samme skelet som changelog-hub'en */
 .docs-hub {
   padding: clamp(36px, 5vw, 72px) 0 clamp(64px, 7vw, 110px);
-  max-width: 760px;
+  max-width: 1040px;
 }
+.docs-hub .hub-head { max-width: 760px; }
 .docs-hub .section-body { margin-top: 14px; max-width: 54ch; line-height: 1.55; }
 
-.doc-groups { margin-top: clamp(30px, 4vw, 46px); display: grid; gap: clamp(30px, 4vw, 44px); }
-.doc-group .section-label {
-  display: block;
-  padding-bottom: 11px;
-  border-bottom: 1px solid var(--line-strong);
+.doc-groups { margin-top: clamp(30px, 4vw, 46px); display: grid; gap: clamp(26px, 3vw, 38px); }
+
+/* Gruppen som en editorial indholdsfortegnelse: navnet står i sin egen kolonne
+   ude i marginen, siderne løber i kolonnen ved siden af. Reglen ligger over
+   begge, så gruppen læses som ét felt og ikke som to. */
+.doc-group {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: 0 clamp(24px, 3vw, 48px);
+  padding-top: 20px;
+  border-top: 1px solid var(--line-strong);
 }
+.doc-group-head {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-top: 15px;
+}
+.doc-group-head .section-label { display: block; }
+.doc-group-count {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: var(--faint);
+}
+
+@media (max-width: 900px) {
+  .doc-group {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+  .doc-group-head {
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 0 0 11px;
+  }
+}
+
 .doc-index { list-style: none; }
-.doc-index li { border-bottom: 1px solid var(--line); }
+.doc-index li + li { border-top: 1px solid var(--line); }
+
+/* Rækken: tekst til venstre, dato i højre kant. Hover tænder en tonet flade,
+   der bløder lidt ud i marginen — intet flytter sig, og der er ingen farvet
+   kant nogen steder. */
 .doc-index a {
-  display: block;
-  padding: 15px 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 6px 20px;
+  padding: 15px 12px;
+  margin-inline: -12px;
+  border-radius: 9px;
   text-decoration: none;
   color: var(--ink);
+  transition: background 160ms ease;
 }
+.doc-index a:hover { background: var(--stage); }
+
+.doc-index-text { display: block; min-width: 0; }
 .doc-index-title {
   display: block;
   font-size: 16.5px; font-weight: 500;
@@ -1309,8 +1543,28 @@ a.pill { text-decoration: none; }
   font-size: 13.5px; line-height: 1.5;
   color: var(--muted);
   max-width: 64ch;
+  text-wrap: pretty;
 }
 .doc-index a:hover .doc-index-title { text-decoration: underline; text-underline-offset: 3px; }
+
+/* Datoen: monospace, tabular, og stille nok til at titlen bliver læst først. */
+.doc-index-date {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  color: var(--faint);
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .doc-index a {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 6px;
+  }
+  /* Datoen falder under teksten frem for at klemme titlen. */
+  .doc-index-date { order: 3; }
+}
 
 /* Docs-side – sektions-nav + artikel */
 .doc { padding: clamp(30px, 4vw, 56px) 0 clamp(64px, 7vw, 110px); }
@@ -1379,6 +1633,16 @@ a.pill { text-decoration: none; }
   font-size: 16.5px; line-height: 1.55;
   color: var(--muted);
   max-width: 60ch;
+}
+/* Hvornår siden sidst blev rørt — under titlen, hvor læseren kan nå at bruge
+   den til noget, før teksten begynder. */
+.doc-updated {
+  margin-top: 14px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  color: var(--faint);
 }
 
 /* Prosaen */

@@ -1,0 +1,48 @@
+{{- /* Docs-links til en feature. Kontekst: en slice af docs-stier fra _index.md,
+      evt. med #anker: "/docs/getting-started/#create-a-new-site".
+      Linket er en chip, ikke en tekstlinje: dokument-ikon + "Docs" som kicker +
+      sidens egen titel + pil – så det er tydeligt at man forlader forsiden og
+      lander i den tekniske beskrivelse.
+      Labelen hentes fra dokumentationen selv – afsnittets overskrift når der er
+      et anker, ellers sidens LinkTitle – så teksten aldrig kan drifte fra docs.
+      Findes siden (eller ankeret) ikke, renderes intet: et forkert link er
+      værre end intet link. */ -}}
+{{- range . -}}
+  {{- $parts := split . "#" -}}
+  {{- $path := index $parts 0 -}}
+  {{- $anchor := "" -}}
+  {{- if gt (len $parts) 1 }}{{ $anchor = index $parts 1 }}{{ end -}}
+
+  {{- $p := site.GetPage $path -}}
+  {{- with $p -}}
+    {{- $href := $p.RelPermalink -}}
+    {{- $label := $p.LinkTitle -}}
+
+    {{- if $anchor -}}
+      {{- $href = printf "%s#%s" $p.RelPermalink $anchor -}}
+      {{- /* .Fragments.Headings har en syntetisk rod på niveau 0 – sidens
+            h2'er ligger som dens børn (samme mønster som docs-nav). */ -}}
+      {{- $hs := $p.Fragments.Headings -}}
+      {{- if and $hs (eq (index $hs 0).Level 0) }}{{ $hs = (index $hs 0).Headings }}{{ end -}}
+      {{- range $hs }}
+        {{- if eq .ID $anchor }}{{ $label = .Title | plainify | htmlUnescape }}{{ end -}}
+        {{- /* Ankeret kan være en h3 under en h2 (fx "Hugo" i First launch) */ -}}
+        {{- range .Headings }}
+          {{- if eq .ID $anchor }}{{ $label = .Title | plainify | htmlUnescape }}{{ end -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+
+    <a class="feature-doc" href="{{ $href }}">
+      <svg class="feature-doc-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/>
+        <path d="M14 3v5h5"/>
+        <path d="M9 13h6"/><path d="M9 17h4"/>
+      </svg>
+      <span class="feature-doc-kicker">Docs</span>
+      <span class="feature-doc-sep" aria-hidden="true">·</span>
+      <span class="feature-doc-title">{{ $label }}</span>
+      <span class="feature-doc-arrow" aria-hidden="true">→</span>
+    </a>
+  {{- end -}}
+{{- end -}}

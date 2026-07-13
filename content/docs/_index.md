@@ -7,6 +7,7 @@ description: "How to run, check and publish a Hugo site with HugoKit – and how
 groups:
   - "Start"
   - "Running Hugo"
+  - "Working in the app"
   - "Publishing"
   - "Fixing common Hugo problems"
 ---
