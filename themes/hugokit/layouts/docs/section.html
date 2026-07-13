@@ -22,13 +22,19 @@
         {{ with $in }}
           {{ $placed = $placed | append . }}
           <section class="doc-group">
-            <h2 class="section-label">{{ $group }}</h2>
+            <div class="doc-group-head">
+              <h2 class="section-label">{{ $group }}</h2>
+              <span class="doc-group-count">{{ len . }} {{ cond (eq 1 (len .)) "page" "pages" }}</span>
+            </div>
             <ul class="doc-index">
               {{ range . }}
               <li>
                 <a href="{{ .RelPermalink }}">
-                  <span class="doc-index-title">{{ .Title }}</span>
-                  {{ with .Description }}<span class="doc-index-desc">{{ . }}</span>{{ end }}
+                  <span class="doc-index-text">
+                    <span class="doc-index-title">{{ .Title }}</span>
+                    {{ with .Description }}<span class="doc-index-desc">{{ . }}</span>{{ end }}
+                  </span>
+                  {{ partial "doc-updated.html" (dict "page" . "format" "hub") }}
                 </a>
               </li>
               {{ end }}
@@ -42,13 +48,19 @@
       {{ $rest := complement $placed $pages }}
       {{ with $rest.ByWeight }}
       <section class="doc-group">
-        <h2 class="section-label">More</h2>
+        <div class="doc-group-head">
+          <h2 class="section-label">More</h2>
+          <span class="doc-group-count">{{ len . }} {{ cond (eq 1 (len .)) "page" "pages" }}</span>
+        </div>
         <ul class="doc-index">
           {{ range . }}
           <li>
             <a href="{{ .RelPermalink }}">
-              <span class="doc-index-title">{{ .Title }}</span>
-              {{ with .Description }}<span class="doc-index-desc">{{ . }}</span>{{ end }}
+              <span class="doc-index-text">
+                <span class="doc-index-title">{{ .Title }}</span>
+                {{ with .Description }}<span class="doc-index-desc">{{ . }}</span>{{ end }}
+              </span>
+              {{ partial "doc-updated.html" (dict "page" . "format" "hub") }}
             </a>
           </li>
           {{ end }}

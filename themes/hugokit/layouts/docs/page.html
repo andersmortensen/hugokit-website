@@ -17,6 +17,7 @@
           {{ with .Params.group }}<p class="section-label">{{ . }}</p>{{ end }}
           <h1 class="doc-title">{{ .Title }}</h1>
           {{ with .Description }}<p class="doc-lead">{{ . }}</p>{{ end }}
+          {{ partial "doc-updated.html" (dict "page" . "format" "page") }}
         </header>
 
         <div class="doc-body">

@@ -1,0 +1,19 @@
+{{- /* Hvornår siden sidst blev rørt.
+
+       .Lastmod kommer fra git-commit-datoen (enableGitInfo), med fallback til
+       en eksplicit lastmod og derefter filens mtime – se [frontmatter] i
+       hugo.toml. En side uden nogen af delene får ingen dato, og partialen
+       skriver så ingenting frem for en løgn.
+
+       dict: page (required) · format "hub" | "page" */ -}}
+{{- $p := .page -}}
+{{- $format := .format | default "page" -}}
+{{- with $p.Lastmod -}}
+  {{- if not .IsZero -}}
+    {{- if eq $format "hub" -}}
+      <time class="doc-index-date" datetime="{{ .Format "2006-01-02" }}">{{ .Format "2 Jan 2006" }}</time>
+    {{- else -}}
+      <p class="doc-updated">Last updated <time datetime="{{ .Format "2006-01-02" }}">{{ .Format "2 January 2006" }}</time></p>
+    {{- end -}}
+  {{- end -}}
+{{- end -}}

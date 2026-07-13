@@ -11,6 +11,12 @@ disableKinds = ['taxonomy', 'term', 'rss']
 # ingen dato der kan drive fra virkeligheden. Rollback: slet denne linje.
 enableGitInfo = true
 
+[frontmatter]
+  # Faldkæde for .Lastmod: git-commit-datoen først, så en eksplicit lastmod i
+  # front matter, og til sidst filens mtime – ellers står en nyskrevet, endnu
+  # ucommittet docs-side uden dato indtil den bliver committet.
+  lastmod = [':git', 'lastmod', ':fileModTime', 'date']
+
 [markup]
   [markup.highlight]
     # Kodeblokke rendres som ren monospace i sitets egne farver. Chromas
