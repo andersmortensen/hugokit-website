@@ -52,6 +52,15 @@
     0 1px 2px light-dark(rgba(38, 38, 43, 0.05), rgba(0, 0, 0, 0.35)),
     0 10px 30px light-dark(rgba(38, 38, 43, 0.07), rgba(0, 0, 0, 0.42));
 
+  /* Kortenes løft – to lag: en tæt kontaktskygge + en blød bæreskygge. Dybde
+     uden kant; det er dette lag der bærer why-kortene, ikke en border. */
+  --panel-lift:
+    0 1px 2px light-dark(rgba(38, 38, 43, 0.05), rgba(0, 0, 0, 0.40)),
+    0 12px 32px -14px light-dark(rgba(38, 38, 43, 0.16), rgba(0, 0, 0, 0.65));
+  --panel-lift-hi:
+    0 1px 2px light-dark(rgba(38, 38, 43, 0.06), rgba(0, 0, 0, 0.45)),
+    0 18px 44px -16px light-dark(rgba(38, 38, 43, 0.22), rgba(0, 0, 0, 0.75));
+
   /* Mode-toggle: månen vises i light, solen i dark (light-dark styrer synlighed) */
   --icon-moon: light-dark(#5F5C66, transparent);
   --icon-sun: light-dark(transparent, #9B98A3);
@@ -463,123 +472,126 @@ a { color: inherit; }
 }
 .fact-l { font-size: 13px; color: var(--muted); line-height: 1.45; }
 
-/* ── Why – sticky statement, kvartet-kortene scroller henover ─────────────── */
+/* ── Why – feature-spotlight: neutral flade, kvartetten som lys ───────────── */
 
-.why { position: relative; padding: clamp(40px, 5vw, 80px) 0 clamp(88px, 10vw, 150px); }
+.why { position: relative; padding: clamp(40px, 5vw, 80px) 0 clamp(72px, 8vw, 120px); }
 
-.why-sticky {
-  position: sticky;
-  top: clamp(90px, 22vh, 200px);
-  z-index: 0;
-  max-width: 620px;
+/* Sektionshoved: statement til venstre, mono-broen til den fulde liste til højre */
+.why-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 40px;
+  margin-bottom: clamp(36px, 3.6vw, 56px);
 }
-.why-sticky .label-pill { margin-bottom: 26px; }
+.why-head .label-pill { margin-bottom: 24px; }
 
+/* Statementet står i fuld --ink hele vejen – ingen scroll-drevet ordafsløring.
+   Sætningen fader ind som én blok via sitets .reveal-mønster (IntersectionObserver
+   i head.html), præcis som fakta-båndet og feature-listen. */
 .why-h {
   font-family: var(--display);
-  font-weight: 800;
+  font-weight: 700;
   font-size: var(--t-statement);
-  line-height: 1.02;
-  letter-spacing: -0.018em;
+  line-height: 1.04;
+  letter-spacing: -0.024em;
+  color: var(--ink);
+  max-width: 19ch;
 }
 
-/* Ordafsløring: statementet tændes ord for ord mens kvartet-kortene scroller
-   forbi det fastlåste sticky-hoved. Timelinen er sektionens egen view-progress
-   (--why-line, navngivet på .why så ordene arver den); hvert ord forskyder sit
-   animation-range med sit indeks (--wi). Ingen JS, ingen scroll-listener.
-   Vinduet er målt, ikke gættet: sektionens cover-range løber over H + viewport,
-   og sticky-hovedet står fast fra ~cover 33 % til ~75 %. Ordene tændes inden
-   for netop det vindue, så første og sidste ord begge falder mens statementet
-   holder stille. Kun ≥1021px, hvor sticky faktisk holder – og kun med
-   motion-accept og scroll-driven support. Ellers står sætningen i --ink. */
-.why-h .ww { color: inherit; }
-
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) and (min-width: 1021px) {
-    .why { view-timeline: --why-line block; }
-
-    .why-h .ww {
-      color: var(--faint);
-      animation: word-lit linear both;
-      animation-timeline: --why-line;
-      animation-range:
-        cover calc(34% + var(--wi, 0) * 2.4%)
-        cover calc(42% + var(--wi, 0) * 2.4%);
-    }
-  }
+.why-bridge {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  white-space: nowrap;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line-strong);
+  transition: color 180ms ease, border-color 180ms ease;
 }
-@keyframes word-lit { to { color: var(--ink); } }
+.why-bridge:hover { color: var(--ink); border-color: var(--ink); }
 
-/* Murværket fra mærket: fire ens, kvadratiske fliser kant mod kant –
-   smal fuge, næsten skarpe hjørner, ingen forskydning. */
 .why-cards {
-  position: relative; z-index: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  width: min(760px, 78%);
-  margin: clamp(-40px, -4vw, -70px) 0 0 auto;
+  gap: 14px;
 }
-.why-col { display: flex; flex-direction: column; gap: 12px; }
 
+/* Kortet: neutral flade, dybden kommer fra to lag skygge (kontakt + bærer) og
+   ikke fra kant eller fyld. Accenten er lys, ikke maling – en enkelt blød
+   lyskilde bag øverste venstre hjørne (::before). */
 .wcard {
-  border-radius: 4px;
-  aspect-ratio: 1 / 1;
-  padding: clamp(24px, 2.6vw, 36px);
-  display: flex; flex-direction: column; justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  padding: clamp(26px, 2.6vw, 34px);
+  min-height: 266px;
+  display: flex;
+  flex-direction: column;
   color: var(--ink);
   background: var(--plate);
-  border: 1px solid var(--line);
+  box-shadow: var(--panel-lift);
+  transition: box-shadow 280ms ease;
 }
-/* Glyphen i ink-streger på neutral flade; accent-prikken i glyphen
-   følger kortets kvartet-farve (--wc-accent). non-scaling-stroke holder
-   stregerne på deres px-bredde når glyphen skaleres op – finere håndværk
-   ved kortstørrelse i stedet for opblæste streger. */
-.wcard .feature-glyph :is(rect, line, path, circle) { vector-effect: non-scaling-stroke; }
-.wcard .feature-glyph {
-  width: clamp(56px, 6vw, 84px);
-  height: auto;
-  --stage: color-mix(in srgb, var(--ink) 7%, transparent);
-  --line: color-mix(in srgb, var(--ink) 16%, transparent);
-  --line-strong: color-mix(in srgb, var(--ink) 40%, transparent);
-  --faint: color-mix(in srgb, var(--ink) 68%, transparent);
-  --pink: var(--wc-accent);
-  --blue: var(--wc-accent);
-  --green: var(--wc-accent);
-  --gold: var(--wc-accent);
-}
-/* Titlerne i display-registret – samme vægt og stramhed som resten af siden.
-   Flisen foran titlen er kortets eneste farveflade: kvartetten som accent. */
-.wcard h3 {
-  display: flex; align-items: center; gap: 11px;
-  font-family: var(--display);
-  font-weight: 800;
-  font-size: clamp(21px, 2vw, 28px);
-  line-height: 1.05;
-  letter-spacing: -0.018em;
-  margin-bottom: 10px;
-}
-.wcard h3::before {
+.wcard::before {
   content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  /* Lyskilden er kraftigere i light end i dark: den varme flade sluger accenten,
+     mens den mørke flade forstærker den. Samme gradient, to styrker – dark holder
+     sit hidtidige udtryk (22 % × 0,35 ≈ den gamle 14 % × 0,55). */
+  background: radial-gradient(120% 90% at 0% 0%,
+    color-mix(in srgb, var(--wc-accent) 22%, transparent), transparent 62%);
+  opacity: light-dark(1, 0.35);
+}
+.wcard > * { position: relative; z-index: 1; }
+.wcard:hover { box-shadow: var(--panel-lift-hi); }
+
+/* Flisen: symbolet i sin rigtige størrelse (19px), aldrig blæst op */
+.wcard-ic {
   flex: none;
-  width: 12px; height: 12px;
-  border-radius: 2.5px;
-  background: var(--wc-accent);
+  width: 34px; height: 34px;
+  border-radius: 10px;
+  display: grid; place-items: center;
+  color: var(--wc-accent);
+  background: color-mix(in srgb, var(--wc-accent) 12%, var(--plate));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--wc-accent) 20%, transparent);
 }
-.wcard p { font-size: 14px; line-height: 1.5; color: var(--muted); max-width: 32ch; }
+.wcard-ic .feature-glyph { width: 19px; height: 19px; color: inherit; }
 
-/* Docs-link på kvartet-kortet: samme mono-henvisning som i feature-listen, men
-   venstrestillet under teksten (i listen ligger den i et højre-spor). Kortet er
-   kvadratisk, så linket kan ikke ændre højden. Selektoren skal bære .wcard for
-   at slå .feature-docs' højrestilling, som står senere i filen. */
-.wcard .feature-docs {
-  margin-left: 0;
-  margin-top: 14px;
-  text-align: left;
-  align-items: flex-start; /* chippen skal have sin egen bredde, ikke kortets */
+.wcard h3 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(19px, 1.7vw, 22px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 22px 0 8px;
+}
+.wcard p { font-size: 14px; line-height: 1.6; color: var(--muted); max-width: 34ch; }
+
+/* Meta-linjen bærer noget faktuelt – genvejen eller vilkåret, aldrig pynt */
+.wcard-meta {
+  display: flex; align-items: center; gap: 10px;
+  margin-top: auto; padding-top: 22px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--faint);
+}
+.wcard-key {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 4px 7px;
+  border-radius: 5px;
+  color: var(--muted);
+  background: var(--stage);
+  box-shadow: inset 0 0 0 1px var(--line);
 }
 
-/* Kvartetten fra mærket – kun som accent (flise + glyph-prik), fladen er neutral */
+/* Kvartetten fra mærket – kun som lyskilde og symbolfarve, fladen er neutral */
 .wc-pink { --wc-accent: var(--pink); }
 .wc-blue { --wc-accent: var(--blue); }
 .wc-green { --wc-accent: var(--green); }
@@ -849,7 +861,20 @@ a { color: inherit; }
   opacity: 1;
   block-size: auto;
 }
-.feature-glyph { width: 44px; height: 44px; stroke-width: 1; }
+/* Glyph-registret: monoline, monokromt, arver farven fra sin kontekst. Stregvægten
+   sidder på selve SVG'en (2.2 på 48-grid) – ingen CSS-stroke-width her, den ville
+   slå symbolets egne detalje-vægte ihjel. */
+.feature-glyph {
+  width: 44px; height: 44px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  color: var(--muted);
+  transition: color 180ms ease;
+}
+.feature-row:hover .feature-glyph,
+.feature-item[open] .feature-glyph { color: var(--ink); }
 .feature-name {
   font-family: var(--display);
   font-weight: 700;
@@ -1406,8 +1431,8 @@ a { color: inherit; }
   .hero-media { order: -1; margin: clamp(-64px, -8vw, -20px) auto 0; }
   .hero-copy { max-width: 52ch; padding-top: 28px; }
   .hugo-panel { grid-template-columns: 1fr; }
-  .why-sticky { position: static; }
-  .why-cards { width: 100%; margin-top: 44px; }
+  .why-head { grid-template-columns: 1fr; align-items: start; gap: 22px; }
+  .why-h { max-width: none; }
 }
 
 @media (max-width: 620px) {
@@ -1428,7 +1453,7 @@ a { color: inherit; }
   .fact + .fact { border-left: 0; border-top: 1px solid var(--line); }
 
   .why-cards { grid-template-columns: 1fr; }
-  .wcard { aspect-ratio: auto; min-height: 220px; }
+  .wcard { min-height: 0; }
 
   .cta-buttons { flex-direction: column; align-items: flex-start; gap: 16px; }
   .cta-row { flex-direction: column; align-items: flex-start; gap: 16px; }

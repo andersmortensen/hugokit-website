@@ -113,48 +113,35 @@
   {{ range .Params.features.items }}
     {{ if .accent }}{{ $cards = $cards | append . }}{{ else }}{{ $rest = $rest | append . }}{{ end }}
   {{ end }}
-  <section class="why" id="why" aria-label="Why HugoKit">
-    <div class="why-sticky">
-      <span class="label-pill">Why HugoKit</span>
-      {{- /* Statementet afsløres ord for ord mens kvartet-kortene scroller forbi:
-            hvert ord er et span med sit indeks, og en scroll-drevet view-timeline
-            på sektionen flytter det fra --faint til --ink. Ren CSS – uden
-            scroll-driven animations (eller ved reduceret bevægelse) står hele
-            sætningen bare i --ink fra start. */}}
-      <h2 class="why-h">
-        {{- range $i, $w := split .Params.about.intro " " -}}
-        <span class="ww" style="--wi:{{ $i }}">{{ $w }} </span>
-        {{- end -}}
-      </h2>
+  <section class="why reveal" id="why" aria-label="Why HugoKit">
+    {{- /* Sektionshovedet: statementet i fuld --ink (ingen scroll-drevet ordafsløring)
+          og en mono-bro over til den fulde liste, så spotlightet selv siger at det er
+          fire ud af mange. */}}
+    <div class="why-head">
+      <div>
+        <span class="label-pill">Why HugoKit</span>
+        <h2 class="why-h">{{ .Params.about.intro }}</h2>
+      </div>
+      <a class="why-bridge" href="#features">{{ .Params.features.title }} ↓</a>
     </div>
-    {{- /* Kolonnefordelingen følger kvartetten i mærket: venstre = q1 pink
-          øverst + q3 grøn nederst, højre = q2 blå øverst + q4 guld nederst.
-          (modBool er sand ved rest 0, dvs. lige indeks.) */}}
+    {{- /* Kortet: neutral flade, kvartetten som en blød lyskilde bag øverste venstre
+          hjørne (ikke som maling), symbolet i sin rigtige størrelse i en tonet flise,
+          og en meta-linje der bærer noget faktuelt – genvej eller vilkår, fra spot i
+          _index.md. Ingen docs-chip: kun tre af fire har en docs-side. */}}
     <div class="why-cards">
-      <div class="why-col">
-        {{ range $i, $c := $cards }}{{ if modBool $i 2 }}
-        <div class="wcard wc-{{ $c.accent }} reveal">
-          {{ partial "feature-glyph.html" (dict "glyph" $c.glyph) }}
-          <div class="wcard-copy">
-            <h3>{{ $c.name }}</h3>
-            <p>{{ $c.text }}</p>
-            {{ with $c.docs }}<span class="feature-docs wcard-docs">{{ partial "doc-links.html" . }}</span>{{ end }}
-          </div>
+      {{ range $cards }}
+      <article class="wcard wc-{{ .accent }}">
+        <span class="wcard-ic" aria-hidden="true">{{ partial "feature-glyph.html" (dict "glyph" .glyph) }}</span>
+        <h3>{{ .name }}</h3>
+        <p>{{ .text }}</p>
+        {{ with .spot }}
+        <div class="wcard-meta">
+          {{ with .key }}<kbd class="wcard-key">{{ . }}</kbd>{{ end }}
+          <span>{{ .text }}</span>
         </div>
-        {{ end }}{{ end }}
-      </div>
-      <div class="why-col why-col2">
-        {{ range $i, $c := $cards }}{{ if modBool $i 2 | not }}
-        <div class="wcard wc-{{ $c.accent }} reveal">
-          {{ partial "feature-glyph.html" (dict "glyph" $c.glyph) }}
-          <div class="wcard-copy">
-            <h3>{{ $c.name }}</h3>
-            <p>{{ $c.text }}</p>
-            {{ with $c.docs }}<span class="feature-docs wcard-docs">{{ partial "doc-links.html" . }}</span>{{ end }}
-          </div>
-        </div>
-        {{ end }}{{ end }}
-      </div>
+        {{ end }}
+      </article>
+      {{ end }}
     </div>
   </section>
 

@@ -44,6 +44,11 @@ features:
     - name: "All your sites"
       glyph: "sites"
       accent: "pink"
+      # spot: meta-linjen på kvartet-kortet i Why. Hentes ikke fra prosaen – den står her,
+      # så kortet aldrig kan drifte fra det features.detail/points faktisk siger.
+      spot:
+        key: "⌘O"
+        text: "Add a site"
       text: "Add sites one by one, or point HugoKit at a folder and it finds them itself. Pin your favourites; give each site its own emoji."
       docs:
         - "/docs/getting-started/#watch-a-folder"
@@ -68,6 +73,9 @@ features:
     - name: "Site health"
       glyph: "health"
       accent: "blue"
+      spot:
+        key: "⇧⌘H"
+        text: "From anywhere"
       text: "Every site gets a score: front matter checks, content stats and a build trend, with the issues listed out. ⇧⌘H from anywhere."
       docs:
         - "/docs/site-health/"
@@ -163,6 +171,8 @@ features:
     - name: "Hugo, managed"
       glyph: "hugo"
       accent: "green"
+      spot:
+        text: "Homebrew or direct download"
       text: "HugoKit finds your Hugo install automatically – and if there isn't one, it installs it for you."
       docs:
         - "/docs/getting-started/#first-launch"
@@ -175,6 +185,8 @@ features:
     - name: "Native and private"
       glyph: "private"
       accent: "gold"
+      spot:
+        text: "Keychain · no sign-in"
       text: "SwiftUI throughout, credentials in the macOS Keychain. No account – nothing ever leaves your Mac."
       detail: "SwiftUI throughout – no Electron, no account, no backend. HugoKit talks to Hugo, Git and your host, and to nothing else."
       points:
