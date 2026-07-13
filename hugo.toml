@@ -17,6 +17,21 @@ enableGitInfo = true
   # ucommittet docs-side uden dato indtil den bliver committet.
   lastmod = [':git', 'lastmod', ':fileModTime', 'date']
 
+# llms.txt genereres ved HVER build – ikke en håndholdt fil i static/.
+# Formatet defineres her, forsiden får det som ekstra output, og templaten
+# (themes/hugokit/layouts/home.llms.txt) bygger docs-listen fra content/docs/.
+# En ny docs-side dukker dermed op i llms.txt af sig selv. Verificér: /llms.txt
+[outputFormats]
+  [outputFormats.llms]
+    mediaType = 'text/plain'
+    baseName = 'llms'
+    isPlainText = true
+    # Ikke et alternativt view af forsiden – skal aldrig i <link rel=alternate>.
+    notAlternative = true
+
+[outputs]
+  home = ['html', 'llms']
+
 [markup]
   [markup.highlight]
     # Kodeblokke rendres som ren monospace i sitets egne farver. Chromas

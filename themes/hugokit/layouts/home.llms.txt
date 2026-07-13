@@ -1,0 +1,59 @@
+{{- /* llms.txt – genereres ved hver build (outputFormats.llms i hugo.toml).
+
+      Docs-listen bygges fra content/docs/ med samme grupper og rækkefølge som
+      hub'en og sidenavigationen, og hver linje bruger sidens EGEN `description`
+      fra front matter. En ny docs-side dukker derfor op i llms.txt af sig selv,
+      og en rettet beskrivelse følger med – ét sted at vedligeholde, ingen drift.
+
+      Den faste prosa nedenfor er det eneste der redigeres i hånden.
+      Formatet følger llmstxt.org: H1, blockquote-resumé, så link-sektioner. */ -}}
+# {{ site.Title }}
+
+> HugoKit is a free Mac app for the Hugo static site generator: it runs the local server with live-reloading preview, edits content and config, scores a site's health, checks every site before publishing (preflight with approve-a-diff auto-fixes), and publishes to GitHub Pages or your own server over FTP/SFTP. No terminal needed. It works as a companion to any code editor or AI coding agent – content stays plain Markdown on disk, and the preview reloads on save.
+
+- Free: no license, no subscription, no account, no cloud
+- Requires macOS 26 (Tahoe) or later
+- Personal, non-commercial project by Anders Mortensen (Denmark)
+{{ with site.GetPage "/docs" }}
+## Documentation
+
+Written for two readers: people using HugoKit, and people with a Hugo problem who have never heard of it. The "Fixing common Hugo problems" pages are standalone Hugo troubleshooting and apply whether or not you use the app.
+{{- $pages := .RegularPages }}
+{{- $placed := slice }}
+{{- range $group := .Params.groups }}
+{{- with (where $pages "Params.group" $group).ByWeight }}
+{{- $placed = $placed | append . }}
+
+### {{ $group }}
+{{ range . }}
+{{- /* IKKE plainify på .Description: den strippede `<!-- raw HTML omitted -->`
+       ud af beskrivelsen på netop den side der handler om det. Front matter er
+       allerede ren tekst, og outputtet er plaintext – der er intet at plainify. */}}
+- [{{ .Title | plainify }}]({{ .Permalink }}): {{ .Description }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- /* Sider hvis `group` ikke står i `groups` – samles nederst, ligesom i nav'en. */}}
+{{- with (complement $placed $pages).ByWeight }}
+
+### More
+{{ range . }}
+{{- /* IKKE plainify på .Description: den strippede `<!-- raw HTML omitted -->`
+       ud af beskrivelsen på netop den side der handler om det. Front matter er
+       allerede ren tekst, og outputtet er plaintext – der er intet at plainify. */}}
+- [{{ .Title | plainify }}]({{ .Permalink }}): {{ .Description }}
+{{- end }}
+{{- end }}
+{{ end }}
+## Pages
+
+- [Home]({{ site.Home.Permalink }}): what HugoKit is, why it exists, features, FAQ, download
+{{- with site.GetPage "/changelog" }}
+- [Changelog]({{ .Permalink }}): release notes per version
+{{- end }}
+- [Download]({{ site.Params.downloadURL }}): latest release (DMG)
+
+## Elsewhere
+
+- [Hugo](https://gohugo.io): the static site generator HugoKit runs. HugoKit does not replace Hugo, convert your site, or add a content model of its own
+- [GitHub]({{ site.Params.githubURL }}): releases and issue tracker
