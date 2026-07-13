@@ -1,6 +1,6 @@
 name = "HugoKit"
 license = "MIT"
-description = "The hugokit.com theme — editorial one-pager for the HugoKit Mac app, plus the changelog pages Sparkle reads."
+description = "The hugokit.com theme – editorial one-pager for the HugoKit Mac app, plus the changelog pages Sparkle reads."
 homepage = "https://hugokit.com/"
 min_version = "0.146.0"
 

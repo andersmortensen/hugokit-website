@@ -1,17 +1,12 @@
 {{ define "body" }}
-{{- /* Changelog-hub'en — sitets fulde layout (kanvas, nav, footer).
+{{- /* Changelog-hub'en – sitets fulde layout (kanvas, nav, footer).
       Release-noter loader DYNAMISK ind i hub'en: klik fetcher undersiden,
       trækker .release-version/-date/-body ud og swapper view'et med en
-      view-transition + pushState — ingen browser-refresh. Hover prefetcher.
+      view-transition + pushState – ingen browser-refresh. Hover prefetcher.
       Uden JS navigeres der normalt til de kompakte release-sider, som
       FORBLIVER minimale (Sparkle-kontrakten i RELEASING.md: releaseNotesLink
       vises i update-vinduets WebView). */}}
 <div class="canvas">
-
-  <div class="edge-marks" aria-hidden="true">
-    <span>HugoKit — Mac app for Hugo</span>
-    <span>macOS 26+ · free</span>
-  </div>
 
   {{ partial "nav.html" . }}
 
@@ -121,7 +116,7 @@
         .catch(function () { location.href = a.href; });
     });
 
-    // Prefetch ved hover/fokus — klikket føles øjeblikkeligt
+    // Prefetch ved hover/fokus – klikket føles øjeblikkeligt
     list.addEventListener('mouseover', function (e) {
       var a = e.target.closest('.release-list a');
       if (a) load(a.href).catch(function () {});

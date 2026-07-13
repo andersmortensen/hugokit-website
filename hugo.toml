@@ -7,6 +7,13 @@ theme = 'hugokit'
 # 'section' er aktiv igen: /changelog/ er en rigtig Hugo-sektion (Sparkle-kontrakten).
 disableKinds = ['taxonomy', 'term', 'rss']
 
+[markup]
+  [markup.highlight]
+    # Kodeblokke rendres som ren monospace i sitets egne farver. Chromas
+    # syntax-styles er bundet til ét farveskema ad gangen og ville låse
+    # kodeblokkene til enten light eller dark — begge skal virke.
+    codeFences = false
+
 [params]
   # Tagline — bruges i forsidens <title> (SERP) sammen med sitets navn.
   tagline = 'a Mac app for Hugo'

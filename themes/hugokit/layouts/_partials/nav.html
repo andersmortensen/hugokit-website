@@ -1,8 +1,8 @@
-{{- /* Sitets nav — genbruges på forsiden og changelog-hub'en.
+{{- /* Sitets nav – genbruges på forsiden og changelog-hub'en.
       Links er rod-relative med anker, så de virker fra undersider. */}}
 <nav class="site-nav" aria-label="Primary">
   <div class="nav-group">
-    <a class="pill lockup" href="{{ "" | relURL }}" aria-label="HugoKit — home">
+    <a class="pill lockup" href="{{ "" | relURL }}" aria-label="HugoKit – home">
       {{ partial "mark.html" (dict "size" 26) }}
       <span class="lockup-name">HugoKit</span>
     </a>
@@ -11,6 +11,7 @@
       <a class="pill nav-link" href="{{ "" | relURL }}#why">Why?</a>
       <a class="pill nav-link" href="{{ "" | relURL }}#features">Features</a>
       <a class="pill nav-link" href="{{ "" | relURL }}#faq">FAQ</a>
+      <a class="pill nav-link" href="{{ "docs/" | relURL }}">Docs</a>
     </div>
   </div>
   <div class="nav-group">

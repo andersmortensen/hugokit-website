@@ -1,0 +1,57 @@
+{{- /* Docs-sektionsnav – samme grupper og rækkefølge som hub'en (styret af
+      `groups` i content/docs/_index.md). Den aktive side folder sine egne
+      h2-ankre ud, så der kun er ÉN navigation på siden. Kontekst: den aktuelle side. */}}
+{{ $current := . }}
+{{ $section := site.GetPage "/docs" }}
+{{ with $section }}
+{{ $pages := .RegularPages }}
+{{ $placed := slice }}
+<nav class="doc-nav" aria-label="Documentation">
+  <a class="doc-nav-home" href="{{ .RelPermalink }}">All docs</a>
+
+  {{ range $group := .Params.groups }}
+    {{ $in := (where $pages "Params.group" $group).ByWeight }}
+    {{ with $in }}
+      {{ $placed = $placed | append . }}
+      <div class="doc-nav-group">
+        <p class="section-label">{{ $group }}</p>
+        <ul>
+          {{ range . }}
+          {{ $isCurrent := eq .RelPermalink $current.RelPermalink }}
+          <li>
+            <a href="{{ .RelPermalink }}"{{ if $isCurrent }} aria-current="page"{{ end }}>{{ .Title }}</a>
+            {{ if $isCurrent }}
+              {{- /* .Fragments.Headings har en syntetisk rod på niveau 0 –
+                    sidens h2'er ligger som dens børn. */}}
+              {{ $headings := .Fragments.Headings }}
+              {{ if and $headings (eq (index $headings 0).Level 0) }}
+                {{ $headings = (index $headings 0).Headings }}
+              {{ end }}
+              {{- /* .Title er HTML (en overskrift kan indeholde <code>, typografiske
+                    apostroffer osv.) – plainify + htmlUnescape giver ren tekst i nav'en. */}}
+              {{ with $headings }}
+              <ul class="doc-nav-frag">
+                {{ range . }}<li><a href="#{{ .ID }}">{{ .Title | plainify | htmlUnescape }}</a></li>{{ end }}
+              </ul>
+              {{ end }}
+            {{ end }}
+          </li>
+          {{ end }}
+        </ul>
+      </div>
+    {{ end }}
+  {{ end }}
+
+  {{ $rest := complement $placed $pages }}
+  {{ with $rest.ByWeight }}
+  <div class="doc-nav-group">
+    <p class="section-label">More</p>
+    <ul>
+      {{ range . }}
+      <li><a href="{{ .RelPermalink }}"{{ if eq .RelPermalink $current.RelPermalink }} aria-current="page"{{ end }}>{{ .Title }}</a></li>
+      {{ end }}
+    </ul>
+  </div>
+  {{ end }}
+</nav>
+{{ end }}

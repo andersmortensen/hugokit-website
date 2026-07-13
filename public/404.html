@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1515&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>
@@ -12,19 +12,11 @@
   })();
 </script>
 
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-5MFTKS6PH9"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-5MFTKS6PH9');
-</script>
-
 
 <title>404 Page not found · HugoKit</title>
 
 <meta name="description" content="A Mac app for Hugo: run the server, preview your pages and publish your site from one window. Free, native, no terminal – built by one person for his own sites.">
-<link rel="canonical" href="https://hugokit.com/404.html">
+<link rel="canonical" href="http://localhost:1515/404.html">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#E2DFE7">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#060607">
 
@@ -32,16 +24,16 @@
 <meta property="og:title" content="404 Page not found · HugoKit">
 <meta property="og:description" content="A Mac app for Hugo: run the server, preview your pages and publish your site from one window. Free, native, no terminal – built by one person for his own sites.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://hugokit.com/404.html">
-<meta property="og:image" content="https://hugokit.com/og/hugokit-og.png">
+<meta property="og:url" content="http://localhost:1515/404.html">
+<meta property="og:image" content="http://localhost:1515/og/hugokit-og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="HugoKit — a Mac app for Hugo.">
+<meta property="og:image:alt" content="HugoKit – a Mac app for Hugo.">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="404 Page not found · HugoKit">
 <meta name="twitter:description" content="A Mac app for Hugo: run the server, preview your pages and publish your site from one window. Free, native, no terminal – built by one person for his own sites.">
-<meta name="twitter:image" content="https://hugokit.com/og/hugokit-og.png">
+<meta name="twitter:image" content="http://localhost:1515/og/hugokit-og.png">
 
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -54,10 +46,42 @@
 
 
   
-  <link rel="stylesheet" href="/css/main.min.517fda01290edca495b1d89e0caaeb4a21615da7b4e93734c86326e740edf0d1.css" integrity="sha256-UX/aASkO3KSVsdieDKrrSiFhXae06Tc0yGMm50Dt8NE=">
+  <link rel="stylesheet" href="/css/main.min.e80f7c4f107ca616654104726406035d8521b7e725dc91f1fb35af751b824b51.css" integrity="sha256-6A98TxB8phZlQQRyZAYDXYUht&#43;cl3JHx&#43;zWvdRuCS1E=">
 
+<script type="speculationrules">
+{
+  "prefetch": [{
+    "where": { "and": [
+      { "href_matches": "/*" },
+      { "not": { "href_matches": "/*.dmg" } }
+    ]},
+    "eagerness": "moderate"
+  }]
+}
+</script>
 <script>
   document.documentElement.classList.add('js');
+  (function () {
+    var conn = navigator.connection;
+    if (conn && (conn.saveData || /(^|-)2g$/.test(conn.effectiveType || ''))) return;
+    var warmed = {};
+    var warm = function (a) {
+      if (!a || !a.href || a.hasAttribute('download') || a.target) return;
+      var u;
+      try { u = new URL(a.href); } catch (e) { return; }
+      if (u.origin !== location.origin) return;
+      if (u.pathname === location.pathname || warmed[u.href]) return;
+      warmed[u.href] = 1;
+      fetch(u.href, { credentials: 'same-origin' }).catch(function () {});
+    };
+    ['mouseover', 'focusin', 'touchstart'].forEach(function (ev) {
+      document.addEventListener(ev, function (e) {
+        var a = e.target && e.target.closest && e.target.closest('a[href]');
+        if (a) warm(a);
+      }, { passive: true, capture: true });
+    });
+  })();
+
   addEventListener('DOMContentLoaded', function () {
     var all = document.querySelectorAll('.reveal');
     if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {

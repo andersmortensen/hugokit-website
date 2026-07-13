@@ -1,7 +1,7 @@
 {{ define "body" }}
 
 {{- /* Orca-editorial layoutet: siden som indrammet, afrundet kanvas.
-      Kvartetten (pink/blå/grøn/guld fra mærket) bærer farverne —
+      Kvartetten (pink/blå/grøn/guld fra mærket) bærer farverne –
       why-kortene, USP-markørerne og Hugo-panelet. CTA'er forbliver
       i utility-registret (ink-knappen). */}}
 <div class="canvas">
@@ -12,7 +12,7 @@
 
   {{ with .Params.hero }}
   <header class="hero">
-    {{- /* Wordmarket kant til kant — JS skalerer det til kanvasbredden.
+    {{- /* Wordmarket kant til kant – JS skalerer det til kanvasbredden.
           Dekorativt; h1 nedenfor bærer budskabet. */}}
     <div class="giant-wrap" aria-hidden="true">
       <span class="giant" id="giant">HugoKit</span>
@@ -33,7 +33,7 @@
         <span class="fine-meta">{{ $.Params.download.meta }}</span>
       </div>
       {{- /* Hero-mediet: rigtigt app-screenshot (window frame + traffic lights
-            bagt ind). Video-klar slot — swap <picture> til
+            bagt ind). Video-klar slot – swap <picture> til
             <video autoplay muted loop playsinline> i samme figur, når
             optagelsen er klar. Light/dark følger sitets mode. */}}
       <div class="hero-media">
@@ -72,7 +72,7 @@
   {{ end }}
 
   {{ with .Params.whatishugo }}
-  {{- /* Hugo-panelet — flyttet op mellem Facts og Why: "What?" besvares
+  {{- /* Hugo-panelet – flyttet op mellem Facts og Why: "What?" besvares
         før "Why?". Pink er Hugos egen farve. */}}
   <section class="hugo-panel reveal" id="hugo" aria-label="{{ .title }}">
     <div class="hugo-left">
@@ -101,7 +101,7 @@
       </ul>
       {{ end }}
       {{ with .bridge }}<p class="hugo-bridge">{{ . }}</p>{{ end }}
-      <a class="hugo-link" href="https://gohugo.io">{{ .link }}</a>
+      <a class="hugo-link" href="https://gohugo.io" target="_blank" rel="noopener">{{ .link }}</a>
     </div>
   </section>
   {{ end }}
@@ -243,7 +243,7 @@
     <p class="note-text">{{ .text }}</p>
     {{ with .extra }}<p class="note-text note-extra">{{ . }}</p>{{ end }}
     {{ with .donate }}
-    <a class="btn-outline note-donate" href="{{ .url }}" rel="noopener">
+    <a class="btn-outline note-donate" href="{{ .url }}" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 9h11v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"/><path d="M16 10h1.5a2.5 2.5 0 0 1 0 5H16"/><path d="M8.5 3.5v2M12 3.5v2"/></svg>
       {{ .label }}
     </a>
@@ -257,7 +257,7 @@
     <div class="get-foot">
       <div class="cta-col">
         <div class="cta-buttons">
-          <a class="btn btn-lg" href="{{ site.Params.downloadURL }}">
+          <a class="btn btn-lg" href="{{ site.Params.downloadURL }}" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
             {{ .cta }}
           </a>

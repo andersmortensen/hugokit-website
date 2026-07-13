@@ -1,10 +1,10 @@
-/*  HugoKit — hugokit.com (theme: themes/hugokit)
+/*  HugoKit – hugokit.com (theme: themes/hugokit)
     Identity v3 "Q2 v2": mark-first, kvartet-murværk.
     Layout v4 "orca-editorial": siden som indrammet kanvas, wordmark-hero
     med overlappende app-vindue, fakta-bånd, sticky statement med kvartet-kort,
     mørkt loop-panel, pink Hugo-panel. Kvartetten bærer farverne; CTA'er
     forbliver i utility-registret (ink-knappen).
-    Light + dark efter systemets præference (prefers-color-scheme) — begge altid.
+    Light + dark efter systemets præference (prefers-color-scheme) – begge altid.
     Tokens: surround / canvas / plate / stage / ink · Hanken Grotesk + Inter + JetBrains Mono
     Wordmark-spec: Hanken Grotesk 700 (−0.015em) · headlines 800 (−0.018em)
     Brand-spec: dokumentation → apps/hugokit/brand · geometri i static/brand/  */
@@ -35,10 +35,10 @@
   --green: #33BA91;
   --gold: #EBB951;
 
-  /* Ink-tonen på kvartet-flader — mode-stabil, mørkest for kontrast */
+  /* Ink-tonen på kvartet-flader – mode-stabil, mørkest for kontrast */
   --card-ink: #17171B;
 
-  /* Browser toolbar color — Safari Tahoe+ sampler html/body (jf. brand-reglen) */
+  /* Browser toolbar color – Safari Tahoe+ sampler html/body (jf. brand-reglen) */
   --toolbar-color: var(--surround);
 
   /* Mode-toggle: månen vises i light, solen i dark (light-dark styrer synlighed) */
@@ -50,10 +50,10 @@
   --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
 
   --radius: 8px;
-  --wrap: 1020px; /* prosa-kanvas — faq-svar, note, changelog */
+  --wrap: 1020px; /* prosa-kanvas – faq-svar, note, changelog */
   --canvas-max: 1560px;
 
-  /* Display-skalaen — flydende, Hanken Grotesk 800 (wordmarket er 700) */
+  /* Display-skalaen – flydende, Hanken Grotesk 800 (wordmarket er 700) */
   --t-title: clamp(34px, 5.4vw, 76px);
   --t-statement: clamp(38px, 5vw, 72px);
   --t-giant: clamp(44px, 7vw, 104px);
@@ -86,7 +86,7 @@ body {
   padding: 14px;
 }
 
-/* Release-/404-sider: ingen kanvas-ramme — flad canvas-flade (Sparkle-venlig) */
+/* Release-/404-sider: ingen kanvas-ramme – flad canvas-flade (Sparkle-venlig) */
 body:has(main.release), body:has(main.notfound) {
   padding: 0;
   background-color: var(--canvas);
@@ -114,7 +114,7 @@ a { color: inherit; }
 }
 .skip-link:focus { left: 0; }
 
-/* ── Kanvassen — siden som indrammet, afrundet flade ─────────────────────── */
+/* ── Kanvassen – siden som indrammet, afrundet flade ─────────────────────── */
 
 .canvas {
   background: var(--canvas);
@@ -126,22 +126,12 @@ a { color: inherit; }
   overflow: clip;
   position: relative;
   /* Fuld højde: korte sider (changelog-hub) fylder viewporten, footeren
-     lander i bunden — lange sider påvirkes ikke */
+     lander i bunden – lange sider påvirkes ikke */
   display: flex;
   flex-direction: column;
   min-height: calc(100svh - 28px);
 }
 .canvas > main { flex: 1 0 auto; width: 100%; }
-
-/* Mono-mikrolabels langs kanvaskanten — plotter-mærkerne */
-.edge-marks {
-  display: flex; justify-content: space-between; gap: 16px;
-  padding: 15px 2px 0;
-  font-family: var(--mono);
-  font-size: 10px; font-weight: 500;
-  letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--faint);
-}
 
 /* ── Typografi-registre ───────────────────────────────────────────────────── */
 
@@ -207,7 +197,7 @@ a { color: inherit; }
 }
 .btn-ghost:hover { color: var(--ink); }
 
-/* Sekundær knap — plate-flade med streg, samme geometri som .btn */
+/* Sekundær knap – plate-flade med streg, samme geometri som .btn */
 .btn-outline {
   display: inline-flex; align-items: center; justify-content: center; gap: 9px;
   background: var(--plate);
@@ -230,7 +220,7 @@ a { color: inherit; }
 .cta-col { display: flex; flex-direction: column; align-items: flex-start; }
 .cta-col .fine-meta { margin-top: 14px; }
 
-/* ── Nav — pill-række øverst i kanvassen ──────────────────────────────────── */
+/* ── Nav – pill-række øverst i kanvassen ──────────────────────────────────── */
 
 .site-nav {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
@@ -292,7 +282,7 @@ a.pill { text-decoration: none; }
 .i-moon { color: var(--icon-moon); }
 .i-sun { color: var(--icon-sun); }
 
-/* ── Hero — wordmark kant til kant, app-vinduet stiger op i det ───────────── */
+/* ── Hero – wordmark kant til kant, app-vinduet stiger op i det ───────────── */
 
 .hero { padding-top: clamp(36px, 5vw, 72px); }
 
@@ -343,7 +333,7 @@ a.pill { text-decoration: none; }
 
 .hero-copy .fine-meta { display: block; margin-top: 14px; }
 
-/* Hero-mediet — rigtigt app-screenshot (frame, traffic lights og skygge er
+/* Hero-mediet – rigtigt app-screenshot (frame, traffic lights og skygge er
    bagt ind i filen, så ingen ekstra chrome her). Video-klar: en <video> i
    samme .hero-shot arver dimensionerne 1:1. */
 .hero-media {
@@ -387,7 +377,7 @@ a.pill { text-decoration: none; }
 }
 .fact-l { font-size: 13px; color: var(--muted); }
 
-/* ── Why — sticky statement, kvartet-kortene scroller henover ─────────────── */
+/* ── Why – sticky statement, kvartet-kortene scroller henover ─────────────── */
 
 .why { position: relative; padding: clamp(40px, 5vw, 80px) 0 clamp(88px, 10vw, 150px); }
 
@@ -407,7 +397,7 @@ a.pill { text-decoration: none; }
   letter-spacing: -0.018em;
 }
 
-/* Murværket fra mærket: fire ens, kvadratiske fliser kant mod kant —
+/* Murværket fra mærket: fire ens, kvadratiske fliser kant mod kant –
    smal fuge, næsten skarpe hjørner, ingen forskydning. */
 .why-cards {
   position: relative; z-index: 1;
@@ -430,7 +420,7 @@ a.pill { text-decoration: none; }
 }
 /* Glyphen i ink-streger på neutral flade; accent-prikken i glyphen
    følger kortets kvartet-farve (--wc-accent). non-scaling-stroke holder
-   stregerne på deres px-bredde når glyphen skaleres op — finere håndværk
+   stregerne på deres px-bredde når glyphen skaleres op – finere håndværk
    ved kortstørrelse i stedet for opblæste streger. */
 .wcard .feature-glyph :is(rect, line, path, circle) { vector-effect: non-scaling-stroke; }
 .wcard .feature-glyph {
@@ -445,7 +435,7 @@ a.pill { text-decoration: none; }
   --green: var(--wc-accent);
   --gold: var(--wc-accent);
 }
-/* Titlerne i display-registret — samme vægt og stramhed som resten af siden.
+/* Titlerne i display-registret – samme vægt og stramhed som resten af siden.
    Flisen foran titlen er kortets eneste farveflade: kvartetten som accent. */
 .wcard h3 {
   display: flex; align-items: center; gap: 11px;
@@ -465,13 +455,13 @@ a.pill { text-decoration: none; }
 }
 .wcard p { font-size: 14px; line-height: 1.5; color: var(--muted); max-width: 32ch; }
 
-/* Kvartetten fra mærket — kun som accent (flise + glyph-prik), fladen er neutral */
+/* Kvartetten fra mærket – kun som accent (flise + glyph-prik), fladen er neutral */
 .wc-pink { --wc-accent: var(--pink); }
 .wc-blue { --wc-accent: var(--blue); }
 .wc-green { --wc-accent: var(--green); }
 .wc-gold { --wc-accent: var(--gold); }
 
-/* ── Loop — mørkt panel: tabs (radio + CSS, ingen JS) med uddybning pr. trin ─ */
+/* ── Loop – mørkt panel: tabs (radio + CSS, ingen JS) med uddybning pr. trin ─ */
 
 .loop {
   background: #17171B;
@@ -493,10 +483,10 @@ a.pill { text-decoration: none; }
 }
 .loop-sub { color: #9B98A3; font-size: 14px; max-width: 40ch; margin-bottom: 30px; }
 
-/* Radios: visuelt skjult, men fokusérbare — piletaster skifter tab natively */
+/* Radios: visuelt skjult, men fokusérbare – piletaster skifter tab natively */
 .loop-radio { position: absolute; opacity: 0; pointer-events: none; }
 
-/* Segmented tab-bar — én tydelig kontrol frem for løse pills. Grid'et gør
+/* Segmented tab-bar – én tydelig kontrol frem for løse pills. Grid'et gør
    de tre trin lige brede; det valgte segment er fyldt. */
 .loop-tabs {
   display: grid;
@@ -584,11 +574,11 @@ a.pill { text-decoration: none; }
 .loop .btn:hover { background: #DEDBE3; }
 
 .loop-panel-side { min-width: 0; }
-/* Screenshottet bærer sin egen window-frame og skygge — ingen ekstra ramme */
+/* Screenshottet bærer sin egen window-frame og skygge – ingen ekstra ramme */
 .loop-shot { margin: 0; }
 .loop-shot .shot { width: 100%; height: auto; }
 
-/* Preflight har intet view endnu — wireframe-glyphen på stille flade,
+/* Preflight har intet view endnu – wireframe-glyphen på stille flade,
    med glyph-tokens overstyret til den mørke kontekst */
 .loop-glyph-tile {
   background: #101013;
@@ -612,7 +602,7 @@ a.pill { text-decoration: none; }
   to   { opacity: 1; transform: none; }
 }
 
-/* ── Hugo-panelet — pink split: terminalen + USP'erne ─────────────────────── */
+/* ── Hugo-panelet – pink split: terminalen + USP'erne ─────────────────────── */
 
 .hugo-panel {
   background: var(--plate);
@@ -695,7 +685,7 @@ a.pill { text-decoration: none; }
   border-top: 1px solid var(--line);
 }
 .usp:first-child { border-top: none; }
-/* Kvartet-markørerne på stage-mini-fliser — markøren bærer farven */
+/* Kvartet-markørerne på stage-mini-fliser – markøren bærer farven */
 .usp-tile {
   width: 26px; height: 26px;
   border-radius: 8px;
@@ -722,7 +712,7 @@ a.pill { text-decoration: none; }
   text-underline-offset: 4px;
 }
 
-/* ── Features — resten af værktøjskassen som kompakte tabel-rækker ────────── */
+/* ── Features – resten af værktøjskassen som kompakte tabel-rækker ────────── */
 
 .features { padding: 0 0 clamp(72px, 8vw, 120px); }
 .features .label-pill { margin-bottom: 26px; }
@@ -745,7 +735,7 @@ a.pill { text-decoration: none; }
 }
 .feature-text { font-size: 14px; color: var(--muted); max-width: 560px; }
 
-/* ── FAQ — details/summary, kun farve skifter på hover ────────────────────── */
+/* ── FAQ – details/summary, kun farve skifter på hover ────────────────────── */
 
 .faq { padding: 0 0 clamp(72px, 8vw, 120px); }
 
@@ -775,7 +765,7 @@ a.pill { text-decoration: none; }
   transition: color 160ms ease;
 }
 
-/* Spørgsmålets glyph-flise — samme wireframe-register som feature-listen */
+/* Spørgsmålets glyph-flise – samme wireframe-register som feature-listen */
 .faq-ic {
   width: 34px; height: 34px; flex: none;
   border-radius: 10px;
@@ -805,7 +795,7 @@ a.pill { text-decoration: none; }
 }
 .faq-answer p + p { margin-top: 8px; }
 
-/* Fakta-chips under svaret — scanbare nøgleord i mono-registret */
+/* Fakta-chips under svaret – scanbare nøgleord i mono-registret */
 .faq-chips {
   list-style: none;
   display: flex; flex-wrap: wrap; gap: 8px;
@@ -852,7 +842,7 @@ a.pill { text-decoration: none; }
 .note-extra { color: var(--muted); font-size: 15px; }
 .note-donate { margin-top: 20px; }
 
-/* ── Download — den store afslutning ──────────────────────────────────────── */
+/* ── Download – den store afslutning ──────────────────────────────────────── */
 
 .get { padding: 0 0 clamp(88px, 10vw, 150px); }
 
@@ -921,7 +911,7 @@ a.pill { text-decoration: none; }
   margin-top: 18px;
 }
 
-/* ── Changelog-hub — sitets layout; undersider swappes ind via JS ─────────── */
+/* ── Changelog-hub – sitets layout; undersider swappes ind via JS ─────────── */
 
 .release-hub {
   padding: clamp(36px, 5vw, 72px) 0 clamp(64px, 7vw, 110px);
@@ -963,7 +953,7 @@ a.pill { text-decoration: none; }
   margin-top: 0;
 }
 
-/* ── Changelog/release-sider — kompakte: læses også i Sparkles update-vindue ─ */
+/* ── Changelog/release-sider – kompakte: læses også i Sparkles update-vindue ─ */
 
 .release { padding: 44px 0 64px; }
 .release-wrap { max-width: 560px; }
@@ -995,7 +985,7 @@ a.pill { text-decoration: none; }
   margin: 22px 0 8px;
 }
 
-/* Kategori-badges — ## New / Improved / Fixed / Removed rendrer som pills
+/* Kategori-badges – ## New / Improved / Fixed / Removed rendrer som pills
    (goldmark auto-id på headings). Kvartetten som accent; Fixed er neutral. */
 .release-body h2#new, .release-body h2#improved,
 .release-body h2#fixed, .release-body h2#removed {
@@ -1085,7 +1075,7 @@ a.pill { text-decoration: none; }
 .notfound .section-body { margin-left: auto; margin-right: auto; }
 .notfound .cta-row { margin-top: 30px; }
 
-/* ── Stille reveals — kræver JS (html.js) OG motion-accept; ellers alt synligt */
+/* ── Stille reveals – kræver JS (html.js) OG motion-accept; ellers alt synligt */
 
 @media (prefers-reduced-motion: no-preference) {
   html.js .reveal {
@@ -1096,7 +1086,7 @@ a.pill { text-decoration: none; }
   html.js .reveal.in { opacity: 1; transform: translateY(0); }
 
   /* Sektioner med barne-stagger: forælderen fader kun, børnene rejser sig
-     forskudt — ét cascade-lag, ikke to bevægelser oven på hinanden. */
+     forskudt – ét cascade-lag, ikke to bevægelser oven på hinanden. */
   html.js .facts.reveal, html.js .loop.reveal,
   html.js .hugo-panel.reveal, html.js .features.reveal { transform: none; }
 
@@ -1124,11 +1114,11 @@ a.pill { text-decoration: none; }
   html.js .reveal .feature-row:nth-child(7) { transition-delay: 300ms; }
 }
 
-/* ── Entré-sekvensen — wordmark-bogstaverne rejser sig, så copy, så vinduet.
+/* ── Entré-sekvensen – wordmark-bogstaverne rejser sig, så copy, så vinduet.
       Kræver JS (spans sættes af fit-scriptet); uden JS er alt bare synligt. */
 
 @media (prefers-reduced-motion: no-preference) {
-  html.js .edge-marks, html.js .site-nav { animation: soft-in 640ms ease-out both; }
+  html.js .site-nav { animation: soft-in 640ms ease-out both; }
 
   /* Ingen flash af det usplittede wordmark før JS når at sætte spans */
   html.js .giant:not(.split) { visibility: hidden; }
@@ -1156,7 +1146,7 @@ a.pill { text-decoration: none; }
   to   { opacity: 1; }
 }
 
-/* ── Mikro-feedback — kun farve/skygge på hover (aldrig bevægelse);
+/* ── Mikro-feedback – kun farve/skygge på hover (aldrig bevægelse);
       squash ved tryk er klik-feedback, ikke hover. */
 
 @media (prefers-reduced-motion: no-preference) {
@@ -1177,6 +1167,15 @@ a.pill { text-decoration: none; }
 /* ── Mode-skiftet som blød crossfade (View Transitions API, progressivt) ──── */
 
 ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 260ms; }
+
+/* ── Instant navigation, lag 1: cross-document view transitions ───────────────
+   Sidenavigation crossfader i stedet for at blinke hvidt. Kræver at BEGGE sider
+   opter ind – derfor står reglen globalt, ikke pr. sektion. Chrome 126+ og
+   Safari 18.2+; alt andet navigerer som før (progressiv forbedring).
+   Lag 2 (Speculation Rules) og lag 3 (hover-prefetch) bor i head.html. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+}
 
 /* (Kolonne-drift udgik 2026-07-11: kortene står nu som kvartettens
    flush 2×2-murværk uden forskydning.) */
@@ -1230,4 +1229,266 @@ a.pill { text-decoration: none; }
   .get-note { text-align: left; }
 
   .footer-inner { flex-direction: column; gap: 12px; }
+}
+
+/* ── Docs – hub, sektions-nav og prosa ────────────────────────────────────────
+   Ingen nye farver, fonte eller radii: alt herunder er sitets egne tokens.
+   Prosaen er et selvstændigt register (.doc-body) – .release-body er tunet til
+   Sparkles update-vindue (badge-pills på h2) og kan ikke genbruges. */
+
+/* Hub – samme skelet som changelog-hub'en */
+.docs-hub {
+  padding: clamp(36px, 5vw, 72px) 0 clamp(64px, 7vw, 110px);
+  max-width: 760px;
+}
+.docs-hub .section-body { margin-top: 14px; max-width: 54ch; line-height: 1.55; }
+
+.doc-groups { margin-top: clamp(30px, 4vw, 46px); display: grid; gap: clamp(30px, 4vw, 44px); }
+.doc-group .section-label {
+  display: block;
+  padding-bottom: 11px;
+  border-bottom: 1px solid var(--line-strong);
+}
+.doc-index { list-style: none; }
+.doc-index li { border-bottom: 1px solid var(--line); }
+.doc-index a {
+  display: block;
+  padding: 15px 0;
+  text-decoration: none;
+  color: var(--ink);
+}
+.doc-index-title {
+  display: block;
+  font-size: 16.5px; font-weight: 500;
+  transition: color 160ms ease;
+}
+.doc-index-desc {
+  display: block;
+  margin-top: 4px;
+  font-size: 13.5px; line-height: 1.5;
+  color: var(--muted);
+  max-width: 64ch;
+}
+.doc-index a:hover .doc-index-title { text-decoration: underline; text-underline-offset: 3px; }
+
+/* Docs-side – sektions-nav + artikel */
+.doc { padding: clamp(30px, 4vw, 56px) 0 clamp(64px, 7vw, 110px); }
+.doc-layout {
+  display: grid;
+  grid-template-columns: 224px minmax(0, 1fr);
+  gap: clamp(34px, 5vw, 76px);
+  align-items: start;
+}
+
+/* Sticky uden egen baggrund – Safari Tahoe sampler sticky elementers
+   background-color til browser-toolbaren; en solid flade her ville overskrive
+   kanvassens tone. Lad den være gennemsigtig. */
+.doc-nav { position: sticky; top: 26px; }
+.doc-nav-home {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--faint);
+  text-decoration: none;
+  margin-bottom: 20px;
+  transition: color 160ms ease;
+}
+.doc-nav-home:hover { color: var(--ink); }
+.doc-nav-group + .doc-nav-group { margin-top: 22px; }
+.doc-nav-group .section-label { display: block; margin-bottom: 9px; }
+.doc-nav ul { list-style: none; display: grid; gap: 1px; }
+.doc-nav a {
+  display: block;
+  padding: 6px 10px;
+  margin-left: -10px;
+  border-radius: 6px;
+  font-size: 14px; line-height: 1.4;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 160ms ease, background 160ms ease;
+}
+.doc-nav a:hover { color: var(--ink); background: var(--stage); }
+.doc-nav a[aria-current="page"] { color: var(--ink); font-weight: 500; background: var(--stage); }
+.doc-nav-frag {
+  margin: 3px 0 5px 2px;
+  padding-left: 9px;
+  border-left: 1px solid var(--line);
+}
+.doc-nav-frag a {
+  margin-left: 0;
+  padding: 4px 8px;
+  font-size: 13px;
+  color: var(--faint);
+}
+.doc-nav-frag a:hover { color: var(--ink); }
+
+.doc-article { max-width: 720px; min-width: 0; }
+.doc-head { padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+.doc-head .section-label { display: block; margin-bottom: 14px; }
+.doc-title {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(30px, 3.6vw, 44px);
+  line-height: 1.03;
+  letter-spacing: -0.018em;
+}
+.doc-lead {
+  margin-top: 15px;
+  font-size: 16.5px; line-height: 1.55;
+  color: var(--muted);
+  max-width: 60ch;
+}
+
+/* Prosaen */
+.doc-body {
+  margin-top: 32px;
+  font-size: 15.5px; line-height: 1.68;
+  color: var(--muted);
+}
+.doc-body > * + * { margin-top: 16px; }
+.doc-body h2 {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 23px; line-height: 1.2;
+  letter-spacing: -0.014em;
+  color: var(--ink);
+  margin-top: 44px;
+  scroll-margin-top: 26px;
+}
+.doc-body h3 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 17px; line-height: 1.3;
+  letter-spacing: -0.008em;
+  color: var(--ink);
+  margin-top: 30px;
+  scroll-margin-top: 26px;
+}
+.doc-body strong { color: var(--ink); font-weight: 500; }
+.doc-body a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--line-strong);
+  transition: text-decoration-color 160ms ease;
+}
+.doc-body a:hover { text-decoration-color: var(--ink); }
+
+.doc-body ul, .doc-body ol { list-style: none; display: grid; gap: 9px; }
+.doc-body li { position: relative; padding-left: 23px; }
+.doc-body ul > li::before {
+  content: "";
+  position: absolute; left: 3px; top: 0.66em;
+  width: 5px; height: 5px;
+  border-radius: 2px;
+  background: var(--faint);
+}
+.doc-body ol { counter-reset: doc-step; }
+.doc-body ol > li { counter-increment: doc-step; }
+.doc-body ol > li::before {
+  content: counter(doc-step);
+  position: absolute; left: 0; top: 0;
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.9;
+  color: var(--faint);
+}
+.doc-body li > ul, .doc-body li > ol { margin-top: 9px; }
+
+.doc-body code {
+  font-family: var(--mono);
+  font-size: 0.86em;
+  color: var(--ink);
+  background: var(--stage);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 1.5px 5px;
+  /* JetBrains Mono har programmerings-ligaturer: uden dette bliver <!-- og -->
+     i et HTML-eksempel tegnet som pile. Kode skal vise de tegn der står der. */
+  font-variant-ligatures: none;
+}
+.doc-body pre {
+  background: var(--stage);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  overflow-x: auto;
+}
+.doc-body pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.doc-body table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14.5px;
+}
+.doc-body th {
+  text-align: left;
+  font-family: var(--mono);
+  font-size: 10.5px; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--faint);
+  padding: 0 16px 10px 0;
+  border-bottom: 1px solid var(--line-strong);
+}
+.doc-body td {
+  padding: 11px 16px 11px 0;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+.doc-body th:last-child, .doc-body td:last-child { padding-right: 0; }
+.doc-body tbody tr:last-child td { border-bottom: 0; }
+.doc-body td code { font-size: 0.85em; }
+
+/* Blockquote = note-registret. Bruges bl.a. til den ene linje om hvad HugoKit
+   gør ved problemet – altid EFTER løsningen, aldrig før. */
+.doc-body blockquote {
+  background: var(--stage);
+  border-left: 2px solid var(--line-strong);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 15px 18px;
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+.doc-body blockquote p + p { margin-top: 9px; }
+
+.doc-body hr { border: 0; border-top: 1px solid var(--line); margin: 36px 0; }
+.doc-body img {
+  max-width: 100%; height: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.doc-foot {
+  margin-top: 46px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  display: flex; flex-wrap: wrap;
+  justify-content: space-between; gap: 16px 24px;
+}
+.doc-foot a {
+  font-size: 13px; font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+.doc-foot a:hover { color: var(--ink); }
+
+@media (max-width: 1020px) {
+  .doc-layout { grid-template-columns: 1fr; gap: 32px; }
+  .doc-nav { position: static; padding-bottom: 26px; border-bottom: 1px solid var(--line); }
+  .doc-nav ul { gap: 0; }
+  .doc-nav-frag { display: none; }
+}
+
+@media (max-width: 620px) {
+  .doc-body { font-size: 15px; }
+  .doc-body table { display: block; overflow-x: auto; }
+  .doc-foot { flex-direction: column; gap: 12px; }
 }

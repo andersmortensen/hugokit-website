@@ -2,13 +2,35 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://hugokit.com/changelog/0.1.0/</loc>
+    <loc>http://localhost:1515/docs/hugo-broken-links-missing-css-github-pages/</loc>
+  </url><url>
+    <loc>http://localhost:1515/docs/getting-started/</loc>
+  </url><url>
+    <loc>http://localhost:1515/docs/publishing-to-github-pages/</loc>
+  </url><url>
+    <loc>http://localhost:1515/docs/running-the-server/</loc>
+  </url><url>
+    <loc>http://localhost:1515/docs/hugo-server-port-already-in-use/</loc>
+  </url><url>
+    <loc>http://localhost:1515/docs/publishing-over-sftp/</loc>
+  </url><url>
+    <loc>http://localhost:1515/docs/hugo-livereload-not-reloading/</loc>
+  </url><url>
+    <loc>http://localhost:1515/docs/preflight/</loc>
+  </url><url>
+    <loc>http://localhost:1515/docs/hugo-raw-html-omitted-markdown/</loc>
+  </url><url>
+    <loc>http://localhost:1515/docs/github-pages-shows-readme-instead-of-hugo-site/</loc>
+  </url><url>
+    <loc>http://localhost:1515/changelog/0.1.0/</loc>
     <lastmod>2026-07-12T00:00:00+02:00</lastmod>
   </url><url>
-    <loc>https://hugokit.com/changelog/</loc>
+    <loc>http://localhost:1515/changelog/</loc>
     <lastmod>2026-07-12T00:00:00+02:00</lastmod>
   </url><url>
-    <loc>https://hugokit.com/</loc>
+    <loc>http://localhost:1515/</loc>
     <lastmod>2026-07-12T00:00:00+02:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1515/docs/</loc>
   </url>
 </urlset>

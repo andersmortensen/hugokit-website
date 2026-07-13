@@ -1,0 +1,64 @@
+{{ define "body" }}
+{{- /* Docs-hub'en – sitets fulde layout (kanvas, nav, footer), samme skelet som
+      changelog-hub'en. Hub'en ER indekset: ingen sidebar her, kun grupperne i
+      den rækkefølge `groups` i _index.md fastlægger. Undersiderne har sidebaren. */}}
+<div class="canvas">
+
+  {{ partial "nav.html" . }}
+
+  <main id="main" class="docs-hub">
+    <header class="hub-head">
+      <h1 class="hub-title">Docs</h1>
+      <p class="section-body">{{ .Description }}</p>
+    </header>
+
+    {{ $pages := .RegularPages }}
+    {{ $groups := .Params.groups | default slice }}
+    {{ $placed := slice }}
+
+    <div class="doc-groups">
+      {{ range $group := $groups }}
+        {{ $in := (where $pages "Params.group" $group).ByWeight }}
+        {{ with $in }}
+          {{ $placed = $placed | append . }}
+          <section class="doc-group">
+            <h2 class="section-label">{{ $group }}</h2>
+            <ul class="doc-index">
+              {{ range . }}
+              <li>
+                <a href="{{ .RelPermalink }}">
+                  <span class="doc-index-title">{{ .Title }}</span>
+                  {{ with .Description }}<span class="doc-index-desc">{{ . }}</span>{{ end }}
+                </a>
+              </li>
+              {{ end }}
+            </ul>
+          </section>
+        {{ end }}
+      {{ end }}
+
+      {{- /* Sikkerhedsnet: en side med en `group` der ikke står i listen
+            forsvinder ikke – den lander her. */}}
+      {{ $rest := complement $placed $pages }}
+      {{ with $rest.ByWeight }}
+      <section class="doc-group">
+        <h2 class="section-label">More</h2>
+        <ul class="doc-index">
+          {{ range . }}
+          <li>
+            <a href="{{ .RelPermalink }}">
+              <span class="doc-index-title">{{ .Title }}</span>
+              {{ with .Description }}<span class="doc-index-desc">{{ . }}</span>{{ end }}
+            </a>
+          </li>
+          {{ end }}
+        </ul>
+      </section>
+      {{ end }}
+    </div>
+  </main>
+
+  {{ partial "footer.html" . }}
+
+</div>
+{{ end }}

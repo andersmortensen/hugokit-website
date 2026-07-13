@@ -1,0 +1,9 @@
+{{- /* Markdown-links: alt der peger på et andet domæne end sitets åbner i en ny
+      fane (target="_blank" rel="noopener"). Interne links, ankre og mailto:
+      opfører sig som før. Gælder al markdown på sitet – docs og changelog.
+      NB: filen må ikke slutte med et linjeskift – det ville blive til et
+      mellemrum efter linket i den rendrede tekst. */ -}}
+{{- $u := urls.Parse .Destination -}}
+{{- $external := and $u.Host (ne $u.Host (urls.Parse site.BaseURL).Host) -}}
+<a href="{{ .Destination | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if $external }} target="_blank" rel="noopener"{{ end }}>{{ .Text }}</a>
+{{- /* ingen trailing newline */ -}}

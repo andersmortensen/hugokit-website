@@ -1,0 +1,38 @@
+{{ define "body" }}
+{{- /* Docs-side – kanvas + nav + footer som resten af sitet. To kolonner:
+      sektions-nav (sticky, uden egen baggrund: Safari Tahoe sampler sticky
+      elementers background-color til toolbaren, og en solid flade her ville
+      overskrive kanvassens tone) og selve artiklen. */}}
+<div class="canvas">
+
+  {{ partial "nav.html" . }}
+
+  <main id="main" class="doc">
+    <div class="doc-layout">
+
+      {{ partial "docs-nav.html" . }}
+
+      <article class="doc-article">
+        <header class="doc-head">
+          {{ with .Params.group }}<p class="section-label">{{ . }}</p>{{ end }}
+          <h1 class="doc-title">{{ .Title }}</h1>
+          {{ with .Description }}<p class="doc-lead">{{ . }}</p>{{ end }}
+        </header>
+
+        <div class="doc-body">
+          {{ .Content }}
+        </div>
+
+        <footer class="doc-foot">
+          <a href="{{ "docs/" | relURL }}">&larr; All docs</a>
+          <a href="mailto:{{ site.Params.feedbackEmail }}">Something missing? Email me.</a>
+        </footer>
+      </article>
+
+    </div>
+  </main>
+
+  {{ partial "footer.html" . }}
+
+</div>
+{{ end }}

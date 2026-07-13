@@ -1,9 +1,9 @@
 {{- /* App-screenshot i light/dark: <picture> vælger dark-varianten ved
-      systemets mørke skema (kun den matchende variant hentes — vigtigt for
+      systemets mørke skema (kun den matchende variant hentes – vigtigt for
       LCP). Den manuelle mode-toggle overstyrer via JS i head.html, som
       sætter source-media til 'all'/'not all' på .mode-pic.
       Params: light (sti, påkrævet) · dark (sti, valgfri) · alt ·
-      eager (bool — hero/LCP: fetchpriority high i stedet for lazy).
+      eager (bool – hero/LCP: fetchpriority high i stedet for lazy).
       Alle app-screenshots er 1072×764 (window frame + skygge bagt ind). */ -}}
 {{- $light := .light }}{{ $dark := .dark }}{{ $alt := .alt }}{{ $eager := .eager }}
 <picture class="mode-pic">
