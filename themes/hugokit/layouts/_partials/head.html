@@ -57,9 +57,29 @@
 <meta name="description" content="{{ $description }}">
 <link rel="canonical" href="{{ .Permalink }}">
 
-{{- /* Browser toolbar color – fallback for Chrome/Firefox; Safari Tahoe+ sampler html/body-baggrunden (sat i main.css). Sitet følger systemets farveskema. */}}
-<meta name="theme-color" media="(prefers-color-scheme: light)" content="#E2DFE7">
+{{- /* Browser toolbar color – fallback for Chrome/Firefox; Safari Tahoe+ sampler
+      html/body-baggrunden (sat i main.css). Farverne ER --surround i main.css:
+      light #F4F1EA (eggshell) · dark #060607. Uden manuelt valg vælger browseren
+      metaen efter systemets skema – siden følger systemet, også live.
+
+      Scriptet lige under: har toggle'n sat et valg (data-theme fra localStorage,
+      skrevet øverst i head), er systemets skema irrelevant – så fjernes
+      media-attributten, og begge metas bærer override-farven. Det skal ske under
+      parsing, mens metaerne netop er læst og før first paint; ellers står
+      toolbar'en i systemets farve mens siden er malet i den valgte. */}}
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#F4F1EA">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#060607">
+<script>
+  (function () {
+    var t = document.documentElement.dataset.theme;
+    if (!t) return;
+    var c = t === 'dark' ? '#060607' : '#F4F1EA';
+    document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
+      m.removeAttribute('media');
+      m.content = c;
+    });
+  })();
+</script>
 
 {{- /* Delekortet. Forsiden beholder det designede kort (kæmpe-wordmark);
       hver anden side får sit eget, genereret ved build med sidens titel oven på
@@ -269,8 +289,13 @@
         var next = cur ? (cur === 'dark' ? 'light' : 'dark') : (sysDark ? 'light' : 'dark');
         root.dataset.theme = next;
         try { localStorage.setItem('hk-theme', next); } catch (e) {}
-        var c = next === 'dark' ? '#060607' : '#E2DFE7';
-        document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) { m.content = c; });
+        // Toolbar-farven følger valget, ikke systemet: media-attributten væk,
+        // begge metas på override-farven (samme kontrakt som scriptet i head).
+        var c = next === 'dark' ? '#060607' : '#F4F1EA';
+        document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
+          m.removeAttribute('media');
+          m.content = c;
+        });
         syncPics(next);
       };
       // Blød crossfade hvor View Transitions findes; ellers øjeblikkeligt skift
