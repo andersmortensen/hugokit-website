@@ -9,6 +9,17 @@
     Wordmark-spec: Hanken Grotesk 700 (−0.015em) · headlines 800 (−0.018em)
     Brand-spec: dokumentation → apps/hugokit/brand · geometri i static/brand/  */
 
+/*  Self-hostede fonts (woff2, latin) – erstatter Google Fonts-CDN'et. Filerne
+    bor i static/fonts/ og bærer Googles version i navnet (v12/v20/v24); de
+    overskrives aldrig, så .htaccess kan cache dem immutable. font-display: swap
+    matcher CDN'ets tidligere &display=swap. */
+@font-face { font-family: 'Hanken Grotesk'; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/hanken-grotesk-v12-latin-700.woff2') format('woff2'); }
+@font-face { font-family: 'Hanken Grotesk'; font-style: normal; font-weight: 800; font-display: swap; src: url('/fonts/hanken-grotesk-v12-latin-800.woff2') format('woff2'); }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/inter-v20-latin-regular.woff2') format('woff2'); }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/inter-v20-latin-500.woff2') format('woff2'); }
+@font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/jetbrains-mono-v24-latin-regular.woff2') format('woff2'); }
+@font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/jetbrains-mono-v24-latin-500.woff2') format('woff2'); }
+
 /*  Tokens via light-dark(): systemets skema er default, og den manuelle
     toggle i nav'en overstyrer via data-theme på <html> (localStorage-husket). */
 :root {

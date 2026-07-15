@@ -197,9 +197,11 @@
 {{ end }}
 {{ end }}
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@700;800&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+{{- /* Fonts self-hostes (woff2, latin) – @font-face bor i main.css, filerne i
+      static/fonts/. Ingen Google Fonts-CDN og dermed ingen preconnect eller
+      render-blokerende ekstern stylesheet. Wordmark-fonten (Hanken 700) maler
+      hero-lockup'et og preloades derfor. */}}
+<link rel="preload" href="{{ "fonts/hanken-grotesk-v12-latin-700.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
 
 {{ with resources.Get "css/main.css" }}
   {{ $css := . | minify | fingerprint }}

@@ -1,0 +1,28 @@
+{{ printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+{{- /* Override af Hugos default-sitemap. Eneste ændring: liste-sider (forside,
+      /docs/, /changelog/) arver den nyeste lastmod blandt deres efterkommere i
+      stedet for git-datoen på deres eget _index.md. Uden det stod hub-siderne
+      som ældre end de docs de faktisk lister – Google anbefaler at lastmod
+      afspejler den seneste væsentlige ændring. Leaf-sider har ingen
+      RegularPagesRecursive, så $lastmod forbliver deres egen .Lastmod. */ -}}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  {{- range .Data.Pages }}
+  {{- if .Permalink }}
+  {{- $lastmod := .Lastmod }}
+  {{- range .RegularPagesRecursive }}{{ if .Lastmod.After $lastmod }}{{ $lastmod = .Lastmod }}{{ end }}{{ end }}
+  <url>
+    <loc>{{ .Permalink }}</loc>
+    {{- if not $lastmod.IsZero }}
+    <lastmod>{{ $lastmod.Format "2006-01-02T15:04:05-07:00" | safeHTML }}</lastmod>
+    {{- end }}
+    {{- with .Sitemap.ChangeFreq }}
+    <changefreq>{{ . }}</changefreq>
+    {{- end }}
+    {{- if ge .Sitemap.Priority 0.0 }}
+    <priority>{{ .Sitemap.Priority }}</priority>
+    {{- end }}
+  </url>
+  {{- end }}
+  {{- end }}
+</urlset>

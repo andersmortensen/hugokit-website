@@ -15,13 +15,18 @@
 
       Params: v (dict med kilder + posters) · alt · light/dark (noscript-fallback) */ -}}
 {{- $v := .v }}{{ $alt := .alt }}
+{{- /* mp4'erne fingerprintes (kilde: assets/video/) så filnavnet skifter når
+      bytes gør – det gør immutable-cachen i .htaccess sikker. Posterne forbliver
+      i static/ (små, sjældent ændret; host-default cache). */ -}}
+{{- $lightMp4 := (resources.Get (strings.TrimPrefix "/" $v.lightMp4) | fingerprint).RelPermalink }}
+{{- $darkMp4 := (resources.Get (strings.TrimPrefix "/" $v.darkMp4) | fingerprint).RelPermalink }}
 <video class="shot hero-vid" id="hero-video"
        width="1072" height="764"
        muted loop playsinline autoplay preload="auto"
        poster="{{ $v.posterLight | relURL }}"
        aria-label="{{ $alt }}"
-       data-light-mp4="{{ $v.lightMp4 | relURL }}"
-       data-dark-mp4="{{ $v.darkMp4 | relURL }}"
+       data-light-mp4="{{ $lightMp4 }}"
+       data-dark-mp4="{{ $darkMp4 }}"
        data-poster-light="{{ $v.posterLight | relURL }}"
        data-poster-dark="{{ $v.posterDark | relURL }}"></video>
 <script>

@@ -1,0 +1,62 @@
+# hugokit.com – Apache config. Ligger i static/, kopieres til public/.htaccess
+# ved build og uploades til docroot. (Statisk Hugo-site: index.html, ingen router.)
+#
+# Bemærk: dette er IKKE preview-subdomænets .htaccess. Ingen index.php-router,
+# og ingen X-Robots-Tag noindex – hugokit.com SKAL indekseres.
+
+# ── Kanonisk vært: www → apex, permanent ──────────────────────────────────────
+# Samler trafik og signaler på https://hugokit.com/ og fjerner duplet-URLs.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP_HOST} ^www\.hugokit\.com$ [NC]
+  RewriteRule ^ https://hugokit.com%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# ── Cache ─────────────────────────────────────────────────────────────────────
+<IfModule mod_headers.c>
+  # Fingerprintede filer bærer et 64-tegns hash i navnet (Hugos fingerprint:
+  # main.min.<hash>.css, hero-light.<hash>.mp4 …). Navnet skifter når bytes gør,
+  # så en årelang immutable-cache er sikker.
+  <FilesMatch "\.[0-9a-f]{64}\.[A-Za-z0-9]+$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  # woff2 er ikke hash-navngivet, men filnavnet bærer skriftens version
+  # (…-v12-…) og overskrives aldrig – samme immutable-løfte, samme house-style
+  # som preview-.htaccess.
+  <FilesMatch "\.woff2$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>
+
+# ── Security headers ──────────────────────────────────────────────────────────
+<IfModule mod_headers.c>
+  # HSTS bevidst KORT og uden preload i første fase – preload er reelt
+  # uigenkaldeligt (browsere husker det hardcoded). Bump til fx max-age=15552000
+  # (+ evt. includeSubDomains; preload) når du har verificeret at intet på
+  # hugokit.com nogensinde skal serveres over http.
+  Header always set Strict-Transport-Security "max-age=86400"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=(), usb=()"
+
+  # CSP kun som Report-Only i fase 1 – blokerer INTET, rapporterer kun afvigelser.
+  # Policyen tillader nuværende site (inkl. GA4 via googletagmanager/analytics).
+  # 'unsafe-inline' på script/style dækker sidens mange inline-scripts og
+  # inline-styles; fase 2 = erstat med sha256-hashes (nonces duer ikke med
+  # fuldt cachede sider). Gates/fjernes GA senere, kan de google-origins slettes.
+  # NB: uden en rapport-endpoint ses violations kun i hver besøgendes devtools;
+  #     tilføj report-to + Reporting-Endpoints (eller en collector) for at samle dem.
+  Header always set Content-Security-Policy-Report-Only "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.googletagmanager.com https://*.google-analytics.com; font-src 'self'; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'"
+
+  # ── Bonus (ikke i feedbacken – matcher din preview-house-style; slet linjen for at fortryde) ──
+  # nosniff: du bruger den allerede på preview; nul risiko.
+  Header always set X-Content-Type-Options "nosniff"
+  # Klikjacking-værn mens CSP endnu kun er Report-Only (frame-ancestors håndhæves ikke endnu).
+  Header always set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+# ── Bonus: server Hugos egen 404-side (aktiverer også page_not_found-analytics) ──
+# Slet linjen for at fortryde.
+ErrorDocument 404 /404.html
+
+# ── Bonus: ingen directory-listing (house-style; slet for at fortryde) ────────
+Options -Indexes
