@@ -3,7 +3,9 @@ title: "HugoKit"
 description: "A Mac app for Hugo: run the server, preview your pages and publish your site from one window. Free, native, no terminal – built by one person for his own sites."
 
 hero:
-  heading: "Hugo, without the terminal."
+  # To-tone headline: headingDim dæmpes (muted), heading bærer pointen i ink.
+  headingDim: "Hugo,"
+  heading: "without the terminal."
   lead: "HugoKit is a Mac app that runs, previews and publishes the Hugo sites you already have. Same Hugo, same files – no terminal."
   more: "Learn more"
   # Hero-mediet: loopende app-optagelse. Screenshottene bliver stående som
@@ -32,8 +34,9 @@ facts:
     label: "no account; your files stay on your Mac"
     glyph: "lock"
 
-# Loop-panelet – de tre moments som nummererede trin.
+# Loop-sektionen – de tre moments som nummererede trin (01/02/03).
 loop:
+  label: "The loop"
   heading: "The whole loop."
   sub: "Preview, preflight, publish – in that order."
 
@@ -262,6 +265,16 @@ moments:
       - "/docs/publishing-to-github-pages/"
       - "/docs/publishing-over-sftp/"
     detail: "Set a destination up once, and publishing is a single keystroke: `⌘P`. GitHub Pages builds in the cloud through Actions or locally on your Mac; FTP and SFTP build on your Mac and upload only the files that actually changed. A site can hold several destinations at once, and one you are not using can be paused rather than removed."
+
+# Docs-teaser på forsiden – tre kuraterede sider, forankret i keyword-planen
+# (SEO-sporet: intern linking fra forsiden til landingssiderne). Titel og
+# beskrivelse hentes fra siderne selv, så kortene aldrig drifter fra docs.
+fromdocs:
+  label: "From the docs"
+  pages:
+    - "/docs/hugo-without-the-terminal/"
+    - "/docs/hugo-gui-desktop-app/"
+    - "/docs/hugo-vs-wordpress/"
 
 faq:
   title: "FAQ"

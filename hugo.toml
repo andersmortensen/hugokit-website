@@ -5,7 +5,12 @@ timeZone = 'Europe/Copenhagen'
 # Sitets layouts/assets bor i temaet — roden ejer kun content, config og static.
 theme = 'hugokit'
 # 'section' er aktiv igen: /changelog/ er en rigtig Hugo-sektion (Sparkle-kontrakten).
-disableKinds = ['taxonomy', 'term', 'rss']
+# RSS er aktivt (fjernet fra disableKinds 2026-07-16): docs og changelog får
+# /docs/index.xml og /changelog/index.xml via Hugos indbyggede template, og
+# head.html udstiller dem som <link rel="alternate">. Forsiden får IKKE et feed
+# (dens outputs er overstyret til html+llms nedenfor). _skabelon.md er draft og
+# holdes dermed ude. Appcast'en (Sparkle) er urørt af dette – separat fil i static/.
+disableKinds = ['taxonomy', 'term']
 # Git-commit-datoen bliver sidens .Lastmod (Hugos lastmod-default har ':git' først).
 # Docs' JSON-LD (TechArticle → dateModified) læser den – ingen dato i front matter,
 # ingen dato der kan drive fra virkeligheden. Rollback: slet denne linje.

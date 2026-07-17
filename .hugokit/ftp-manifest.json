@@ -1,9 +1,14 @@
 {
   "files" : {
+    ".htaccess" : {
+      "hash" : "sha256:73c2c24bc298f6ee95af218a8d55ea787d198cd1921c920e4d3a652f3a7fabca",
+      "modified" : "2026-07-15T18:09:58Z",
+      "size" : 4065
+    },
     "404.html" : {
-      "hash" : "sha256:cfcfcb09ebf19baf30b09ce0f18fc970252fe3e9577a7accb6bbd83b78cd5b22",
-      "modified" : "2026-07-15T10:32:08Z",
-      "size" : 10781
+      "hash" : "sha256:08325341277673989d2eefa6afbe99e1c47b57e7900ab13af1d89ba0501462f8",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 11388
     },
     "appcast.xml" : {
       "hash" : "sha256:af6aeabb6ba129ef1ad36abe6d367a407658bb1d731c856e17e7761398de56ae",
@@ -45,20 +50,35 @@
       "modified" : "2026-07-05T14:09:07Z",
       "size" : 667
     },
+    "changelog\/.gitkeep" : {
+      "hash" : "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "modified" : "2026-07-04T20:37:27Z",
+      "size" : 0
+    },
     "changelog\/0.1.0\/index.html" : {
-      "hash" : "sha256:53b1db0a1f88531c1a4f47c85d53f54a29bb6a5c45895adca5b8d78c06201840",
-      "modified" : "2026-07-15T10:32:08Z",
-      "size" : 12075
+      "hash" : "sha256:6a41d75133caea5502cdbcf3944eee7202dfa866a8587a0ab9554e03e09aefa5",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 12802
     },
     "changelog\/0.1.0\/index.md" : {
       "hash" : "sha256:f7529880341a70bd64711ead4d2c7444ba5e367c3890963b2638ddd763559a48",
-      "modified" : "2026-07-15T10:32:08Z",
+      "modified" : "2026-07-16T09:08:14Z",
       "size" : 2025
     },
     "changelog\/index.html" : {
-      "hash" : "sha256:f6e86b9da20e572dac7dfad08ad9b4aa9457c2f2474bbad26988f14339aec8ef",
-      "modified" : "2026-07-15T10:32:08Z",
-      "size" : 14489
+      "hash" : "sha256:e42c00b5c96585f8aea35ad4cf2bec3651e3fc2d9d6beff72af8d7fa7da5c881",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 15216
+    },
+    "changelog\/index.xml" : {
+      "hash" : "sha256:69be12ea9f563fb931bd99597d527dd63b1ec3ceb7c001597ae537083f487062",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 2524
+    },
+    "css\/main.min.01758edc1f50e8a70ca865258a4a5c9c31b64d3a695d52487b0634d1bdabccb1.css" : {
+      "hash" : "sha256:01758edc1f50e8a70ca865258a4a5c9c31b64d3a695d52487b0634d1bdabccb1",
+      "modified" : "2026-07-16T08:42:57Z",
+      "size" : 44046
     },
     "css\/main.min.017b07335e8220d45c7bb27d766ce66699b7c383c79d0d44b31597f3d9504f54.css" : {
       "hash" : "sha256:017b07335e8220d45c7bb27d766ce66699b7c383c79d0d44b31597f3d9504f54",
@@ -89,6 +109,11 @@
       "hash" : "sha256:06d43f96ea0b8fa77269bf82bf6f5c8294b1192505fa1187c14fe3927df6ed64",
       "modified" : "2026-07-11T21:24:15Z",
       "size" : 24262
+    },
+    "css\/main.min.0749b0057026ca9e756d8c63a4003c7c8ec61fb296d5cb1ae48d5543f652c5ff.css" : {
+      "hash" : "sha256:0749b0057026ca9e756d8c63a4003c7c8ec61fb296d5cb1ae48d5543f652c5ff",
+      "modified" : "2026-07-16T08:43:13Z",
+      "size" : 44405
     },
     "css\/main.min.08334181b6d7a9e77080241c50b19a83d27d4050a8cea9b2f4b39dec4dca5e28.css" : {
       "hash" : "sha256:08334181b6d7a9e77080241c50b19a83d27d4050a8cea9b2f4b39dec4dca5e28",
@@ -230,6 +255,11 @@
       "modified" : "2026-07-10T14:16:31Z",
       "size" : 11951
     },
+    "css\/main.min.2dde2be353140f57c0f78b70ab7009edc4f539dd7e40252b41651a1ba79fc581.css" : {
+      "hash" : "sha256:2dde2be353140f57c0f78b70ab7009edc4f539dd7e40252b41651a1ba79fc581",
+      "modified" : "2026-07-16T08:43:19Z",
+      "size" : 44742
+    },
     "css\/main.min.2e27a0ec43f3c8c62adef5bad968ce49b4c97e560a250ad5e5d0d42fc16e3412.css" : {
       "hash" : "sha256:2e27a0ec43f3c8c62adef5bad968ce49b4c97e560a250ad5e5d0d42fc16e3412",
       "modified" : "2026-07-13T22:36:39Z",
@@ -330,10 +360,20 @@
       "modified" : "2026-07-13T18:24:12Z",
       "size" : 36135
     },
+    "css\/main.min.434d18898ad635f8236d59028bd522667145cc1102e171b11ab66082237a1ddc.css" : {
+      "hash" : "sha256:434d18898ad635f8236d59028bd522667145cc1102e171b11ab66082237a1ddc",
+      "modified" : "2026-07-16T08:45:53Z",
+      "size" : 47624
+    },
     "css\/main.min.438f629a81678ace6d41b7f80a7e85b3238188206d1c5c41549a8e164462d65b.css" : {
       "hash" : "sha256:438f629a81678ace6d41b7f80a7e85b3238188206d1c5c41549a8e164462d65b",
       "modified" : "2026-07-11T21:21:37Z",
       "size" : 24106
+    },
+    "css\/main.min.4491229c3c7636bdd474ad16a525287fbead5299338979c1cb5b9e4fc5d9289b.css" : {
+      "hash" : "sha256:4491229c3c7636bdd474ad16a525287fbead5299338979c1cb5b9e4fc5d9289b",
+      "modified" : "2026-07-16T08:42:21Z",
+      "size" : 43660
     },
     "css\/main.min.44f5ddfc9b65c0ed8cddc18b94341fd70719591264025a1df2002843e896f857.css" : {
       "hash" : "sha256:44f5ddfc9b65c0ed8cddc18b94341fd70719591264025a1df2002843e896f857",
@@ -474,6 +514,11 @@
       "hash" : "sha256:627a7a32639389665da9f8df37a74a7a923eb28f42aeb071a58abbffc9ba5878",
       "modified" : "2026-07-13T16:48:16Z",
       "size" : 33311
+    },
+    "css\/main.min.64369267b08329ea556a33bba89c89ba5be32c1c57f4ba4a8d9d28507af12fd6.css" : {
+      "hash" : "sha256:64369267b08329ea556a33bba89c89ba5be32c1c57f4ba4a8d9d28507af12fd6",
+      "modified" : "2026-07-15T19:19:53Z",
+      "size" : 41695
     },
     "css\/main.min.651625b0d0990fe6212c155c7a6af15885336fbf4eb173cec5df6ef453802512.css" : {
       "hash" : "sha256:651625b0d0990fe6212c155c7a6af15885336fbf4eb173cec5df6ef453802512",
@@ -632,7 +677,7 @@
     },
     "css\/main.min.81865c2253213c403c521ac105a15fa6982709a8ddaf0e697e38777e4ac890d4.css" : {
       "hash" : "sha256:81865c2253213c403c521ac105a15fa6982709a8ddaf0e697e38777e4ac890d4",
-      "modified" : "2026-07-15T10:32:08Z",
+      "modified" : "2026-07-15T11:27:31Z",
       "size" : 40787
     },
     "css\/main.min.81fb23a9a248ead19329e5912ad5f59423497019e34577c12e9825434b6b621a.css" : {
@@ -689,6 +734,11 @@
       "hash" : "sha256:8bfc9bff7c6573c128b87958c4250c1e6c40ca9ed2f2814eb5e1d78d6a77335b",
       "modified" : "2026-07-13T16:40:35Z",
       "size" : 33066
+    },
+    "css\/main.min.8c043264e8312ff6a35be41c0ad26d952144cc45f4d0a9aec06f4c55af7bc350.css" : {
+      "hash" : "sha256:8c043264e8312ff6a35be41c0ad26d952144cc45f4d0a9aec06f4c55af7bc350",
+      "modified" : "2026-07-16T06:27:03Z",
+      "size" : 43726
     },
     "css\/main.min.8cfca6451859287fc2b88e97c6d98639aea4ef9279a296363c6d7b16a6f07ac2.css" : {
       "hash" : "sha256:8cfca6451859287fc2b88e97c6d98639aea4ef9279a296363c6d7b16a6f07ac2",
@@ -749,6 +799,11 @@
       "hash" : "sha256:9e01c3e0af53242e677a8a3b2e0e679c89f34dad5d52abced22948e7940e181c",
       "modified" : "2026-07-10T13:59:56Z",
       "size" : 11945
+    },
+    "css\/main.min.9e59d2e3717140cdb9ebdb320440620a28ce694806bfe4bf579205a8e95ff4ff.css" : {
+      "hash" : "sha256:9e59d2e3717140cdb9ebdb320440620a28ce694806bfe4bf579205a8e95ff4ff",
+      "modified" : "2026-07-16T06:23:19Z",
+      "size" : 43701
     },
     "css\/main.min.a00cde0db7c92212004d4c573b49d6af50c9ed39a2a06a2ef62d3fcb5d879956.css" : {
       "hash" : "sha256:a00cde0db7c92212004d4c573b49d6af50c9ed39a2a06a2ef62d3fcb5d879956",
@@ -839,6 +894,21 @@
       "hash" : "sha256:b310a7566ac33b9670e68e03138154d338747d39fddb53a6d87ad25fee951f19",
       "modified" : "2026-07-10T14:38:46Z",
       "size" : 19139
+    },
+    "css\/main.min.b3a8773924e9d48d07c7d4884fc6a2694b889096806caabb10b7a1250c03e856.css" : {
+      "hash" : "sha256:b3a8773924e9d48d07c7d4884fc6a2694b889096806caabb10b7a1250c03e856",
+      "modified" : "2026-07-16T08:42:50Z",
+      "size" : 43701
+    },
+    "css\/main.min.b5270253e150bcfd740f0a54ada72a8344804e29d05faf5754500469f72bbf1a.css" : {
+      "hash" : "sha256:b5270253e150bcfd740f0a54ada72a8344804e29d05faf5754500469f72bbf1a",
+      "modified" : "2026-07-16T06:23:09Z",
+      "size" : 43243
+    },
+    "css\/main.min.b57a3e47be00b5fd27360a050d9a532d8e11c5a4755bbddaec2bbf12e421c88a.css" : {
+      "hash" : "sha256:b57a3e47be00b5fd27360a050d9a532d8e11c5a4755bbddaec2bbf12e421c88a",
+      "modified" : "2026-07-16T08:45:52Z",
+      "size" : 47605
     },
     "css\/main.min.b63c1051b49f8447e5077b08984a6f2b9c46740ab3601256929375e46932d3cb.css" : {
       "hash" : "sha256:b63c1051b49f8447e5077b08984a6f2b9c46740ab3601256929375e46932d3cb",
@@ -1020,6 +1090,11 @@
       "modified" : "2026-07-13T17:40:43Z",
       "size" : 31270
     },
+    "css\/main.min.e0feb30c8117b2e3b586218df68762ca3f40a3dc3dfa4c393970c6e4b41ca539.css" : {
+      "hash" : "sha256:e0feb30c8117b2e3b586218df68762ca3f40a3dc3dfa4c393970c6e4b41ca539",
+      "modified" : "2026-07-16T08:47:27Z",
+      "size" : 48854
+    },
     "css\/main.min.e167a0db90a049aa28b55a024a8dc61944e591dd34ba7a643676c422aa6d1e1c.css" : {
       "hash" : "sha256:e167a0db90a049aa28b55a024a8dc61944e591dd34ba7a643676c422aa6d1e1c",
       "modified" : "2026-07-11T21:28:31Z",
@@ -1105,6 +1180,11 @@
       "modified" : "2026-07-10T22:58:12Z",
       "size" : 20301
     },
+    "css\/main.min.f3ead257dd817d9cb04a5f5ebdd5d162dfd9d30e26144000f6470179811e253e.css" : {
+      "hash" : "sha256:f3ead257dd817d9cb04a5f5ebdd5d162dfd9d30e26144000f6470179811e253e",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 49085
+    },
     "css\/main.min.f3faaa30145a419aa55e8f988b172f29b3f980e137be7a75075c73aa14ad0e19.css" : {
       "hash" : "sha256:f3faaa30145a419aa55e8f988b172f29b3f980e137be7a75075c73aa14ad0e19",
       "modified" : "2026-07-10T23:49:48Z",
@@ -1119,6 +1199,11 @@
       "hash" : "sha256:f5d3adfa2ee75204e422d6fbc350d8c0cf6e3eecbb5090d8196c7fb33f9cba0f",
       "modified" : "2026-07-13T17:01:18Z",
       "size" : 35423
+    },
+    "css\/main.min.f68491aba7dd3f8e5c7d1a18096737c187f6c160e61aa11eae456409a0bf86ef.css" : {
+      "hash" : "sha256:f68491aba7dd3f8e5c7d1a18096737c187f6c160e61aa11eae456409a0bf86ef",
+      "modified" : "2026-07-16T08:46:00Z",
+      "size" : 47771
     },
     "css\/main.min.f79899413233b21b795985f487074992ab848879112c1b726a5ce131f2fe4aa0.css" : {
       "hash" : "sha256:f79899413233b21b795985f487074992ab848879112c1b726a5ce131f2fe4aa0",
@@ -1166,254 +1251,294 @@
       "size" : 19599
     },
     "docs\/editing-your-config\/index.html" : {
-      "hash" : "sha256:43c17934e2816e2242a23783769aa099ce62d9342a89ad480ddb073ffc710d93",
-      "modified" : "2026-07-15T10:32:08Z",
-      "size" : 19463
+      "hash" : "sha256:f899f8ee63c4a5d554b199f8a366ce63f532623be2f1ac89d9406aa89cb39be4",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 20180
     },
     "docs\/editing-your-config\/index.md" : {
       "hash" : "sha256:496577ec8f5e9089e2dbfd261dba9c61e361a2aed637368d8f966108c1187f2e",
-      "modified" : "2026-07-15T10:32:08Z",
+      "modified" : "2026-07-16T09:08:14Z",
       "size" : 2415
     },
     "docs\/getting-started\/index.html" : {
-      "hash" : "sha256:d939de73334476a6d908b5914c8f2d102663751bb53e834307a14f37e4a1ed42",
-      "modified" : "2026-07-15T10:32:08Z",
-      "size" : 27217
+      "hash" : "sha256:10f5f5eab16f60a3fd15fd2f37d4d0b963926e6680f9186adbe758bb960d2b48",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 27934
     },
     "docs\/getting-started\/index.md" : {
       "hash" : "sha256:64c4daebb9c50fcf52bf3735d9c25b31b0fa01e43f8e702df7fca218eb61c214",
-      "modified" : "2026-07-15T10:32:08Z",
+      "modified" : "2026-07-16T09:08:14Z",
       "size" : 8323
     },
     "docs\/github-pages-serving-old-version\/index.html" : {
-      "hash" : "sha256:ae8ae403787bb51f3c091af20203c9fe9123a532365b6438cd32c28744e4c873",
-      "modified" : "2026-07-15T10:32:08Z",
-      "size" : 21526
+      "hash" : "sha256:9f37cce4a293b880481884e531875fcbb839613251ad795fb4d103091cc7ee7b",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 22243
     },
     "docs\/github-pages-serving-old-version\/index.md" : {
       "hash" : "sha256:d0b43a29851b8b77f764921b2075d620c18fb4d2a42dd9fcc620243ac242228e",
-      "modified" : "2026-07-15T10:32:08Z",
+      "modified" : "2026-07-16T09:08:14Z",
       "size" : 4003
     },
     "docs\/github-pages-shows-readme-instead-of-hugo-site\/index.html" : {
-      "hash" : "sha256:476797b2b0a31da3c42d3a58ed6417bc6ce23662eecc64e8ca1100c49dba79d6",
-      "modified" : "2026-07-15T10:32:08Z",
-      "size" : 21922
+      "hash" : "sha256:3094b6367a15581498fbeac2a6fb016a2a20f004534b64b2fe13d8d8d1d92669",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 22639
     },
     "docs\/github-pages-shows-readme-instead-of-hugo-site\/index.md" : {
       "hash" : "sha256:e95e05d2175b9249c3975e7f78a1f7e5fa3cca329a4b097f7a7b7ece16bc7b47",
-      "modified" : "2026-07-15T10:32:08Z",
+      "modified" : "2026-07-16T09:08:14Z",
       "size" : 4369
     },
     "docs\/hugo-broken-links-missing-css-github-pages\/index.html" : {
-      "hash" : "sha256:f870d32c577d66ca4f53e7a051280ab1678d674f135c64378000a944a3a5b5a9",
-      "modified" : "2026-07-15T10:32:08Z",
-      "size" : 22921
+      "hash" : "sha256:ddb77a11d722e7a23e028f26dcd08a723c6ac9b0cac21b5b596206c46487da68",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 23638
     },
     "docs\/hugo-broken-links-missing-css-github-pages\/index.md" : {
       "hash" : "sha256:ff27abe8c8ed9b96eca5e1c3511db10d52c6f758aeeab3063e096f54c36feb42",
-      "modified" : "2026-07-15T10:32:08Z",
+      "modified" : "2026-07-16T09:08:14Z",
       "size" : 4496
     },
     "docs\/hugo-config-setting-ignored\/index.html" : {
-      "hash" : "sha256:8d9981a71b57f65e07b9f7e4a26083d069f43325b6d06aff9778cfbffdb7802e",
-      "modified" : "2026-07-15T10:32:08Z",
-      "size" : 20999
+      "hash" : "sha256:8251d02ada472b3706fb1a56a0c64468eb50f41f0804fa6f8897cb2f423460c1",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 21716
     },
     "docs\/hugo-config-setting-ignored\/index.md" : {
       "hash" : "sha256:c3c2b82269975ab88d8f49f3411ccddb3032769b0a0783b9e916166dc30a1bf1",
-      "modified" : "2026-07-15T10:32:08Z",
+      "modified" : "2026-07-16T09:08:14Z",
       "size" : 3314
     },
     "docs\/hugo-deprecation-warnings\/index.html" : {
-      "hash" : "sha256:f20d927bf7f291eba7800d96c0fefc99f813246ef85827b015016699cf2675ee",
-      "modified" : "2026-07-15T10:32:08Z",
-      "size" : 21441
+      "hash" : "sha256:dcecb74de59d5e73ad33c34f4381bf2745a4b8c0e012118529d832a9ccc38678",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 22158
     },
     "docs\/hugo-deprecation-warnings\/index.md" : {
       "hash" : "sha256:9819e3893bf3337076a701f37baeb4efac33d613880814c4df1ae79eb594a02e",
-      "modified" : "2026-07-15T10:32:08Z",
+      "modified" : "2026-07-16T09:08:14Z",
       "size" : 3662
     },
     "docs\/hugo-drafts-not-showing\/index.html" : {
-      "hash" : "sha256:97585b58e70e2c68a7cbedbd580904ab6550f4abe2e6983cbbdeb5dc3c0fdfd1",
-      "modified" : "2026-07-15T10:32:08Z",
-      "size" : 21026
+      "hash" : "sha256:1859145dd855a404d143b6e3450f50560f8b32e571f67f90ed9a9de748360ad7",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 21743
     },
     "docs\/hugo-drafts-not-showing\/index.md" : {
       "hash" : "sha256:a1fa34c82cda55e1e531680618dd0f9f0b7827d83ab2e5cd4a73002503f3ae39",
-      "modified" : "2026-07-15T10:32:08Z",
+      "modified" : "2026-07-16T09:08:14Z",
       "size" : 3545
     },
     "docs\/hugo-error-calling-partial\/index.html" : {
-      "hash" : "sha256:38d336938d583f884d5eb9f6dfb865e62dcf51de01d724fa6030a6d96f2af496",
-      "modified" : "2026-07-15T10:32:08Z",
-      "size" : 20926
+      "hash" : "sha256:e1068050611bbf89a51200a59df0b0127a446a7e8b448737fdef559ce7c27b6a",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 21643
     },
     "docs\/hugo-error-calling-partial\/index.md" : {
       "hash" : "sha256:38793568adc7c58d91ead04a7ba55a3b6912b8840b2121b8803f6436a6d6478c",
-      "modified" : "2026-07-15T10:32:08Z",
+      "modified" : "2026-07-16T09:08:14Z",
       "size" : 3432
     },
     "docs\/hugo-found-no-layout-file\/index.html" : {
-      "hash" : "sha256:d308ab6fa920c8066f1ee71c6c814f6f1b742e64fac4e0049a99b6ad775321c0",
-      "modified" : "2026-07-15T10:32:08Z",
-      "size" : 21969
+      "hash" : "sha256:baa65a650d74f229f0f67cdf02f64c06d5701750f0bd22d87b97be2487698b9e",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 22686
     },
     "docs\/hugo-found-no-layout-file\/index.md" : {
       "hash" : "sha256:9591e53a1599b3a37b0d75de2027c459e535fb200c6e08e943751796b2409579",
-      "modified" : "2026-07-15T10:32:08Z",
+      "modified" : "2026-07-16T09:08:14Z",
       "size" : 4097
     },
     "docs\/hugo-front-matter-errors\/index.html" : {
-      "hash" : "sha256:efd91b57d3eddd6667f2908d38bf7aab36ceb97db2e2fea86de3f8f474d6168b",
-      "modified" : "2026-07-15T10:32:08Z",
-      "size" : 21526
+      "hash" : "sha256:8b8f363c863cafde6153fa92818c202b63b78e2d155a8c7e4ecefd6afaff82a3",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 22243
     },
     "docs\/hugo-front-matter-errors\/index.md" : {
       "hash" : "sha256:e9942f015b813cea636052375ea4e4ea6c3995b39db8f52b08d9db3d1e36e5af",
-      "modified" : "2026-07-15T10:32:08Z",
+      "modified" : "2026-07-16T09:08:14Z",
       "size" : 3570
     },
     "docs\/hugo-gui-desktop-app\/index.html" : {
-      "hash" : "sha256:7cc92380b334be8e17984b0ab1ea93f9af8fbc8c3c9187d271b6386fcfc7463d",
-      "modified" : "2026-07-15T10:32:08Z",
-      "size" : 21334
+      "hash" : "sha256:e8298667c7227c6a51ac05d8b5336aec1380c7210f8c90e0a65515714be56d2a",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 22051
     },
     "docs\/hugo-gui-desktop-app\/index.md" : {
       "hash" : "sha256:8daef7ce821aaf8cff276474827a89616bf8b768afc9c83d4e4d43b6eadaacc6",
-      "modified" : "2026-07-15T10:32:08Z",
+      "modified" : "2026-07-16T09:08:14Z",
       "size" : 3816
     },
     "docs\/hugo-livereload-not-reloading\/index.html" : {
-      "hash" : "sha256:376c4623402c2a1247d54eea4ed869e73c79f39a01863c7db82fdf367e36087d",
-      "modified" : "2026-07-15T10:32:08Z",
-      "size" : 21368
+      "hash" : "sha256:64bf56961e2face8511d42a12f62129cdbd5179d614cf6a72d4dbb39066af5d8",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 22085
     },
     "docs\/hugo-livereload-not-reloading\/index.md" : {
       "hash" : "sha256:6414f5e70f3b0d22418a81f4d14be07b36626a649865a047e6e8624d2d0a811e",
-      "modified" : "2026-07-15T10:32:08Z",
+      "modified" : "2026-07-16T09:08:14Z",
       "size" : 3943
     },
     "docs\/hugo-raw-html-omitted-markdown\/index.html" : {
-      "hash" : "sha256:83f96332deb1b0e0ae3c62dbf01c75ad09197c3822a2ec594460e3a2154109e9",
-      "modified" : "2026-07-15T10:32:08Z",
-      "size" : 20323
+      "hash" : "sha256:94e26f3bd006c32ca7f43a555ba6401ca2ee3d4258b26e151a02e5a0f13bb5ad",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 21040
     },
     "docs\/hugo-raw-html-omitted-markdown\/index.md" : {
       "hash" : "sha256:27d336c6336adc6a5ee837e20b894359e1a7f622bf45896f73bf3bb79cd42fc9",
-      "modified" : "2026-07-15T10:32:08Z",
+      "modified" : "2026-07-16T09:08:14Z",
       "size" : 2876
     },
     "docs\/hugo-scss-extended-version\/index.html" : {
-      "hash" : "sha256:660d527e196ff3b48ccad7bbdbef3d15dfb398b13ffe66bfac59d20e7955f2f1",
-      "modified" : "2026-07-15T10:32:08Z",
-      "size" : 20630
+      "hash" : "sha256:49cae2dcfa15ccb5c592e04b0a8305f86f4d5e853252b39f339a4c0a78741663",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 21347
     },
     "docs\/hugo-scss-extended-version\/index.md" : {
       "hash" : "sha256:b95e92e3b12c0cb40ee0fe6eefdc2d1cc17fe00ae2269def8b5701cf7d4cc502",
-      "modified" : "2026-07-15T10:32:08Z",
+      "modified" : "2026-07-16T09:08:14Z",
       "size" : 2874
     },
     "docs\/hugo-server-port-already-in-use\/index.html" : {
-      "hash" : "sha256:00dce7d4f57da8ff3c3c0015c2125164a88dcd8315aa5e3d53f21a745dba3806",
-      "modified" : "2026-07-15T10:32:08Z",
-      "size" : 19877
+      "hash" : "sha256:509a2688352707fe76857953b86ac8a0d5bca365301ac692aad0d79de54ba1ca",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 20594
     },
     "docs\/hugo-server-port-already-in-use\/index.md" : {
       "hash" : "sha256:4f4f55419738ed0e18ec10b820f8d63888dc3292f334f88e53b07d394a9ea766",
-      "modified" : "2026-07-15T10:32:08Z",
+      "modified" : "2026-07-16T09:08:14Z",
       "size" : 2510
     },
     "docs\/hugo-vs-wordpress\/index.html" : {
-      "hash" : "sha256:bfd862645b76cdbf29fdd4216ac8fd6cf6029ea56fea2645496563eab5c18143",
-      "modified" : "2026-07-15T10:32:08Z",
-      "size" : 21568
+      "hash" : "sha256:203a8f57fc9534dec84ef7f46f9757d90acbe96995d259ab1e6e3cd3f20f85c6",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 22285
     },
     "docs\/hugo-vs-wordpress\/index.md" : {
       "hash" : "sha256:235e57e6df40fd0f9ee749c385f017a766efdba67f5b5d36a35f2ee0dcb65d23",
-      "modified" : "2026-07-15T10:32:08Z",
+      "modified" : "2026-07-16T09:08:14Z",
       "size" : 4235
     },
     "docs\/hugo-without-the-terminal\/index.html" : {
-      "hash" : "sha256:fd169f9a97dc8d3eafac29fbea2fa7f8ca54c87a388c8c4791d3e0a9e2e71ef7",
-      "modified" : "2026-07-15T10:32:08Z",
-      "size" : 22434
+      "hash" : "sha256:cbda45b5e050c95f8549e6370a9600056567be27858b4de4c64c22f2f47cf35b",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 23151
     },
     "docs\/hugo-without-the-terminal\/index.md" : {
       "hash" : "sha256:9e11029b85b2e13a84b2ee610ff723e0a92d399ee3b23a3a0cb5a748a4cea122",
-      "modified" : "2026-07-15T10:32:08Z",
+      "modified" : "2026-07-16T09:08:14Z",
       "size" : 4653
     },
     "docs\/index.html" : {
-      "hash" : "sha256:037d58ff123cbb7f5c7cb8921f0530c669f8611470d5de4a0dd731c562390b12",
-      "modified" : "2026-07-15T10:32:08Z",
-      "size" : 23538
+      "hash" : "sha256:8bc323e8dbbe89f55ed2c5d21beda89c362f19770a09933768ebb3f5e9e1b07a",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 24255
+    },
+    "docs\/index.xml" : {
+      "hash" : "sha256:e37f2a101d9a81e114f15106964b12fd30587a6bd335f24f8a2e45142dbf979a",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 26732
     },
     "docs\/preflight\/index.html" : {
-      "hash" : "sha256:6e4e9807d66364c40a6b05e4781a76cf7ad5cc459d38d1a8ab71bd70aedc7c97",
-      "modified" : "2026-07-15T10:32:08Z",
-      "size" : 22672
+      "hash" : "sha256:f05ff697e0c8258ff66f0d542d8c1f37f63d9526240f805e234af3d3d91abcb2",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 23389
     },
     "docs\/preflight\/index.md" : {
       "hash" : "sha256:d5bdcabc769b7582e64d61d9ee276af25586ed058d7ab9cb7ba7a983998bbe16",
-      "modified" : "2026-07-15T10:32:08Z",
+      "modified" : "2026-07-16T09:08:14Z",
       "size" : 4555
     },
     "docs\/publishing-over-sftp\/index.html" : {
-      "hash" : "sha256:b62b413029a94cd67110a3df220d80798e38524bf266b053bb85ee3eefc7b39f",
-      "modified" : "2026-07-15T10:32:08Z",
-      "size" : 21894
+      "hash" : "sha256:b6ba096fe3efe92e9ebb51f698dcef7430c24501c66fe9d4c46cdca5dc1911fc",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 22611
     },
     "docs\/publishing-over-sftp\/index.md" : {
       "hash" : "sha256:4c5d4d25f8ecc2b3687fe1772bb7eb8d9ec981e35b0fb8546b335dbbf053e8b2",
-      "modified" : "2026-07-15T10:32:08Z",
+      "modified" : "2026-07-16T09:08:14Z",
       "size" : 4313
     },
     "docs\/publishing-to-github-pages\/index.html" : {
-      "hash" : "sha256:7c2fcd41f343c28eda0755c8963d46e3e0b1f9297398cd378ec4e0e8b471bb8c",
-      "modified" : "2026-07-15T10:32:08Z",
-      "size" : 22715
+      "hash" : "sha256:98eec72421d8867a805d9c3aefa47bf72d09c7d5d66f03f54a7306164aab10aa",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 23432
     },
     "docs\/publishing-to-github-pages\/index.md" : {
       "hash" : "sha256:2128c5a6febf8e24ad0fe727dd7b41e975cf848de76e5a8919c8e7894e6ee5db",
-      "modified" : "2026-07-15T10:32:08Z",
+      "modified" : "2026-07-16T09:08:14Z",
       "size" : 4930
     },
     "docs\/running-the-server\/index.html" : {
-      "hash" : "sha256:6120be6326e149ba054937e16b10e453f48e28b61f790a7ed4796c5aecd063eb",
-      "modified" : "2026-07-15T10:32:08Z",
-      "size" : 21651
+      "hash" : "sha256:d82b207c81a5e9cb503bcb3060aa3a38cdd65e18f3f768d834e77827732abb77",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 22368
     },
     "docs\/running-the-server\/index.md" : {
       "hash" : "sha256:69585af9a9db6c7d702cb3879d728d8e8c353926a533862266495502c2fe85dc",
-      "modified" : "2026-07-15T10:32:08Z",
+      "modified" : "2026-07-16T09:08:14Z",
       "size" : 4163
     },
     "docs\/site-health\/index.html" : {
-      "hash" : "sha256:821283b891f7b4d8d850b646a8a29667d593a9b5b061d9c7a8f349c8f9f2ddfa",
-      "modified" : "2026-07-15T10:32:08Z",
-      "size" : 21061
+      "hash" : "sha256:7c186e6ec3d2f4a236ab65687c2143860680195676b5bf1d65e7449a92b5db53",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 21778
     },
     "docs\/site-health\/index.md" : {
       "hash" : "sha256:6b7e6f40b8aa9b1cc8b2ceceb52cfd9f1e8a8e355c7feefbcfa80d2fd7f62dc2",
-      "modified" : "2026-07-15T10:32:08Z",
+      "modified" : "2026-07-16T09:08:14Z",
       "size" : 3533
     },
     "docs\/themes-and-template-preview\/index.html" : {
-      "hash" : "sha256:d5e21a1d2c137289d52d06217332fc0250431e9988ded82c64e6b6a86437cf4c",
-      "modified" : "2026-07-15T10:32:08Z",
-      "size" : 20094
+      "hash" : "sha256:e55219ca4c944a7a9805e28e88e826d59d69d650fdecbca9091cc585f10fca7e",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 20811
     },
     "docs\/themes-and-template-preview\/index.md" : {
       "hash" : "sha256:c86e6d0b98fddda7e7f870d6637d82f788d9536cab0a4646e0dd8157239782d1",
-      "modified" : "2026-07-15T10:32:08Z",
+      "modified" : "2026-07-16T09:08:14Z",
       "size" : 2943
     },
+    "downloads\/.gitkeep" : {
+      "hash" : "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "modified" : "2026-07-04T20:37:27Z",
+      "size" : 0
+    },
     "favicon.svg" : {
-      "hash" : "sha256:75f5fd249d9a2003d545c641403787a52740e5885de446a26101e1512ca85f7a",
-      "modified" : "2026-07-05T14:09:07Z",
-      "size" : 492
+      "hash" : "sha256:051dcc2f8ef45dd04720ea2231ff214e5ee883b9f4ccaa65cf8d4207e3d9c12b",
+      "modified" : "2026-07-16T06:25:22Z",
+      "size" : 756
+    },
+    "fonts\/hanken-grotesk-v12-latin-700.woff2" : {
+      "hash" : "sha256:d85de6e272296d06f8205ad11e27140274e0ef97050232777d146eabb71c312d",
+      "modified" : "2026-07-15T18:09:09Z",
+      "size" : 13844
+    },
+    "fonts\/hanken-grotesk-v12-latin-800.woff2" : {
+      "hash" : "sha256:999ca80394429ddd84f4df688b3ca8ca28cfcbf0a03e2dd75d57d800300a781d",
+      "modified" : "2026-07-15T18:09:09Z",
+      "size" : 13860
+    },
+    "fonts\/inter-v20-latin-500.woff2" : {
+      "hash" : "sha256:f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f",
+      "modified" : "2026-07-15T18:09:09Z",
+      "size" : 24272
+    },
+    "fonts\/inter-v20-latin-regular.woff2" : {
+      "hash" : "sha256:8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc",
+      "modified" : "2026-07-15T18:09:09Z",
+      "size" : 23664
+    },
+    "fonts\/jetbrains-mono-v24-latin-500.woff2" : {
+      "hash" : "sha256:cb182feeed4d798ff6961d3c79f7026279448fca0676438aaecb21f3fc39553a",
+      "modified" : "2026-07-15T18:09:09Z",
+      "size" : 21832
+    },
+    "fonts\/jetbrains-mono-v24-latin-regular.woff2" : {
+      "hash" : "sha256:14425ba9c695763c1547f48a206b7aa60350a33ae23de09f0407877f3fcd89eb",
+      "modified" : "2026-07-15T18:09:09Z",
+      "size" : 21168
     },
     "images\/app\/all-sites-grid.png" : {
       "hash" : "sha256:6f2575eb4db095a246a733b500b5368257dcfe828acec0526174b5552efa2477",
@@ -1481,13 +1606,13 @@
       "size" : 112594
     },
     "index.html" : {
-      "hash" : "sha256:38cd5374d7d04e6ab95bdcf9f84976ac84b5ff72d09d4e1e9aacebd30f28055a",
-      "modified" : "2026-07-15T10:32:08Z",
-      "size" : 63514
+      "hash" : "sha256:328afa59abdbdbe8b0c545a997e37cddec80ab50d64feb50e2a6e2b0f7b92710",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 65677
     },
     "llms.txt" : {
       "hash" : "sha256:7ca61db5a5af9bf8430a2cc61a2d9f9f9751e5115e2df1dc1d7a4d7f72392230",
-      "modified" : "2026-07-15T10:32:08Z",
+      "modified" : "2026-07-16T09:08:14Z",
       "size" : 7958
     },
     "og\/hugokit-og.png" : {
@@ -1741,13 +1866,13 @@
       "size" : 50952
     },
     "privacy\/index.html" : {
-      "hash" : "sha256:5425126135589e341faa74eada4922d708d65351988eb1ad9c448a44463eaf49",
-      "modified" : "2026-07-15T10:32:08Z",
-      "size" : 15920
+      "hash" : "sha256:ce74b0ba4eb7b310a0898bf0af0381d44697d917fd2d9c43c12a02bf5a9ad6f0",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 16527
     },
     "privacy\/index.md" : {
       "hash" : "sha256:c1e062674244271367b8edb6f2efd748b2323b9a056ef6401fe3f97760bf7420",
-      "modified" : "2026-07-15T10:32:08Z",
+      "modified" : "2026-07-16T09:08:14Z",
       "size" : 2590
     },
     "robots.txt" : {
@@ -1756,9 +1881,14 @@
       "size" : 65
     },
     "sitemap.xml" : {
-      "hash" : "sha256:dfa73803b5b6db38f06204aee945bed8f667486788bd152b67f1df8b2ca767bd",
-      "modified" : "2026-07-15T10:32:08Z",
+      "hash" : "sha256:50960f0eef3323ab960ac396a65243317248daed16665c7c5ba9556626635466",
+      "modified" : "2026-07-16T09:08:14Z",
       "size" : 3437
+    },
+    "video\/hero-dark.ca3366bce39dfd83c41afeb3640149590968ede794ee407ce6d5d29ddfc32be4.mp4" : {
+      "hash" : "sha256:ca3366bce39dfd83c41afeb3640149590968ede794ee407ce6d5d29ddfc32be4",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 899142
     },
     "video\/hero-dark.mp4" : {
       "hash" : "sha256:ca3366bce39dfd83c41afeb3640149590968ede794ee407ce6d5d29ddfc32be4",
@@ -1769,6 +1899,11 @@
       "hash" : "sha256:032b468420a2ba49dceb2445209b097c15afbac04c826f506e5d6581cabbcd2e",
       "modified" : "2026-07-13T12:47:51Z",
       "size" : 1134423
+    },
+    "video\/hero-light.afdf0d6c35737cfbe33c12845dd81f624e3bc94da04648e1ca8c1aa2f3731419.mp4" : {
+      "hash" : "sha256:afdf0d6c35737cfbe33c12845dd81f624e3bc94da04648e1ca8c1aa2f3731419",
+      "modified" : "2026-07-16T09:08:14Z",
+      "size" : 1051035
     },
     "video\/hero-light.mp4" : {
       "hash" : "sha256:afdf0d6c35737cfbe33c12845dd81f624e3bc94da04648e1ca8c1aa2f3731419",
@@ -1791,7 +1926,7 @@
       "size" : 19370
     }
   },
-  "lastSync" : "2026-07-15T10:32:23Z",
+  "lastSync" : "2026-07-16T09:08:53Z",
   "remotePath" : "\/public_html",
   "targetHost" : "linux228.unoeuro.com"
 }

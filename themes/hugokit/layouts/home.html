@@ -19,16 +19,23 @@
     </div>
     <div class="hero-row">
       <div class="hero-copy">
-        <h1 class="hero-heading">{{ .heading }}</h1>
+        {{- /* To-tone headline: emnet dæmpes, pointen står i ink (R2/R5-grebet
+              i neutral palet). headingDim er valgfri – uden den renderes
+              heading alene, præcis som før. Swap: byt farverne i .hh-dim. */}}
+        <h1 class="hero-heading">{{ with .headingDim }}<span class="hh-dim">{{ . }}</span> {{ end }}{{ .heading }}</h1>
         <p class="hero-lead">{{ .lead }}</p>
         <div class="cta-buttons">
           <a class="btn btn-lg" href="#download">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4.5v10.5"/><path d="m7 10.5 5 4.5 5-4.5"/><path d="M5.5 19.5h13"/></svg>
             Download for macOS
           </a>
           <a class="btn-outline btn-lg" href="#why">{{ .more }}</a>
         </div>
         <span class="fine-meta">{{ $.Params.download.meta }}</span>
+        {{- /* Versionslinjen: levende produkt-signal i fine-meta-registret.
+              Versionen bor i hugo.toml (site.Params.version) og bumpes ved
+              release – samme kilde som download-fakta nederst. */}}
+        <a class="fine-meta hero-whatsnew" href="{{ "changelog/" | relURL }}">v{{ site.Params.version }} · what's new</a>
       </div>
       {{- /* Hero-mediet: loopende app-optagelse (window frame + traffic lights
             bagt ind, samme 1072×764 som screenshottene). Light/dark følger
@@ -145,10 +152,55 @@
     </div>
   </section>
 
+  {{ with .Params.loop }}
+  {{- /* Loop: sidens kerneargument – Preview, preflight, publish, in that
+        order – som tre nummererede trin (referenceanalysen 2026-07-16, S1).
+        Indholdet er de tre moments fra _index.md; server- og deploy-trinnene
+        bærer deres screenshots, preflight (uden screenshot) bærer et piktoralt
+        diff-panel tegnet i sitets egne tokens. */}}
+  <section class="loop reveal" id="loop" aria-label="{{ .heading }}">
+    <div class="loop-head">
+      <span class="label-pill">{{ .label }}</span>
+      <h2 class="loop-h">{{ .heading }}</h2>
+      <p class="loop-sub">{{ .sub }}</p>
+    </div>
+    <div class="loop-steps">
+      {{ range $i, $m := $.Params.moments }}
+      <article class="lstep">
+        <div class="lstep-head">
+          <span class="lstep-no">0{{ add $i 1 }}</span>
+          <span class="lstep-label">{{ $m.label }}</span>
+        </div>
+        <h3 class="lstep-h">{{ $m.heading }}</h3>
+        <p class="lstep-t">{{ $m.text }}</p>
+        <ul class="lstep-points">
+          {{ range $m.points }}<li>{{ . | markdownify }}</li>{{ end }}
+        </ul>
+        {{ with $m.docs }}<div class="lstep-meta">{{ partial "doc-links.html" . }}</div>{{ end }}
+        {{ if $m.screenshot }}
+        <figure class="lstep-vis">
+          {{ partial "shot.html" (dict "light" $m.screenshot "dark" $m.screenshotDark "alt" $m.alt) }}
+        </figure>
+        {{ else }}
+        {{- /* Preflight har intet screenshot – udsnittet viser featurens
+              faktiske indhold: en fix som rød/grøn diff, godkend, re-check. */}}
+        <div class="lstep-vis lstep-pf" role="img" aria-label="{{ $m.alt }}">
+          <div class="pf-bar"><span class="pf-name">preflight</span><span class="pf-status">1 fix waiting</span></div>
+          <div class="pf-row pf-del">- baseURL = "http://localhost:1313/"</div>
+          <div class="pf-row pf-add">+ baseURL = "https://example.com/"</div>
+          <div class="pf-foot"><span class="pf-dot" aria-hidden="true"></span>approve the diff · preflight re-checks</div>
+        </div>
+        {{ end }}
+      </article>
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+
   {{ if .Params.features.items }}
-  {{- /* Features: sidens fulde overblik. Løkkens tre trin (Preview, Preflight,
-        Publish) står øverst, derefter HELE feature-listen – også de fire med
-        accent, som samtidig optræder som kvartet-kort i Why. Kortene er
+  {{- /* Features: sidens fulde overblik. Løkkens tre trin bor nu i loop-
+        sektionen ovenfor; listen her er HELE værktøjskassen – også de fire
+        med accent, som samtidig optræder som kvartet-kort i Why. Kortene er
         teaseren; listen er stedet hvor alt står. */}}
   <section class="features reveal" id="features" aria-label="Features">
     <h2 class="label-pill">{{ .Params.features.title }}</h2>
@@ -157,11 +209,30 @@
           meta-linje med genvej + link til dokumentationen. Ingen JS – ::details-content
           animeres i CSS (samme mønster som FAQ'en). */}}
     <div class="feature-list">
-      {{ range .Params.moments }}
-      {{ partial "feature-item.html" (dict "name" .label "glyph" .glyph "text" .text "detail" .detail "points" .points "shortcut" .shortcut "docs" .docs) }}
-      {{ end }}
       {{ range .Params.features.items }}
       {{ partial "feature-item.html" (dict "name" .name "glyph" .glyph "text" .text "detail" .detail "points" .points "shortcut" .shortcut "docs" .docs) }}
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+
+  {{ with .Params.fromdocs }}
+  {{- /* Docs-teaser (referenceanalysen S3): tre kuraterede sider fra docs,
+        valgt efter keyword-planen. Titel og beskrivelse hentes fra siderne
+        selv (samme kontrakt som doc-links.html) – findes en side ikke,
+        renderes dens kort ikke. */}}
+  <section class="fromdocs reveal" aria-label="{{ .label }}">
+    <h2 class="label-pill">{{ .label }}</h2>
+    <div class="fromdocs-grid">
+      {{ range .pages }}
+      {{ with site.GetPage . }}
+      <a class="fd-card" href="{{ .RelPermalink }}">
+        <span class="fd-kind">{{ .Params.group }}</span>
+        <span class="fd-title">{{ .LinkTitle }}</span>
+        <span class="fd-desc">{{ .Description }}</span>
+        <span class="fd-more" aria-hidden="true">Read in the docs →</span>
+      </a>
+      {{ end }}
       {{ end }}
     </div>
   </section>
@@ -218,7 +289,7 @@
       <div class="cta-col">
         <div class="cta-buttons">
           <a class="btn btn-lg" href="{{ site.Params.downloadURL }}" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4.5v10.5"/><path d="m7 10.5 5 4.5 5-4.5"/><path d="M5.5 19.5h13"/></svg>
             {{ .cta }}
           </a>
         </div>
@@ -238,6 +309,15 @@
       <div><dt>Requires</dt><dd>{{ site.Params.requires }}</dd></div>
       <div><dt>Released</dt><dd>{{ (time.AsTime site.Params.releaseDate).Format "2 January 2006" }}</dd></div>
     </dl>
+    {{- /* Closure-vinduet (referenceanalysen S4, Logly-grebet): dashboardet
+          stiger op bag footerens linje og beskæres af sektionen – produktet
+          ét sidste sted, dér hvor beslutningen træffes. Dekorativt; hero'en
+          bærer den fulde alt-tekst. Mode-følsomt via shot.html. */}}
+    {{ with $.Params.hero }}
+    <figure class="get-shot" aria-hidden="true">
+      {{ partial "shot.html" (dict "light" .screenshot "dark" .screenshotDark "alt" "") }}
+    </figure>
+    {{ end }}
   </section>
   {{ end }}
 

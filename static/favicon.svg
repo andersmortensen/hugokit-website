@@ -1,5 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="HugoKit">
-  <path d="M50 4L91.43 27L50 50L8.57 27Z" fill="#F2F0F4"/>
+  <!-- Topfladen følger fanelinjens skema som sitets mark (--mark-top i main.css):
+       #F2F0F4 i dark, #E2DFE7 i light - fill-attributten er dark-fallback. -->
+  <style>@media (prefers-color-scheme: light) { .hk-top { fill: #E2DFE7; } }</style>
+  <path class="hk-top" d="M50 4L91.43 27L50 50L8.57 27Z" fill="#F2F0F4"/>
   <path d="M8.57 27L50 50L50 96L8.57 73Z" fill="#26262B"/>
   <path d="M50 50L70.72 38.5L70.72 61.5L50 73Z" fill="#FF4088"/>
   <path d="M70.72 38.5L91.43 27L91.43 50L70.72 61.5Z" fill="#0594CB"/>
