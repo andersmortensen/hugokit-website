@@ -168,6 +168,28 @@ a { color: inherit; }
 }
 .canvas > main { flex: 1 0 auto; width: 100%; }
 
+/* Grain – stille editorial tekstur over hele kanvassen. Ét 160px-tile af
+   desatureret feTurbulence-støj, gentaget; pointer-events: none. Styrken pr.
+   mode via --grain-o (dark tåler mere før det læses som artefakter).
+   Release-/404-sider har ingen .canvas og er dermed automatisk fri (Sparkle-
+   vinduet skal aldrig have grain). Justérbar parameter: --grain-o herunder.
+   Rollback: slet blokken. */
+:root { --grain-o: 0.028; }
+:root[data-theme="dark"] { --grain-o: 0.05; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --grain-o: 0.05; }
+}
+.canvas::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: var(--grain-o);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
 /* ── Typografi-registre ───────────────────────────────────────────────────── */
 
 .section-label {
@@ -200,6 +222,16 @@ a { color: inherit; }
   background: var(--ink); color: var(--canvas);
   border-radius: 999px;
   padding: 6px 13px;
+}
+
+/* Optisk trim af display-skalaen: line-boxens luft over cap-height og under
+   baseline fjernes, så overskrifterne sidder præcist mod kanter og hairlines –
+   ikke typografisk-teknisk. Chrome 133+/Safari 18.4+; alle andre står som før.
+   Rollback: slet blokken. */
+@supports (text-box: trim-both cap alphabetic) {
+  .giant, .why-h, .hugo-h, .get-heading, .faq-title {
+    text-box: trim-both cap alphabetic;
+  }
 }
 
 /* ── Knapper ──────────────────────────────────────────────────────────────── */
@@ -408,6 +440,10 @@ a { color: inherit; }
   text-wrap: balance;
 }
 
+/* To-tone headline: emnet ("Hugo,") dæmpes, pointen bærer ink'en.
+   Justérbar parameter: farven herunder (--muted ↔ --ink for at bytte om). */
+.hero-heading .hh-dim { color: var(--muted); }
+
 .hero-lead {
   color: var(--muted);
   font-size: 14.5px;
@@ -447,6 +483,10 @@ a { color: inherit; }
     0 8px 19px light-dark(rgba(0, 0, 0, 0.34), rgba(0, 0, 0, 0.82)),
     0 1px 3px light-dark(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.45));
 }
+
+/* Versionslinjen under CTA'erne – fine-meta-registret, kun farve på hover */
+.hero-whatsnew { display: block; margin-top: 6px; text-decoration: none; transition: color 160ms ease; }
+.hero-whatsnew:hover { color: var(--ink); }
 
 /* Traffic lights i terminal-mockuppen (Hugo-panelet) */
 .hw-tl { width: 11px; height: 11px; border-radius: 50%; }
@@ -724,6 +764,143 @@ a { color: inherit; }
   text-underline-offset: 4px;
 }
 
+/* ── Loop – kerneargumentet som tre nummererede trin ──────────────────────── */
+
+/* Preview → preflight → publish, in that order. Trinnene er plate-kort med
+   indholdet øverst og trinnets visual ved bundkanten, beskåret af kortet
+   (R4-mønstret fra referenceanalysen). Justérbare parametre: --lstep-pad
+   (kortets luft) og --lstep-vis-h (udsnittets højde) herunder. */
+
+.loop { padding: 0 0 clamp(72px, 8vw, 120px); }
+
+.loop-head { margin-bottom: clamp(30px, 3.6vw, 48px); }
+.loop-head .label-pill { margin-bottom: 24px; }
+.loop-h {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(30px, 3.8vw, 54px);
+  line-height: 1.02;
+  letter-spacing: -0.018em;
+}
+.loop-sub { margin-top: 12px; font-size: 16px; color: var(--muted); }
+
+.loop-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(14px, 1.6vw, 22px);
+  align-items: stretch;
+}
+
+.lstep {
+  --lstep-pad: clamp(20px, 2vw, 26px);
+  --lstep-vis-h: clamp(150px, 14vw, 200px);
+  display: flex;
+  flex-direction: column;
+  background: var(--plate);
+  border-radius: 18px;
+  padding: var(--lstep-pad);
+  box-shadow: var(--panel-lift);
+  overflow: clip;
+}
+
+.lstep-head { display: flex; align-items: baseline; gap: 10px; }
+.lstep-no {
+  font-family: var(--mono);
+  font-size: 12px; font-weight: 500;
+  color: var(--faint);
+}
+.lstep-label {
+  font-family: var(--mono);
+  font-size: 10.5px; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted);
+}
+
+.lstep-h {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(18px, 1.6vw, 21px);
+  letter-spacing: -0.012em;
+  line-height: 1.15;
+  margin-top: 14px;
+}
+.lstep-t { margin-top: 8px; font-size: 14px; line-height: 1.6; color: var(--muted); max-width: 40ch; }
+
+.lstep-points { list-style: none; margin-top: 14px; }
+.lstep-points li {
+  position: relative;
+  padding: 5px 0 5px 20px;
+  font-size: 12.5px; line-height: 1.55;
+  color: var(--muted);
+}
+.lstep-points li::before {
+  content: "";
+  position: absolute;
+  left: 2px; top: 11px;
+  width: 6px; height: 6px;
+  border-radius: 1.5px;
+  background: var(--line-strong);
+  transform: rotate(45deg);
+}
+
+.lstep-meta { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* Visualet: skubbes til kortets bund og bløder til kanterne – beskæringen
+   sker mod kortets egen overflow-clip. Fast højde holder de tre kort i takt. */
+.lstep-vis {
+  margin-top: auto;
+  padding-top: 20px;
+  margin-inline: calc(-1 * var(--lstep-pad));
+  margin-bottom: calc(-1 * var(--lstep-pad));
+  height: var(--lstep-vis-h);
+  overflow: clip;
+}
+figure.lstep-vis { margin-top: auto; }
+.lstep-vis .shot {
+  display: block;
+  width: 108%;
+  max-width: none;
+  margin-left: -4%;
+  margin-top: -1.5%;
+}
+
+/* Preflight-udsnittet: featurens faktiske indhold – rød/grøn diff, godkend,
+   re-check – tegnet i tokens, så det følger begge modes uden billedfil. */
+.lstep-pf {
+  background: var(--stage);
+  border-top: 1px solid var(--line);
+  padding: 16px var(--lstep-pad) 0;
+  font-family: var(--mono);
+}
+.pf-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.pf-name {
+  font-size: 10.5px; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--faint);
+}
+.pf-status {
+  font-size: 10.5px; color: var(--muted);
+  background: var(--plate);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 9px;
+}
+.pf-row {
+  font-size: 11.5px;
+  padding: 5px 9px;
+  border-radius: 6px;
+  margin-top: 4px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.pf-del { background: color-mix(in srgb, var(--pink) 10%, transparent); color: light-dark(#B02360, #FF8FBC); }
+.pf-add { background: color-mix(in srgb, var(--green) 12%, transparent); color: light-dark(#1D7A5F, #7FDCC0); }
+.pf-foot { display: flex; align-items: center; gap: 7px; margin-top: 12px; font-size: 11px; color: var(--muted); }
+.pf-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); flex: none; }
+
+@media (max-width: 900px) {
+  .loop-steps { grid-template-columns: 1fr; }
+}
+
 /* ── Features – resten af værktøjskassen som kompakte tabel-rækker ────────── */
 
 /* Sektionen er smallere end kanvassen og står midt i den – listen skal læses,
@@ -841,7 +1018,8 @@ a { color: inherit; }
 /* Genvejstaster: skrevet som `⌘P` i indholdet, renderet som <code> – samme
    pille som før, men nu inline dér hvor sætningen nævner dem. */
 .feature-lead code,
-.feature-points code {
+.feature-points code,
+.lstep-points code {
   display: inline-block;
   vertical-align: baseline;
   font-family: var(--mono);
@@ -863,6 +1041,21 @@ a { color: inherit; }
   margin-left: 0;
   text-align: left;
 }
+
+/* Åben tilstand: samme plate-løft som FAQ'en – den udfoldede feature træder
+   frem af listen, de lukkede rækker forbliver flade. Hairlines der ville røre
+   pladen (egen + næste rækkes), viger. Justérbar parameter: --open-pad. */
+.feature-item { --open-pad: 18px; }
+.feature-item[open] {
+  background: var(--plate);
+  border-radius: 14px;
+  box-shadow: var(--panel-lift);
+  margin: 0 calc(-1 * var(--open-pad));
+  padding: 0 var(--open-pad);
+  border-top-color: transparent;
+}
+.feature-item[open] + .feature-item { border-top-color: transparent; }
+.feature-list:has(> .feature-item[open]:last-child) { border-bottom-color: transparent; }
 
 /* Blød udfoldning – samme mekanik som FAQ'en (interpolate-size er sat der) */
 .feature-item::details-content {
@@ -958,6 +1151,71 @@ a { color: inherit; }
 
 .feature-doc:hover { background: var(--btn-bg-hover); }
 
+/* ── From the docs – kuraterede indgange til dokumentationen ──────────────── */
+
+/* Tre kort, valgt i _index.md efter keyword-planen. Titel/beskrivelse hentes
+   fra docs-siderne selv. Hover løfter kun skyggen – intet flytter sig. */
+
+.fromdocs {
+  padding: 0 0 clamp(72px, 8vw, 120px);
+  max-width: 1000px;
+  margin-inline: auto;
+}
+.fromdocs .label-pill { margin-bottom: 26px; }
+
+.fromdocs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(14px, 1.6vw, 22px);
+}
+
+.fd-card {
+  display: flex; flex-direction: column; gap: 10px;
+  background: var(--plate);
+  border-radius: 14px;
+  padding: 22px;
+  box-shadow: var(--panel-lift);
+  text-decoration: none;
+  color: var(--ink);
+  transition: box-shadow 180ms ease;
+}
+.fd-card:hover { box-shadow: var(--panel-lift-hi); }
+
+.fd-kind {
+  font-family: var(--mono);
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--faint);
+}
+.fd-title {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -0.012em;
+  line-height: 1.25;
+}
+.fd-desc {
+  font-size: 13px; line-height: 1.55;
+  color: var(--muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.fd-more {
+  margin-top: auto;
+  padding-top: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--faint);
+  transition: color 160ms ease;
+}
+.fd-card:hover .fd-more { color: var(--ink); }
+
+@media (max-width: 900px) {
+  .fromdocs-grid { grid-template-columns: 1fr; }
+}
+
 /* ── FAQ – details/summary, kun farve skifter på hover ────────────────────── */
 
 .faq { padding: 0 0 clamp(72px, 8vw, 120px); }
@@ -1052,6 +1310,23 @@ a { color: inherit; }
   block-size: auto;
 }
 
+/* Åben tilstand: det udfoldede punkt løfter sig som plate-kort, lukkede
+   forbliver flade rækker (Consulty-grebet i neutral palet – lag, ikke farve).
+   Negative margins holder tekstkolonnen på plads mens pladen skyder ud.
+   Justérbar parameter: --open-pad herunder. */
+.faq-item { --open-pad: 18px; }
+.faq-item[open] {
+  background: var(--plate);
+  border-radius: 14px;
+  box-shadow: var(--panel-lift);
+  margin: 0 calc(-1 * var(--open-pad));
+  padding: 0 var(--open-pad);
+  border-bottom-color: transparent;
+}
+/* Hairlinen der ville røre den løftede plades overkant, viger */
+.faq-item:has(+ .faq-item[open]) { border-bottom-color: transparent; }
+.faq-list:has(> .faq-item[open]:first-child) { border-top-color: transparent; }
+
 /* ── Personlig note ───────────────────────────────────────────────────────── */
 
 .note { padding: 0 0 clamp(72px, 8vw, 120px); }
@@ -1119,7 +1394,24 @@ a { color: inherit; }
   margin-top: clamp(36px, 4vw, 56px);
   padding-top: 22px;
   border-top: 1px solid var(--line);
+  position: relative;
 }
+
+/* Corner ticks: små crosshair-markører i spec-linjens ender – blueprint-
+   detaljen fra referenceanalysen (R4), kun her hvor spec-registret bor.
+   Tegnet med to 1px-gradienter; ingen ekstra markup. */
+.get-facts::before,
+.get-facts::after {
+  content: "";
+  position: absolute;
+  top: -4.5px;
+  width: 9px; height: 9px;
+  background:
+    linear-gradient(var(--line-strong), var(--line-strong)) center / 9px 1px no-repeat,
+    linear-gradient(var(--line-strong), var(--line-strong)) center / 1px 9px no-repeat;
+}
+.get-facts::before { left: -4px; }
+.get-facts::after { right: -4px; }
 .get-facts dt {
   font-family: var(--mono);
   font-size: 10.5px;
@@ -1134,6 +1426,18 @@ a { color: inherit; }
   color: var(--ink);
   white-space: nowrap;
 }
+
+/* Closure-vinduet (referenceanalysen S4): dashboardet stiger op bag footerens
+   hairline og beskæres af sektionen – Logly-grebet i sitets register.
+   Justérbar parameter: --get-crop (hvor meget af vinduet der gemmes). */
+.get { overflow: clip; }
+.get:has(.get-shot) { padding-bottom: 0; }
+.get-shot {
+  --get-crop: clamp(110px, 14vw, 180px);
+  max-width: 780px;
+  margin: clamp(48px, 6vw, 84px) auto calc(-1 * var(--get-crop));
+}
+.get-shot .shot { display: block; width: 100%; height: auto; }
 
 /* ── Vindues-/billedrammen (bruges af loop + changelog-billeder) ──────────── */
 
@@ -1372,10 +1676,11 @@ a { color: inherit; }
 
   /* Sektioner med barne-stagger: forælderen fader kun, børnene rejser sig
      forskudt – ét cascade-lag, ikke to bevægelser oven på hinanden. */
-  html.js .facts.reveal,
+  html.js .facts.reveal, html.js .loop.reveal,
   html.js .hugo-panel.reveal, html.js .features.reveal { transform: none; }
 
   html.js .facts.reveal .fact,
+  html.js .loop.reveal .lstep,
   html.js .hugo-panel.reveal .usp,
   html.js .features.reveal .feature-row {
     opacity: 0;
@@ -1383,12 +1688,15 @@ a { color: inherit; }
     transition: opacity 560ms ease, transform 560ms cubic-bezier(0.19, 1, 0.22, 1);
   }
   html.js .reveal.in .fact,
+  html.js .reveal.in .lstep,
   html.js .reveal.in .usp,
   html.js .reveal.in .feature-row { opacity: 1; transform: none; }
 
   html.js .reveal .fact:nth-child(2),
+  html.js .reveal .lstep:nth-child(2),
   html.js .reveal .usp:nth-child(2) { transition-delay: 80ms; }
   html.js .reveal .fact:nth-child(3),
+  html.js .reveal .lstep:nth-child(3),
   html.js .reveal .usp:nth-child(3) { transition-delay: 160ms; }
   html.js .reveal .usp:nth-child(4) { transition-delay: 240ms; }
   html.js .reveal .feature-row:nth-child(2) { transition-delay: 50ms; }
@@ -1431,6 +1739,24 @@ a { color: inherit; }
   to   { opacity: 1; }
 }
 
+/* Scroll-drift på wordmarket: bogstaverne glider 12 px op mens heroen forlades –
+   dybde, ikke parallax-teater. Ren CSS (scroll-driven animation), dobbelt gated:
+   @supports OG reduced-motion. Ligger på .giant-wrap, ikke .giant – fit-scriptet
+   måler .giant, og entré-animationen bor på dens børn. Justérbar parameter:
+   translateY i giant-drift. Rollback: slet blokken. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .giant-wrap {
+      animation: giant-drift linear both;
+      animation-timeline: view();
+      animation-range: exit 0% exit 100%;
+    }
+    @keyframes giant-drift {
+      to { transform: translateY(-12px); }
+    }
+  }
+}
+
 /* ── Mikro-feedback – kun farve/skygge på hover (aldrig bevægelse);
       squash ved tryk er klik-feedback, ikke hover. */
 
@@ -1462,6 +1788,26 @@ a { color: inherit; }
   @view-transition { navigation: auto; }
 }
 
+/* Nav-baren får sin egen transition-gruppe: den står fast mens siden under den
+   crossfader ved navigation. Findes baren kun på den ene side (404, release),
+   falder den tilbage til almindelig fade. Rollback: slet reglen. */
+.site-nav { view-transition-name: site-nav; }
+
+/* Mode-skiftet som cirkulær reveal fra toggle-knappen. SKAL være skopet til
+   data-vt="theme" (sat af toggle-JS i head.html, fjernet når transitionen er
+   færdig) – uskopet ville keyframen også ramme al sidenavigation ovenfor.
+   Koordinaterne (--vt-x/--vt-y) er knappens centrum; 50%-fallback hvis de
+   mod forventning ikke er sat. Reduced-motion når aldrig herind: toggle'n
+   kalder kun startViewTransition under no-preference. */
+:root[data-vt="theme"]::view-transition-old(root) { animation: none; }
+:root[data-vt="theme"]::view-transition-new(root) {
+  animation: vt-circle 420ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+@keyframes vt-circle {
+  from { clip-path: circle(0 at var(--vt-x, 50%) var(--vt-y, 50%)); }
+  to   { clip-path: circle(150vmax at var(--vt-x, 50%) var(--vt-y, 50%)); }
+}
+
 /* (Kolonne-drift udgik 2026-07-11: kortene står nu som kvartettens
    flush 2×2-murværk uden forskydning.) */
 
@@ -1472,7 +1818,7 @@ a { color: inherit; }
   .faq-item::details-content { transition: none; }
   .feature-item::details-content { transition: none; }
   .feature-plus::before, .feature-plus::after { transition: none; }
-  .btn, .btn-ghost, .nav-link, .mode-toggle, .footer-links a, .faq-item summary, .faq-item summary::after { transition: none; }
+  .btn, .btn-ghost, .nav-link, .mode-toggle, .footer-links a, .faq-item summary, .faq-item summary::after, .doc-copy, .hero-whatsnew { transition: none; }
   .term-caret { animation: none; }
 }
 
@@ -1910,12 +2256,35 @@ a { color: inherit; }
   font-variant-ligatures: none;
 }
 .doc-body pre {
+  position: relative; /* forankrer copy-knappen */
   background: var(--stage);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 16px 18px;
   overflow-x: auto;
 }
+
+/* Copy-knappen på kodeblokke – mono-chip i øverste højre hjørne, altid synlig
+   (hover-skjulte kontroller taber touch og tastatur). Indsættes af JS
+   (head.html) og findes kun hvor clipboard-API'et gør. Kun farve/flade på
+   hover; "Copied" kvitterer i badge-grønnen fra release-siderne. */
+.doc-copy {
+  position: absolute;
+  top: 8px; right: 8px;
+  font-family: var(--mono);
+  font-size: 10.5px; font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--plate);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+.doc-copy:hover { background: var(--stage); color: var(--ink); }
+.doc-copy.is-copied { color: light-dark(#0E6B4E, #7FE0C0); }
 .doc-body pre code {
   background: none;
   border: 0;
@@ -2077,4 +2446,105 @@ a { color: inherit; }
 @media (max-width: 520px) {
   .consent { flex-direction: column; align-items: stretch; }
   .consent-actions { justify-content: flex-end; }
+}
+
+/* ── Bezel – sitet siddende i en enhed ───────────────────────────────────────
+   Lånt fra preview-projektets bezel-layout: RAMMEN ER IKKE NOGET PÅ SIDEN,
+   SIDEN SIDDER I RAMMEN. To faste elementer (partial: bezel.html): .bezel-bar
+   er toppen af rammen i surround-fladen, .bezel-frame tegner sider + afrundet
+   vindues-udskæring via box-shadow-cutoutet – alt UDENFOR den afrundede
+   rektangel males i --surround, så kanvassen scroller inde i enheden og
+   hjørnerne forbliver runde under scroll. Rammen er åben forneden (radius kun
+   i top), præcis som originalen.
+
+   Kun på sider med .canvas: release-/404-siderne (Sparkle-vinduet) er flade
+   og forbliver fri via :has-gaten – samme mekanik som deres padding-override.
+   Sticky-offsets (site-nav, doc-nav, scroll-padding) re-deklareres HER frem
+   for at ændre originalerne: én blok, ét rollback.
+
+   Justérbare parametre: --bezel-top (barhøjde) · --bezel-side (rammens sider;
+   følger kanvassens 14px/8px og centrerer over --canvas-max på brede skærme) ·
+   --bezel-ground (rammens materiale – SKAL adskille sig fra --canvas i begge
+   modes, ellers er rammen usynlig; --surround er identisk med canvas i light).
+   Parret spejles i head.html's theme-color-metas – ret begge steder.
+   Rollback: slet denne blok + partial-kaldet i baseof.html. */
+
+:root {
+  --bezel-top: 38px;
+  --bezel-side: max(14px, calc((100% - var(--canvas-max)) / 2));
+  /* Kølig stone i light, ink-grafit i dark (= light-ink-værdien) – enheden
+     skal stå KLART mod kanvassen i begge modes */
+  --bezel-ground: light-dark(#CDC8D6, #26262B);
+}
+
+/* Browser-chromen smelter ind i rammen: html/body-baggrunden (Safari sampler
+   den, jf. toolbar-reglen) følger rammens materiale – kun på canvas-sider.
+   Overscroll-gummibåndet viser dermed også rammens tone. */
+html:has(.canvas) { --toolbar-color: var(--bezel-ground); }
+
+/* Kanvassen SKAL male sin egen flade: historisk viste body-baggrunden igennem
+   (surround = canvas i light), men nu hvor body bærer rammens tone, ville
+   vinduets indre ellers være ramme-farvet – og rammen usynlig. */
+.canvas { background: var(--canvas); }
+
+/* Vinduet begynder under baren; bundens 14px består. Gaten holder sider uden
+   kanvas urørte – dér findes .bezel slet ikke visuelt. */
+body:has(.canvas) { padding-top: var(--bezel-top); }
+body:not(:has(.canvas)) .bezel { display: none; }
+body:has(.canvas) .canvas { min-height: calc(100svh - var(--bezel-top) - 14px); }
+
+/* Ren dekoration: intet i rammen er interaktivt (titlen dublerer nav'ens
+   lockup, aria-hidden i partialen). pointer-events arves til begge børn. */
+.bezel { pointer-events: none; }
+
+.bezel-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 95;
+  height: var(--bezel-top);
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 calc(var(--bezel-side) + 8px);
+  background: var(--bezel-ground); /* solid – Safari sampler toppen (toolbar-reglen) */
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.bezel-dot {
+  flex: none;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--green) 18%, transparent);
+}
+
+.bezel-title { color: var(--ink); font-weight: 500; }
+.bezel-to    { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; color: var(--muted); }
+.bezel-meta  { color: var(--muted); }
+
+.bezel-frame {
+  position: fixed;
+  inset: var(--bezel-top) var(--bezel-side) 0;
+  z-index: 94; /* over kanvassens grain (90), under skip-link (100) */
+  border-radius: 26px 26px 0 0; /* = kanvassens radius */
+  box-shadow: 0 0 0 200vmax var(--bezel-ground);
+}
+
+/* Sticky-offsets under baren – originalernes 14px-verden + barhøjden */
+.site-nav { top: calc(var(--bezel-top) + 10px); }
+.doc-nav  { top: calc(var(--bezel-top) + 12px); }
+html { scroll-padding-top: calc(var(--bezel-top) + 80px); }
+
+/* Rammen står fast mens siderne crossfader under den ved navigation – samme
+   greb som .site-nav. Mangler den på én side (404, release): almindelig fade. */
+.bezel-bar   { view-transition-name: bezel-bar; }
+.bezel-frame { view-transition-name: bezel-frame; }
+
+@media (max-width: 620px) {
+  :root { --bezel-top: 32px; --bezel-side: 8px; }
+  .bezel-bar { padding: 0 14px; gap: 8px; }
+  .bezel-to { display: none; } /* taglinen viger; dot + navn + version består */
+  .bezel-frame { border-radius: 18px 18px 0 0; } /* = kanvassens mobile radius */
+  body:has(.canvas) .canvas { min-height: calc(100svh - var(--bezel-top) - 8px); }
 }

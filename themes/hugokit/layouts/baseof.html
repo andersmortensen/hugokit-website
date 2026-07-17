@@ -5,6 +5,7 @@
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
+  {{ partial "bezel.html" . }}
   {{ block "body" . }}{{ end }}
   {{- /* Begge sidst i body: DOM'en er parset, så tracking og banner kan binde
         sig direkte uden at vente på DOMContentLoaded. */}}

@@ -1,0 +1,23 @@
+{{- /* Bezel – sitet siddende i en enhed. Lånt fra preview-projektets
+      bezel-layout (bars/bezel.php): RAMMEN ER IKKE NOGET PÅ SIDEN, SIDEN
+      SIDDER I RAMMEN. To faste elementer: baren er toppen af rammen,
+      .bezel-frame tegner den afrundede udskæring som kanvassen scroller
+      inde i (box-shadow-cutout – alt udenfor males i --surround).
+
+      Ren dekoration: aria-hidden (titlen dublerer nav'ens lockup) og
+      pointer-events: none hele vejen – intet i baren er interaktivt.
+
+      Vises kun på sider MED .canvas: release-/404-siderne (Sparkle-vinduet)
+      gates i CSS via body:not(:has(.canvas)) – samme mekanik som deres
+      flade padding-override. Al styling bor i main.css under "Bezel".
+
+      Rollback: slet dette partial-kald i baseof.html + CSS-blokken. */ -}}
+<div class="bezel" aria-hidden="true">
+  <header class="bezel-bar">
+    <span class="bezel-dot"></span>
+    <span class="bezel-title">HugoKit</span>
+    <span class="bezel-to">– {{ site.Params.tagline }}</span>
+    <span class="bezel-meta">v{{ site.Params.version }}</span>
+  </header>
+  <div class="bezel-frame"></div>
+</div>

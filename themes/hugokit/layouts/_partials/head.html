@@ -58,22 +58,29 @@
 <link rel="canonical" href="{{ .Permalink }}">
 
 {{- /* Browser toolbar color – fallback for Chrome/Firefox; Safari Tahoe+ sampler
-      html/body-baggrunden (sat i main.css). Farverne ER --surround i main.css:
-      light #F4F1EA (eggshell) · dark #060607. Uden manuelt valg vælger browseren
-      metaen efter systemets skema – siden følger systemet, også live.
+      html/body-baggrunden (sat i main.css). Canvas-sider bærer bezel-rammen,
+      så toolbaren skal matche DENS materiale: farverne ER --bezel-ground i
+      main.css (light #CDC8D6 · dark #26262B) – ret begge steder. De flade
+      sider (release/404, ingen .canvas → ingen bezel, jf. gaten i main.css)
+      beholder --surround: light #F4F1EA (eggshell) · dark #060607. Uden
+      manuelt valg vælger browseren metaen efter systemets skema – siden
+      følger systemet, også live.
 
       Scriptet lige under: har toggle'n sat et valg (data-theme fra localStorage,
       skrevet øverst i head), er systemets skema irrelevant – så fjernes
       media-attributten, og begge metas bærer override-farven. Det skal ske under
       parsing, mens metaerne netop er læst og før first paint; ellers står
       toolbar'en i systemets farve mens siden er malet i den valgte. */}}
-<meta name="theme-color" media="(prefers-color-scheme: light)" content="#F4F1EA">
-<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#060607">
+{{- $flat := or (eq .Kind "404") (and .IsPage (eq .Section "changelog")) }}
+{{- $tbLight := cond $flat "#F4F1EA" "#CDC8D6" }}
+{{- $tbDark := cond $flat "#060607" "#26262B" }}
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="{{ $tbLight }}">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="{{ $tbDark }}">
 <script>
   (function () {
     var t = document.documentElement.dataset.theme;
     if (!t) return;
-    var c = t === 'dark' ? '#060607' : '#F4F1EA';
+    var c = t === 'dark' ? '{{ $tbDark }}' : '{{ $tbLight }}';
     document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
       m.removeAttribute('media');
       m.content = c;
@@ -115,6 +122,15 @@
       sider der faktisk har outputtet. */}}
 {{ range .AlternativeOutputFormats }}
   {{ if eq .Name "md" }}<link rel="alternate" type="text/markdown" href="{{ .Permalink }}">{{ end }}
+{{ end }}
+
+{{- /* RSS-autodiscovery – docs og changelog har feeds (rss taget ud af
+      disableKinds i hugo.toml; Hugos indbyggede template). Opslaget går via
+      .FirstSection, så både sektions-forsiden OG artiklerne under den peger på
+      sektionens feed. Forsiden og rodsider (privacy) rammes ikke: deres
+      FirstSection er home, som ikke har rss-output. */}}
+{{ with .FirstSection }}
+  {{ with .OutputFormats.Get "rss" }}<link rel="alternate" type="application/rss+xml" title="{{ site.Title }} – {{ $.FirstSection.Title }}" href="{{ .Permalink }}">{{ end }}
 {{ end }}
 
 <link rel="icon" type="image/svg+xml" href="{{ "favicon.svg" | relURL }}">
@@ -273,6 +289,32 @@
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
     all.forEach(function (el) { io.observe(el); });
 
+    // Copy-knap på docs-kodeblokke. Indsættes kun hvor clipboard-API'et findes
+    // (kræver secure context) – ellers står blokkene urørte. Kvitteringen
+    // "Copied" står i 1,4 s og falder tilbage af sig selv.
+    if (navigator.clipboard) {
+      document.querySelectorAll('.doc-body pre').forEach(function (pre) {
+        var code = pre.querySelector('code');
+        if (!code) return;
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'doc-copy';
+        b.textContent = 'Copy';
+        b.setAttribute('aria-label', 'Copy code to clipboard');
+        b.addEventListener('click', function () {
+          navigator.clipboard.writeText(code.textContent).then(function () {
+            b.textContent = 'Copied';
+            b.classList.add('is-copied');
+            setTimeout(function () {
+              b.textContent = 'Copy';
+              b.classList.remove('is-copied');
+            }, 1400);
+          }).catch(function () {});
+        });
+        pre.appendChild(b);
+      });
+    }
+
     // App-screenshots (light/dark <picture>): manuel mode-overstyring flipper
     // source-media, så billedvalget følger toggle'n og ikke kun systemet.
     var syncPics = function (mode) {
@@ -293,16 +335,25 @@
         try { localStorage.setItem('hk-theme', next); } catch (e) {}
         // Toolbar-farven følger valget, ikke systemet: media-attributten væk,
         // begge metas på override-farven (samme kontrakt som scriptet i head).
-        var c = next === 'dark' ? '#060607' : '#F4F1EA';
+        var c = next === 'dark' ? '{{ $tbDark }}' : '{{ $tbLight }}';
         document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
           m.removeAttribute('media');
           m.content = c;
         });
         syncPics(next);
       };
-      // Blød crossfade hvor View Transitions findes; ellers øjeblikkeligt skift
+      // Cirkulær reveal fra knappen hvor View Transitions findes; ellers
+      // øjeblikkeligt skift. data-vt="theme" skoper keyframen i main.css til
+      // NETOP dette skift – uden den ville cirklen også ramme sidenavigation.
+      // Attributten fjernes igen når transitionen er færdig (også ved fejl).
       if (document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        document.startViewTransition(apply);
+        var root = document.documentElement;
+        var r = mt.getBoundingClientRect();
+        root.style.setProperty('--vt-x', (r.left + r.width / 2) + 'px');
+        root.style.setProperty('--vt-y', (r.top + r.height / 2) + 'px');
+        root.dataset.vt = 'theme';
+        var vt = document.startViewTransition(apply);
+        vt.finished.finally(function () { delete root.dataset.vt; });
       } else {
         apply();
       }
