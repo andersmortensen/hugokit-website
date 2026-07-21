@@ -3,6 +3,7 @@ title: "Getting started"
 description: "Install HugoKit, add a Hugo site and start the server. Setup takes a few minutes, and you don't need the terminal for any of it."
 group: "Start"
 weight: 10
+tags: [basics]
 ---
 
 HugoKit is a Mac app that runs the Hugo you already use. It doesn't convert your site, doesn't move your files and doesn't need an account – it starts `hugo server`, checks the site before it ships, and publishes it.
@@ -102,7 +103,7 @@ Open **Deploy** and add a deploy target. There are two kinds:
 - **GitHub Pages** – connect your GitHub account and pick one of your repositories. HugoKit points the folder at it and turns Pages on; you choose whether Hugo builds in the cloud (GitHub Actions) or locally on your Mac.
 - **FTP / SFTP** – host, port, user, remote path. SFTP is the default; plain FTP is there for hosts that still need it. The wizard finishes with a real login test, and the password goes into the macOS Keychain.
 
-A site can have several targets at once – production and staging, or GitHub Pages plus a copy to your own host. Each one publishes on its own, and a target you're not using can be paused rather than removed.
+A site can have several targets at once – production and staging, or GitHub Pages plus a copy to your own host. Each target publishes on its own and shows its own status; with two or more active targets, **Publish to All Targets** sends the site to every one of them. A target you're not using can be paused rather than removed.
 
 Every publish runs [preflight](/docs/preflight/) first: it builds the site, then checks the config, the `baseURL`, the assets in `public/`, your templates and any JavaScript in `static/`. Most of what it finds, it can fix – and each fix is shown as a diff you approve before anything is written. Errors block the publish; warnings don't. Once a target is set up, publishing is `⌘P`.
 
@@ -113,6 +114,8 @@ The full walkthroughs: [Publishing to GitHub Pages](/docs/publishing-to-github-p
 The **Content** page counts what's in the site – pages, sections, words and images – and lists the files. Open one and you get a preview, plus a **Raw** tab: a plain monospaced editor with an explicit **Save** (`⌘S`), a line count and an *edited* marker while you have unsaved changes. Close it with changes pending and HugoKit asks first.
 
 It's for a typo, a front matter field, a date. Real writing stays in your own editor – there's an **Open in editor** button one click away, and the dev server reloads on save either way.
+
+Saves from HugoKit go through the app's snapshot layer: the file as it was is kept, and the change can be undone from the site's **Snapshots** sheet. See [Snapshots and undo](/docs/snapshots-and-undo/).
 
 ## Outside the window
 

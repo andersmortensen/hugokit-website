@@ -3,6 +3,7 @@ title: "Preflight – what it checks and why"
 description: "Before every publish, HugoKit builds your Hugo site and checks the config, baseURL, assets, templates and static JavaScript – then offers to fix what it finds, as a diff you approve."
 group: "Publishing"
 weight: 30
+tags: [publishing, checks]
 ---
 
 A Hugo site that builds perfectly on your Mac can still land broken on the web. The build isn't the thing that breaks – the *paths* are. Preflight runs before every publish and looks for exactly the failures that only show up once the site is live.
@@ -38,6 +39,8 @@ Errors stop the publish: *Errors must be resolved before publishing.* Warnings d
 ## Fixes are a diff you approve
 
 Most of what preflight finds, it can fix. Press the fix button and you get a **Fix Preview**: the files that would change, line by line, red and green. Nothing is written until you press **Apply** – and after it's applied, preflight runs again from the top to confirm the issue is really gone.
+
+Applied fixes also go through the app's snapshot layer: every file a fix touches is copied first, and the change can be undone – file by file or all at once. See [Snapshots and undo](/docs/snapshots-and-undo/).
 
 What it can fix, and what the fix does:
 

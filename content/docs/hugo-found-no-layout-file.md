@@ -3,6 +3,7 @@ title: "Hugo builds fine, but the page is blank"
 description: "Hugo says \"found no layout file\" and writes an empty page. Nothing is broken – Hugo just has no template for that kind of page, and the fix is one file with the right name."
 group: "Fixing common Hugo problems"
 weight: 60
+tags: [templates, troubleshooting]
 ---
 
 The build succeeds. The server starts. And the page in the browser is empty – no error, no content, nothing to click. Somewhere in the log:

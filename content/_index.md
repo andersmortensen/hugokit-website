@@ -69,7 +69,7 @@ features:
         - "/docs/getting-started/#create-a-new-site"
       detail: "`⇧⌘N` gives you two templates. The HugoKit Starter is a complete, working site – kept as a real, running Hugo project inside the app rather than a pile of snippets. Blank is the plain output of hugo new site with a small welcome page."
       points:
-        - "The Starter always brings a 404 page, robots.txt, a sitemap, an RSS feed, an SEO partial and light/dark mode."
+        - "The Starter always brings the essentials – a 404 page, robots.txt, a sitemap, an RSS feed, an SEO partial and light/dark mode – plus an archive, a colophon, a `⌘K` search palette, a sharing image drawn per page and the whole site as llms.txt."
         - "You pick the rest up front: a blog with sample posts, a projects section, an about page, a theme toggle and tags."
         - "The Starter is TOML-only and needs Hugo 0.146 or newer; Blank lets you choose the config format."
         - "Either one can initialise a git repository, open the site and start the server the moment it is done."
@@ -132,6 +132,17 @@ features:
         - "The two tabs are the same document – type a key in Raw and it turns up in the form, and the other way round."
         - "Save does not save. It shows every changed key, old value against new; you approve, and then it is written."
         - "TOML, YAML or JSON – the format is read from the file, and keys you never touched keep their place, their spelling and their comments."
+    - name: "Snapshots and undo"
+      glyph: "snapshots"
+      text: "Before HugoKit writes to any file in your site, it keeps a copy. Every change is a diff you can read – and undo, file by file."
+      docs:
+        - "/docs/snapshots-and-undo/"
+      detail: "Nothing changes without a diff, and everything can be undone. Whenever HugoKit writes to your site – a preflight fix, a config save, a content edit, a theme switch – it snapshots the affected files first."
+      points:
+        - "Snapshots live in the app's own storage, never in your repository – so they can't be committed or published by accident."
+        - "Every write is recorded as a per-file diff. Read it in place, copy it out, or undo just that file."
+        - "Restore brings back a whole operation – and takes its own snapshot first, so even an undo can be undone."
+        - "Per site, you decide: turn the layer off, or set how many versions of each file to keep."
     - name: "Hugo Reference"
       glyph: "reference"
       text: "Searchable Hugo documentation built into the app – 195 entries across twelve categories, no browser needed."
@@ -230,6 +241,7 @@ moments:
       - "Toggles for drafts, future and expired content – no flags to remember."
       - "Colour-coded live logs, with errors translated into plain language."
       - "A monospace preview shows the exact command before it runs."
+      - "Hugo's deprecation notices are collected into one list on the dashboard – each one once, however often it repeats."
     screenshot: "/images/app/server-light.webp"
     screenshotDark: "/images/app/server-dark.webp"
     alt: "The Server view: live URL, stop and restart actions, and toggles for drafts, future and expired content."
@@ -255,8 +267,8 @@ moments:
     heading: "Publish where you already publish."
     text: "GitHub Pages, or your own server over FTP/SFTP. Set it up once per site – after that it's ⌘P."
     points:
-      - "GitHub Pages or your own server over FTP/SFTP – one target or several."
-      - "Each site's setup is saved: pick a target, publish, done."
+      - "GitHub Pages or your own server over FTP/SFTP – one target or several, published one at a time or all at once."
+      - "Each target shows its own status, and after every publish HugoKit checks that the live site actually responds."
       - "Deploy credentials go in the macOS Keychain, and `⌘P` publishes from anywhere."
     screenshot: "/images/app/deploy-light.webp"
     screenshotDark: "/images/app/deploy-dark.webp"
@@ -264,7 +276,7 @@ moments:
     docs:
       - "/docs/publishing-to-github-pages/"
       - "/docs/publishing-over-sftp/"
-    detail: "Set a destination up once, and publishing is a single keystroke: `⌘P`. GitHub Pages builds in the cloud through Actions or locally on your Mac; FTP and SFTP build on your Mac and upload only the files that actually changed. A site can hold several destinations at once, and one you are not using can be paused rather than removed."
+    detail: "Set a destination up once, and publishing is a single keystroke: `⌘P`. GitHub Pages builds in the cloud through Actions or locally on your Mac; FTP and SFTP build on your Mac and upload only the files that actually changed. A site can hold several destinations at once – publish them all in one go, pause the one you are not using – and each target keeps its own status and history."
 
 # Docs-teaser på forsiden – tre kuraterede sider, forankret i keyword-planen
 # (SEO-sporet: intern linking fra forsiden til landingssiderne). Titel og
@@ -293,6 +305,10 @@ faq:
     - q: "Where does my content live?"
       glyph: "private"
       a: "On your Mac, as the plain files Hugo already uses. There's no account and no cloud – deploy credentials go in the macOS Keychain, and nothing ever leaves your machine."
+    - q: "What if HugoKit breaks something?"
+      glyph: "snapshots"
+      a: "Before HugoKit writes to any file in your site – a preflight fix, a config save, a content edit – it keeps a copy of the file as it was. Every change is recorded as a diff you can read, and undo works per file or per operation. Preflight fixes are shown as a diff you approve before they're applied at all."
+      chips: ["Snapshots", "Diffs", "Undo"]
     - q: "Where can it publish to?"
       glyph: "publish"
       a: "GitHub Pages, and your own server over FTP/SFTP – one target or several per site. Cloud hosts like Netlify or Vercel aren't supported – if you deploy through them, their git integration already does this job."

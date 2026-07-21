@@ -3,6 +3,7 @@ title: "hugo server won't start: port already in use"
 description: "Hugo exits with \"address already in use\" on port 1313. Find what's holding the port, free it, or just run on another one."
 group: "Fixing common Hugo problems"
 weight: 20
+tags: [server, troubleshooting]
 ---
 
 You run `hugo server` and get:

@@ -3,6 +3,7 @@ title: "Themes and template preview"
 description: "See a site's installed themes, scaffold a blank one to build on, and render any layout file live with Template Preview (⇧⌘T)."
 group: "Working in the app"
 weight: 20
+tags: [templates]
 ---
 
 Hugo's layouts are the part you can't see until the page renders. HugoKit's **Themes** page lists what's installed, and **Template Preview** renders any single layout file next to its source – without you guessing which URL exercises it.

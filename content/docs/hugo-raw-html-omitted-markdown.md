@@ -3,6 +3,7 @@ title: "Raw HTML omitted: your HTML disappears from Markdown"
 description: "Hugo replaces the HTML in your Markdown with an <!-- raw HTML omitted --> comment. Here's why Goldmark does that, and the two right ways to get your markup back."
 group: "Fixing common Hugo problems"
 weight: 40
+tags: [content, troubleshooting]
 ---
 
 You put a `<div>`, an `<iframe>` or a `<details>` block in a Markdown file. The page builds fine – and the HTML is gone. In the output there's a comment where your markup should be:

@@ -3,6 +3,7 @@ title: "Deprecation warnings after upgrading Hugo"
 description: ".Site.IsServer, .Data.Pages, blackfriday, canonifyURLs – Hugo warns before it removes, so a warning today is a broken build a few releases from now. Here's what each one wants instead."
 group: "Fixing common Hugo problems"
 weight: 100
+tags: [build, troubleshooting]
 ---
 
 You upgrade Hugo. The site still builds. But the log has grown a paragraph:

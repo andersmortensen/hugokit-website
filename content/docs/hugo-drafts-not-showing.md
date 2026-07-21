@@ -3,6 +3,7 @@ title: "Your post doesn't show up"
 description: "The file is there, the build is clean, and the page doesn't exist. Hugo hides drafts, future-dated posts and expired ones by default – three flags, three fixes."
 group: "Fixing common Hugo problems"
 weight: 120
+tags: [content, troubleshooting]
 ---
 
 You wrote the post. The file is in `content/posts/`. Hugo builds without a word. And the post isn't on the site – not on the front page, not at its own URL, not anywhere.

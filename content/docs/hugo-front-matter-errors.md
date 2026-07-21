@@ -3,6 +3,7 @@ title: "Hugo won't build: front matter errors"
 description: "\"mapping values are not allowed\", \"cannot unmarshal into time.Time\", \"did not find expected key\" – three YAML errors from one Markdown file, and what each one is really telling you."
 group: "Fixing common Hugo problems"
 weight: 90
+tags: [content, troubleshooting]
 ---
 
 You add a post, Hugo refuses to build, and the error is about YAML rather than about anything you recognise as your problem. Here are the three you'll actually meet.

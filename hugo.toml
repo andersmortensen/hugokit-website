@@ -71,6 +71,8 @@ enableGitInfo = true
   releaseDate = '2026-07-13'
   architecture = 'Universal – Apple silicon and Intel'
   requires = 'macOS 26 or later'
+  # Kort form til bezel-barens app-fakta – følg `requires` ved ændringer.
+  requiresShort = 'macOS 26+'
   # GA4 measurement ID — gtag indsættes kun i production-builds (se head.html).
   googleAnalyticsID = 'G-5MFTKS6PH9'
   # DMG'en hostes som asset på det offentlige repos releases (se RELEASING.md).

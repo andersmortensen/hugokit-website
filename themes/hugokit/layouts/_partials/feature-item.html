@@ -1,49 +1,33 @@
-{{- /* Én feature i listen. Kontekst: dict med name, glyph, text, detail, points,
-      shortcut, docs. Lukket = summary-rækken (fast 76px). Åben = prosa, punkter
-      og meta-linjen. Har featuren ingen detail/points, er der intet at folde ud,
-      og rækken renderes som en almindelig <div> uden discloser. */ -}}
+{{- /* Én feature i registret. Kontekst: dict med name, glyph, text, detail,
+      points, docs. Alt er synligt – ingen discloser (valgt 2026-07-21: sitet
+      som datablad, intet gemmes bag klik). Venstre kolonne er definitionen
+      (glyph + navn + docs-links), højre er indholdet: detail som lead og
+      points som spec-linjer. text bruges kun som fallback uden detail. */ -}}
 
-{{- $expandable := or .detail .points -}}
-
-{{- if $expandable -}}
-<details class="feature-item">
-  <summary class="feature-row">
+<div class="feature-item{{ with .accent }} fi-{{ . }}{{ end }}">
+  <div class="feature-def">
     {{ partial "feature-glyph.html" (dict "glyph" .glyph) }}
-    <h3 class="feature-name">{{ .name }}</h3>
-    <div class="feature-copy">
-      <p class="feature-text">{{ .text }}</p>
+    <div class="feature-def-copy">
+      <h3 class="feature-name">{{ .name }}</h3>
     </div>
-    <span class="feature-plus" aria-hidden="true"></span>
-  </summary>
-
-  <div class="feature-detail">
+  </div>
+  <div class="feature-body">
     {{- /* Genvejstaster skrives som `⌘P` i _index.md og renderes som <code> –
           CSS giver dem pille-udseendet, så de står inline dér hvor sætningen
-          faktisk nævner dem. Docs-knappen får sin egen linje nedenunder. */}}
-    {{ with .detail }}<p class="feature-lead">{{ . | markdownify }}</p>{{ end }}
-
+          faktisk nævner dem. Docs-links står på egen linje under punkterne –
+          fuld bredde, så titel og pil aldrig bryder (2026-07-21). */}}
+    {{ if .detail }}
+    <p class="feature-lead">{{ .detail | markdownify }}</p>
+    {{ else if .text }}
+    <p class="feature-lead">{{ .text }}</p>
+    {{ end }}
     {{ with .points }}
     <ul class="feature-points">
       {{ range . }}<li>{{ . | markdownify }}</li>{{ end }}
     </ul>
     {{ end }}
-
     {{ with .docs }}
-    <div class="feature-meta">
-      <span class="feature-docs">{{ partial "doc-links.html" . }}</span>
-    </div>
+    <div class="feature-meta">{{ partial "doc-links.html" . }}</div>
     {{ end }}
   </div>
-</details>
-{{- else -}}
-<div class="feature-item feature-item-static">
-  <div class="feature-row">
-    {{ partial "feature-glyph.html" (dict "glyph" .glyph) }}
-    <h3 class="feature-name">{{ .name }}</h3>
-    <div class="feature-copy">
-      <p class="feature-text">{{ .text }}</p>
-      {{ with .docs }}<span class="feature-docs">{{ partial "doc-links.html" . }}</span>{{ end }}
-    </div>
-  </div>
 </div>
-{{- end -}}

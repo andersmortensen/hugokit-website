@@ -3,6 +3,7 @@ title: "Publishing to GitHub Pages"
 description: "Connect a Hugo site to a GitHub repository and publish it to GitHub Pages from HugoKit – cloud builds, local builds, and the subpath trap that breaks most first deploys."
 group: "Publishing"
 weight: 10
+tags: [publishing, github-pages]
 ---
 
 HugoKit publishes to GitHub Pages the way you'd do it by hand: it commits your project, pushes it, and lets GitHub Actions build the site. The difference is that you never open a terminal, and the checks that usually bite you run first.
@@ -46,6 +47,8 @@ When you press **Done**, HugoKit wires the folder up: it makes it a git reposito
 5. Waits a moment for the CDN, then reports the site as live.
 
 The timeline shows **Save version → Push to GitHub → Build site → Deploy**. If the workflow doesn't finish within five minutes, HugoKit stops waiting and tells you to check Actions on github.com – the build usually failed there.
+
+After a successful publish, HugoKit probes the live URL – the dot on the target row tells you whether the site actually responds, and **Check if Live** in the target's **⋯** menu runs the same probe on demand. And if the site has more than one active target, **Publish to All Targets** on the Deploy page sends it to every one of them.
 
 ## The subpath trap
 

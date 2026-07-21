@@ -3,6 +3,7 @@ title: "Site health"
 description: "A score out of 100 for a Hugo site: broken links, missing alt text, oversized images, deprecated config, front matter gaps and build regressions – with the issues listed out."
 group: "Working in the app"
 weight: 30
+tags: [checks]
 ---
 
 Preflight runs before a publish and blocks the things that break a deployed site. **Site health** is the other half: it doesn't block anything, and it tells you what the site is like to *read* – broken links, images without alt text, a config key Hugo deprecated two versions ago.

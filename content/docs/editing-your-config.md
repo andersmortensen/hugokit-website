@@ -3,6 +3,7 @@ title: "Editing your config"
 description: "Edit hugo.toml from HugoKit – a visual form for the fields you actually change, a raw text tab for everything else, and a diff you approve before anything is written."
 group: "Working in the app"
 weight: 10
+tags: [config]
 ---
 
 Your Hugo config is the file most likely to break a site, and the one you edit least often – so you never quite remember what the keys are called. HugoKit gives it a form, a raw editor, and one rule: nothing is written to disk until you've seen the diff.
@@ -25,6 +26,8 @@ Edit anything and an amber **Edited** badge appears next to the title. That's th
 **Save** doesn't save. It builds the new file contents and shows you a diff: every changed key, old value against new. Approve it, and *then* it's written. **Revert** throws the edits away and reloads the file as it is on disk.
 
 That means a mistyped key costs you a glance, not a broken build.
+
+And even an approved save has a way back: HugoKit snapshots the config as it was before writing, so the change can be undone from the site's **Snapshots** sheet. More on that in [Snapshots and undo](/docs/snapshots-and-undo/).
 
 ## When Hugo disagrees
 

@@ -3,6 +3,7 @@ title: "Hugo without the terminal"
 description: "A command-by-command map from the Hugo CLI to HugoKit – what each button actually runs, what it does that no command does, and the parts where the terminal is still the honest answer."
 group: "Start"
 weight: 20
+tags: [basics]
 ---
 
 Hugo is a command-line tool, and using it means knowing a handful of commands, a handful of flags, and which of them you need right now. That's a small amount of knowledge, and it's fine – until it isn't. Until you write once a month and have to relearn it every time. Until the flag you need is one you've never used. Until something goes wrong and the error is about Go template internals.

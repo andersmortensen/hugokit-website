@@ -8,7 +8,7 @@
       (for detaljerede) eller som store (opblæste streger).
 
       Param: glyph (preview/publish/preflight/sites/create/themes/templates/content/
-      config/reference/palette/menubar/hugo/health/private/bell/free/mac/person). */ -}}
+      config/reference/palette/menubar/hugo/health/private/snapshots/bell/free/mac/person). */ -}}
 {{- $g := .glyph -}}
 <svg class="feature-glyph" viewBox="0 0 48 48" fill="none" stroke="currentColor"
      stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -95,6 +95,11 @@
   <rect x="11" y="22.5" width="26" height="17.5" rx="5.5"/>
   <circle cx="24" cy="29.5" r="2.4" stroke-width="2"/>
   <path d="M24 32.5V35" stroke-width="2"/>
+{{- else if eq $g "snapshots" }}
+  {{- /* clock.arrow.circlepath – hver skrivning gemmer en version bagud i tid */}}
+  <path d="M6 24a18 18 0 1 0 18-18c-5.2 0-10 2.2-13.4 5.6L6 16"/>
+  <path d="M6 6v10h10"/>
+  <path d="M24 15v9l7 4"/>
 {{- else if eq $g "bell" }}
   {{- /* bell – notifikationer */}}
   <path d="M14 32v-9a10 10 0 0 1 20 0v9"/>

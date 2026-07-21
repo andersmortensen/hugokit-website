@@ -1,169 +1,90 @@
 {{ define "body" }}
 
-{{- /* Orca-editorial layoutet: siden som indrammet, afrundet kanvas.
-      Kvartetten (pink/blå/grøn/guld fra mærket) bærer farverne –
-      why-kortene, USP-markørerne og Hugo-panelet. CTA'er forbliver
-      i utility-registret (ink-knappen). */}}
+{{- /* Layout v5 "spec sheet" (2026-07-19). Afløser v4 "orca-editorial".
+
+      Greb: siden er ét opmålt dokument, ikke en stak sektioner. Ét layout-
+      mønster hele vejen – label-skinne til venstre, indhold til højre – og
+      hairlines frem for kort og skygger. Hver sektion åbner med .rule: en
+      hairline med tick i hver ende og index + navn under linjen.
+
+      Wordmarket er flyttet fra heroen til kolofonen i footeren; kvartet-
+      kortene ("Why") er opløst ind i den fulde feature-liste, og statementet
+      derfra står nu som billedtekst under hero-mediet. Intet indhold er
+      fjernet fra _index.md – kun flyttet.
+
+      Rollback: _Arkiv/diverse/hugokit-website-home-html-foer-spec-sheet-2026-07-19.html */}}
+
 <div class="canvas">
 
-  {{ partial "nav.html" . }}
 
-  <main id="main">
+  <main id="main" class="sheet">
 
   {{ with .Params.hero }}
-  <header class="hero">
-    {{- /* Wordmarket kant til kant – JS skalerer det til kanvasbredden.
-          Dekorativt; h1 nedenfor bærer budskabet. */}}
-    <div class="giant-wrap" aria-hidden="true">
-      <span class="giant" id="giant">HugoKit</span>
-    </div>
-    <div class="hero-row">
-      <div class="hero-copy">
-        {{- /* To-tone headline: emnet dæmpes, pointen står i ink (R2/R5-grebet
-              i neutral palet). headingDim er valgfri – uden den renderes
-              heading alene, præcis som før. Swap: byt farverne i .hh-dim. */}}
+  {{- /* 00 Masthead: hvad det er, hvad det koster. Asymmetrisk (soft deck):
+        copy til venstre, to svævende fakta-kort til højre – begge kort bærer
+        ÆGTE tal fra hugo.toml (dmgSize) og download-metaen. Hero-videoen
+        udgik 2026-07-21 (soft deck-runden); screenshot-/video-felterne i
+        front matter består ubrugte til release-materialet. */}}
+  <header class="mast">
+    <div class="mast-grid">
+      <div>
+        <p class="lab">Overview</p>
+        {{- /* To-tone headline: emnet dæmpes, pointen står i ink */}}
         <h1 class="hero-heading">{{ with .headingDim }}<span class="hh-dim">{{ . }}</span> {{ end }}{{ .heading }}</h1>
         <p class="hero-lead">{{ .lead }}</p>
-        <div class="cta-buttons">
-          <a class="btn btn-lg" href="#download">
+
+        <div class="mast-act">
+          <a class="btn btn-lg" href="{{ site.Params.downloadURL }}" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4.5v10.5"/><path d="m7 10.5 5 4.5 5-4.5"/><path d="M5.5 19.5h13"/></svg>
-            Download for macOS
+            {{ $.Params.download.cta }}
           </a>
-          <a class="btn-outline btn-lg" href="#why">{{ .more }}</a>
+          <span class="fine-meta">{{ $.Params.download.meta }}</span>
         </div>
-        <span class="fine-meta">{{ $.Params.download.meta }}</span>
-        {{- /* Versionslinjen: levende produkt-signal i fine-meta-registret.
-              Versionen bor i hugo.toml (site.Params.version) og bumpes ved
-              release – samme kilde som download-fakta nederst. */}}
-        <a class="fine-meta hero-whatsnew" href="{{ "changelog/" | relURL }}">v{{ site.Params.version }} · what's new</a>
       </div>
-      {{- /* Hero-mediet: loopende app-optagelse (window frame + traffic lights
-            bagt ind, samme 1072×764 som screenshottene). Light/dark følger
-            sitets mode; uden hero.video – eller uden JS – vises screenshottet. */}}
-      <div class="hero-media">
-        <figure class="hero-shot">
-          {{ if .video }}
-          {{ partial "hero-video.html" (dict "v" .video "alt" .alt "light" .screenshot "dark" .screenshotDark) }}
-          {{ else }}
-          {{ partial "shot.html" (dict "light" .screenshot "dark" .screenshotDark "alt" .alt "eager" true) }}
-          {{ end }}
-        </figure>
-        {{ with $.Params.whatishugo }}
-        <a class="btn-outline btn-sm hero-hugo-cta" href="#hugo">{{ .cta }}</a>
-        {{ end }}
+
+      <div class="float-stack" aria-hidden="true">
+        <div class="fcard fc1">
+          <span class="fcard-k">The whole app</span>
+          <span class="fcard-v">{{ site.Params.dmgSize }}</span>
+          <span class="fcard-s">one DMG, signed and notarised</span>
+        </div>
+        <div class="fcard fc2">
+          <span class="fcard-k">Price</span>
+          <span class="fcard-v">Free</span>
+          <span class="fcard-s">no license, no subscription, no account</span>
+        </div>
       </div>
-      <div></div>
     </div>
   </header>
-  {{ end }}
 
-  {{ with .Params.facts }}
-  <section class="facts reveal" aria-label="Facts">
+  {{ with $.Params.facts }}
+  {{- /* Stats-panen (pane-2): de tre bånd-fakta som store værdier m. delere */}}
+  <section class="facts facts-pane reveal" aria-label="Facts">
     {{ range . }}
     <div class="fact">
-      <span class="fact-ic" aria-hidden="true">
-        {{ if eq .glyph "free" }}
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v8H4v-8"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7c-1.5 0-4-.7-4-2.5S9.5 2 10.5 2C12 2 12 4.5 12 7zm0 0c1.5 0 4-.7 4-2.5S14.5 2 13.5 2C12 2 12 4.5 12 7z"/></svg>
-        {{ else if eq .glyph "editor" }}
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M7 9h6"/><path d="M7 13h4"/><path d="M15.5 10.5v6"/><path d="M14 10.5h3"/><path d="M14 16.5h3"/></svg>
-        {{ else }}
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
-        {{ end }}
-      </span>
-      <div>
-        <div class="fact-v">{{ .value }}</div>
-        <div class="fact-l">{{ .label }}</div>
-      </div>
+      <div class="fact-v">{{ .value }}</div>
+      <div class="fact-l">{{ .label }}</div>
     </div>
     {{ end }}
   </section>
   {{ end }}
-
-  {{ with .Params.whatishugo }}
-  {{- /* Hugo-panelet – flyttet op mellem Facts og Why: "What?" besvares
-        før "Why?". Pink er Hugos egen farve. */}}
-  <section class="hugo-panel reveal" id="hugo" aria-label="{{ .title }}">
-    <div class="hugo-left">
-      <div class="term" role="img" aria-label="Terminal running hugo server">
-        <div class="term-bar">
-          <span class="hw-tl hw-r"></span><span class="hw-tl hw-y"></span><span class="hw-tl hw-g"></span>
-        </div>
-        <div class="term-body">
-          <span class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">hugo server</span><span class="term-caret"></span></span>
-          <span class="term-out">Web Server is available at http://localhost:1313/</span>
-        </div>
-      </div>
-    </div>
-    <div class="hugo-right">
-      <h2 class="hugo-h">{{ .title }}</h2>
-      {{ range .body }}<p class="hugo-body">{{ . }}</p>{{ end }}
-      {{ with .usps }}
-      <p class="hugo-usp-label">{{ .label }}</p>
-      <ul class="usps">
-        {{ range $i, $u := .items }}
-        <li class="usp">
-          <span class="usp-tile"><span class="usp-fct usp-fct-{{ add $i 1 }}" aria-hidden="true"></span></span>
-          <b>{{ $u.name }}</b><span>{{ $u.text }}</span>
-        </li>
-        {{ end }}
-      </ul>
-      {{ end }}
-      {{ with .bridge }}<p class="hugo-bridge">{{ . }}</p>{{ end }}
-      <a class="hugo-link" href="https://gohugo.io" target="_blank" rel="noopener">{{ .link }}</a>
-    </div>
-  </section>
   {{ end }}
-
-  {{- /* Why: sticky statement, kvartet-kortene scroller henover.
-        Kort = feature-items med accent-nøgle; resten står i "Also in HugoKit". */}}
-  {{ $cards := slice }}{{ $rest := slice }}
-  {{ range .Params.features.items }}
-    {{ if .accent }}{{ $cards = $cards | append . }}{{ else }}{{ $rest = $rest | append . }}{{ end }}
-  {{ end }}
-  <section class="why reveal" id="why" aria-label="Why HugoKit">
-    {{- /* Sektionshovedet: statementet i fuld --ink (ingen scroll-drevet ordafsløring)
-          og en mono-bro over til den fulde liste, så spotlightet selv siger at det er
-          fire ud af mange. */}}
-    <div class="why-head">
-      <div>
-        <span class="label-pill">Why HugoKit</span>
-        <h2 class="why-h">{{ .Params.about.intro }}</h2>
-      </div>
-      <a class="why-bridge" href="#features">{{ .Params.features.title }} ↓</a>
-    </div>
-    {{- /* Kortet: neutral flade, kvartetten som en blød lyskilde bag øverste venstre
-          hjørne (ikke som maling), symbolet i sin rigtige størrelse i en tonet flise,
-          og en meta-linje der bærer noget faktuelt – genvej eller vilkår, fra spot i
-          _index.md. Ingen docs-chip: kun tre af fire har en docs-side. */}}
-    <div class="why-cards">
-      {{ range $cards }}
-      <article class="wcard wc-{{ .accent }}">
-        <span class="wcard-ic" aria-hidden="true">{{ partial "feature-glyph.html" (dict "glyph" .glyph) }}</span>
-        <h3>{{ .name }}</h3>
-        <p>{{ .text }}</p>
-        {{ with .spot }}
-        <div class="wcard-meta">
-          {{ with .key }}<kbd class="wcard-key">{{ . }}</kbd>{{ end }}
-          <span>{{ .text }}</span>
-        </div>
-        {{ end }}
-      </article>
-      {{ end }}
-    </div>
-  </section>
 
   {{ with .Params.loop }}
-  {{- /* Loop: sidens kerneargument – Preview, preflight, publish, in that
-        order – som tre nummererede trin (referenceanalysen 2026-07-16, S1).
-        Indholdet er de tre moments fra _index.md; server- og deploy-trinnene
-        bærer deres screenshots, preflight (uden screenshot) bærer et piktoralt
-        diff-panel tegnet i sitets egne tokens. */}}
+  {{- /* 01 – sidens kerneargument: Preview, preflight, publish, in that order.
+        Hvert trin bærer sin prosa (moments.detail), sine punkter, sine docs-
+        links og sit udsnit. Preflight har intet screenshot og bærer i stedet
+        et diff-panel tegnet i sitets egne tokens. */}}
   <section class="loop reveal" id="loop" aria-label="{{ .heading }}">
-    <div class="loop-head">
-      <span class="label-pill">{{ .label }}</span>
-      <h2 class="loop-h">{{ .heading }}</h2>
-      <p class="loop-sub">{{ .sub }}</p>
+    <div class="rule"><span class="ix">01</span><span class="nm">{{ .label }}</span></div>
+    <div class="lc">
+      <p class="lab">Core</p>
+      <div>
+        <h2 class="loop-h">{{ .heading }}</h2>
+        <p class="loop-sub">{{ .sub }}</p>
+      </div>
     </div>
+
     <div class="loop-steps">
       {{ range $i, $m := $.Params.moments }}
       <article class="lstep">
@@ -171,26 +92,44 @@
           <span class="lstep-no">0{{ add $i 1 }}</span>
           <span class="lstep-label">{{ $m.label }}</span>
         </div>
-        <h3 class="lstep-h">{{ $m.heading }}</h3>
-        <p class="lstep-t">{{ $m.text }}</p>
-        <ul class="lstep-points">
-          {{ range $m.points }}<li>{{ . | markdownify }}</li>{{ end }}
-        </ul>
-        {{ with $m.docs }}<div class="lstep-meta">{{ partial "doc-links.html" . }}</div>{{ end }}
-        {{ if $m.screenshot }}
-        <figure class="lstep-vis">
-          {{ partial "shot.html" (dict "light" $m.screenshot "dark" $m.screenshotDark "alt" $m.alt) }}
-        </figure>
-        {{ else }}
-        {{- /* Preflight har intet screenshot – udsnittet viser featurens
-              faktiske indhold: en fix som rød/grøn diff, godkend, re-check. */}}
-        <div class="lstep-vis lstep-pf" role="img" aria-label="{{ $m.alt }}">
-          <div class="pf-bar"><span class="pf-name">preflight</span><span class="pf-status">1 fix waiting</span></div>
-          <div class="pf-row pf-del">- baseURL = "http://localhost:1313/"</div>
-          <div class="pf-row pf-add">+ baseURL = "https://example.com/"</div>
-          <div class="pf-foot"><span class="pf-dot" aria-hidden="true"></span>approve the diff · preflight re-checks</div>
+        <div class="lstep-body">
+          <div>
+            <h3 class="lstep-h">{{ $m.heading }}</h3>
+            {{ with $m.detail }}<p class="prose">{{ . | markdownify }}</p>{{ end }}
+            <ul class="pts">
+              {{ range $m.points }}<li>{{ . | markdownify }}</li>{{ end }}
+            </ul>
+            {{ with $m.docs }}<div class="lstep-meta">{{ partial "doc-links.html" . }}</div>{{ end }}
+          </div>
+          {{- /* Udsnittene er tegnet i sitets egne tokens – ingen screenshots
+                (de daterer sig; panelerne viser trinnets faktiske indhold).
+                Panel pr. glyph: preview = serveren, preflight = diffen,
+                publish = target-rækkerne. Tallene i server-panelet er docs'
+                eget log-eksempel (running-the-server.md), ikke opfundne. */}}
+          {{ if eq $m.glyph "preview" }}
+          <div class="lstep-vis lstep-pf" role="img" aria-label="{{ $m.alt }}">
+            <div class="pf-bar"><span class="pf-name">server</span><span class="pf-status">running</span></div>
+            <div class="pf-line"><span class="pf-dot" aria-hidden="true"></span>Server running · localhost:1313</div>
+            <div class="pf-line pf-quiet">Build complete (430 ms) · 78 pages · 12 static files</div>
+            <div class="pf-cmd">$ hugo server --buildDrafts</div>
+            <div class="pf-foot">drafts on · future off · expired off</div>
+          </div>
+          {{ else if eq $m.glyph "publish" }}
+          <div class="lstep-vis lstep-pf" role="img" aria-label="{{ $m.alt }}">
+            <div class="pf-bar"><span class="pf-name">deploy targets</span><span class="pf-status">2 active</span></div>
+            <div class="pf-line"><span class="pf-dot" aria-hidden="true"></span>GitHub Pages · you.github.io/site · live</div>
+            <div class="pf-line"><span class="pf-dot" aria-hidden="true"></span>SFTP · your own host · live</div>
+            <div class="pf-foot">⌘P publishes · every target probed after publish</div>
+          </div>
+          {{ else }}
+          <div class="lstep-vis lstep-pf" role="img" aria-label="{{ $m.alt }}">
+            <div class="pf-bar"><span class="pf-name">preflight</span><span class="pf-status">1 fix waiting</span></div>
+            <div class="pf-row pf-del">- baseURL = "http://localhost:1313/"</div>
+            <div class="pf-row pf-add">+ baseURL = "https://example.com/"</div>
+            <div class="pf-foot"><span class="pf-dot" aria-hidden="true"></span>approve the diff · preflight re-checks</div>
+          </div>
+          {{ end }}
         </div>
-        {{ end }}
       </article>
       {{ end }}
     </div>
@@ -198,39 +137,81 @@
   {{ end }}
 
   {{ if .Params.features.items }}
-  {{- /* Features: sidens fulde overblik. Løkkens tre trin bor nu i loop-
-        sektionen ovenfor; listen her er HELE værktøjskassen – også de fire
-        med accent, som samtidig optræder som kvartet-kort i Why. Kortene er
-        teaseren; listen er stedet hvor alt står. */}}
+  {{- /* 02 – HELE værktøjskassen. Kvartet-kortene fra v4 er opløst herind, så
+        listen er det ene sted alt står. Hver række folder ud til prosa,
+        punkter og docs-links (feature-item.html). */}}
   <section class="features reveal" id="features" aria-label="Features">
-    <h2 class="label-pill">{{ .Params.features.title }}</h2>
-    {{- /* Hver feature er en <details>: den lukkede række er altid 76px høj og
-          bærer den korte tekst; det udfoldede felt bærer prosa, punkter og en
-          meta-linje med genvej + link til dokumentationen. Ingen JS – ::details-content
-          animeres i CSS (samme mønster som FAQ'en). */}}
+    <div class="rule"><span class="ix">02</span><span class="nm">Features</span></div>
+    <div class="lc" style="margin-bottom:24px">
+      <p class="lab">Inventory</p>
+      <div>
+        <h2>{{ .Params.features.title }}</h2>
+        <p class="fine-meta features-meta">{{ len .Params.features.items }} entries</p>
+      </div>
+    </div>
     <div class="feature-list">
       {{ range .Params.features.items }}
-      {{ partial "feature-item.html" (dict "name" .name "glyph" .glyph "text" .text "detail" .detail "points" .points "shortcut" .shortcut "docs" .docs) }}
+      {{ partial "feature-item.html" (dict "name" .name "glyph" .glyph "text" .text "detail" .detail "points" .points "shortcut" .shortcut "docs" .docs "accent" .accent) }}
       {{ end }}
     </div>
   </section>
   {{ end }}
 
+  {{ with .Params.whatishugo }}
+  {{- /* 03 – baggrundsstof for den der landede her uden at kende Hugo. Bevidst
+        EFTER loop og features: forsiden taler til Hugo-brugere, og produktets
+        kerneargument skal ikke stå bag en forklaring af Hugo. Terminalen viser
+        hvad HugoKit kører. */}}
+  <section class="hugo-panel reveal" id="hugo" aria-label="{{ .title }}">
+    <div class="rule"><span class="ix">03</span><span class="nm">What is Hugo</span></div>
+    <div class="lc">
+      <p class="lab">Background</p>
+      <div class="hugo-split">
+        <div>
+          <h2 class="hugo-h">{{ .title }}</h2>
+          {{ range .body }}<p class="hugo-body">{{ . }}</p>{{ end }}
+          {{ with .usps }}
+          <ul class="usps" aria-label="{{ .label }}">
+            {{ range $i, $u := .items }}
+            <li class="usp">
+              <b><span class="usp-fct usp-fct-{{ add $i 1 }}" aria-hidden="true"></span>{{ $u.name }}</b>
+              <span>{{ $u.text }}</span>
+            </li>
+            {{ end }}
+          </ul>
+          {{ end }}
+          {{ with .bridge }}<p class="hugo-bridge">{{ . }}</p>{{ end }}
+          <a class="hugo-link" href="https://gohugo.io" target="_blank" rel="noopener">{{ .link }} →</a>
+        </div>
+        <div class="term" role="img" aria-label="Terminal running hugo server">
+          <div class="term-bar">
+            <span class="hw-tl hw-r"></span><span class="hw-tl hw-y"></span><span class="hw-tl hw-g"></span>
+          </div>
+          <div class="term-body">
+            <span class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">hugo server</span><span class="term-caret"></span></span>
+            <span class="term-out">Web Server is available at http://localhost:1313/</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {{ end }}
+
   {{ with .Params.fromdocs }}
-  {{- /* Docs-teaser (referenceanalysen S3): tre kuraterede sider fra docs,
-        valgt efter keyword-planen. Titel og beskrivelse hentes fra siderne
-        selv (samme kontrakt som doc-links.html) – findes en side ikke,
-        renderes dens kort ikke. */}}
-  <section class="fromdocs reveal" aria-label="{{ .label }}">
-    <h2 class="label-pill">{{ .label }}</h2>
-    <div class="fromdocs-grid">
+  {{- /* 04 – tre kuraterede sider fra docs. Titel og beskrivelse hentes fra
+        siderne selv – findes en side ikke, renderes dens række ikke. */}}
+  <section class="fromdocs reveal" id="reading" aria-label="{{ .label }}">
+    <div class="rule"><span class="ix">04</span><span class="nm">{{ .label }}</span></div>
+    <div class="fromdocs-list">
       {{ range .pages }}
       {{ with site.GetPage . }}
       <a class="fd-card" href="{{ .RelPermalink }}">
         <span class="fd-kind">{{ .Params.group }}</span>
-        <span class="fd-title">{{ .LinkTitle }}</span>
-        <span class="fd-desc">{{ .Description }}</span>
-        <span class="fd-more" aria-hidden="true">Read in the docs →</span>
+        <span>
+          <span class="fd-title">{{ .LinkTitle }}</span>
+          <span class="fd-desc">{{ .Description }}</span>
+        </span>
+        <span class="fd-more" aria-hidden="true">Read →</span>
       </a>
       {{ end }}
       {{ end }}
@@ -239,15 +220,18 @@
   {{ end }}
 
   {{ with .Params.faq }}
+  {{- /* 05 – spørgsmålene, alle svar synlige (ingen disclosere – datablads-
+        beslutningen 2026-07-21). To CSS-kolonner pakker dem tæt; hvert punkt
+        åbner med sin egen hairline, så kolonnetoppene flugter. */}}
   <section class="faq reveal" id="faq" aria-label="Frequently asked questions">
-    <h2 class="faq-title">{{ .title }}</h2>
+    <div class="rule"><span class="ix">05</span><span class="nm">{{ .title }}</span></div>
     <div class="faq-list">
       {{ range .items }}
-      <details class="faq-item">
-        <summary>
+      <div class="faq-item">
+        <div class="faq-head">
           <span class="faq-ic" aria-hidden="true">{{ partial "feature-glyph.html" (dict "glyph" .glyph) }}</span>
-          <span class="faq-q">{{ .q }}</span>
-        </summary>
+          <h3 class="faq-q">{{ .q }}</h3>
+        </div>
         <div class="faq-answer">
           {{ .a | markdownify }}
           {{ with .chips }}
@@ -256,21 +240,21 @@
           </ul>
           {{ end }}
         </div>
-      </details>
+      </div>
       {{ end }}
     </div>
   </section>
   {{ end }}
 
   {{ with .Params.note }}
-  {{- /* Hairline-split: regel-linje over, eyebrow i venstre kolonne, prosaen
-        til højre bag en neutral lodret hairline (samme deler som fakta-båndet). */}}
-  <section class="note reveal">
-    <div class="note-split">
-      <p class="section-label note-label">{{ .label }}</p>
-      <div class="note-body">
+  {{- /* 06 – hvorfor appen findes. Sidens eneste sted med en jeg-stemme. */}}
+  <section class="note reveal" id="why">
+    <div class="rule"><span class="ix">06</span><span class="nm">{{ .label }}</span></div>
+    <div class="lc">
+      <p class="lab">Colophon</p>
+      <div>
         <p class="note-text">{{ .text }}</p>
-        {{ with .extra }}<p class="note-text note-extra">{{ . }}</p>{{ end }}
+        {{ with .extra }}<p class="note-text">{{ . }}</p>{{ end }}
         {{ with .donate }}
         <a class="btn-outline note-donate" href="{{ .url }}" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 9h11v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"/><path d="M16 10h1.5a2.5 2.5 0 0 1 0 5H16"/><path d="M8.5 3.5v2M12 3.5v2"/></svg>
@@ -283,41 +267,36 @@
   {{ end }}
 
   {{ with .Params.download }}
+  {{- /* 07 – hvad der faktisk hentes. Selv-distribueret download uden App Store
+        betyder at brugeren selv skal kunne se hvad filen er, før den åbnes:
+        version, størrelse, arkitektur, krav og dato. Tallene bor i hugo.toml
+        og skal matche den DMG appcast'en peger på. */}}
   <section class="get reveal" id="download">
-    <h2 class="get-heading">{{ .heading }}</h2>
-    <div class="get-foot">
-      <div class="cta-col">
-        <div class="cta-buttons">
-          <a class="btn btn-lg" href="{{ site.Params.downloadURL }}" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4.5v10.5"/><path d="m7 10.5 5 4.5 5-4.5"/><path d="M5.5 19.5h13"/></svg>
-            {{ .cta }}
-          </a>
+    <div class="rule"><span class="ix">07</span><span class="nm">Download</span></div>
+    <div class="lc">
+      <p class="lab">Get it</p>
+      <div>
+        <div class="get-foot">
+          <div class="cta-col">
+            <h2 class="get-heading">{{ .heading }}</h2>
+            <div class="cta-buttons" style="margin-top:20px">
+              <a class="btn btn-lg" href="{{ site.Params.downloadURL }}" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4.5v10.5"/><path d="m7 10.5 5 4.5 5-4.5"/><path d="M5.5 19.5h13"/></svg>
+                {{ .cta }}
+              </a>
+            </div>
+          </div>
+          <p class="get-note">{{ .note }}</p>
         </div>
+        <dl class="get-facts">
+          <div><dt>Version</dt><dd>{{ site.Params.version }}</dd></div>
+          <div><dt>Size</dt><dd>{{ site.Params.dmgSize }}</dd></div>
+          <div><dt>Architecture</dt><dd>{{ site.Params.architecture }}</dd></div>
+          <div><dt>Requires</dt><dd>{{ site.Params.requires }}</dd></div>
+          <div><dt>Released</dt><dd>{{ (time.AsTime site.Params.releaseDate).Format "2 January 2006" }}</dd></div>
+        </dl>
       </div>
-      <p class="get-note">{{ .note }}</p>
     </div>
-    {{- /* Download-fakta: hvad der faktisk hentes. Erstatter fine-meta-linjen her
-          (den bliver stående i hero'en) – "free · macOS 26 or later" stod ellers
-          to gange inden for 40 px. Selv-distribueret download uden
-          App Store betyder at brugeren selv skal kunne se hvad filen er, før den
-          åbnes – version, størrelse, arkitektur, krav og dato. Tallene bor i
-          hugo.toml og skal matche den DMG appcast'en peger på. */}}
-    <dl class="get-facts">
-      <div><dt>Version</dt><dd>{{ site.Params.version }}</dd></div>
-      <div><dt>Size</dt><dd>{{ site.Params.dmgSize }}</dd></div>
-      <div><dt>Architecture</dt><dd>{{ site.Params.architecture }}</dd></div>
-      <div><dt>Requires</dt><dd>{{ site.Params.requires }}</dd></div>
-      <div><dt>Released</dt><dd>{{ (time.AsTime site.Params.releaseDate).Format "2 January 2006" }}</dd></div>
-    </dl>
-    {{- /* Closure-vinduet (referenceanalysen S4, Logly-grebet): dashboardet
-          stiger op bag footerens linje og beskæres af sektionen – produktet
-          ét sidste sted, dér hvor beslutningen træffes. Dekorativt; hero'en
-          bærer den fulde alt-tekst. Mode-følsomt via shot.html. */}}
-    {{ with $.Params.hero }}
-    <figure class="get-shot" aria-hidden="true">
-      {{ partial "shot.html" (dict "light" .screenshot "dark" .screenshotDark "alt" "") }}
-    </figure>
-    {{ end }}
   </section>
   {{ end }}
 

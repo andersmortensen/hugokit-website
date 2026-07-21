@@ -1,23 +1,81 @@
-{{- /* Bezel – sitet siddende i en enhed. Lånt fra preview-projektets
-      bezel-layout (bars/bezel.php): RAMMEN ER IKKE NOGET PÅ SIDEN, SIDEN
-      SIDDER I RAMMEN. To faste elementer: baren er toppen af rammen,
-      .bezel-frame tegner den afrundede udskæring som kanvassen scroller
-      inde i (box-shadow-cutout – alt udenfor males i --surround).
+{{- /* Bezel – sitet siddende i en enhed, og rammen ER navigationen
+      (besluttet 2026-07-21, soft deck-runden): sidens lockup, links,
+      version, mode-toggle og Download bor i bezel-baren. Den tidligere
+      dekorative bar (app-fakta, tagline/sektionsaflæsning, fremdriftslinje)
+      udgik samme dag – nav'en ERSTATTER indholdet, og pointer-events/
+      aria-hidden-kontrakten er væk: baren er semantisk <nav> nu.
 
-      Ren dekoration: aria-hidden (titlen dublerer nav'ens lockup) og
-      pointer-events: none hele vejen – intet i baren er interaktivt.
+      .bezel-frame tegner fortsat den afrundede udskæring som kanvassen
+      scroller inde i (box-shadow-cutout) – den er ren dekoration og
+      beholder pointer-events: none i CSS.
 
       Vises kun på sider MED .canvas: release-/404-siderne (Sparkle-vinduet)
-      gates i CSS via body:not(:has(.canvas)) – samme mekanik som deres
-      flade padding-override. Al styling bor i main.css under "Bezel".
-
-      Rollback: slet dette partial-kald i baseof.html + CSS-blokken. */ -}}
-<div class="bezel" aria-hidden="true">
-  <header class="bezel-bar">
-    <span class="bezel-dot"></span>
-    <span class="bezel-title">HugoKit</span>
-    <span class="bezel-to">– {{ site.Params.tagline }}</span>
-    <span class="bezel-meta">v{{ site.Params.version }}</span>
-  </header>
-  <div class="bezel-frame"></div>
+      gates i CSS via body:not(:has(.canvas)). Al styling bor i main.css
+      under "Bezel". Rollback: slet partial-kaldet i baseof.html + CSS-blokken
+      og genindsæt nav.html-kaldene i templates. */ -}}
+<div class="bezel">
+  <nav class="bezel-bar" aria-label="Primary">
+    <a class="lockup" href="{{ "" | relURL }}" aria-label="HugoKit – home">
+      {{ partial "mark.html" (dict "size" 22) }}
+      <span class="lockup-name">HugoKit</span>
+    </a>
+    {{- /* Aktiv-markering: undersider markeres server-side (Docs-linket på
+          docs-sektionen, versionen på changelog); forsidens sektioner
+          markeres af scrollspy-scriptet nederst. Kun farve skifter –
+          ingen weight, så intet rykker sig. */}}
+    <div class="nav-links-mid">
+      <a class="nav-link" href="{{ "" | relURL }}#loop">The loop</a>
+      <a class="nav-link" href="{{ "" | relURL }}#features">Features</a>
+      <a class="nav-link" href="{{ "" | relURL }}#hugo">What is Hugo</a>
+      <a class="nav-link" href="{{ "" | relURL }}#faq">FAQ</a>
+      <a class="nav-link" href="{{ "docs/" | relURL }}"{{ if eq .Section "docs" }} aria-current="page"{{ end }}>Docs</a>
+    </div>
+    <div class="nav-actions">
+      {{- /* Versionen: levende produkt-signal, samme kilde som download-fakta */}}
+      <a class="nav-version" href="{{ "changelog/" | relURL }}"{{ if eq .Section "changelog" }} aria-current="page"{{ end }}>v{{ site.Params.version }}</a>
+      <button class="mode-toggle" type="button" aria-label="Switch between light and dark appearance">
+        <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4l1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4m11.4-11.4l1.4-1.4"/></svg>
+      </button>
+      <a class="btn btn-sm" href="{{ "" | relURL }}#download">Download</a>
+    </div>
+  </nav>
+  <div class="bezel-frame" aria-hidden="true"></div>
 </div>
+
+{{ if .IsHome }}
+<script>
+  (function () {
+    {{- /* Scrollspy: sektionen i viewport-fokus markerer sit nav-link
+          (aria-current="location"). Samme center-bånd som reveal-laget.
+          Sektioner uden link (masthead, download m.fl.) rydder markeringen.
+          Uden JS: ingen markering på forsiden – links virker som altid.
+          OBS: bezelen renderes FØR main i body, så init skal vente på
+          DOMContentLoaded – ellers ser querySelectorAll nul sektioner. */}}
+    if (!('IntersectionObserver' in window)) return;
+    var init = function () {
+      var links = {};
+      document.querySelectorAll('.bezel-bar .nav-link[href*="#"]').forEach(function (a) {
+        links[a.getAttribute('href').split('#')[1]] = a;
+      });
+      var clear = function () {
+        Object.keys(links).forEach(function (k) { links[k].removeAttribute('aria-current'); });
+      };
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          clear();
+          var a = links[e.target.id];
+          if (a) a.setAttribute('aria-current', 'location');
+        });
+      }, { rootMargin: '-45% 0px -45% 0px' });
+      document.querySelectorAll('main.sheet > section, main.sheet > .mast').forEach(function (s) { obs.observe(s); });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>
+{{ end }}

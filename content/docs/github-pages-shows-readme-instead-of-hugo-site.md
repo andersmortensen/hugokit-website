@@ -3,6 +3,7 @@ title: "GitHub Pages shows your README instead of your Hugo site"
 description: "You pushed your Hugo project and GitHub Pages serves the README as the homepage. The Pages source is set to a branch, so GitHub is running Jekyll on your source."
 group: "Fixing common Hugo problems"
 weight: 50
+tags: [publishing, github-pages, troubleshooting]
 ---
 
 You push your Hugo project to GitHub, enable Pages, and the site that comes up is your `README.md` – rendered as a web page, with the wrong theme and none of your content.

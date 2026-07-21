@@ -59,12 +59,13 @@
 
 {{- /* Browser toolbar color – fallback for Chrome/Firefox; Safari Tahoe+ sampler
       html/body-baggrunden (sat i main.css). Canvas-sider bærer bezel-rammen,
-      så toolbaren skal matche DENS materiale: farverne ER --bezel-ground i
-      main.css (light #CDC8D6 · dark #26262B) – ret begge steder. De flade
-      sider (release/404, ingen .canvas → ingen bezel, jf. gaten i main.css)
-      beholder --surround: light #F4F1EA (eggshell) · dark #060607. Uden
-      manuelt valg vælger browseren metaen efter systemets skema – siden
-      følger systemet, også live.
+      og med maskinkantens gradient (2026-07-21) er barens øverste pixel
+      --bezel-hi – så farverne ER --bezel-hi i main.css (light #ECE4D7 ·
+      dark #1A1917) – ret begge steder. De flade sider (release/404, ingen
+      .canvas → ingen bezel, jf. gaten i main.css) beholder --surround:
+      light #F1EAE0 (creme) · dark #141312. Uden manuelt valg vælger
+      browseren metaen efter systemets skema – siden følger systemet, også
+      live.
 
       Scriptet lige under: har toggle'n sat et valg (data-theme fra localStorage,
       skrevet øverst i head), er systemets skema irrelevant – så fjernes
@@ -72,8 +73,8 @@
       parsing, mens metaerne netop er læst og før first paint; ellers står
       toolbar'en i systemets farve mens siden er malet i den valgte. */}}
 {{- $flat := or (eq .Kind "404") (and .IsPage (eq .Section "changelog")) }}
-{{- $tbLight := cond $flat "#F4F1EA" "#CDC8D6" }}
-{{- $tbDark := cond $flat "#060607" "#26262B" }}
+{{- $tbLight := cond $flat "#F1EAE0" "#ECE4D7" }}
+{{- $tbDark := cond $flat "#141312" "#1A1917" }}
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="{{ $tbLight }}">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="{{ $tbDark }}">
 <script>
@@ -359,28 +360,8 @@
       }
     });
 
-    // Wordmark: split i bogstav-spans (til entré-stagger) + fit til kanvasbredden
-    var g = document.getElementById('giant');
-    if (g) {
-      var text = g.textContent;
-      g.textContent = '';
-      text.split('').forEach(function (ch, i) {
-        var s = document.createElement('span');
-        s.className = 'gl';
-        s.style.setProperty('--gi', i);
-        s.textContent = ch;
-        g.appendChild(s);
-      });
-      g.classList.add('split');
-      var fit = function () {
-        var w = g.parentElement.clientWidth;
-        g.style.fontSize = '100px';
-        var natural = g.getBoundingClientRect().width;
-        if (natural > 0 && w > 0) g.style.fontSize = (100 * w / natural) + 'px';
-      };
-      addEventListener('resize', fit);
-      if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
-      fit();
-    }
+    // (Wordmark-fit + bogstav-split udgik 2026-07-19 sammen med wordmark-heroen.
+    //  Wordmarket bor nu i nav-lockup'et og i footerens kolofon – begge i fast
+    //  størrelse, så der er intet at måle op mod kanvasbredden.)
   });
 </script>

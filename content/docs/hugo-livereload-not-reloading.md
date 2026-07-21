@@ -3,6 +3,7 @@ title: "LiveReload isn't reloading"
 description: "You save a file and the Hugo dev server does nothing – or reloads with the old content. Work out whether Hugo saw the change or the browser ignored it."
 group: "Fixing common Hugo problems"
 weight: 30
+tags: [server, troubleshooting]
 ---
 
 You save a file. The browser sits there. Or it refreshes and shows exactly what it showed before.

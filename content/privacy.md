@@ -52,3 +52,5 @@ No ads, no tracking pixels, no data sold or handed to anyone beyond Google Analy
 ## Questions
 
 Write to [hello@hugokit.com](mailto:hello@hugokit.com).
+
+SNAPSHOT-TEST delete me

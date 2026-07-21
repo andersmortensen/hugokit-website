@@ -3,6 +3,7 @@ title: "A desktop app for Hugo"
 description: "Hugo is a command-line tool with no GUI of its own. HugoKit is a native Mac app that puts a window around it – run, preview, check and publish, no terminal. How a desktop app differs from a Hugo CMS, and who each one suits."
 group: "Start"
 weight: 30
+tags: [basics]
 ---
 
 Hugo is a command-line tool. There's no official app, no window, no buttons – you drive it from a terminal. So it's a reasonable thing to go looking for: a GUI, a desktop app, a Mac app, something with an interface. This page is the honest answer to that search.

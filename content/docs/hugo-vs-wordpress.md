@@ -3,6 +3,7 @@ title: "Hugo vs WordPress"
 description: "Two very different ways to build a website – a static site generator and a database-driven CMS. Where each one wins, who should choose which, and where HugoKit fits if you like Hugo but not the terminal."
 group: "Start"
 weight: 40
+tags: [basics]
 ---
 
 Hugo and WordPress both build websites, and roughly there the similarity ends. WordPress is a database-driven CMS: content lives in a database, you edit it in a browser admin, and a server assembles each page when someone visits. Hugo is a static site generator: content lives in Markdown files, you build the whole site into plain HTML once, and a host just serves those files.

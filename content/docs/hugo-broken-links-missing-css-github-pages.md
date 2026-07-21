@@ -3,6 +3,7 @@ title: "Broken links and missing CSS after deploying to GitHub Pages"
 description: "Your Hugo site works locally but loses its CSS on GitHub Pages. The cause is the repository subpath in baseURL – and relURL doesn't fix it the way you'd expect."
 group: "Fixing common Hugo problems"
 weight: 10
+tags: [publishing, github-pages, troubleshooting]
 ---
 
 The site is fine on `localhost:1313`. You deploy it, open `https://you.github.io/my-blog/`, and get unstyled HTML: the text is there, the CSS is gone, the images 404, and half the links go nowhere.

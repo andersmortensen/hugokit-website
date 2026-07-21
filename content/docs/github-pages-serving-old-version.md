@@ -3,6 +3,7 @@ title: "GitHub Pages keeps serving the old version of your site"
 description: "You pushed. The build was green. The live site is unchanged. Usually two deploy mechanisms are fighting over the same repository – and only one of them is winning."
 group: "Fixing common Hugo problems"
 weight: 110
+tags: [publishing, github-pages, troubleshooting]
 ---
 
 You publish. Git accepts the push. GitHub reports no failure. And hugokit.com – or whatever your site is called – shows exactly what it showed yesterday.

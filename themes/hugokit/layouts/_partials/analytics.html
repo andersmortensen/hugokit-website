@@ -12,8 +12,12 @@
 
       Fyres herfra:
         Tier 1  download_started · cta_download_click · download_section_view
-        Tier 2  faq_opened · loop_tab_changed · feedback_click · github_click
+        Tier 2  feedback_click · github_click
         Tier 3  page_not_found · mode_toggled
+
+      Udgået 2026-07-21 (datablads-redesignet): faq_opened (FAQ har ingen
+      disclosere længere – alt er synligt) og loop_tab_changed (loop-tabs
+      forsvandt allerede med spec sheet-layoutet; lytteren var død kode).
 
       Rollback: slet denne fil og dens kald i baseof.html. */}}
 <script>
@@ -34,7 +38,7 @@
     var placeOf = function (a) {
       if (a.closest('.site-footer')) return 'footer';
       if (a.closest('.doc-foot'))    return 'docs_page';
-      if (a.closest('.site-nav'))    return 'nav';
+      if (a.closest('.bezel'))       return 'nav'; /* nav bor i bezel-baren (2026-07-21) */
       if (a.closest('.get'))         return 'download_section';
       if (a.closest('.hero'))        return 'hero';
       return 'other';
@@ -61,7 +65,7 @@
       if (a.getAttribute('href') && a.getAttribute('href').indexOf('#download') !== -1) {
         var panel = a.closest('.loop-panel');
         var loc = 'other';
-        if (a.closest('.site-nav')) {
+        if (a.closest('.bezel')) { /* nav bor i bezel-baren (2026-07-21) */
           loc = 'nav';
         } else if (a.closest('.hero')) {
           loc = 'hero';
@@ -85,32 +89,6 @@
         track('github_click', { location: placeOf(a) });
       }
     }, { passive: true });
-
-    {{- /* ── Tier 2: loop-tabs ────────────────────────────────────────────── */}}
-    {{- /* Tabbene er radios (CSS-drevne, virker uden JS). 'change' bobler, så
-          den kan delegeres. Fyrer kun ved brugerens skift, ikke ved load. */}}
-    document.addEventListener('change', function (e) {
-      var t = e.target;
-      if (!t || t.name !== 'loop-tab' || !t.checked) return;
-      var lab = document.querySelector('label[for="' + t.id + '"]');
-      var idx = parseInt((t.id.match(/loop-t(\d+)/) || [])[1], 10);
-      track('loop_tab_changed', {
-        // Labelen er "<span>01</span>Preview" – tallet klippes af.
-        tab_name: lab ? lab.textContent.replace(/^\s*0\d\s*/, '').trim() : t.id,
-        tab_index: isNaN(idx) ? 0 : idx + 1
-      });
-    });
-
-    {{- /* ── Tier 2: FAQ ──────────────────────────────────────────────────── */}}
-    {{- /* 'toggle' bobler ikke – listeners sættes pr. <details>. Hvilke
-          spørgsmål folk åbner = hvilken tvivl der står mellem dem og downloadet. */}}
-    document.querySelectorAll('details.faq-item').forEach(function (d) {
-      d.addEventListener('toggle', function () {
-        if (!d.open) return;
-        var q = d.querySelector('.faq-q');
-        track('faq_opened', { question: q ? q.textContent.trim() : '' });
-      });
-    });
 
     {{- /* ── Tier 1: er download-sektionen overhovedet set? ───────────────── */}}
     {{- /* Skiller "ingen når ned" fra "de når ned og klikker ikke". Uden dette

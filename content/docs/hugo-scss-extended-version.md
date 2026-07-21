@@ -3,6 +3,7 @@ title: "Hugo can't build SCSS: you need the extended version"
 description: "Hugo stops with \"TOCSS: failed to transform … this feature is not available in your current Hugo version\". It means your Hugo isn't the extended build. How to install extended and make sure it stuck."
 group: "Fixing common Hugo problems"
 weight: 130
+tags: [build, troubleshooting]
 ---
 
 You add a theme, run `hugo server`, and the build stops with something like:

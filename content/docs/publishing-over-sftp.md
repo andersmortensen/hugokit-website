@@ -3,6 +3,7 @@ title: "Publishing over SFTP"
 description: "Upload a Hugo site to your own web host from HugoKit over SFTP or plain FTP – what to fill in, how the smart sync works, and why passwords need sshpass."
 group: "Publishing"
 weight: 20
+tags: [publishing, sftp]
 ---
 
 If you have a web host rather than a GitHub Pages site, HugoKit builds the site on your Mac and uploads it. It only sends the files that actually changed.
@@ -52,7 +53,11 @@ The alternative is an SSH key. Leave the password field empty, and HugoKit uses 
    ```
 3. Uploads, then updates the manifest.
 
+Dotfiles come along: `.htaccess`, `.well-known`, `.nojekyll` all upload. Only Finder junk (`.DS_Store`, `._*`) is filtered out.
+
 Nothing changed since last time? `No files to sync – site is up to date`.
+
+If the target has a **Public URL**, HugoKit probes it after the upload – the dot on the target row tells you whether the live site actually responds, and **Check if Live** in the target's **⋯** menu runs the same probe on demand.
 
 Change the host or the remote path and the manifest no longer applies – HugoKit does a full upload. Note that files on the *old* server are left where they are.
 

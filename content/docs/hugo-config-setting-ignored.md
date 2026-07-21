@@ -3,6 +3,7 @@ title: "Hugo ignores a setting in hugo.toml"
 description: "Your theme, your baseURL or your title has no effect – and Hugo says nothing. In TOML, everything after a [section] header belongs to that section, including the line you just added at the bottom."
 group: "Fixing common Hugo problems"
 weight: 70
+tags: [config, troubleshooting]
 ---
 
 You add a setting to `hugo.toml`. You restart the server. Nothing changes. No error, no warning – Hugo builds happily and behaves as if the line isn't there.

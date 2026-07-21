@@ -3,6 +3,7 @@ title: "Running the server"
 description: "Start Hugo's development server from HugoKit: ports, drafts, the live log, and what to do when the port is already taken."
 group: "Running Hugo"
 weight: 10
+tags: [server, preview]
 ---
 
 HugoKit runs the same `hugo server` you'd run in a terminal. It just remembers the flags, picks a free port, and turns Hugo's output into something you can read.
@@ -60,6 +61,8 @@ Draft counts elsewhere in the app come from `hugo list drafts`, so they match wh
 Hugo's output is parsed rather than dumped. Each line becomes an event with a time, a severity colour and a summary you can scan: `Server running`, `File changed – rebuilding`, `Build complete (430 ms) · 78 pages · 12 static files`. Errors and warnings keep their file references (`layouts/index.html:14:3`).
 
 The log page has **Copy**, **Export** (saves it as a file) and **Clear**.
+
+Hugo's deprecation notices get their own treatment: instead of scrolling past in the log, they're collected into one list on the site's dashboard – each notice once, with a count of how often it fired. A config key Hugo is about to drop doesn't have to be caught mid-scroll.
 
 ## LiveReload
 

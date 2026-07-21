@@ -3,6 +3,7 @@ title: "error calling partial: the two things it usually means"
 description: "Hugo stops with \"error calling partial\" or a nil pointer dereference deep inside a template. Almost always it's a missing dot, or a name that doesn't match the file."
 group: "Fixing common Hugo problems"
 weight: 80
+tags: [templates, troubleshooting]
 ---
 
 The build stops in the middle of a template:
