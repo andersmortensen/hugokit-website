@@ -31,6 +31,8 @@ Alongside the copy, HugoKit records what actually changed – a per-file diff, c
 
 Open **Snapshots** from the site's **⋯** menu and each entry unfolds file by file: additions green, removals red. Long diffs are truncated in the view; **Copy Diff** always gives you the whole thing.
 
+{{< shot name="snapshots" alt="The Snapshots sheet: a change unfolded file by file as a diff, additions in green and removals in red." >}}
+
 ## Undo works on two levels
 
 - **Undo File** – restore a single file to how it was before that one write, and leave the rest of the operation alone.

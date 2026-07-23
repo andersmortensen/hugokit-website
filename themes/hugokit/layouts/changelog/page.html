@@ -1,23 +1,30 @@
 {{ define "body" }}
-{{- /* Release note – to forbrugere, én side: Sparkles releaseNotes-WebView
-      (kompakt, ingen site-nav) og almindelige web-læsere. Derfor minimal chrome. */}}
-<main id="main" class="release">
-  <div class="wrap release-wrap">
-    <header class="release-head">
-      <a class="lockup" href="{{ "" | relURL }}" aria-label="HugoKit – home">
-        {{ partial "mark.html" (dict "size" 22) }}
-        <span class="lockup-name lockup-name-sm">HugoKit</span>
-      </a>
-      <h1 class="release-version">{{ .Title }}</h1>
-      {{ with .Date }}<time class="release-date" datetime="{{ .Format "2006-01-02" }}">{{ .Format "2 January 2006" }}</time>{{ end }}
-    </header>
-    <article class="release-body">
-      {{ .Content }}
-    </article>
-    <footer class="release-foot">
-      <a href="{{ "changelog/" | relURL }}">All releases</a>
-      <a href="{{ "" | relURL }}">hugokit.com</a>
-    </footer>
-  </div>
-</main>
+{{- /* Release note – one page, two layouts. In the browser it wears the site's
+      full chrome (bezel nav + footer) like every other page. Sparkle's update
+      WebView loads the SAME url with ?in-app, and that strips the chrome down to
+      the note alone (flag set flash-free in head.html, hidden in _bezel.scss).
+      The .release-version / -date / -body hooks are kept verbatim: the changelog
+      hub fetches this page and pulls them out for its instant-nav view. */}}
+<div class="canvas">
+
+
+  <main id="main" class="release">
+    <div class="wrap release-wrap">
+      <header class="release-head">
+        <a class="lockup" href="{{ "" | relURL }}" aria-label="HugoKit – home">
+          {{ partial "mark.html" (dict "size" 22) }}
+          <span class="lockup-name lockup-name-sm">HugoKit</span>
+        </a>
+        <h1 class="release-version">{{ .Title }}</h1>
+        {{ with .Date }}<time class="release-date" datetime="{{ .Format "2006-01-02" }}">{{ .Format "2 January 2006" }}</time>{{ end }}
+      </header>
+      <article class="release-body">
+        {{ .Content }}
+      </article>
+    </div>
+  </main>
+
+</div>
+
+{{ partial "footer.html" . }}
 {{ end }}

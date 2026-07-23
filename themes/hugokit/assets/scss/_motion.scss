@@ -1,0 +1,121 @@
+/* ── Quiet reveals – require JS (html.js) AND motion acceptance; else all visible */
+
+@media (prefers-reduced-motion: no-preference) {
+  html.js .reveal {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 600ms ease, transform 600ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  html.js .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* Sections with child stagger: the parent only fades, the children rise
+     offset – one cascade layer, not two motions on top of each other. */
+  html.js .facts.reveal, html.js .loop.reveal,
+  html.js .hugo-panel.reveal, html.js .features.reveal { transform: none; }
+
+  html.js .facts.reveal .fact,
+  html.js .loop.reveal .lstep,
+  html.js .hugo-panel.reveal .usp,
+  html.js .features.reveal .feature-item {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 560ms ease, transform 560ms cubic-bezier(0.19, 1, 0.22, 1);
+  }
+  html.js .reveal.in .fact,
+  html.js .reveal.in .lstep,
+  html.js .reveal.in .usp,
+  html.js .reveal.in .feature-item { opacity: 1; transform: none; }
+
+  html.js .reveal .fact:nth-child(2),
+  html.js .reveal .lstep:nth-child(2),
+  html.js .reveal .usp:nth-child(2) { transition-delay: 80ms; }
+  html.js .reveal .fact:nth-child(3),
+  html.js .reveal .lstep:nth-child(3),
+  html.js .reveal .usp:nth-child(3) { transition-delay: 160ms; }
+  html.js .reveal .usp:nth-child(4) { transition-delay: 240ms; }
+  html.js .reveal .usp:nth-child(5) { transition-delay: 320ms; }
+  html.js .reveal .usp:nth-child(6) { transition-delay: 400ms; }
+  html.js .reveal .feature-item:nth-child(2) { transition-delay: 50ms; }
+  html.js .reveal .feature-item:nth-child(3) { transition-delay: 100ms; }
+  html.js .reveal .feature-item:nth-child(4) { transition-delay: 150ms; }
+  html.js .reveal .feature-item:nth-child(5) { transition-delay: 200ms; }
+  html.js .reveal .feature-item:nth-child(6) { transition-delay: 250ms; }
+  html.js .reveal .feature-item:nth-child(7) { transition-delay: 300ms; }
+}
+
+/* ── Entrance – one quiet lift, not a sequence ───────────────────────────────
+   The wordmark hero (and thereby the letter-by-letter animation and the scroll
+   drift on .giant-wrap) was removed 2026-07-19. One move remains: the masthead's
+   copy and media rise once. Requires JS; without JS everything is just visible. */
+
+@media (prefers-reduced-motion: no-preference) {
+  html.js .mast .mast-grid > div:first-child { animation: rise-in 700ms cubic-bezier(0.19, 1, 0.22, 1) 90ms both; }
+  html.js .mast .float-stack { animation: rise-in 700ms cubic-bezier(0.19, 1, 0.22, 1) 240ms both; }
+}
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes soft-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Micro-feedback – only color/shadow on hover (never motion);
+      squash on press is click feedback, not hover. */
+
+/* No glow on hover: the colored glow under .btn-lg was removed with the spec
+   sheet register (2026-07-19). Press squash remains – it's click feedback. */
+@media (prefers-reduced-motion: no-preference) {
+  .btn { transition: background-color 160ms ease, transform 100ms ease-out; }
+  .btn:active { transform: scale(0.98); }
+}
+
+.btn-ghost { transition: color 160ms ease, text-decoration-color 160ms ease; }
+.btn-ghost:hover { text-decoration-color: currentColor; }
+.hugo-link { transition: opacity 160ms ease; }
+.hugo-link:hover { opacity: 0.7; }
+
+/* ── The mode switch as a soft crossfade (View Transitions API, progressive) ─ */
+
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 260ms; }
+
+/* ── Instant navigation, layer 1: cross-document view transitions ─────────────
+   Page navigation crossfades instead of flashing white. Requires that BOTH pages
+   opt in – hence the rule stands globally, not per section. Chrome 126+ and
+   Safari 18.2+; everything else navigates as before (progressive enhancement).
+   Layer 2 (Speculation Rules) and layer 3 (hover-prefetch) live in head.html. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+}
+
+/* (The nav's own transition group now lives on .bezel-bar – see the bezel block.) */
+
+/* The mode switch as a circular reveal from the toggle button. MUST be scoped to
+   data-vt="theme" (set by toggle JS in head.html, removed when the transition is
+   done) – unscoped, the keyframe would also hit all page navigation above.
+   The coordinates (--vt-x/--vt-y) are the button's center; 50% fallback if they
+   are unexpectedly not set. Reduced-motion never gets in here: the toggle
+   calls startViewTransition only under no-preference. */
+:root[data-vt="theme"]::view-transition-old(root) { animation: none; }
+:root[data-vt="theme"]::view-transition-new(root) {
+  animation: vt-circle 420ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+@keyframes vt-circle {
+  from { clip-path: circle(0 at var(--vt-x, 50%) var(--vt-y, 50%)); }
+  to   { clip-path: circle(150vmax at var(--vt-x, 50%) var(--vt-y, 50%)); }
+}
+
+/* (Column drift removed 2026-07-11: the cards now stand as the quartet's
+   flush 2×2 masonry without offset.) */
+
+/* ── Motion rules ─────────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .btn, .btn-ghost, .btn-outline, .nav-link, .nav-version, .mode-toggle,
+  .footer-links a, .fd-card, .feature-doc, .doc-copy { transition: none; }
+  .term-caret { animation: none; }
+}
+

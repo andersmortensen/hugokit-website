@@ -1,11 +1,11 @@
-{{- /* Sitets footer – genbruges på forsiden, docs, changelog-hub'en og rodsider.
-      Data fra forsidens footer-params (site.GetPage "/").
+{{- /* The site's footer – reused on the home page, docs, the changelog hub and root pages.
+      Data from the home page's footer params (site.GetPage "/").
 
-      Siden 2026-07-19 er footeren en kolofon: wordmarket bor her, ikke i heroen.
-      Marken + ordet står øverst, derunder hvem der har lavet det og hvad det
-      kører på, og til sidst linjen med links. Kolofon, ikke CTA.
+      Since 2026-07-19 the footer is a colophon: the wordmark lives here, not in the hero.
+      The mark + the word are at the top, below them who made it and what it
+      runs on, and finally the line of links. Colophon, not CTA.
       Rollback: _Arkiv/diverse/hugokit-website-main-css-foer-spec-sheet-2026-07-19.css
-      dokumenterer det gamle udseende; markup'en her er kort nok til at genskrives. */}}
+      documents the old appearance; the markup here is short enough to recreate. */}}
 {{ with (site.GetPage "/").Params.footer }}
 <footer class="site-footer">
   <div class="footer-inner">
@@ -16,7 +16,7 @@
     </div>
 
     <div class="colophon-meta">
-      {{- /* Navnet linker til Anders' eget site – resten af linjen er tekst */}}
+      {{- /* The name links to Anders' own site – the rest of the line is text */}}
       <p class="footer-made">{{ .made }}
         <a class="footer-author" href="{{ .authorURL }}" target="_blank" rel="noopener">{{ .author }}</a>
       </p>
@@ -26,14 +26,14 @@
     <nav class="footer-links" aria-label="Footer">
       <a href="mailto:{{ site.Params.feedbackEmail }}">Feedback</a>
       <a href="{{ "changelog/" | relURL }}">Changelog</a>
-      {{- /* Genåbner consent-banneret. Uden det kan et givet samtykke ikke
-            trækkes tilbage – og det skal være lige så let som at give det.
-            Står ved siden af Privacy: samme emne, to skridt. */}}
+      {{- /* Reopens the consent banner. Without it a given consent cannot
+            be withdrawn – and it must be just as easy as giving it.
+            Sits next to Privacy: same topic, two steps. */}}
       <button type="button" data-consent-reopen>Cookies</button>
       <a href="{{ "privacy/" | relURL }}">Privacy</a>
       <a href="{{ site.Params.githubURL }}" target="_blank" rel="noopener">GitHub</a>
       <a href="https://gohugo.io" target="_blank" rel="noopener">gohugo.io</a>
-      {{- /* Build-linjen: samme kilde som download-fakta og appcast'en */}}
+      {{- /* The build line: same source as the download facts and the appcast */}}
       <span class="footer-build">v{{ site.Params.version }} · {{ (time.AsTime site.Params.releaseDate).Format "2 January 2006" }}</span>
     </nav>
 

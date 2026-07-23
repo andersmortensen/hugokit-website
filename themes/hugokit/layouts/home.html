@@ -1,16 +1,16 @@
 {{ define "body" }}
 
-{{- /* Layout v5 "spec sheet" (2026-07-19). Afløser v4 "orca-editorial".
+{{- /* Layout v5 "spec sheet" (2026-07-19). Replaces v4 "orca-editorial".
 
-      Greb: siden er ét opmålt dokument, ikke en stak sektioner. Ét layout-
-      mønster hele vejen – label-skinne til venstre, indhold til højre – og
-      hairlines frem for kort og skygger. Hver sektion åbner med .rule: en
-      hairline med tick i hver ende og index + navn under linjen.
+      Approach: the page is one measured document, not a stack of sections. One layout
+      pattern all the way – label rail on the left, content on the right – and
+      hairlines rather than cards and shadows. Each section opens with .rule: a
+      hairline with a tick at each end and index + name below the line.
 
-      Wordmarket er flyttet fra heroen til kolofonen i footeren; kvartet-
-      kortene ("Why") er opløst ind i den fulde feature-liste, og statementet
-      derfra står nu som billedtekst under hero-mediet. Intet indhold er
-      fjernet fra _index.md – kun flyttet.
+      The wordmark is moved from the hero to the colophon in the footer; the quartet
+      cards ("Why") are dissolved into the full feature list, and the statement
+      from there now stands as a caption under the hero media. No content has been
+      removed from _index.md – only moved.
 
       Rollback: _Arkiv/diverse/hugokit-website-home-html-foer-spec-sheet-2026-07-19.html */}}
 
@@ -20,16 +20,18 @@
   <main id="main" class="sheet">
 
   {{ with .Params.hero }}
-  {{- /* 00 Masthead: hvad det er, hvad det koster. Asymmetrisk (soft deck):
-        copy til venstre, to svævende fakta-kort til højre – begge kort bærer
-        ÆGTE tal fra hugo.toml (dmgSize) og download-metaen. Hero-videoen
-        udgik 2026-07-21 (soft deck-runden); screenshot-/video-felterne i
-        front matter består ubrugte til release-materialet. */}}
+  {{- /* 00 Masthead: what it is. Asymmetric (soft deck): copy on the left,
+        three floating feature cards on the right – one feature per card (the loop,
+        snapshots & undo, site health), anchored in moments/features. Price and
+        size are MOVED away from here (2026-07-22, the feedback round): 'free' stood
+        above the fold in the bezel, facts and download – the cards now sell function, not
+        numbers. The hero video was removed 2026-07-21; the screenshot/video fields in front
+        matter remain unused for the release material. */}}
   <header class="mast">
     <div class="mast-grid">
       <div>
         <p class="lab">Overview</p>
-        {{- /* To-tone headline: emnet dæmpes, pointen står i ink */}}
+        {{- /* Two-tone headline: the subject is dimmed, the point stands in ink */}}
         <h1 class="hero-heading">{{ with .headingDim }}<span class="hh-dim">{{ . }}</span> {{ end }}{{ .heading }}</h1>
         <p class="hero-lead">{{ .lead }}</p>
 
@@ -44,24 +46,31 @@
 
       <div class="float-stack" aria-hidden="true">
         <div class="fcard fc1">
-          <span class="fcard-k">The whole app</span>
-          <span class="fcard-v">{{ site.Params.dmgSize }}</span>
-          <span class="fcard-s">one DMG, signed and notarised</span>
+          <span class="fcard-k">Workflow</span>
+          <span class="fcard-v">Preview, preflight, publish</span>
+          <span class="fcard-s">run, check and publish from one window</span>
         </div>
         <div class="fcard fc2">
-          <span class="fcard-k">Price</span>
-          <span class="fcard-v">Free</span>
-          <span class="fcard-s">no license, no subscription, no account</span>
+          <span class="fcard-k">Safety net</span>
+          <span class="fcard-v">Snapshots &amp; undo</span>
+          <span class="fcard-s">nothing changes without a diff you can undo</span>
+        </div>
+        <div class="fcard fc3">
+          <span class="fcard-k">Quality</span>
+          <span class="fcard-v">Site health</span>
+          <span class="fcard-s">links, alt text and deprecations, scored</span>
         </div>
       </div>
     </div>
   </header>
 
   {{ with $.Params.facts }}
-  {{- /* Stats-panen (pane-2): de tre bånd-fakta som store værdier m. delere */}}
+  {{- /* Stats pane (pane-2): the three band facts as large values w. glyph + dividers.
+        Glyph per column from facts.glyph (2026-07-22, the feedback round). */}}
   <section class="facts facts-pane reveal" aria-label="Facts">
     {{ range . }}
     <div class="fact">
+      {{ with .glyph }}<span class="fact-ic" aria-hidden="true">{{ partial "feature-glyph.html" (dict "glyph" .) }}</span>{{ end }}
       <div class="fact-v">{{ .value }}</div>
       <div class="fact-l">{{ .label }}</div>
     </div>
@@ -71,10 +80,9 @@
   {{ end }}
 
   {{ with .Params.loop }}
-  {{- /* 01 – sidens kerneargument: Preview, preflight, publish, in that order.
-        Hvert trin bærer sin prosa (moments.detail), sine punkter, sine docs-
-        links og sit udsnit. Preflight har intet screenshot og bærer i stedet
-        et diff-panel tegnet i sitets egne tokens. */}}
+  {{- /* 01 – the page's core argument: Preview, preflight, publish, in that order.
+        Each step carries its prose (moments.detail), its points, its docs
+        links and its own app screenshot in light/dark (moments.screenshot). */}}
   <section class="loop reveal" id="loop" aria-label="{{ .heading }}">
     <div class="rule"><span class="ix">01</span><span class="nm">{{ .label }}</span></div>
     <div class="lc">
@@ -101,32 +109,16 @@
             </ul>
             {{ with $m.docs }}<div class="lstep-meta">{{ partial "doc-links.html" . }}</div>{{ end }}
           </div>
-          {{- /* Udsnittene er tegnet i sitets egne tokens – ingen screenshots
-                (de daterer sig; panelerne viser trinnets faktiske indhold).
-                Panel pr. glyph: preview = serveren, preflight = diffen,
-                publish = target-rækkerne. Tallene i server-panelet er docs'
-                eget log-eksempel (running-the-server.md), ikke opfundne. */}}
-          {{ if eq $m.glyph "preview" }}
-          <div class="lstep-vis lstep-pf" role="img" aria-label="{{ $m.alt }}">
-            <div class="pf-bar"><span class="pf-name">server</span><span class="pf-status">running</span></div>
-            <div class="pf-line"><span class="pf-dot" aria-hidden="true"></span>Server running · localhost:1313</div>
-            <div class="pf-line pf-quiet">Build complete (430 ms) · 78 pages · 12 static files</div>
-            <div class="pf-cmd">$ hugo server --buildDrafts</div>
-            <div class="pf-foot">drafts on · future off · expired off</div>
-          </div>
-          {{ else if eq $m.glyph "publish" }}
-          <div class="lstep-vis lstep-pf" role="img" aria-label="{{ $m.alt }}">
-            <div class="pf-bar"><span class="pf-name">deploy targets</span><span class="pf-status">2 active</span></div>
-            <div class="pf-line"><span class="pf-dot" aria-hidden="true"></span>GitHub Pages · you.github.io/site · live</div>
-            <div class="pf-line"><span class="pf-dot" aria-hidden="true"></span>SFTP · your own host · live</div>
-            <div class="pf-foot">⌘P publishes · every target probed after publish</div>
-          </div>
-          {{ else }}
-          <div class="lstep-vis lstep-pf" role="img" aria-label="{{ $m.alt }}">
-            <div class="pf-bar"><span class="pf-name">preflight</span><span class="pf-status">1 fix waiting</span></div>
-            <div class="pf-row pf-del">- baseURL = "http://localhost:1313/"</div>
-            <div class="pf-row pf-add">+ baseURL = "https://example.com/"</div>
-            <div class="pf-foot"><span class="pf-dot" aria-hidden="true"></span>approve the diff · preflight re-checks</div>
+          {{- /* Real app screenshots in light/dark (2026-07-23, the 0.2.0 shoot):
+                one per moment, from the moment's own screenshot/screenshotDark
+                fields. This reverses the drawn-panel decision of 2026-07-21 ("drawn
+                is deliberate") now that there are proper 2x shots – frame and shadow
+                are baked into the file, so the shot sits bare on the deck.
+                Rollback: the drawn .lstep-pf panels are in git before this commit,
+                and their CSS (.lstep-pf / .pf-*) is still in _home.scss. */}}
+          {{ with $m.screenshot }}
+          <div class="lstep-vis">
+            {{ partial "shot.html" (dict "light" . "dark" $m.screenshotDark "alt" $m.alt) }}
           </div>
           {{ end }}
         </div>
@@ -137,9 +129,9 @@
   {{ end }}
 
   {{ if .Params.features.items }}
-  {{- /* 02 – HELE værktøjskassen. Kvartet-kortene fra v4 er opløst herind, så
-        listen er det ene sted alt står. Hver række folder ud til prosa,
-        punkter og docs-links (feature-item.html). */}}
+  {{- /* 02 – the WHOLE toolbox. The quartet cards from v4 are dissolved in here, so
+        the list is the one place everything stands. Each row unfolds to prose,
+        points and docs links (feature-item.html). */}}
   <section class="features reveal" id="features" aria-label="Features">
     <div class="rule"><span class="ix">02</span><span class="nm">Features</span></div>
     <div class="lc" style="margin-bottom:24px">
@@ -158,10 +150,10 @@
   {{ end }}
 
   {{ with .Params.whatishugo }}
-  {{- /* 03 – baggrundsstof for den der landede her uden at kende Hugo. Bevidst
-        EFTER loop og features: forsiden taler til Hugo-brugere, og produktets
-        kerneargument skal ikke stå bag en forklaring af Hugo. Terminalen viser
-        hvad HugoKit kører. */}}
+  {{- /* 03 – background material for the person who landed here without knowing Hugo. Deliberately
+        AFTER loop and features: the home page speaks to Hugo users, and the product's
+        core argument should not stand behind an explanation of Hugo. The terminal shows
+        what HugoKit runs. */}}
   <section class="hugo-panel reveal" id="hugo" aria-label="{{ .title }}">
     <div class="rule"><span class="ix">03</span><span class="nm">What is Hugo</span></div>
     <div class="lc">
@@ -198,8 +190,8 @@
   {{ end }}
 
   {{ with .Params.fromdocs }}
-  {{- /* 04 – tre kuraterede sider fra docs. Titel og beskrivelse hentes fra
-        siderne selv – findes en side ikke, renderes dens række ikke. */}}
+  {{- /* 04 – three curated pages from docs. Title and description are taken from
+        the pages themselves – if a page does not exist, its row is not rendered. */}}
   <section class="fromdocs reveal" id="reading" aria-label="{{ .label }}">
     <div class="rule"><span class="ix">04</span><span class="nm">{{ .label }}</span></div>
     <div class="fromdocs-list">
@@ -220,18 +212,18 @@
   {{ end }}
 
   {{ with .Params.faq }}
-  {{- /* 05 – spørgsmålene, alle svar synlige (ingen disclosere – datablads-
-        beslutningen 2026-07-21). To CSS-kolonner pakker dem tæt; hvert punkt
-        åbner med sin egen hairline, så kolonnetoppene flugter. */}}
+  {{- /* 05 – the questions, all answers visible (no disclosures – the spec-sheet
+        decision 2026-07-21). Two CSS columns pack them tightly; each item
+        opens with its own hairline, so the column tops align. */}}
   <section class="faq reveal" id="faq" aria-label="Frequently asked questions">
     <div class="rule"><span class="ix">05</span><span class="nm">{{ .title }}</span></div>
     <div class="faq-list">
       {{ range .items }}
-      <div class="faq-item">
-        <div class="faq-head">
+      <details class="faq-item">
+        <summary class="faq-head">
           <span class="faq-ic" aria-hidden="true">{{ partial "feature-glyph.html" (dict "glyph" .glyph) }}</span>
-          <h3 class="faq-q">{{ .q }}</h3>
-        </div>
+          <span class="faq-q">{{ .q }}</span>
+        </summary>
         <div class="faq-answer">
           {{ .a | markdownify }}
           {{ with .chips }}
@@ -240,14 +232,14 @@
           </ul>
           {{ end }}
         </div>
-      </div>
+      </details>
       {{ end }}
     </div>
   </section>
   {{ end }}
 
   {{ with .Params.note }}
-  {{- /* 06 – hvorfor appen findes. Sidens eneste sted med en jeg-stemme. */}}
+  {{- /* 06 – why the app exists. The page's only place with a first-person voice. */}}
   <section class="note reveal" id="why">
     <div class="rule"><span class="ix">06</span><span class="nm">{{ .label }}</span></div>
     <div class="lc">
@@ -267,10 +259,10 @@
   {{ end }}
 
   {{ with .Params.download }}
-  {{- /* 07 – hvad der faktisk hentes. Selv-distribueret download uden App Store
-        betyder at brugeren selv skal kunne se hvad filen er, før den åbnes:
-        version, størrelse, arkitektur, krav og dato. Tallene bor i hugo.toml
-        og skal matche den DMG appcast'en peger på. */}}
+  {{- /* 07 – what is actually downloaded. Self-distributed download without an App Store
+        means the user must be able to see what the file is, before it opens:
+        version, size, architecture, requirements and date. The numbers live in hugo.toml
+        and must match the DMG the appcast points to. */}}
   <section class="get reveal" id="download">
     <div class="rule"><span class="ix">07</span><span class="nm">Download</span></div>
     <div class="lc">
@@ -302,8 +294,8 @@
 
   </main>
 
-  {{ partial "footer.html" . }}
-
 </div>
+
+{{ partial "footer.html" . }}
 
 {{ end }}

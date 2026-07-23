@@ -1,0 +1,64 @@
+/* ── Buttons ──────────────────────────────────────────────────────────────── */
+
+/* Used on both <a> and <button> (the consent banner). The browser's own button
+   border and font MUST be reset here: the `*` reset only touches margin/padding,
+   so a <button> would otherwise keep Safari's bevel edge. On <a> the three lines
+   have no effect. */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-family: inherit;
+  font-size: 16px; font-weight: 500;
+  text-decoration: none;
+  padding: 9px 18px;
+  border: 0;
+  border-radius: 999px; /* soft deck: the pill is the button shape */
+  cursor: pointer;
+  transition: background-color 160ms ease;
+}
+.btn:hover { background: var(--btn-bg-hover); }
+.btn svg { width: 15px; height: 15px; }
+
+.btn-sm { padding: 7px 14px; font-size: 15px; }
+/* Fixed height rather than padding: .btn and .btn-outline have different
+   font-size and border, so padding alone gave two different heights side by side */
+.btn-lg { height: 42px; padding: 0 20px; font-size: 17px; gap: 9px; }
+.btn-lg svg { width: 16px; height: 16px; }
+
+.btn-ghost {
+  display: inline-flex; align-items: center;
+  font-size: 17px; font-weight: 500;
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--line-strong);
+  transition: color 160ms ease;
+}
+.btn-ghost:hover { color: var(--ink); }
+
+/* Secondary button – no surface, only a hairline. Same geometry as .btn */
+.btn-outline {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+  font-family: inherit;
+  font-size: 16px; font-weight: 500;
+  text-decoration: none;
+  padding: 8px 17px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 160ms ease, border-color 160ms ease;
+}
+.btn-outline:hover { background: color-mix(in srgb, var(--ink) 5%, transparent); }
+.btn-outline svg { width: 15px; height: 15px; }
+.btn-outline.btn-lg { height: 42px; padding: 0 19px; font-size: 17px; }
+.btn-outline.btn-sm { padding: 6px 13px; font-size: 15px; }
+
+.cta-row { display: flex; align-items: center; gap: 22px; }
+.centered-row { justify-content: center; }
+.cta-buttons { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.cta-col { display: flex; flex-direction: column; align-items: flex-start; }
+.cta-col .fine-meta { margin-top: 14px; }
+

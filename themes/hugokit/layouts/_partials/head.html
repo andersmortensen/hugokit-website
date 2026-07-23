@@ -1,6 +1,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-{{- /* Gemt mode-valg sættes FØR CSS'en parses – ingen tema-flash */}}
+{{- /* Stored mode choice is set BEFORE the CSS is parsed – no theme flash */}}
 <script>
   (function () {
     try {
@@ -9,20 +9,32 @@
     } catch (e) {}
   })();
 </script>
+{{- /* Sparkle loads the release page in its update WebView with ?in-app. The flag
+      is set here, before the CSS paints, so the site chrome (bezel nav + footer)
+      is stripped without a flash. The browser (no ?in-app) keeps the full layout.
+      Only the changelog pages are ever linked with the param. */}}
+<script>
+  (function () {
+    try {
+      if (new URLSearchParams(location.search).has('in-app'))
+        document.documentElement.classList.add('in-app');
+    } catch (e) {}
+  })();
+</script>
 {{- /* Google Analytics 4 (gtag.js) + Consent Mode v2.
 
-      dataLayer og gtag() defineres ALTID – også uden for production. gtag() er
-      blot en kø der skubber ind i dataLayer, så uden GA-scriptet sker der intet
-      andet end at eventet lander i window.dataLayer. Det gør tracking
-      verificérbar lokalt (`window.dataLayer` i konsollen) ad præcis den samme
-      kodesti som i produktion. Selve gtag.js hentes fortsat kun i
-      production-builds, så hugo server ikke forurener data. ID'et bor i hugo.toml.
+      dataLayer and gtag() are ALWAYS defined – also outside production. gtag() is
+      just a queue that pushes into dataLayer, so without the GA script nothing happens
+      other than the event landing in window.dataLayer. That makes tracking
+      verifiable locally (`window.dataLayer` in the console) along exactly the same
+      code path as in production. gtag.js itself is still only loaded in
+      production builds, so hugo server does not pollute the data. The ID lives in hugo.toml.
 
-      Consent Mode v2: alt starter på 'denied', og defaulten SKAL stå før gtag.js
-      hentes – ellers når GA at sætte cookies. Banneret (consent.html) sender
-      'update' → granted når brugeren accepterer; valget huskes i localStorage og
-      gensendes her ved næste besøg, før GA loader. Uden samtykke sætter GA4 ingen
-      cookies og sender kun cookieløse pings (modellerede, ikke-identificerende tal). */}}
+      Consent Mode v2: everything starts at 'denied', and the default MUST come before gtag.js
+      is loaded – otherwise GA gets to set cookies. The banner (consent.html) sends
+      'update' → granted when the user accepts; the choice is remembered in localStorage and
+      resent here on the next visit, before GA loads. Without consent GA4 sets no
+      cookies and sends only cookieless pings (modeled, non-identifying numbers). */}}
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -49,30 +61,33 @@
 </script>
 {{ end }}
 
-{{- /* Forsiden får tagline i title-tagget (søgeord + SERP-læsbarhed);
-      undersider beholder "Side · HugoKit". */}}
+{{- /* The home page gets the tagline in the title tag (keywords + SERP readability);
+      subpages keep "Page · HugoKit". */}}
 {{ $title := cond .IsHome (printf "%s – %s" site.Title site.Params.tagline) (printf "%s · %s" .Title site.Title) }}
 <title>{{ $title }}</title>
 {{ $description := .Params.description | default site.Params.description }}
 <meta name="description" content="{{ $description }}">
 <link rel="canonical" href="{{ .Permalink }}">
 
-{{- /* Browser toolbar color – fallback for Chrome/Firefox; Safari Tahoe+ sampler
-      html/body-baggrunden (sat i main.css). Canvas-sider bærer bezel-rammen,
-      og med maskinkantens gradient (2026-07-21) er barens øverste pixel
-      --bezel-hi – så farverne ER --bezel-hi i main.css (light #ECE4D7 ·
-      dark #1A1917) – ret begge steder. De flade sider (release/404, ingen
-      .canvas → ingen bezel, jf. gaten i main.css) beholder --surround:
-      light #F1EAE0 (creme) · dark #141312. Uden manuelt valg vælger
-      browseren metaen efter systemets skema – siden følger systemet, også
+{{- /* Browser toolbar color – fallback for Chrome/Firefox; Safari Tahoe+ samples
+      the html/body background (set in main.css). Canvas pages carry the bezel frame,
+      and with the machine-edge gradient (2026-07-21) the bar's topmost pixel is
+      --bezel-hi – so the colors ARE --bezel-hi in main.css (light #ECE4D7 ·
+      dark #1A1917) – change both places. The flat pages (release/404, no
+      .canvas → no bezel, cf. the gate in main.css) keep --surround:
+      light #F1EAE0 (cream) · dark #141312. Without a manual choice the
+      browser picks the meta by the system scheme – the page follows the system, also
       live.
 
-      Scriptet lige under: har toggle'n sat et valg (data-theme fra localStorage,
-      skrevet øverst i head), er systemets skema irrelevant – så fjernes
-      media-attributten, og begge metas bærer override-farven. Det skal ske under
-      parsing, mens metaerne netop er læst og før first paint; ellers står
-      toolbar'en i systemets farve mens siden er malet i den valgte. */}}
-{{- $flat := or (eq .Kind "404") (and .IsPage (eq .Section "changelog")) }}
+      The script just below: if the toggle has set a choice (data-theme from localStorage,
+      written at the top of head), the system scheme is irrelevant – then the
+      media attribute is removed, and both metas carry the override color. This must happen during
+      parsing, while the metas have just been read and before first paint; otherwise the
+      toolbar stays in the system color while the page is painted in the chosen one. */}}
+{{- /* Flat = no bezel: only 404 now. Changelog pages wear the full canvas chrome
+      in the browser; the toolbar there matches --bezel-hi like any canvas page.
+      In Sparkle's in-app view there is no browser toolbar, so this does not apply. */}}
+{{- $flat := eq .Kind "404" }}
 {{- $tbLight := cond $flat "#F1EAE0" "#ECE4D7" }}
 {{- $tbDark := cond $flat "#141312" "#1A1917" }}
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="{{ $tbLight }}">
@@ -89,10 +104,10 @@
   })();
 </script>
 
-{{- /* Delekortet. Forsiden beholder det designede kort (kæmpe-wordmark);
-      hver anden side får sit eget, genereret ved build med sidens titel oven på
-      brandpladen (se og-image.html). Fejler genereringen, falder vi tilbage til
-      forsidens kort – et generisk kort er bedre end intet. */}}
+{{- /* The share card. The home page keeps the designed card (giant wordmark);
+      every other page gets its own, generated at build with the page's title on top of
+      the brand plate (see og-image.html). If generation fails, we fall back to
+      the home page's card – a generic card is better than none. */}}
 {{ $ogImage := "og/hugokit-og.png" | absURL }}
 {{ $ogAlt := "HugoKit – a Mac app for Hugo." }}
 {{ if not .IsHome }}
@@ -117,19 +132,19 @@
 <meta name="twitter:description" content="{{ $description }}">
 <meta name="twitter:image" content="{{ $ogImage }}">
 
-{{- /* Markdown-udgaven af siden (outputFormats.md i hugo.toml). rel=alternate
-      fortæller crawlere – og de AI-crawlere der leder efter ren tekst – at der
-      findes en Markdown-kilde til præcis denne side. Linket findes kun på de
-      sider der faktisk har outputtet. */}}
+{{- /* The Markdown version of the page (outputFormats.md in hugo.toml). rel=alternate
+      tells crawlers – and the AI crawlers looking for plain text – that there
+      is a Markdown source for exactly this page. The link only exists on the
+      pages that actually have the output. */}}
 {{ range .AlternativeOutputFormats }}
   {{ if eq .Name "md" }}<link rel="alternate" type="text/markdown" href="{{ .Permalink }}">{{ end }}
 {{ end }}
 
-{{- /* RSS-autodiscovery – docs og changelog har feeds (rss taget ud af
-      disableKinds i hugo.toml; Hugos indbyggede template). Opslaget går via
-      .FirstSection, så både sektions-forsiden OG artiklerne under den peger på
-      sektionens feed. Forsiden og rodsider (privacy) rammes ikke: deres
-      FirstSection er home, som ikke har rss-output. */}}
+{{- /* RSS autodiscovery – docs and changelog have feeds (rss taken out of
+      disableKinds in hugo.toml; Hugo's built-in template). The lookup goes via
+      .FirstSection, so both the section front page AND the articles under it point to
+      the section's feed. The home page and root pages (privacy) are not affected: their
+      FirstSection is home, which has no rss output. */}}
 {{ with .FirstSection }}
   {{ with .OutputFormats.Get "rss" }}<link rel="alternate" type="application/rss+xml" title="{{ site.Title }} – {{ $.FirstSection.Title }}" href="{{ .Permalink }}">{{ end }}
 {{ end }}
@@ -137,9 +152,9 @@
 <link rel="icon" type="image/svg+xml" href="{{ "favicon.svg" | relURL }}">
 <link rel="apple-touch-icon" href="{{ "apple-touch-icon.png" | relURL }}">
 
-{{- /* Hero-mediet er LCP – preload den variant systemskemaet vælger. Med video
-      er poster-framen det billede der males først (videoen selv hentes af
-      hero-video.html, som også respekterer reduced-motion). */}}
+{{- /* The hero media is LCP – preload the variant the system scheme picks. With video
+      the poster frame is the image painted first (the video itself is loaded by
+      hero-video.html, which also respects reduced-motion). */}}
 {{ if .IsHome }}{{ with .Params.hero }}
 {{ $light := .screenshot }}{{ $dark := .screenshotDark }}
 {{ with .video }}{{ $light = .posterLight }}{{ $dark = .posterDark }}{{ end }}
@@ -148,8 +163,8 @@
 {{ with $dark }}<link rel="preload" as="image" href="{{ . | relURL }}" media="(prefers-color-scheme: dark)">{{ end }}
 {{ end }}{{ end }}{{ end }}
 
-{{- /* Strukturerede data – kun forsiden: appen + FAQ (genereres fra samme
-      front matter som sektionen, så de aldrig driver fra hinanden). */}}
+{{- /* Structured data – home page only: the app + FAQ (generated from the same
+      front matter as the section, so they never drift apart). */}}
 {{ if .IsHome }}
 {{ $app := dict
   "@context" "https://schema.org"
@@ -175,11 +190,11 @@
 {{ end }}
 {{ end }}
 
-{{- /* Docs – breadcrumbs på hub og sider, TechArticle kun på artiklerne.
-      Breadcrumbs er den med synlig effekt (Google renderer dem i resultatet);
-      TechArticle er semantik, som søgemaskiner og AI-crawlere læser.
-      dateModified kommer fra git (enableGitInfo i hugo.toml) – ingen dato at
-      vedligeholde i front matter, og den kan aldrig lyve. */}}
+{{- /* Docs – breadcrumbs on the hub and pages, TechArticle only on the articles.
+      Breadcrumbs are the one with a visible effect (Google renders them in the result);
+      TechArticle is semantics, which search engines and AI crawlers read.
+      dateModified comes from git (enableGitInfo in hugo.toml) – no date to
+      maintain in front matter, and it can never lie. */}}
 {{ if eq .Section "docs" }}
 {{ $docs := site.GetPage "/docs" }}
 {{ $crumbs := slice
@@ -214,24 +229,24 @@
 {{ end }}
 {{ end }}
 
-{{- /* Fonts self-hostes (woff2, latin) – @font-face bor i main.css, filerne i
-      static/fonts/. Ingen Google Fonts-CDN og dermed ingen preconnect eller
-      render-blokerende ekstern stylesheet. Wordmark-fonten (Hanken 700) maler
-      hero-lockup'et og preloades derfor. */}}
+{{- /* Fonts are self-hosted (woff2, latin) – @font-face lives in main.css, the files in
+      static/fonts/. No Google Fonts CDN and thus no preconnect or
+      render-blocking external stylesheet. The wordmark font (Hanken 700) paints
+      the hero lockup and is therefore preloaded. */}}
 <link rel="preload" href="{{ "fonts/hanken-grotesk-v12-latin-700.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
 
-{{ with resources.Get "css/main.css" }}
-  {{ $css := . | minify | fingerprint }}
+{{ with resources.Get "scss/main.scss" }}
+  {{ $css := . | css.Sass (dict "targetPath" "css/main.css" "transpiler" "dartsass") | minify | fingerprint }}
   <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
 {{ end }}
 
-{{- /* Instant navigation, lag 2: Speculation Rules. Browseren henter dokumentet
-      på hover/pointerdown ("moderate"), så klikket ikke koster en rundtur.
-      `prefetch` – ikke `prerender` – så sidens scripts (GA4) først kører når
-      siden faktisk vises; prerender ville tælle sidevisninger for sider ingen
-      har set. `href_matches: "/*"` rammer kun samme origin; eksterne links og
-      DMG-downloadet er dermed ude. Chromium i dag (Safari 26.2 bag flag,
-      Firefox ikke endnu) – lag 3 nedenfor dækker resten. */}}
+{{- /* Instant navigation, layer 2: Speculation Rules. The browser fetches the document
+      on hover/pointerdown ("moderate"), so the click does not cost a round trip.
+      `prefetch` – not `prerender` – so the page's scripts (GA4) only run when
+      the page is actually shown; prerender would count page views for pages no one
+      has seen. `href_matches: "/*"` hits only the same origin; external links and
+      the DMG download are thereby out. Chromium today (Safari 26.2 behind a flag,
+      Firefox not yet) – layer 3 below covers the rest. */}}
 <script type="speculationrules">
 {
   "prefetch": [{
@@ -244,18 +259,18 @@
 }
 </script>
 
-{{- /* Stille reveals: .js sættes før paint (ingen flash), observer efter DOM.
-      Uden JS eller uden IntersectionObserver forbliver alt synligt. */}}
+{{- /* Quiet reveals: .js is set before paint (no flash), observer after DOM.
+      Without JS or without IntersectionObserver everything stays visible. */}}
 <script>
   document.documentElement.classList.add('js');
 
-  {{- /* Instant navigation, lag 3: hover/fokus/touch varmer HTTP-cachen med det
-        dokument klikket vil hente – ingen router, ingen DOM-swap, ingen
-        historik- eller analytics-bivirkninger. Kører ALTID, også i Chromium:
-        Speculation Rules (lag 2) er afhængig af browserindstillingen "Preload
-        pages", som brugeren kan have slået fra – så feature-detection ville
-        efterlade dem uden noget. Prisen er én cachelagret request pr. hoveret
-        link. Springes over på sparetilstand og langsomme forbindelser. */}}
+  {{- /* Instant navigation, layer 3: hover/focus/touch warms the HTTP cache with the
+        document the click will fetch – no router, no DOM swap, no
+        history or analytics side effects. Runs ALWAYS, also in Chromium:
+        Speculation Rules (layer 2) depends on the browser setting "Preload
+        pages", which the user may have turned off – so feature detection would
+        leave them with nothing. The price is one cached request per hovered
+        link. Skipped on data saver and slow connections. */}}
   (function () {
     var conn = navigator.connection;
     if (conn && (conn.saveData || /(^|-)2g$/.test(conn.effectiveType || ''))) return;
@@ -290,9 +305,9 @@
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
     all.forEach(function (el) { io.observe(el); });
 
-    // Copy-knap på docs-kodeblokke. Indsættes kun hvor clipboard-API'et findes
-    // (kræver secure context) – ellers står blokkene urørte. Kvitteringen
-    // "Copied" står i 1,4 s og falder tilbage af sig selv.
+    // Copy button on docs code blocks. Inserted only where the clipboard API exists
+    // (requires secure context) – otherwise the blocks stay untouched. The receipt
+    // "Copied" stays for 1.4 s and reverts on its own.
     if (navigator.clipboard) {
       document.querySelectorAll('.doc-body pre').forEach(function (pre) {
         var code = pre.querySelector('code');
@@ -316,8 +331,8 @@
       });
     }
 
-    // App-screenshots (light/dark <picture>): manuel mode-overstyring flipper
-    // source-media, så billedvalget følger toggle'n og ikke kun systemet.
+    // App screenshots (light/dark <picture>): manual mode override flips
+    // source-media, so the image choice follows the toggle and not just the system.
     var syncPics = function (mode) {
       document.querySelectorAll('picture.mode-pic source').forEach(function (s) {
         s.media = mode === 'dark' ? 'all' : 'not all';
@@ -334,8 +349,8 @@
         var next = cur ? (cur === 'dark' ? 'light' : 'dark') : (sysDark ? 'light' : 'dark');
         root.dataset.theme = next;
         try { localStorage.setItem('hk-theme', next); } catch (e) {}
-        // Toolbar-farven følger valget, ikke systemet: media-attributten væk,
-        // begge metas på override-farven (samme kontrakt som scriptet i head).
+        // The toolbar color follows the choice, not the system: media attribute gone,
+        // both metas on the override color (same contract as the script in head).
         var c = next === 'dark' ? '{{ $tbDark }}' : '{{ $tbLight }}';
         document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
           m.removeAttribute('media');
@@ -343,10 +358,10 @@
         });
         syncPics(next);
       };
-      // Cirkulær reveal fra knappen hvor View Transitions findes; ellers
-      // øjeblikkeligt skift. data-vt="theme" skoper keyframen i main.css til
-      // NETOP dette skift – uden den ville cirklen også ramme sidenavigation.
-      // Attributten fjernes igen når transitionen er færdig (også ved fejl).
+      // Circular reveal from the button where View Transitions exist; otherwise
+      // an instant switch. data-vt="theme" scopes the keyframe in main.css to
+      // EXACTLY this switch – without it the circle would also hit page navigation.
+      // The attribute is removed again once the transition finishes (also on error).
       if (document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
         var root = document.documentElement;
         var r = mt.getBoundingClientRect();
@@ -360,8 +375,67 @@
       }
     });
 
-    // (Wordmark-fit + bogstav-split udgik 2026-07-19 sammen med wordmark-heroen.
-    //  Wordmarket bor nu i nav-lockup'et og i footerens kolofon – begge i fast
-    //  størrelse, så der er intet at måle op mod kanvasbredden.)
+    // Screenshot lightbox: click any img.shot to see it at full size. currentSrc
+    // follows the system scheme and the manual toggle (syncPics), so the overlay
+    // shows the same light/dark variant as the page. Close on the scrim, Esc or the
+    // button; focus returns to the shot. The <video> hero is left out (img.shot only).
+    (function () {
+      var box, lbImg, closeBtn, lastFocus;
+
+      var close = function () {
+        if (!box || !box.classList.contains('is-open')) return;
+        box.classList.remove('is-open');
+        document.documentElement.style.overflow = '';
+        if (lastFocus && lastFocus.focus) lastFocus.focus();
+      };
+
+      var build = function () {
+        box = document.createElement('div');
+        box.className = 'lightbox';
+        box.setAttribute('role', 'dialog');
+        box.setAttribute('aria-modal', 'true');
+        box.setAttribute('aria-label', 'Screenshot, full size');
+        var inner = document.createElement('div');
+        inner.className = 'lightbox-inner';
+        lbImg = document.createElement('img');
+        lbImg.className = 'lightbox-img';
+        closeBtn = document.createElement('button');
+        closeBtn.type = 'button';
+        closeBtn.className = 'lightbox-close';
+        closeBtn.setAttribute('aria-label', 'Close');
+        closeBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>';
+        inner.appendChild(lbImg);
+        inner.appendChild(closeBtn);
+        box.appendChild(inner);
+        document.body.appendChild(box);
+        box.addEventListener('click', function (e) { if (e.target !== lbImg) close(); });
+      };
+
+      var open = function (shot) {
+        if (!box) build();
+        lbImg.src = shot.currentSrc || shot.src;
+        lbImg.alt = shot.alt || '';
+        lastFocus = shot;
+        box.classList.add('is-open');
+        document.documentElement.style.overflow = 'hidden';
+        closeBtn.focus();
+      };
+
+      document.addEventListener('click', function (e) {
+        var t = e.target;
+        if (!t || !t.closest) return;
+        var shot = t.closest('img.shot');
+        if (!shot || shot.closest('a')) return;
+        e.preventDefault();
+        open(shot);
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') close();
+      });
+    })();
+
+    // (Wordmark fit + letter split were removed 2026-07-19 together with the wordmark hero.
+    //  The wordmark now lives in the nav lockup and in the footer colophon – both at fixed
+    //  size, so there is nothing to measure against the canvas width.)
   });
 </script>

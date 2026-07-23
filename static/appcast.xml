@@ -3,13 +3,13 @@
     <channel>
         <title>HugoKit</title>
         <item>
-            <title>0.1.0</title>
-            <pubDate>Mon, 13 Jul 2026 12:59:52 +0200</pubDate>
-            <sparkle:version>1</sparkle:version>
-            <sparkle:shortVersionString>0.1.0</sparkle:shortVersionString>
+            <title>0.2.0</title>
+            <pubDate>Thu, 23 Jul 2026 22:19:58 +0200</pubDate>
+            <sparkle:version>2</sparkle:version>
+            <sparkle:shortVersionString>0.2.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/andersmortensen/hugokit/releases/download/v0.1.0/HugoKit-0.1.0.dmg" length="6120150" type="application/octet-stream" sparkle:edSignature="2ioxklTaMmoDDAOtA/aUfJmlUyViXKXDBk5HqmK90OWMwnLNH7SilA/hD6V5YQDVPlrToR/RdRsVzqpFZdvcAA=="/>
-            <sparkle:releaseNotesLink>https://hugokit.com/changelog/0.1.0/</sparkle:releaseNotesLink>
+            <enclosure url="https://github.com/andersmortensen/hugokit/releases/download/v0.2.0/HugoKit-0.2.0.dmg" length="7115242" type="application/octet-stream" sparkle:edSignature="2BZDJlnSNtCh3U3A417S14d4YF5KYEDGer9/aUFYksSoGh4V5E8N3DD8dKeV8h8c7PvgqyPI5VDU5kH9Ih3GDw=="/>
+            <sparkle:releaseNotesLink>https://hugokit.com/changelog/0.2.0/?in-app</sparkle:releaseNotesLink>
         </item>
     </channel>
 </rss>

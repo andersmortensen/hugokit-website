@@ -32,9 +32,11 @@ Sitet hoster altså ingen binærer længere; `static/downloads/` er ikke i brug.
    Det faste navn holder sitets download-knap stabil uden redirects.
 3. Kopiér `dist/sparkle/appcast.xml` → `static/appcast.xml` i dette repo.
 4. Skriv/redigér `content/changelog/X.Y.Z.md`. Siden **skal** eksistere: scriptet
-   sætter selv appcast'ens `releaseNotesLink` til `https://hugokit.com/changelog/X.Y.Z/`
-   (`generate_appcast` kan kun bygge linket som `<prefix><dmg-navn>.html`, så
-   release.sh patcher XML'en bagefter — der genereres ingen HTML-notes længere).
+   sætter selv appcast'ens `releaseNotesLink` til `https://hugokit.com/changelog/X.Y.Z/?in-app`
+   (`?in-app` fortæller siden at den skal fjerne sitets nav + footer, så Sparkles
+   update-vindue kun viser selve noten; samme URL uden query er den fulde side i
+   browseren). `generate_appcast` kan kun bygge linket som `<prefix><dmg-navn>.html`,
+   så release.sh patcher XML'en bagefter — der genereres ingen HTML-notes længere.
 5. Bump download-fakta i `hugo.toml` (`[params]`) — de står under download-knappen
    på forsiden og skal matche den DMG appcast'en peger på:
 

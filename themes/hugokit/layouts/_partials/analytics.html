@@ -1,31 +1,31 @@
-{{- /* Event-tracking (GA4).
+{{- /* Event tracking (GA4).
 
-      Ét delegeret lag på document frem for listeners pr. element: markup'en må
-      ændre sig uden at tracking følger med i faldet. gtag() og dataLayer er
-      defineret i head.html – her fyres kun events.
+      One delegated layer on document rather than listeners per element: the markup may
+      change without tracking dropping out with it. gtag() and dataLayer are
+      defined in head.html – only events are fired here.
 
-      Uden GA-scriptet (dev-builds) lander events alligevel i window.dataLayer,
-      så hver trigger kan verificeres lokalt ad samme kodesti som i produktion.
+      Without the GA script (dev builds) events still land in window.dataLayer,
+      so every trigger can be verified locally along the same code path as in production.
 
-      Navnekonvention: object_action, lowercase_underscore, kontekst i params –
-      aldrig i event-navnet.
+      Naming convention: object_action, lowercase_underscore, context in params –
+      never in the event name.
 
-      Fyres herfra:
+      Fired from here:
         Tier 1  download_started · cta_download_click · download_section_view
         Tier 2  feedback_click · github_click
         Tier 3  page_not_found · mode_toggled
 
-      Udgået 2026-07-21 (datablads-redesignet): faq_opened (FAQ har ingen
-      disclosere længere – alt er synligt) og loop_tab_changed (loop-tabs
-      forsvandt allerede med spec sheet-layoutet; lytteren var død kode).
+      Removed 2026-07-21 (the spec-sheet redesign): faq_opened (the FAQ no longer has
+      any disclosures – everything is visible) and loop_tab_changed (the loop tabs
+      disappeared already with the spec sheet layout; the listener was dead code).
 
-      Rollback: slet denne fil og dens kald i baseof.html. */}}
+      Rollback: delete this file and its call in baseof.html. */}}
 <script>
   (function () {
-    {{- /* Bare {{ }} i JS-kontekst: Hugos html/template udsender selv et
-          korrekt escaped JS-strengliteral. IKKE `| jsonify` – det ville blive
-          escapet én gang til, så DOWNLOAD blev "\"https://…\"" og
-          sammenligningen med a.href aldrig kunne matche. */}}
+    {{- /* Bare {{ }} in a JS context: Hugo's html/template itself emits a
+          correctly escaped JS string literal. NOT `| jsonify` – it would be
+          escaped one more time, so DOWNLOAD became "\"https://…\"" and
+          the comparison with a.href could never match. */}}
     var VERSION  = {{ site.Params.version | default "0.1.0" }};
     var DOWNLOAD = {{ site.Params.downloadURL }};
 
@@ -34,23 +34,23 @@
       gtag('event', name, params || {});
     };
 
-    {{- /* Hvor på siden sad linket? Bruges af feedback_click og github_click. */}}
+    {{- /* Where on the page did the link sit? Used by feedback_click and github_click. */}}
     var placeOf = function (a) {
       if (a.closest('.site-footer')) return 'footer';
       if (a.closest('.doc-foot'))    return 'docs_page';
-      if (a.closest('.bezel'))       return 'nav'; /* nav bor i bezel-baren (2026-07-21) */
+      if (a.closest('.bezel'))       return 'nav'; /* nav lives in the bezel bar (2026-07-21) */
       if (a.closest('.get'))         return 'download_section';
       if (a.closest('.hero'))        return 'hero';
       return 'other';
     };
 
-    {{- /* ── Klik (delegeret) ─────────────────────────────────────────────── */}}
+    {{- /* ── Click (delegated) ─────────────────────────────────────────────── */}}
     document.addEventListener('click', function (e) {
       var a = e.target.closest && e.target.closest('a[href]');
       if (!a) return;
 
-      // Tier 1 – den rigtige DMG. Står FØR github_click: download-URL'en ligger
-      // også på github.com, og må ikke tælle to gange.
+      // Tier 1 – the real DMG. Comes BEFORE github_click: the download URL is
+      // also on github.com, and must not count twice.
       if (a.href === DOWNLOAD) {
         track('download_started', {
           app_version: VERSION,
@@ -59,13 +59,13 @@
         return;
       }
 
-      // Tier 1 – intent. Hero-, nav- og loop-knapperne er interne ankre til
-      // #download, ikke downloads. `location` fortæller hvilken CTA der drev
-      // brugeren derned; uden den er hele funnelen én udifferentieret klump.
+      // Tier 1 – intent. The hero, nav and loop buttons are internal anchors to
+      // #download, not downloads. `location` tells which CTA drove the
+      // user down there; without it the whole funnel is one undifferentiated lump.
       if (a.getAttribute('href') && a.getAttribute('href').indexOf('#download') !== -1) {
         var panel = a.closest('.loop-panel');
         var loc = 'other';
-        if (a.closest('.bezel')) { /* nav bor i bezel-baren (2026-07-21) */
+        if (a.closest('.bezel')) { /* nav lives in the bezel bar (2026-07-21) */
           loc = 'nav';
         } else if (a.closest('.hero')) {
           loc = 'hero';
@@ -77,22 +77,22 @@
         return;
       }
 
-      // Tier 2 – mailto. GA4's enhanced measurement tracker IKKE mailto-klik;
-      // uden dette event er sitets eneste kontaktkanal helt umålt.
+      // Tier 2 – mailto. GA4's enhanced measurement does NOT track mailto clicks;
+      // without this event the site's only contact channel is entirely unmeasured.
       if (a.protocol === 'mailto:') {
         track('feedback_click', { location: placeOf(a) });
         return;
       }
 
-      // Tier 2 – GitHub (repo/releases, ikke DMG'en – den er fanget ovenfor).
+      // Tier 2 – GitHub (repo/releases, not the DMG – it is caught above).
       if (a.hostname === 'github.com') {
         track('github_click', { location: placeOf(a) });
       }
     }, { passive: true });
 
-    {{- /* ── Tier 1: er download-sektionen overhovedet set? ───────────────── */}}
-    {{- /* Skiller "ingen når ned" fra "de når ned og klikker ikke". Uden dette
-          trin er funnelen blind mellem landing og klik. Fyrer én gang pr. side. */}}
+    {{- /* ── Tier 1: was the download section seen at all? ───────────────── */}}
+    {{- /* Distinguishes "nobody reaches it" from "they reach it and don't click". Without
+          this step the funnel is blind between landing and click. Fires once per page. */}}
     var get = document.getElementById('download');
     if (get && 'IntersectionObserver' in window) {
       var io = new IntersectionObserver(function (entries) {
@@ -106,19 +106,19 @@
     }
 
     {{- /* ── Tier 3: mode-toggle ──────────────────────────────────────────── */}}
-    {{- /* Aflæses via MutationObserver, ikke via klik: toggle-handleren i
-          head.html kører gennem startViewTransition() og er dermed asynkron –
-          et klik-event ville læse den GAMLE værdi. Observeren ser den faktisk
-          anvendte tilstand. Den initiale værdi sættes før observeren findes,
-          så load fyrer ikke noget. */}}
+    {{- /* Read via MutationObserver, not via click: the toggle handler in
+          head.html runs through startViewTransition() and is therefore async –
+          a click event would read the OLD value. The observer sees the actually
+          applied state. The initial value is set before the observer exists,
+          so load fires nothing. */}}
     var root = document.documentElement;
     new MutationObserver(function () {
       track('mode_toggled', { mode: root.dataset.theme || 'system' });
     }).observe(root, { attributeFilter: ['data-theme'] });
 
     {{- /* ── Tier 3: 404 ──────────────────────────────────────────────────── */}}
-    {{- /* Hosten serverer 404.html på enhver død sti, så location.pathname ER
-          den døde sti. Fanger fx links til sider der er fjernet. */}}
+    {{- /* The host serves 404.html on any dead path, so location.pathname IS
+          the dead path. Catches e.g. links to pages that have been removed. */}}
     if (document.querySelector('main.notfound')) {
       track('page_not_found', {
         bad_path: location.pathname,

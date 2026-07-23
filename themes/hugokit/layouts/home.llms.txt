@@ -1,12 +1,12 @@
-{{- /* llms.txt – genereres ved hver build (outputFormats.llms i hugo.toml).
+{{- /* llms.txt – generated on every build (outputFormats.llms in hugo.toml).
 
-      Docs-listen bygges fra content/docs/ med samme grupper og rækkefølge som
-      hub'en og sidenavigationen, og hver linje bruger sidens EGEN `description`
-      fra front matter. En ny docs-side dukker derfor op i llms.txt af sig selv,
-      og en rettet beskrivelse følger med – ét sted at vedligeholde, ingen drift.
+      The docs list is built from content/docs/ with the same groups and order as
+      the hub and the side navigation, and each line uses the page's OWN `description`
+      from front matter. A new docs page therefore appears in llms.txt by itself,
+      and a corrected description follows along – one place to maintain, no drift.
 
-      Den faste prosa nedenfor er det eneste der redigeres i hånden.
-      Formatet følger llmstxt.org: H1, blockquote-resumé, så link-sektioner. */ -}}
+      The fixed prose below is the only thing edited by hand.
+      The format follows llmstxt.org: H1, blockquote summary, then link sections. */ -}}
 # {{ site.Title }}
 
 > HugoKit is a free Mac app for the Hugo static site generator: it runs the local server with live-reloading preview, edits content and config, scores a site's health, checks every site before publishing (preflight with approve-a-diff auto-fixes), and publishes to GitHub Pages or your own server over FTP/SFTP. No terminal needed. It works as a companion to any code editor or AI coding agent – content stays plain Markdown on disk, and the preview reloads on save.
@@ -28,21 +28,21 @@ Every page below is also published as plain Markdown: append `index.md` to any U
 
 ### {{ $group }}
 {{ range . }}
-{{- /* IKKE plainify på .Description: den strippede `<!-- raw HTML omitted -->`
-       ud af beskrivelsen på netop den side der handler om det. Front matter er
-       allerede ren tekst, og outputtet er plaintext – der er intet at plainify. */}}
+{{- /* NOT plainify on .Description: it stripped `<!-- raw HTML omitted -->`
+       out of the description on exactly the page that is about that. Front matter is
+       already plain text, and the output is plaintext – there is nothing to plainify. */}}
 - [{{ .Title | plainify }}]({{ .Permalink }}): {{ .Description }}
 {{- end }}
 {{- end }}
 {{- end }}
-{{- /* Sider hvis `group` ikke står i `groups` – samles nederst, ligesom i nav'en. */}}
+{{- /* Pages whose `group` is not in `groups` – collected at the bottom, like in the nav. */}}
 {{- with (complement $placed $pages).ByWeight }}
 
 ### More
 {{ range . }}
-{{- /* IKKE plainify på .Description: den strippede `<!-- raw HTML omitted -->`
-       ud af beskrivelsen på netop den side der handler om det. Front matter er
-       allerede ren tekst, og outputtet er plaintext – der er intet at plainify. */}}
+{{- /* NOT plainify on .Description: it stripped `<!-- raw HTML omitted -->`
+       out of the description on exactly the page that is about that. Front matter is
+       already plain text, and the output is plaintext – there is nothing to plainify. */}}
 - [{{ .Title | plainify }}]({{ .Permalink }}): {{ .Description }}
 {{- end }}
 {{- end }}

@@ -1,0 +1,506 @@
+/* ── Docs – hub, section nav and prose ────────────────────────────────────────
+   No new colors, fonts or radii: everything below is the site's own tokens.
+   The prose is a standalone register (.doc-body) – .release-body is tuned to
+   Sparkle's update window (badge pills on h2) and can't be reused. */
+
+/* Hub – same skeleton as the changelog hub. On the deck: one pane on the base. */
+.docs-hub {
+  background: var(--plate);
+  border-radius: var(--pane-r, 22px);
+  padding: clamp(28px, 4vw, 52px);
+  margin: 18px auto 90px;
+}
+.docs-hub .hub-head { max-width: 760px; }
+.docs-hub .section-body { margin-top: 14px; max-width: 54ch; line-height: 1.55; }
+
+.doc-groups { margin-top: clamp(30px, 4vw, 46px); display: grid; gap: clamp(26px, 3vw, 38px); }
+
+/* The group as an editorial table of contents: the name stands in its own column
+   out in the margin, the pages run in the column beside it. The rule sits over
+   both, so the group reads as one field and not as two. */
+.doc-group {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: 0 clamp(24px, 3vw, 48px);
+  padding-top: 20px;
+  border-top: 1px solid var(--line-strong);
+}
+.doc-group-head {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-top: 15px;
+}
+.doc-group-head .section-label { display: block; }
+.doc-group-count {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--faint);
+}
+
+@media (max-width: 900px) {
+  .doc-group {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+  .doc-group-head {
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 0 0 11px;
+  }
+}
+
+.doc-index { list-style: none; }
+.doc-index li + li { border-top: 1px solid var(--line); }
+
+/* The row: text on the left, date at the right edge. Hover lights a tinted
+   surface that bleeds a little into the margin – nothing moves, and there is no
+   colored border anywhere. */
+.doc-index a {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 6px 20px;
+  padding: 15px 12px;
+  margin-inline: -12px;
+  border-radius: 9px;
+  text-decoration: none;
+  color: var(--ink);
+  transition: background 160ms ease;
+}
+.doc-index a:hover { background: var(--stage); }
+
+.doc-index-text { display: block; min-width: 0; }
+.doc-index-title {
+  display: block;
+  font-size: 20px; font-weight: 500;
+  transition: color 160ms ease;
+}
+.doc-index-desc {
+  display: block;
+  margin-top: 4px;
+  font-size: 16px; line-height: 1.5;
+  color: var(--muted);
+  max-width: 64ch;
+  text-wrap: pretty;
+}
+.doc-index a:hover .doc-index-title { text-decoration: underline; text-underline-offset: 3px; }
+
+/* The date: monospace, tabular, and quiet enough that the title is read first. */
+.doc-index-date {
+  font-family: var(--mono);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  color: var(--faint);
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .doc-index a {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 6px;
+  }
+  /* The date drops below the text rather than cramping the title. */
+  .doc-index-date { order: 3; }
+}
+
+/* Docs page – section nav on the base, the article as pane */
+.doc { padding: 18px 0 90px; }
+.doc-layout {
+  display: grid;
+  grid-template-columns: 224px minmax(0, 1fr);
+  gap: clamp(28px, 4vw, 56px);
+  align-items: start;
+}
+.doc-nav { padding-top: clamp(28px, 4vw, 52px); }
+.doc-article {
+  background: var(--plate);
+  border-radius: var(--pane-r, 22px);
+  padding: clamp(26px, 3.4vw, 48px);
+}
+
+/* Sticky without its own background – Safari Tahoe samples sticky elements'
+   background-color for the browser toolbar; a solid surface here would override
+   the canvas's tone. Leave it transparent. */
+.doc-nav { position: sticky; top: 26px; }
+.doc-nav-home {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 13px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--faint);
+  text-decoration: none;
+  margin-bottom: 20px;
+  transition: color 160ms ease;
+}
+.doc-nav-home:hover { color: var(--ink); }
+.doc-nav-group + .doc-nav-group { margin-top: 22px; }
+.doc-nav-group .section-label { display: block; margin-bottom: 9px; }
+.doc-nav ul { list-style: none; display: grid; gap: 1px; }
+.doc-nav a {
+  display: block;
+  padding: 6px 10px;
+  margin-left: -10px;
+  border-radius: 6px;
+  font-size: 17px; line-height: 1.4;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 160ms ease, background 160ms ease;
+}
+.doc-nav a:hover { color: var(--ink); background: var(--stage); }
+.doc-nav a[aria-current="page"] { color: var(--ink); font-weight: 500; background: var(--stage); }
+.doc-nav-frag {
+  margin: 3px 0 5px 2px;
+  padding-left: 9px;
+  border-left: 1px solid var(--line);
+}
+.doc-nav-frag a {
+  margin-left: 0;
+  padding: 4px 8px;
+  font-size: 15.5px;
+  color: var(--faint);
+}
+.doc-nav-frag a:hover { color: var(--ink); }
+
+/* Standalone root page (e.g. /privacy/): same prose register as docs, but
+   centered on the base – one pane with no section nav to balance against. */
+.page { padding: 18px 0 90px; }
+.page-article {
+  margin: 0 auto;
+  background: var(--plate);
+  border-radius: var(--pane-r, 22px);
+  padding: clamp(26px, 3.4vw, 48px);
+}
+.page-article .page-body, .page-article .page-head { max-width: 860px; }
+
+/* The head: title on the left, the date in its own track on the right – it must
+   be readable without breaking the reading line. */
+.page-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+.page-head .doc-updated { margin-top: 0; white-space: nowrap; }
+.page-eyebrow {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 16px;
+}
+.page-eyebrow::before { content: ""; width: 18px; height: 1px; background: var(--line-strong); }
+.page-title {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(31px, 3.8vw, 45.5px);
+  line-height: 1.08;
+  letter-spacing: -0.024em;
+}
+.page-lead {
+  margin-top: 14px;
+  font-size: 19px; line-height: 1.55;
+  color: var(--muted);
+  max-width: 52ch;
+}
+
+/* The receipt: the factual lines stand before the prose, so the answer doesn't
+   have to be read out. Three cards on the plate surface, the symbol at its true size. */
+.page-glance {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 26px;
+}
+.page-glance li {
+  display: flex; align-items: center; gap: 11px;
+  padding: 14px 16px 14px 0;
+  border-top: 1px solid var(--line);
+  font-size: 15.5px; line-height: 1.35;
+  color: var(--ink);
+}
+.page-glance-ic {
+  flex: none;
+  width: 30px; height: 30px;
+  border-radius: 9px;
+  display: grid; place-items: center;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--ink) 7%, transparent);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.page-glance-ic .feature-glyph { width: 16px; height: 16px; color: inherit; }
+
+/* The sections are numbered by CSS – the markdown shouldn't carry a number that
+   could fall out of step with the order. */
+.page-body { counter-reset: sec; }
+.page-body h2 {
+  counter-increment: sec;
+  display: flex; align-items: baseline; gap: 14px;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 25px;
+  letter-spacing: -0.02em;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+.page-body h2::before {
+  content: counter(sec, decimal-leading-zero);
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  color: var(--faint);
+}
+.page-body p { max-width: 68ch; }
+
+/* Definition rows (def-shortcode): term in the left track, explanation on the right */
+.def-row {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 20px;
+  align-items: start;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+}
+.def-row + .def-row { margin-top: 0; }
+.page-body .def-row:last-of-type { border-bottom: 1px solid var(--line); }
+.def-row b {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 17.5px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.def-row span { font-size: 17px; line-height: 1.6; color: var(--muted); }
+.def-row p { margin: 0; }
+
+.doc-article { min-width: 0; }
+.doc-article .doc-head, .doc-article .doc-body { max-width: 860px; }
+.doc-head { padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+.doc-head .section-label { display: block; margin-bottom: 14px; }
+.doc-title {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(31px, 3.8vw, 45.5px);
+  line-height: 1.08;
+  letter-spacing: -0.024em;
+}
+.doc-lead {
+  margin-top: 15px;
+  font-size: 20px; line-height: 1.55;
+  color: var(--muted);
+  max-width: 60ch;
+}
+/* When the page was last touched – below the title, where the reader can put it
+   to use before the text begins. */
+.doc-updated {
+  margin-top: 14px;
+  font-family: var(--mono);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  color: var(--faint);
+}
+
+/* The prose */
+.doc-body {
+  margin-top: 32px;
+  font-size: 18.5px; line-height: 1.68;
+  color: var(--muted);
+}
+.doc-body > * + * { margin-top: 16px; }
+.doc-body h2 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 26.5px; line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-top: 44px;
+  scroll-margin-top: 26px;
+}
+.doc-body h3 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 20.5px; line-height: 1.3;
+  letter-spacing: -0.008em;
+  color: var(--ink);
+  margin-top: 30px;
+  scroll-margin-top: 26px;
+}
+.doc-body strong { color: var(--ink); font-weight: 500; }
+.doc-body a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--line-strong);
+  transition: text-decoration-color 160ms ease;
+}
+.doc-body a:hover { text-decoration-color: var(--ink); }
+
+.doc-body ul, .doc-body ol { list-style: none; display: grid; gap: 9px; }
+.doc-body li { position: relative; padding-left: 23px; }
+.doc-body ul > li::before {
+  content: "";
+  position: absolute; left: 3px; top: 0.66em;
+  width: 5px; height: 5px;
+  border-radius: 2px;
+  background: var(--faint);
+}
+.doc-body ol { counter-reset: doc-step; }
+.doc-body ol > li { counter-increment: doc-step; }
+.doc-body ol > li::before {
+  content: counter(doc-step);
+  position: absolute; left: 0; top: 0;
+  font-family: var(--mono);
+  font-size: 14.5px;
+  line-height: 1.9;
+  color: var(--faint);
+}
+.doc-body li > ul, .doc-body li > ol { margin-top: 9px; }
+
+.doc-body code {
+  font-family: var(--mono);
+  font-size: 0.86em;
+  color: var(--ink);
+  background: var(--stage);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 1.5px 5px;
+  /* JetBrains Mono has programming ligatures: without this, <!-- and --> in an
+     HTML example are drawn as arrows. Code must show the characters that are there. */
+  font-variant-ligatures: none;
+}
+.doc-body pre {
+  position: relative; /* anchors the copy button */
+  background: var(--stage);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  overflow-x: auto;
+}
+
+/* The copy button on code blocks – mono chip in the top right corner, always
+   visible (hover-hidden controls lose touch and keyboard). Inserted by JS
+   (head.html) and present only where the clipboard API is. Only color/surface on
+   hover; "Copied" acknowledges in the badge green from the release pages. */
+.doc-copy {
+  position: absolute;
+  top: 8px; right: 8px;
+  font-family: var(--mono);
+  font-size: 12.5px; font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--plate);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+.doc-copy:hover { background: var(--stage); color: var(--ink); }
+.doc-copy.is-copied { color: light-dark(#0E6B4E, #7FE0C0); }
+.doc-body pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: 15.5px;
+  line-height: 1.75;
+}
+
+.doc-body table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 17.5px;
+}
+.doc-body th {
+  text-align: left;
+  font-family: var(--mono);
+  font-size: 12.5px; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--faint);
+  padding: 0 16px 10px 0;
+  border-bottom: 1px solid var(--line-strong);
+}
+.doc-body td {
+  padding: 11px 16px 11px 0;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+.doc-body th:last-child, .doc-body td:last-child { padding-right: 0; }
+.doc-body tbody tr:last-child td { border-bottom: 0; }
+.doc-body td code { font-size: 0.85em; }
+
+/* Blockquote = the note register. Used among other things for the one line about
+   what HugoKit does about the problem – always AFTER the solution, never before. */
+.doc-body blockquote {
+  background: var(--stage);
+  border-radius: var(--radius);
+  padding: 15px 18px;
+  font-size: 17.5px;
+  line-height: 1.6;
+}
+.doc-body blockquote p + p { margin-top: 9px; }
+
+.doc-body hr { border: 0; border-top: 1px solid var(--line); margin: 36px 0; }
+.doc-body img {
+  max-width: 100%; height: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+/* Screenshots via the shot shortcode. The window frame + shadow are baked into
+   the image on a transparent ground, so the shot sits bare on the plate – it must
+   not take the .doc-body img border/radius above, which would draw a second frame
+   around one that is already there. Adjustable: figure margin + figcaption register. */
+.doc-shot { margin: 30px 0; }
+.doc-shot .mode-pic { display: block; }
+.doc-body .doc-shot img {
+  display: block;
+  width: 100%; height: auto;
+  border: 0; border-radius: 0;
+}
+.doc-shot figcaption {
+  margin-top: 11px;
+  font-family: var(--mono);
+  font-size: 13px; letter-spacing: 0.02em;
+  color: var(--faint);
+}
+
+.doc-foot {
+  margin-top: 46px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  display: flex; flex-wrap: wrap;
+  justify-content: space-between; gap: 16px 24px;
+}
+.doc-foot a {
+  font-size: 15.5px; font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+.doc-foot a:hover { color: var(--ink); }
+
+@media (max-width: 1020px) {
+  .doc-layout { grid-template-columns: 1fr; gap: 32px; }
+  .doc-nav { position: static; padding-bottom: 26px; border-bottom: 1px solid var(--line); }
+  .doc-nav ul { gap: 0; }
+  .doc-nav-frag { display: none; }
+}
+
+@media (max-width: 620px) {
+  .doc-body { font-size: 18px; }
+  .doc-body table { display: block; overflow-x: auto; }
+  .doc-foot { flex-direction: column; gap: 12px; }
+}
+

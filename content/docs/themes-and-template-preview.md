@@ -26,6 +26,8 @@ The **Themes** page lists every theme in your site's `themes/` folder. Removing 
 
 **Template Preview** (**⇧⌘T**) is a split panel: your layout files on the left, the rendered page on the right.
 
+{{< shot name="template-preview" alt="Template Preview: the layout file tree on the left and the live rendered page on the right." >}}
+
 **It needs the dev server running.** The preview is your own site, served by Hugo – if the server is stopped, the panel says so and offers to start it.
 
 ### What's in the file tree

@@ -1,12 +1,14 @@
-{{- /* App-screenshot i light/dark: <picture> vælger dark-varianten ved
-      systemets mørke skema (kun den matchende variant hentes – vigtigt for
-      LCP). Den manuelle mode-toggle overstyrer via JS i head.html, som
-      sætter source-media til 'all'/'not all' på .mode-pic.
-      Params: light (sti, påkrævet) · dark (sti, valgfri) · alt ·
-      eager (bool – hero/LCP: fetchpriority high i stedet for lazy).
-      Alle app-screenshots er 1072×764 (window frame + skygge bagt ind). */ -}}
+{{- /* App screenshot in light/dark: <picture> picks the dark variant on
+      the system's dark scheme (only the matching variant is loaded – important for
+      LCP). The manual mode-toggle overrides via JS in head.html, which
+      sets source-media to 'all'/'not all' on .mode-pic.
+      Params: light (path, required) · dark (path, optional) · alt ·
+      eager (bool – hero/LCP: fetchpriority high instead of lazy) ·
+      w/h (intrinsic px, default 1072×764 – override for an off-ratio shot).
+      Window frame + shadow are baked into every file. */ -}}
 {{- $light := .light }}{{ $dark := .dark }}{{ $alt := .alt }}{{ $eager := .eager }}
+{{- $w := .w | default 1072 }}{{ $h := .h | default 764 }}
 <picture class="mode-pic">
   {{ if $dark }}<source media="(prefers-color-scheme: dark)" srcset="{{ $dark | relURL }}">{{ end }}
-  <img class="shot" src="{{ $light | relURL }}" alt="{{ $alt }}" width="1072" height="764"{{ if $eager }} fetchpriority="high"{{ else }} loading="lazy"{{ end }}>
+  <img class="shot" src="{{ $light | relURL }}" alt="{{ $alt }}" width="{{ $w }}" height="{{ $h }}"{{ if $eager }} fetchpriority="high"{{ else }} loading="lazy"{{ end }}>
 </picture>

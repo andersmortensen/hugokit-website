@@ -10,6 +10,8 @@ Preflight runs before a publish and blocks the things that break a deployed site
 
 Open it with **⇧⌘H**, from the Dashboard's health card, from the Config page, the View menu or the command palette (⌘K).
 
+{{< shot name="site-health" alt="HugoKit's Site Health sheet: a score out of 100, with warnings and info issues listed and tagged by category." >}}
+
 ## Build the site first
 
 Health scans your site's `public/` folder, not your content. Links are checked against the pages Hugo actually produced, and the page count is the number of HTML files it wrote.

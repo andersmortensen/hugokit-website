@@ -36,13 +36,13 @@ facts:
 
 # Loop-sektionen – de tre moments som nummererede trin (01/02/03).
 loop:
-  label: "The loop"
-  heading: "The whole loop."
+  label: "How it works"
+  heading: "The whole thing."
   sub: "Preview, preflight, publish – in that order."
 
 # Den fulde feature-liste – hvert punkt er forankret i docs' features.md.
 features:
-  title: "Also in HugoKit"
+  title: "Everything HugoKit does"
   items:
     - name: "All your sites"
       glyph: "sites"
@@ -52,13 +52,14 @@ features:
       spot:
         key: "⌘O"
         text: "Add a site"
-      text: "Add sites one by one, or point HugoKit at a folder and it finds them itself. Pin your favourites; give each site its own emoji."
+      text: "Add sites one by one, clone one from a Git URL, or point HugoKit at a folder and it finds them itself. Pin your favourites; give each site its own emoji."
       docs:
         - "/docs/getting-started/#watch-a-folder"
-      detail: "Every Hugo site you have, in one sidebar. Add them one at a time with `⌘O`, or point HugoKit at the folder you keep your projects in and let it find them itself."
+      detail: "Every Hugo site you have, in one sidebar. Add them one at a time with `⌘O`, clone one straight from a Git URL, or point HugoKit at the folder you keep your projects in and let it find them itself."
       points:
         - "Watch a folder: HugoKit scans up to three levels deep, adds every folder that holds a Hugo config, and skips the ones that never contain a site of their own – public, resources, themes, archetypes, .git, node_modules, .build and vendor."
         - "A folder counts as a site when it has a Hugo config file. If the config is there but the folders around it look incomplete, the site is added with a warning rather than turned away."
+        - "Add a site straight from a Git URL – paste the repository, choose where to clone it, and HugoKit clones and adds it in one step. A token is only ever sent to github.com."
         - "Pin the ones you use most, and give each site an emoji so the sidebar is scannable at a glance."
         - "Each site keeps its own settings – its port, its content toggles, its deploy destinations."
     - name: "Create new sites"
@@ -112,13 +113,15 @@ features:
         - "Removing a theme deletes themes/<name> and touches nothing else in the site."
     - name: "Content overview"
       glyph: "content"
-      text: "Pages, sections, word counts and images per site – plus quick edits built in. Real writing stays in your own editor."
+      text: "Pages, sections, word counts and images per site – with a front matter inspector and quick edits built in. Real writing stays in your own editor."
       docs:
         - "/docs/getting-started/#your-content"
-      detail: "The Content page counts what is in the site and lists the files. It is built for a typo, a front matter field, a date – not for writing. Real writing stays in your own editor, and the preview reloads on save either way."
+        - "/docs/editing-content/"
+      detail: "The Content page counts what is in the site and lists the files. It is built for a typo, a front matter field, a date – not for writing. A front matter inspector sits beside each file for exactly those fields; real writing stays in your own editor, and the preview reloads on save either way."
       points:
-        - "Pages, sections, word counts and images per site – plus how many are drafts, future-dated or expired."
-        - "Open a file for a preview, or its Raw tab: a plain monospaced editor with an explicit Save (`⌘S`), a line count and an edited marker."
+        - "Pages, sections, word counts and images per site – plus how many are drafts, future-dated or expired. A page bundle shows as one entry with its images, not a folder of loose files."
+        - "Edit the front matter in a panel beside the file – title, description, date, tags and categories, with suggestions drawn from the site's own taxonomies – or use the Raw tab, a plain monospaced editor with an explicit Save (`⌘S`). Both edit the same text."
+        - "See every tag and category across the site, catch a duplicate spelling, and rename one everywhere in a single pass you can undo."
         - "Close a file with unsaved changes and HugoKit asks first."
         - "Open in editor is one click away, in whatever editor you already use."
     - name: "Config editor"
@@ -219,11 +222,15 @@ whatishugo:
     label: "Why people use it"
     items:
       - name: "Fast"
-        text: "Most sites build in under a second, and the live preview reloads as you save."
+        text: "Most sites build in a fraction of a second – even with thousands of pages."
+      - name: "Live preview"
+        text: "A built-in local server renders your site as you write, and reloads the page the moment you save."
       - name: "Plain files"
         text: "Content is Markdown text files – easy to edit, back up and move."
       - name: "Host anywhere"
         text: "The output is plain HTML – no database, no server code."
+      - name: "Batteries included"
+        text: "Menus, taxonomies, image processing, RSS and sitemaps are built in – no plugins to wire up."
       - name: "Free and open source"
         text: "No cost, no license, no lock-in."
   bridge: "HugoKit runs Hugo for you – same sites, same files, just with buttons. Pair it with any editor, human or AI."
@@ -256,8 +263,8 @@ moments:
       - "Runs automatically before every publish – build, config, assets and subpath traps."
       - "Each fix is shown as a red/green diff first; approve it, and preflight re-checks."
       - "Issues are ranked error, warning or info – and the fixes are applied for you."
-    screenshot: ""
-    screenshotDark: ""
+    screenshot: "/images/app/preflight-light.webp"
+    screenshotDark: "/images/app/preflight-dark.webp"
     alt: "HugoKit's preflight check presenting a fix as a diff before publishing."
     docs:
       - "/docs/preflight/"
@@ -267,8 +274,9 @@ moments:
     heading: "Publish where you already publish."
     text: "GitHub Pages, or your own server over FTP/SFTP. Set it up once per site – after that it's ⌘P."
     points:
-      - "GitHub Pages or your own server over FTP/SFTP – one target or several, published one at a time or all at once."
+      - "GitHub Pages or your own server over FTP/SFTP – one target or several, published one at a time or all at once, each built to its own folder and uploaded in parallel."
       - "Each target shows its own status, and after every publish HugoKit checks that the live site actually responds."
+      - "Before a GitHub Pages publish, HugoKit shows the site's git state – uncommitted work, a branch or remote that doesn't match – and holds back a push that would send the wrong thing."
       - "Deploy credentials go in the macOS Keychain, and `⌘P` publishes from anywhere."
     screenshot: "/images/app/deploy-light.webp"
     screenshotDark: "/images/app/deploy-dark.webp"
@@ -276,7 +284,7 @@ moments:
     docs:
       - "/docs/publishing-to-github-pages/"
       - "/docs/publishing-over-sftp/"
-    detail: "Set a destination up once, and publishing is a single keystroke: `⌘P`. GitHub Pages builds in the cloud through Actions or locally on your Mac; FTP and SFTP build on your Mac and upload only the files that actually changed. A site can hold several destinations at once – publish them all in one go, pause the one you are not using – and each target keeps its own status and history."
+    detail: "Set a destination up once, and publishing is a single keystroke: `⌘P`. GitHub Pages builds in the cloud through Actions or locally on your Mac; FTP and SFTP build on your Mac and upload only the files that actually changed. A site can hold several destinations at once – publish them all in one go, pause the one you are not using – and each target keeps its own status and history. Hugo's build flags are set per site, with the exact command line shown before it runs."
 
 # Docs-teaser på forsiden – tre kuraterede sider, forankret i keyword-planen
 # (SEO-sporet: intern linking fra forsiden til landingssiderne). Titel og

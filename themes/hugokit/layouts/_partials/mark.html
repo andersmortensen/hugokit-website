@@ -1,12 +1,12 @@
-{{- /* HugoKit-mark (Q2 v2) – isometrisk kube med kvartet-murværk, helt flat.
+{{- /* HugoKit mark (Q2 v2) – isometric cube with quartet masonry, fully flat.
       Params: size (px, default 27), class.
-      Størrelses-reglen er indbygget:
-        < 28 px → H-fri
-        ≥ 28 px → fuld (med H)
-      Klasserne mk-top/mk-left/mk-h/mk-q1…mk-q4 bruges af CSS-animationen
-      ("Samlingen") på hero-marken.
-      Top-fladen følger farveskemaet via --mark-top (light: #E2DFE7 = brandets
-      light-surface-variant, dark: #F2F0F4) – sat i main.css. */ -}}
+      The size rule is built in:
+        < 28 px → H-free
+        ≥ 28 px → full (with H)
+      The classes mk-top/mk-left/mk-h/mk-q1…mk-q4 are used by the CSS animation
+      ("The assembly") on the hero mark.
+      The top surface follows the color scheme via --mark-top (light: #E2DFE7 = the brand's
+      light-surface-variant, dark: #F2F0F4) – set in main.css. */ -}}
 {{- $size := .size | default 27 -}}
 {{- $class := .class | default "" -}}
 {{- $full := ge $size 28 -}}

@@ -1,8 +1,8 @@
 {{ define "body" }}
-{{- /* Docs-side – kanvas + nav + footer som resten af sitet. To kolonner:
-      sektions-nav (sticky, uden egen baggrund: Safari Tahoe sampler sticky
-      elementers background-color til toolbaren, og en solid flade her ville
-      overskrive kanvassens tone) og selve artiklen. */}}
+{{- /* Docs page – canvas + nav + footer like the rest of the site. Two columns:
+      section nav (sticky, without its own background: Safari Tahoe samples sticky
+      elements' background-color for the toolbar, and a solid surface here would
+      overwrite the canvas's tone) and the article itself. */}}
 <div class="canvas">
 
 
@@ -32,7 +32,7 @@
     </div>
   </main>
 
-  {{ partial "footer.html" . }}
-
 </div>
+
+{{ partial "footer.html" . }}
 {{ end }}

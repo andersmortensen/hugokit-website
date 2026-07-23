@@ -1,7 +1,7 @@
 {{ define "body" }}
-{{- /* Docs-hub'en – sitets fulde layout (kanvas, nav, footer), samme skelet som
-      changelog-hub'en. Hub'en ER indekset: ingen sidebar her, kun grupperne i
-      den rækkefølge `groups` i _index.md fastlægger. Undersiderne har sidebaren. */}}
+{{- /* The docs hub – the site's full layout (canvas, nav, footer), same skeleton as
+      the changelog hub. The hub IS the index: no sidebar here, only the groups in
+      the order `groups` in _index.md sets. The subpages have the sidebar. */}}
 <div class="canvas">
 
 
@@ -42,8 +42,8 @@
         {{ end }}
       {{ end }}
 
-      {{- /* Sikkerhedsnet: en side med en `group` der ikke står i listen
-            forsvinder ikke – den lander her. */}}
+      {{- /* Safety net: a page with a `group` not in the list
+            does not disappear – it lands here. */}}
       {{ $rest := complement $placed $pages }}
       {{ with $rest.ByWeight }}
       <section class="doc-group">
@@ -69,7 +69,7 @@
     </div>
   </main>
 
-  {{ partial "footer.html" . }}
-
 </div>
+
+{{ partial "footer.html" . }}
 {{ end }}

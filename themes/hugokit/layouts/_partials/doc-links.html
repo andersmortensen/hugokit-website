@@ -1,12 +1,12 @@
-{{- /* Docs-links til en feature. Kontekst: en slice af docs-stier fra _index.md,
-      evt. med #anker: "/docs/getting-started/#create-a-new-site".
-      Linket er en chip, ikke en tekstlinje: dokument-ikon + "Docs" som kicker +
-      sidens egen titel + pil – så det er tydeligt at man forlader forsiden og
-      lander i den tekniske beskrivelse.
-      Labelen hentes fra dokumentationen selv – afsnittets overskrift når der er
-      et anker, ellers sidens LinkTitle – så teksten aldrig kan drifte fra docs.
-      Findes siden (eller ankeret) ikke, renderes intet: et forkert link er
-      værre end intet link. */ -}}
+{{- /* Docs links for a feature. Context: a slice of docs paths from _index.md,
+      optionally with #anchor: "/docs/getting-started/#create-a-new-site".
+      The link is a chip, not a text line: document icon + "Docs" as kicker +
+      the page's own title + arrow – so it is clear you are leaving the home page and
+      landing in the technical description.
+      The label is taken from the documentation itself – the section heading when there is
+      an anchor, otherwise the page's LinkTitle – so the text can never drift from the docs.
+      If the page (or the anchor) does not exist, nothing is rendered: a wrong link is
+      worse than no link. */ -}}
 {{- range . -}}
   {{- $parts := split . "#" -}}
   {{- $path := index $parts 0 -}}
@@ -20,13 +20,13 @@
 
     {{- if $anchor -}}
       {{- $href = printf "%s#%s" $p.RelPermalink $anchor -}}
-      {{- /* .Fragments.Headings har en syntetisk rod på niveau 0 – sidens
-            h2'er ligger som dens børn (samme mønster som docs-nav). */ -}}
+      {{- /* .Fragments.Headings has a synthetic root at level 0 – the page's
+            h2s are its children (same pattern as docs-nav). */ -}}
       {{- $hs := $p.Fragments.Headings -}}
       {{- if and $hs (eq (index $hs 0).Level 0) }}{{ $hs = (index $hs 0).Headings }}{{ end -}}
       {{- range $hs }}
         {{- if eq .ID $anchor }}{{ $label = .Title | plainify | htmlUnescape }}{{ end -}}
-        {{- /* Ankeret kan være en h3 under en h2 (fx "Hugo" i First launch) */ -}}
+        {{- /* The anchor can be an h3 under an h2 (e.g. "Hugo" in First launch) */ -}}
         {{- range .Headings }}
           {{- if eq .ID $anchor }}{{ $label = .Title | plainify | htmlUnescape }}{{ end -}}
         {{- end -}}

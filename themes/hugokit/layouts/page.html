@@ -1,8 +1,8 @@
 {{ define "body" }}
-{{- /* Enkeltstående side i roden (fx /privacy/) – ikke docs, ikke changelog.
-      Hovedet bærer eyebrow, titel, lead og dato; derunder en valgfri "kvittering"
-      (glance i front matter): de faktuelle linjer, så svaret står før prosaen.
-      Docs- og changelog-sider har deres egne templates og rammes ikke af denne. */}}
+{{- /* Standalone page in the root (e.g. /privacy/) – not docs, not changelog.
+      The header carries eyebrow, title, lead and date; below it an optional "receipt"
+      (glance in front matter): the factual lines, so the answer stands before the prose.
+      Docs and changelog pages have their own templates and are not affected by this one. */}}
 <div class="canvas">
 
 
@@ -17,8 +17,8 @@
         {{ partial "doc-updated.html" (dict "page" . "format" "page") }}
       </header>
 
-      {{- /* Kvitteringen: hvert punkt er en glyph-nøgle + en linje. Findes den ikke
-            i front matter, renderes intet – ingen tom stribe. */}}
+      {{- /* The receipt: each item is a glyph key + a line. If it does not exist
+            in front matter, nothing is rendered – no empty strip. */}}
       {{ with .Params.glance }}
       <ul class="page-glance">
         {{ range . }}
@@ -36,7 +36,7 @@
     </article>
   </main>
 
-  {{ partial "footer.html" . }}
-
 </div>
+
+{{ partial "footer.html" . }}
 {{ end }}

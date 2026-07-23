@@ -1,21 +1,19 @@
-{{- /* Én feature i registret. Kontekst: dict med name, glyph, text, detail,
-      points, docs. Alt er synligt – ingen discloser (valgt 2026-07-21: sitet
-      som datablad, intet gemmes bag klik). Venstre kolonne er definitionen
-      (glyph + navn + docs-links), højre er indholdet: detail som lead og
-      points som spec-linjer. text bruges kun som fallback uden detail. */ -}}
+{{- /* One feature in the set – collapsible (2026-07-22, the feedback round). Context:
+      dict with name, glyph, text, detail, points, docs, accent. <summary> is the
+      always-visible row: glyph slot + name + text as teaser + chevron. On click
+      <details> unfolds .feature-reveal: detail as lead (fallback: text), points
+      as spec lines and docs links – you can click through to the docs from there.
+      Rollback: replace details/summary with the flat .feature-item-grid from before
+      (all visible). Keyboard shortcuts are written `⌘P` in _index.md → <code>. */ -}}
 
-<div class="feature-item{{ with .accent }} fi-{{ . }}{{ end }}">
-  <div class="feature-def">
-    {{ partial "feature-glyph.html" (dict "glyph" .glyph) }}
-    <div class="feature-def-copy">
-      <h3 class="feature-name">{{ .name }}</h3>
-    </div>
-  </div>
-  <div class="feature-body">
-    {{- /* Genvejstaster skrives som `⌘P` i _index.md og renderes som <code> –
-          CSS giver dem pille-udseendet, så de står inline dér hvor sætningen
-          faktisk nævner dem. Docs-links står på egen linje under punkterne –
-          fuld bredde, så titel og pil aldrig bryder (2026-07-21). */}}
+<details class="feature-item{{ with .accent }} fi-{{ . }}{{ end }}">
+  <summary class="feature-summary">
+    <span class="feature-glyph-slot">{{ partial "feature-glyph.html" (dict "glyph" .glyph) }}</span>
+    <span class="feature-name">{{ .name }}</span>
+    {{ with .text }}<span class="feature-teaser">{{ . }}</span>{{ end }}
+    <svg class="feature-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+  </summary>
+  <div class="feature-reveal">
     {{ if .detail }}
     <p class="feature-lead">{{ .detail | markdownify }}</p>
     {{ else if .text }}
@@ -30,4 +28,4 @@
     <div class="feature-meta">{{ partial "doc-links.html" . }}</div>
     {{ end }}
   </div>
-</div>
+</details>

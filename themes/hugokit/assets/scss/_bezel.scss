@@ -1,0 +1,132 @@
+/* ── Bezel – the site sitting inside a device ────────────────────────────────
+   Borrowed from the preview project's bezel layout: THE FRAME IS NOT SOMETHING
+   ON THE PAGE, THE PAGE SITS IN THE FRAME. Two fixed elements (partial:
+   bezel.html): .bezel-bar is the top of the frame in the surround surface,
+   .bezel-frame draws the sides + rounded window cutout via the box-shadow cutout
+   – everything OUTSIDE the rounded rectangle is painted in --surround, so the
+   canvas scrolls inside the device and the corners stay round while scrolling.
+   The frame is OPEN at the bottom (2026-07-23): the top + sides stay pinned (the
+   box-shadow ground and the rounded top corners are fixed), but there is no fixed
+   bottom seam over the viewport. The window's rounded bottom is drawn by the canvas
+   itself at the end of the content, and the footer sits on the ground BELOW the
+   window – outside the bezel, the same way the nav bar sits above it.
+
+   Only on pages with .canvas: the release/404 pages (the Sparkle window) are flat
+   and stay free via the :has gate – same mechanic as their padding override.
+   Sticky offsets (site-nav, doc-nav, scroll-padding) are re-declared HERE rather
+   than changing the originals: one block, one rollback.
+
+   Adjustable parameters: --bezel-top (bar height) · --bezel-side (the frame's
+   sides; follows the canvas's 14px/8px and centers over --canvas-max on wide
+   screens) · --bezel-ground (the frame's material – MUST differ from --canvas in
+   both modes, otherwise the frame is invisible; --surround is identical to canvas
+   in light). The pair is mirrored in head.html's theme-color metas – edit both
+   places. Rollback: delete this block + the partial call in baseof.html. */
+
+:root {
+  --bezel-top: 80px; /* houses the real nav + presence (2026-07-22, feedback round); ceiling 100px */
+  --bezel-bottom: 14px; /* the ground seam below the footer (2026-07-23: no longer a fixed frame seam) */
+  --bezel-side: max(14px, calc((100% - var(--canvas-max)) / 2));
+  /* Soft deck: warm sand in light, warm near-black in dark – the device must stand
+     CLEARLY against the base in both modes, in the same warm family */
+  --bezel-ground: light-dark(#E4DACB, #121110);
+  /* The machine edge (2026-07-21): the bar's gradient top and the cutout's inner
+     edge – same material family as the app's v8 bezel deck (light top, shadowed bottom) */
+  --bezel-hi: light-dark(#ECE4D7, #1A1917);
+  --bezel-edge: light-dark(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.07));
+}
+
+/* The browser chrome melts into the frame: the html/body background (Safari
+   samples it, cf. the toolbar rule) follows the frame's material – only on canvas
+   pages. With the machine edge's gradient the bar's TOP pixel is --bezel-hi, so
+   THAT is what the chrome must match (mirrored in head.html's theme-color metas –
+   edit both places). The overscroll rubber band thereby also shows the frame's tone. */
+html:has(.canvas) { --toolbar-color: var(--bezel-hi); }
+
+/* The canvas MUST paint its own surface: historically the body background showed
+   through (surround = canvas in light), but now that the body carries the frame's
+   tone, the window's interior would otherwise be frame-colored – and the frame invisible. */
+.canvas { background: var(--canvas); }
+
+/* The window begins below the bar. The surround/device ground is now painted by the
+   BODY: the fixed frame no longer closes at the bottom, so it can't paint the ground
+   below the window. html stays --bezel-hi for the toolbar sampling; only the body
+   carries the ground. The gate keeps pages without canvas untouched. */
+body:has(.canvas) {
+  background-color: var(--bezel-ground);
+  padding-top: var(--bezel-top);
+  padding-bottom: var(--bezel-bottom);
+  /* Column so the footer lands on the ground BELOW the window: the canvas grows to
+     fill on short pages (changelog hub), the footer sits at the bottom; long pages
+     are unaffected. */
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+}
+body:not(:has(.canvas)) .bezel { display: none; }
+
+/* In-app: Sparkle's update WebView loads the release page with ?in-app, and
+   head.html sets html.in-app before paint. Strip every trace of site chrome so
+   the WebView shows only the note – no bezel, no footer, no device ground. */
+html.in-app .bezel,
+html.in-app .site-footer { display: none; }
+html.in-app body:has(.canvas) {
+  padding: 0;
+  background-color: var(--canvas);
+}
+/* The canvas fills the column – its own viewport min-height gives way to flex.
+   width: 100% is required: as a flex item its `margin: 0 auto` (from _canvas.scss)
+   turns off cross-axis stretch, which would otherwise shrink the canvas to its
+   content's width (narrow on docs, wide on the home page). 100% makes every page's
+   window the same width again – capped by max-width, centered above it. */
+body:has(.canvas) .canvas { flex: 1 0 auto; min-height: 0; width: 100%; }
+
+/* The bar IS the navigation (semantic <nav> in the partial) – only the frame is
+   decorative and keeps pointer-events: none. */
+.bezel-frame { pointer-events: none; }
+
+.bezel-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 95;
+  height: var(--bezel-top);
+  display: flex; align-items: center; gap: 22px;
+  padding: 0 calc(var(--bezel-side) + 10px);
+  /* Machine edge: light top toward the browser chrome (toolbar metas = --bezel-hi),
+     landing on ground at the cutout edge */
+  background: linear-gradient(180deg, var(--bezel-hi) 0%, var(--bezel-ground) 100%);
+  white-space: nowrap;
+}
+.bezel-bar .lockup-name { font-size: 20px; }
+.bezel-bar .nav-actions { margin-left: auto; }
+
+.bezel-frame {
+  position: fixed;
+  /* Open at the bottom: the frame runs from below the bar to the very bottom edge,
+     so no bottom seam floats over the viewport. Top + sides stay pinned (box-shadow
+     ground + rounded top corners); the window's rounded BOTTOM is the canvas itself,
+     at the end of the content. */
+  inset: var(--bezel-top) var(--bezel-side) 0;
+  z-index: 94; /* over the canvas's grain (90), under skip-link (100) */
+  border-radius: 26px 26px 0 0; /* rounded top only – the bottom is open */
+  box-shadow: 0 0 0 200vmax var(--bezel-ground);
+  border: 1px solid var(--bezel-edge); /* the machine edge's inner edge */
+  border-bottom: 0; /* the frame does not close at the bottom */
+}
+
+/* Sticky offsets below the bar – the nav lives in the bar itself now, so the
+   offset is the bar height alone. */
+.doc-nav  { top: calc(var(--bezel-top) + 20px); }
+html { scroll-padding-top: calc(var(--bezel-top) + 24px); }
+
+/* The frame stays fixed while the pages crossfade under it during navigation.
+   If it's missing on one page (404, release): ordinary fade. */
+.bezel-bar   { view-transition-name: bezel-bar; }
+.bezel-frame { view-transition-name: bezel-frame; }
+
+@media (max-width: 620px) {
+  :root { --bezel-top: 60px; --bezel-bottom: 8px; --bezel-side: 8px; }
+  .bezel-bar { padding: 0 14px; gap: 12px; }
+  /* Links and version give way (as before in the nav); lockup + toggle + Download remain */
+  .bezel-frame { border-radius: 18px 18px 0 0; } /* = the canvas's mobile radius, top only */
+}

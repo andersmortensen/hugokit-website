@@ -1,11 +1,11 @@
-{{- /* Markdown-udgaven af en enkeltside (outputFormats.md i hugo.toml).
+{{- /* The Markdown version of a single page (outputFormats.md in hugo.toml).
 
-      Ligger som /docs/<slug>/index.md ved siden af HTML'en og linkes fra head
-      med rel="alternate". Målgruppen er crawlere og modeller der hellere vil
-      have kilden end en DOM: samme tekst, ingen navigation, ingen chrome.
+      Lives as /docs/<slug>/index.md next to the HTML and is linked from head
+      with rel="alternate". The audience is crawlers and models that would rather
+      have the source than a DOM: same text, no navigation, no chrome.
 
-      .RawContent er filens Markdown som den står på disken – ikke det rendrede
-      HTML. Shortcodes udføres altså ikke; de sider vi har, bruger ingen. */ -}}
+      .RawContent is the file's Markdown as it stands on disk – not the rendered
+      HTML. Shortcodes are therefore not executed; the pages we have use none. */ -}}
 # {{ .Title | plainify }}
 {{ with .Description }}
 > {{ . }}

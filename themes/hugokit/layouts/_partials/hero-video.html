@@ -1,23 +1,23 @@
-{{- /* Hero-videoen: loopende app-optagelse i light/dark, samme geometri som
-      app-screenshottene (1072×764 – vinduesramme og skygge er komponeret ind i
-      filen, så .shot-reglerne gælder uændret).
+{{- /* The hero video: looping app recording in light/dark, same geometry as
+      the app screenshots (1072×764 – window frame and shadow are composed into
+      the file, so the .shot rules apply unchanged).
 
-      <video> kan ikke vælge kilde efter farveskema, som <picture> kan (media på
-      <source> ignoreres i video). Derfor står elementet uden kilder i markup'en,
-      og scriptet lige under indsætter dem for den mode der faktisk gælder – ét
-      sæt hentes, aldrig begge. Samme sandhed som .mode-pic: data-theme (den
-      manuelle toggle) vinder over systemets prefers-color-scheme.
+      <video> cannot pick its source by color scheme the way <picture> can (media on
+      <source> is ignored in video). The element therefore stands without sources in the markup,
+      and the script just below inserts them for the mode that actually applies – one
+      set is loaded, never both. Same truth as .mode-pic: data-theme (the
+      manual toggle) wins over the system's prefers-color-scheme.
 
-      prefers-reduced-motion: ingen autoplay, ingen video-download – poster-framen
-      står som stillbillede (samme første frame som klippet starter på).
+      prefers-reduced-motion: no autoplay, no video download – the poster frame
+      stands as a still image (the same first frame the clip starts on).
 
-      Uden JS: <noscript> falder tilbage til det statiske screenshot.
+      Without JS: <noscript> falls back to the static screenshot.
 
-      Params: v (dict med kilder + posters) · alt · light/dark (noscript-fallback) */ -}}
+      Params: v (dict with sources + posters) · alt · light/dark (noscript fallback) */ -}}
 {{- $v := .v }}{{ $alt := .alt }}
-{{- /* mp4'erne fingerprintes (kilde: assets/video/) så filnavnet skifter når
-      bytes gør – det gør immutable-cachen i .htaccess sikker. Posterne forbliver
-      i static/ (små, sjældent ændret; host-default cache). */ -}}
+{{- /* The mp4s are fingerprinted (source: assets/video/) so the filename changes when
+      the bytes do – that makes the immutable cache in .htaccess safe. The posters remain
+      in static/ (small, rarely changed; host-default cache). */ -}}
 {{- $lightMp4 := (resources.Get (strings.TrimPrefix "/" $v.lightMp4) | fingerprint).RelPermalink }}
 {{- $darkMp4 := (resources.Get (strings.TrimPrefix "/" $v.darkMp4) | fingerprint).RelPermalink }}
 <video class="shot hero-vid" id="hero-video"
@@ -45,7 +45,7 @@
     var apply = function () {
       var dark = isDark();
       v.poster = dark ? v.dataset.posterDark : v.dataset.posterLight;
-      if (reduce) return; // stillbillede – hent aldrig videoen
+      if (reduce) return; // still image – never fetch the video
       var src = dark ? v.dataset.darkMp4 : v.dataset.lightMp4;
       if (v.dataset.current === src) return;
       v.dataset.current = src;
@@ -65,11 +65,11 @@
     }
     apply();
 
-    // Systemets skema skifter (kun når brugeren ikke har valgt manuelt)
+    // The system scheme changes (only when the user has not chosen manually)
     matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () {
       if (!root.dataset.theme) apply();
     });
-    // Mode-toggle'n i nav'en skriver data-theme på <html>
+    // The mode toggle in the nav writes data-theme on <html>
     new MutationObserver(apply).observe(root, { attributeFilter: ['data-theme'] });
   })();
 </script>

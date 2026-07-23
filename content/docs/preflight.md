@@ -8,6 +8,8 @@ tags: [publishing, checks]
 
 A Hugo site that builds perfectly on your Mac can still land broken on the web. The build isn't the thing that breaks – the *paths* are. Preflight runs before every publish and looks for exactly the failures that only show up once the site is live.
 
+{{< shot name="preflight" alt="HugoKit's preflight report: the pre-publish checks, with a fix offered as a red and green diff to approve." >}}
+
 ## When it runs
 
 Automatically, before every publish. If it finds nothing, the publish just continues. If it finds something, you get the report and decide what to do.

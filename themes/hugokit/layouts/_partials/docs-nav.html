@@ -1,6 +1,6 @@
-{{- /* Docs-sektionsnav – samme grupper og rækkefølge som hub'en (styret af
-      `groups` i content/docs/_index.md). Den aktive side folder sine egne
-      h2-ankre ud, så der kun er ÉN navigation på siden. Kontekst: den aktuelle side. */}}
+{{- /* Docs section nav – same groups and order as the hub (controlled by
+      `groups` in content/docs/_index.md). The active page unfolds its own
+      h2 anchors, so there is only ONE navigation on the page. Context: the current page. */}}
 {{ $current := . }}
 {{ $section := site.GetPage "/docs" }}
 {{ with $section }}
@@ -21,14 +21,14 @@
           <li>
             <a href="{{ .RelPermalink }}"{{ if $isCurrent }} aria-current="page"{{ end }}>{{ .Title }}</a>
             {{ if $isCurrent }}
-              {{- /* .Fragments.Headings har en syntetisk rod på niveau 0 –
-                    sidens h2'er ligger som dens børn. */}}
+              {{- /* .Fragments.Headings has a synthetic root at level 0 –
+                    the page's h2s are its children. */}}
               {{ $headings := .Fragments.Headings }}
               {{ if and $headings (eq (index $headings 0).Level 0) }}
                 {{ $headings = (index $headings 0).Headings }}
               {{ end }}
-              {{- /* .Title er HTML (en overskrift kan indeholde <code>, typografiske
-                    apostroffer osv.) – plainify + htmlUnescape giver ren tekst i nav'en. */}}
+              {{- /* .Title is HTML (a heading can contain <code>, typographic
+                    apostrophes etc.) – plainify + htmlUnescape gives clean text in the nav. */}}
               {{ with $headings }}
               <ul class="doc-nav-frag">
                 {{ range . }}<li><a href="#{{ .ID }}">{{ .Title | plainify | htmlUnescape }}</a></li>{{ end }}

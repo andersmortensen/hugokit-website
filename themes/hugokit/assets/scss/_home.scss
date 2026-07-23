@@ -1,0 +1,391 @@
+/* ── What is Hugo ────────────────────────────────────────────────────────── */
+
+.hugo-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 0 56px;
+  align-items: start;
+}
+.hugo-h { margin-bottom: 14px; }
+.hugo-body { font-size: 17px; line-height: 1.62; color: var(--muted); max-width: 62ch; }
+
+.usps { list-style: none; margin-top: 20px; border-top: 1px solid var(--line); }
+.usp {
+  display: grid; grid-template-columns: 118px minmax(0, 1fr);
+  gap: 0 20px; align-items: baseline;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--line);
+}
+.usp b { display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 16px; }
+/* The quartet as marker – one color per USP, otherwise the page is monochrome */
+.usp-fct { width: 6px; height: 6px; border-radius: 50%; flex: none; }
+.usp-fct-1 { background: var(--pink); }
+.usp-fct-2 { background: var(--blue); }
+.usp-fct-3 { background: var(--green); }
+.usp-fct-4 { background: var(--gold); }
+.usp-fct-5 { background: var(--pink); }
+.usp-fct-6 { background: var(--blue); }
+.usp span:last-child { font-size: 15.5px; color: var(--muted); }
+
+.hugo-bridge { margin-top: 20px; font-size: 17px; line-height: 1.6; max-width: 62ch; }
+.hugo-link {
+  display: inline-block; margin-top: 14px;
+  font-family: var(--mono); font-size: 13px; letter-spacing: 0.03em;
+  color: var(--muted); text-decoration: none;
+  border-bottom: 1px solid var(--line-strong);
+  padding-bottom: 2px;
+}
+.hugo-link:hover { color: var(--ink); }
+
+/* The terminal – what HugoKit runs for you */
+.term {
+  background: light-dark(#26262B, #0B0B0D);
+  border-radius: 8px;
+  overflow: hidden;
+  font-family: var(--mono);
+  font-size: 14px; line-height: 1.75;
+}
+.term-bar {
+  height: 26px; display: flex; align-items: center; gap: 6px;
+  padding: 0 11px;
+  background: light-dark(#33333A, #141418);
+}
+.hw-tl { width: 8px; height: 8px; border-radius: 50%; }
+.hw-r { background: #FF5F57; } .hw-y { background: #FEBC2E; } .hw-g { background: #28C840; }
+.term-body { padding: 14px 15px 17px; color: #9B98A3; }
+.term-prompt { color: #6A6773; }
+.term-cmd { color: #F2F0F4; }
+.term-caret {
+  display: inline-block; width: 6px; height: 12px;
+  vertical-align: -2px; margin-left: 2px;
+  background: #F2F0F4;
+  animation: term-blink 1.15s steps(1) infinite;
+}
+@keyframes term-blink { 50% { opacity: 0; } }
+.term-out { display: block; margin-top: 5px; }
+
+/* ── The loop – the core argument as three numbered steps ────────────────── */
+
+.loop-sub { margin-top: 12px; font-size: 17px; color: var(--muted); }
+.loop-steps { margin-top: 30px; border-top: 1px solid var(--line); }
+
+.lstep {
+  display: grid;
+  grid-template-columns: var(--rail) minmax(0, 1fr);
+  gap: 0 var(--rail-gap);
+  padding: 30px 0;
+  border-bottom: 1px solid var(--line);
+}
+.lstep-head { display: flex; flex-direction: column; gap: 8px; }
+.lstep-no {
+  font-family: var(--mono);
+  font-size: 26.5px; font-weight: 500;
+  letter-spacing: -0.02em; line-height: 1;
+  color: var(--line-strong);
+}
+.lstep-label {
+  font-family: var(--mono);
+  font-size: 12.5px; letter-spacing: 0.13em;
+  text-transform: uppercase; color: var(--faint);
+}
+.lstep-body {
+  display: grid; grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 0 40px; align-items: start;
+}
+.lstep-h { margin-bottom: 9px; }
+.lstep-vis .shot { display: block; width: 100%; height: auto; }
+
+/* The step panes – receipts on the pane-2 surface (soft deck: radius 16) */
+.lstep-pf {
+  background: var(--stage);
+  border-radius: 16px;
+  padding: 16px 18px;
+  font-family: var(--mono);
+  font-size: 13px; line-height: 1.7;
+}
+.pf-bar {
+  display: flex; justify-content: space-between;
+  font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 11px;
+}
+.pf-row {
+  padding: 3px 8px; border-radius: 4px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.pf-del { color: var(--del); background: color-mix(in srgb, var(--del) 10%, transparent); }
+.pf-add { color: var(--add); background: color-mix(in srgb, var(--add) 12%, transparent); margin-top: 3px; }
+.pf-foot { margin-top: 11px; display: flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--faint); }
+.pf-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); flex: none; }
+
+/* The server and deploy panes (same shell as the diff): status lines with a dot,
+   muted secondary lines and a command line in the pane's own code surface */
+.pf-line {
+  display: flex; align-items: center; gap: 7px;
+  padding: 2px 0;
+  color: var(--ink);
+  white-space: nowrap; overflow: hidden;
+}
+.pf-quiet { color: var(--faint); padding-left: 12px; }
+.pf-cmd {
+  margin-top: 8px;
+  padding: 5px 8px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--ink) 5%, transparent);
+  color: var(--muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* ── Docs chips (doc-links.html) – used by loop and features ─────────────── */
+
+.lstep-meta, .feature-meta { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px 10px; }
+/* The docs chip (2026-07-22, feedback round): filled --stage surface + hairline, so
+   it reads as a button rather than an empty outline. Hierarchy: DOCS (faint kicker) ·
+   page title (ink) · arrow. Hover changes only surface, border and ink – nothing moves
+   (cf. the hover rule). Adjustable: the surface/border below + radius. */
+.feature-doc {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 13px; letter-spacing: 0.03em;
+  color: var(--muted); text-decoration: none;
+  background: var(--stage);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 7px 14px;
+  transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease;
+}
+.feature-doc:hover {
+  background: color-mix(in srgb, var(--ink) 6%, var(--stage));
+  border-color: var(--line-strong);
+}
+.feature-doc-ic { width: 14px; height: 14px; align-self: center; color: var(--muted); transition: color 160ms ease; }
+.feature-doc-kicker {
+  font-size: 11px; letter-spacing: 0.11em; text-transform: uppercase;
+  color: var(--faint);
+}
+.feature-doc-title { color: var(--ink); }
+.feature-doc-sep { display: none; }
+.feature-doc-arrow { color: var(--muted); transition: color 160ms ease; }
+.feature-doc:hover .feature-doc-ic,
+.feature-doc:hover .feature-doc-title,
+.feature-doc:hover .feature-doc-arrow { color: var(--ink); }
+
+/* ── Features – the whole toolbox, collapsible ────────────────────────────────
+   Feedback round (2026-07-22): each feature is a <details>. <summary> is the
+   always-visible row (glyph slot + name + teaser + chevron); .feature-reveal
+   unfolds detail (lead), points and docs links on click – and click through to
+   docs from there. Replaces the datasheet decision (all visible, 2026-07-21).
+   Rollback: re-grid .feature-item + move the reveal content out of <details>.
+   Adjustable: --feature-indent (reveal indent) + summary padding below. */
+
+:root { --feature-indent: 45px; }
+.features-meta { margin-top: 11px; }
+.feature-list { border-top: 1px solid var(--line); }
+
+.feature-item { border-bottom: 1px solid var(--line); }
+.feature-summary {
+  display: flex; align-items: center; gap: 15px;
+  padding: 17px 2px 17px 0;
+  cursor: pointer;
+  list-style: none;
+  transition: background-color 160ms ease;
+}
+.feature-summary::-webkit-details-marker { display: none; }
+.feature-summary:hover { background: color-mix(in srgb, var(--ink) 3.5%, transparent); }
+
+/* Fixed glyph slot, so the names align whether the glyph is 17px or a 27px
+   accent tile. */
+.feature-glyph-slot { flex: none; width: 28px; display: flex; align-items: center; justify-content: center; }
+.feature-glyph { width: 17px; height: 17px; color: var(--muted); }
+
+/* Accent glyphs: the four features with accent in front matter get a muted
+   quartet tile behind the glyph – the rest stay quiet. */
+.fi-pink .feature-glyph, .fi-blue .feature-glyph,
+.fi-green .feature-glyph, .fi-gold .feature-glyph {
+  width: 27px; height: 27px;
+  padding: 5px;
+  border-radius: 8px;
+}
+.fi-pink .feature-glyph { color: var(--pink-ink); background: var(--pink-soft); }
+.fi-blue .feature-glyph { color: var(--blue-ink); background: var(--blue-soft); }
+.fi-green .feature-glyph { color: var(--green-ink); background: var(--green-soft); }
+.fi-gold .feature-glyph { color: var(--gold-ink); background: var(--gold-soft); }
+
+.feature-name {
+  flex: none;
+  font-family: var(--display);
+  font-weight: 500; font-size: 17.5px;
+  letter-spacing: -0.01em;
+}
+.feature-teaser {
+  flex: 1; min-width: 0;
+  font-size: 15px; line-height: 1.5; color: var(--muted);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.feature-chevron {
+  flex: none; width: 18px; height: 18px; color: var(--faint);
+  transition: transform 220ms cubic-bezier(0.19, 1, 0.22, 1), color 160ms ease;
+}
+.feature-item[open] .feature-chevron { transform: rotate(180deg); }
+.feature-summary:hover .feature-chevron { color: var(--muted); }
+
+.feature-reveal { padding: 2px 0 26px var(--feature-indent); max-width: 82ch; }
+.feature-lead { font-size: 17px; line-height: 1.62; color: var(--muted); text-wrap: pretty; }
+.feature-lead code, .feature-points code {
+  font-family: var(--mono); font-size: 0.88em; color: var(--ink);
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+  border-radius: 3px; padding: 1px 4px; font-variant-ligatures: none;
+}
+.feature-points { list-style: none; margin-top: 14px; }
+.feature-points li {
+  position: relative; padding-left: 17px; margin-top: 7px;
+  font-size: 15.5px; line-height: 1.55; color: var(--muted);
+  text-wrap: pretty;
+}
+.feature-points li::before {
+  content: ""; position: absolute; left: 2px; top: 8px;
+  width: 5px; height: 1px; background: var(--line-strong);
+}
+
+/* ── From the docs ───────────────────────────────────────────────────────── */
+
+.fromdocs-list { border-top: 1px solid var(--line); }
+.fd-card {
+  display: grid;
+  grid-template-columns: var(--rail) minmax(0, 1fr) 90px;
+  gap: 0 var(--rail-gap);
+  align-items: baseline;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+  text-decoration: none;
+  transition: opacity 140ms ease;
+}
+.fd-card:hover { opacity: 0.62; }
+.fd-kind {
+  font-family: var(--mono); font-size: 12px;
+  letter-spacing: 0.13em; text-transform: uppercase; color: var(--faint);
+}
+.fd-title {
+  display: block;
+  font-family: var(--display); font-weight: 500; font-size: 18px;
+  letter-spacing: -0.012em;
+}
+.fd-desc {
+  display: block; margin-top: 5px;
+  font-size: 15.5px; line-height: 1.5; color: var(--muted);
+  max-width: 70ch; text-wrap: pretty;
+}
+.fd-more {
+  font-family: var(--mono); font-size: 12.5px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--faint); text-align: right;
+}
+
+/* ── FAQ – collapsible, packed into two columns ───────────────────────────────
+   Every question starts collapsed; click the summary to expand (restored
+   2026-07-23 – the datasheet decision to keep all answers visible was reverted).
+   The two-column CSS-columns setting is kept; each item is a <details> with its
+   own hairline. Adjustable parameter: column-gap below. */
+
+.faq-list { columns: 2; column-gap: 56px; }
+.faq-item {
+  break-inside: avoid;
+  border-top: 1px solid var(--line);
+}
+/* The summary is the toggle – click to expand. No default disclosure triangle. */
+.faq-head {
+  list-style: none;
+  cursor: pointer;
+  position: relative;
+  display: flex; align-items: center; gap: 12px;
+  padding: 15px 30px 15px 0; /* right room for the +/× indicator */
+}
+.faq-head::-webkit-details-marker { display: none; }
+.faq-ic { flex: none; display: flex; }
+.faq-ic .feature-glyph { width: 17px; height: 17px; }
+.faq-q {
+  font-family: var(--display);
+  font-weight: 500; font-size: 17.5px;
+  letter-spacing: -0.01em;
+  color: var(--ink); /* the question is the title – held in ink, apart from the muted answer */
+}
+/* The indicator: a + that rotates into a × when the item is open */
+.faq-head::after {
+  content: "+";
+  position: absolute; right: 2px; top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--mono); font-size: 16px;
+  color: var(--faint);
+  transition: transform 220ms ease, color 160ms ease;
+}
+.faq-item[open] .faq-head::after { transform: translateY(-50%) rotate(45deg); color: var(--ink); }
+.faq-head:hover::after { color: var(--ink); }
+/* The answer sits indented under the question text (glyph 17 + gap 12) */
+.faq-answer { padding: 0 0 20px 29px; max-width: 74ch; }
+.faq-answer p { font-size: 16px; line-height: 1.6; color: var(--muted); text-wrap: pretty; }
+.faq-answer p + p { margin-top: 10px; }
+/* Smooth reveal where the browser can animate block-size to auto; elsewhere the
+   item just snaps open (still fine). */
+@supports (interpolate-size: allow-keywords) {
+  :root { interpolate-size: allow-keywords; }
+  .faq-item::details-content {
+    block-size: 0; opacity: 0; overflow: clip;
+    transition: block-size 260ms ease, opacity 240ms ease, content-visibility 260ms allow-discrete;
+  }
+  .faq-item[open]::details-content { block-size: auto; opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .faq-item::details-content { transition: none; }
+  .faq-head::after { transition: none; }
+}
+.faq-chips { list-style: none; display: flex; flex-wrap: wrap; gap: 7px; margin-top: 13px; }
+.faq-chips li {
+  font-family: var(--mono); font-size: 12px;
+  letter-spacing: 0.07em; text-transform: uppercase;
+  color: var(--faint);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 3px 8px;
+}
+
+/* ── Why it exists ───────────────────────────────────────────────────────── */
+
+.note-text { font-size: 18px; line-height: 1.6; color: var(--muted); max-width: 64ch; text-wrap: pretty; }
+.note-text + .note-text { margin-top: 11px; }
+.note-donate { margin-top: 18px; }
+
+/* ── Download ────────────────────────────────────────────────────────────── */
+
+.get-foot {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 30px; flex-wrap: wrap;
+}
+.get-note { font-size: 15.5px; line-height: 1.5; color: var(--faint); max-width: 34ch; }
+.get-facts { margin-top: 30px; border-top: 1px solid var(--line); }
+.get-facts > div {
+  display: grid;
+  grid-template-columns: var(--rail) minmax(0, 1fr);
+  gap: 0 var(--rail-gap);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+.get-facts dt {
+  font-family: var(--mono); font-size: 12.5px;
+  letter-spacing: 0.13em; text-transform: uppercase;
+  color: var(--faint);
+  padding-top: 2px;
+}
+.get-facts dd { font-family: var(--mono); font-size: 15px; letter-spacing: 0.02em; }
+
+/* ── Colophon – the wordmark lives here now, not in the hero ─────────────── */
+
+.colophon-mark { display: flex; align-items: center; gap: 13px; }
+.colophon-word {
+  font-family: var(--display);
+  font-weight: 700; /* the wordmark weight, always – cf. the lockup spec */
+  font-size: 36px;
+  letter-spacing: -0.015em;
+  line-height: 1;
+}
+.colophon-meta { margin-top: 16px; }
+.colophon-meta p { font-size: 15.5px; color: var(--muted); }
+.colophon-meta p + p { margin-top: 3px; }

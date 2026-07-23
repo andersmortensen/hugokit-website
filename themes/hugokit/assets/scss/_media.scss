@@ -1,0 +1,57 @@
+/* ── The window/image frame (used by loop + changelog images) ─────────────── */
+
+.frame {
+  margin: 0;
+  background: var(--plate);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.shot { display: block; width: 100%; height: auto; }
+
+/* ── Screenshot lightbox ──────────────────────────────────────────────────────
+   Any img.shot opens at full size on click (head.html wires it). The backdrop is
+   frosted glass – the page behind is blurred, with no colour tint over it – and the
+   window frame + shadow baked into the image let it float on top. Close sits on the
+   image's own top-right corner, clear of the nav. The <video> hero keeps the default
+   cursor. Adjustable: the blur amount + the image cap (1072px = the shot's 1× size,
+   so a 2× file lands retina-crisp). */
+img.shot { cursor: zoom-in; }
+
+.lightbox {
+  position: fixed; inset: 0; z-index: 200;
+  display: grid; place-items: center;
+  padding: clamp(16px, 4vw, 56px);
+  background: transparent;
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+  cursor: zoom-out;
+  opacity: 0; visibility: hidden;
+  transition: opacity 200ms ease, visibility 0s linear 200ms;
+}
+.lightbox.is-open { opacity: 1; visibility: visible; transition: opacity 200ms ease; }
+.lightbox-inner { position: relative; line-height: 0; cursor: default; }
+.lightbox-img {
+  display: block;
+  max-width: min(1072px, 100%);
+  max-height: 92vh;
+  width: auto; height: auto;
+}
+.lightbox-close {
+  position: absolute; top: -14px; right: -14px;
+  width: 34px; height: 34px;
+  display: grid; place-items: center;
+  color: var(--ink);
+  background: var(--plate);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+.lightbox-close:hover { background: var(--stage); }
+.lightbox-close svg { width: 16px; height: 16px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox { transition: none; }
+}
+

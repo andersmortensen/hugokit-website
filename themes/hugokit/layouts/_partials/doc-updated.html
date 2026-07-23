@@ -1,9 +1,9 @@
-{{- /* Hvornår siden sidst blev rørt.
+{{- /* When the page was last touched.
 
-       .Lastmod kommer fra git-commit-datoen (enableGitInfo), med fallback til
-       en eksplicit lastmod og derefter filens mtime – se [frontmatter] i
-       hugo.toml. En side uden nogen af delene får ingen dato, og partialen
-       skriver så ingenting frem for en løgn.
+       .Lastmod comes from the git commit date (enableGitInfo), with fallback to
+       an explicit lastmod and then the file's mtime – see [frontmatter] in
+       hugo.toml. A page without any of these gets no date, and the partial
+       then writes nothing rather than a lie.
 
        dict: page (required) · format "hub" | "page" */ -}}
 {{- $p := .page -}}

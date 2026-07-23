@@ -1,0 +1,104 @@
+/*  Tokens via light-dark(): the system scheme is default, and the manual
+    toggle in the nav overrides via data-theme on <html> (localStorage-remembered). */
+:root {
+  color-scheme: light dark;
+
+  /* Soft deck palette (layout v6): canvas is the BASE the panes stand on, plate is
+     the pane, stage is pane-2 (the muted sister). Everything is warm – cream in light,
+     warm dark (not cold black) in dark. surround = the flat Sparkle pages' tone. */
+  --surround: light-dark(#F1EAE0, #141312);
+  --canvas: light-dark(#F1EAE0, #1C1A17);
+  --bg: var(--canvas);
+  --plate: light-dark(#FBF8F3, #26231F);
+  --stage: light-dark(#F6F1E9, #211F1B);
+  --ink: light-dark(#2A2521, #EFEAE2);
+  --muted: light-dark(#6E6559, #A79E90);
+  --faint: light-dark(#998F80, #6E6559);
+  --line: light-dark(rgba(42, 37, 33, 0.10), rgba(239, 234, 226, 0.09));
+  --line-strong: light-dark(rgba(42, 37, 33, 0.18), rgba(239, 234, 226, 0.16));
+
+  /* The mark's top surface: the light-surface variant, so the cube doesn't drown in --bg */
+  --mark-top: light-dark(#E6E1D6, #EFEAE2);
+
+  --pink: #FF4088;
+  --pink-deep: #E62E78;
+  --blue: #0594CB;
+  --green: #33BA91;
+  --gold: #EBB951;
+
+  /* The quartet, muted – soft deck uses it only as tinted surfaces and
+     darkened/lightened text (accent glyphs, tags), never as a raw primary color */
+  --pink-ink: light-dark(#B82E64, #FF6EA6);
+  --pink-soft: light-dark(rgba(255, 64, 136, 0.12), rgba(255, 110, 166, 0.14));
+  --blue-ink: light-dark(#0A6E96, #58BFE8);
+  --blue-soft: light-dark(rgba(5, 148, 203, 0.12), rgba(88, 191, 232, 0.14));
+  --green-ink: light-dark(#1E7F62, #4ECFA4);
+  --green-soft: light-dark(rgba(51, 186, 145, 0.14), rgba(78, 207, 164, 0.14));
+  --gold-ink: light-dark(#8F6A1D, #EBC276);
+  --gold-soft: light-dark(rgba(235, 185, 81, 0.16), rgba(235, 194, 118, 0.14));
+
+  /* The diff register – the preflight excerpt on the front page. Its own tones
+     rather than --green/--pink: they must read as added/removed, not as the quartet. */
+  --add: light-dark(#1E7F62, #4ECFA4);
+  --del: light-dark(#C0325F, #FF6E9E);
+
+  /* The ink tone on quartet surfaces – mode-stable, darkest for contrast */
+  --card-ink: #17171B;
+
+  /* Browser toolbar color – Safari Tahoe+ samples html/body (cf. the brand rule) */
+  --toolbar-color: var(--surround);
+
+  /* The nav bar's frosted surface – opacity low enough that the content is sensed
+     behind, high enough that the mono links hold contrast over anything at all */
+  --nav-glass: light-dark(rgba(255, 255, 255, 0.72), rgba(23, 23, 27, 0.62));
+
+  /* The nav bar's lift – two layers: a tight contact shadow + a soft carrying shadow */
+  --nav-shadow:
+    0 1px 2px light-dark(rgba(38, 38, 43, 0.05), rgba(0, 0, 0, 0.35)),
+    0 10px 30px light-dark(rgba(38, 38, 43, 0.07), rgba(0, 0, 0, 0.42));
+
+  /* The glass's lift – used by the floating consent card, which hovers freely over
+     the page and therefore must carry a heavier shadow than the embedded cards. */
+  --glass-lift:
+    0 1px 2px light-dark(rgba(38, 38, 43, 0.06), rgba(0, 0, 0, 0.40)),
+    0 16px 40px -12px light-dark(rgba(38, 38, 43, 0.18), rgba(0, 0, 0, 0.65));
+
+  /* The cards' lift – two layers: a tight contact shadow + a soft carrying shadow.
+     Depth without an edge; it's this layer that carries the why cards, not a border. */
+  --panel-lift:
+    0 1px 2px light-dark(rgba(38, 38, 43, 0.05), rgba(0, 0, 0, 0.40)),
+    0 12px 32px -14px light-dark(rgba(38, 38, 43, 0.16), rgba(0, 0, 0, 0.65));
+  --panel-lift-hi:
+    0 1px 2px light-dark(rgba(38, 38, 43, 0.06), rgba(0, 0, 0, 0.45)),
+    0 18px 44px -16px light-dark(rgba(38, 38, 43, 0.22), rgba(0, 0, 0, 0.75));
+
+  /* Mode-toggle: the moon shows in light, the sun in dark (light-dark controls visibility) */
+  --icon-moon: light-dark(#5F5C66, transparent);
+  --icon-sun: light-dark(transparent, #9B98A3);
+
+  --display: 'Hanken Grotesk', system-ui, sans-serif;
+  --sans: 'Inter', -apple-system, system-ui, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+
+  --radius: 8px;
+  --wrap: 1020px; /* prose canvas – faq answers, note, changelog */
+  --canvas-max: 1560px;
+  /* The deck seam: the distance between the panes and the device edge. Narrow like
+     the app's v8 gutter – the panes FILL the device, the base is a seam, not a margin. */
+  --deck-side: clamp(16px, 1.6vw, 24px);
+
+  /* The display scale – the spec sheet register: hierarchy via size, not weight.
+     Hanken Grotesk 500 carries the headings; 700 is reserved for the wordmark
+     (nav lockup and colophon). --t-giant removed with the wordmark hero 2026-07-19. */
+  --t-title: clamp(33.5px, 4.1vw, 48px);
+
+  /* Utility CTA: ink pill in light, inverted in dark (warm ink, warm surface) */
+  --btn-bg: light-dark(#2A2521, #EFEAE2);
+  --btn-bg-hover: light-dark(#3E382F, #DED8CC);
+  --btn-fg: light-dark(#FBF8F3, #141210);
+}
+
+/* Manual mode override */
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+

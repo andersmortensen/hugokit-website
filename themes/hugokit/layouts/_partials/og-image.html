@@ -1,25 +1,25 @@
-{{- /* Per-side OG-kort – genereres ved build, ét pr. side.
+{{- /* Per-page OG card – generated at build, one per page.
 
-      Forsiden beholder det designede kort i static/og/hugokit-og.png (kæmpe-
-      wordmark + tagline). Alle andre sider får dette: samme plade (assets/og/
-      plate.png – baggrund #0D0D0F, mærket i samme geometri som forsidens kort,
-      "macOS 26+ · free" nederst til højre), med sidens EGEN titel sat i Hanken
-      Grotesk oven på. Ingen håndlavede billeder at vedligeholde: en ny docs-side
-      får sit kort af sig selv.
+      The home page keeps the designed card in static/og/hugokit-og.png (giant
+      wordmark + tagline). All other pages get this: the same plate (assets/og/
+      plate.png – background #0D0D0F, the mark in the same geometry as the home page's card,
+      "macOS 26+ · free" at the bottom right), with the page's OWN title set in Hanken
+      Grotesk on top. No hand-made images to maintain: a new docs page
+      gets its card by itself.
 
-      Titlen ombrydes her i templaten, fordi images.Text ikke ombryder selv – der
-      findes ingen bredde-parameter, kun x/y. Loftet er tre linjer; en titel der
-      ikke kan være der, klippes med et ellipsetegn frem for at løbe ud over
-      kanten. Vil du justere kortets rytme, er det de fire konstanter nedenfor.
+      The title is wrapped here in the template, because images.Text does not wrap on its own – there
+      is no width parameter, only x/y. The ceiling is three lines; a title that
+      cannot fit is clipped with an ellipsis rather than running past the
+      edge. If you want to adjust the card's rhythm, it is the four constants below.
 
-      Returnerer den absolutte URL som en streng. Fejler en af ressourcerne
-      (font eller plade), returneres tom streng, og head.html falder tilbage til
-      forsidens kort – et manglende OG-billede er værre end et generisk. */ -}}
+      Returns the absolute URL as a string. If one of the resources fails
+      (font or plate), an empty string is returned, and head.html falls back to
+      the home page's card – a missing OG image is worse than a generic one. */ -}}
 
-{{- $wrap := 26 -}}{{- /* tegn pr. titel-linje */ -}}
-{{- $size := 60 -}}{{- /* titlens punktstørrelse */ -}}
-{{- $lead := 76 -}}{{- /* linjeafstand i titlen */ -}}
-{{- $top := 244 -}}{{- /* titlens første linje, y */ -}}
+{{- $wrap := 26 -}}{{- /* characters per title line */ -}}
+{{- $size := 60 -}}{{- /* the title's point size */ -}}
+{{- $lead := 76 -}}{{- /* line spacing in the title */ -}}
+{{- $top := 244 -}}{{- /* the title's first line, y */ -}}
 
 {{- $plate := resources.Get "og/plate.png" -}}
 {{- $display := resources.Get "fonts/HankenGrotesk-Bold.ttf" -}}
@@ -27,9 +27,9 @@
 
 {{- if and $plate $display $mono -}}
 
-  {{- /* Ombrydning: læg ord på den aktuelle linje så længe den holder sig under
-        loftet. Et enkelt ord der er længere end loftet får sin egen linje – det
-        er stadig pænere end at klippe midt i et ord. */ -}}
+  {{- /* Wrapping: place words on the current line as long as it stays under
+        the ceiling. A single word longer than the ceiling gets its own line – it
+        is still nicer than clipping in the middle of a word. */ -}}
   {{- $lines := slice -}}
   {{- $cur := "" -}}
   {{- range $word := split (.Title | plainify) " " -}}
@@ -50,18 +50,18 @@
 
   {{- $filters := slice -}}
 
-  {{- /* Kicker: samme gruppe som docs-hub'en og sidenavigationen bruger, så
-        kortet siger hvor i sitet siden hører til. Changelog har ingen gruppe –
-        der står sektionen i stedet. */ -}}
+  {{- /* Kicker: the same group the docs hub and the side navigation use, so
+        the card says where in the site the page belongs. Changelog has no group –
+        the section is shown instead. */ -}}
   {{- $label := .Params.group | default (.Section | humanize) -}}
   {{- with $label -}}
     {{- $filters = $filters | append (images.Text (upper .) (dict
       "color" "#9B98A3" "size" 20 "x" 64 "y" 186 "font" $mono)) -}}
   {{- end -}}
 
-  {{- /* Titel-blokken hænger ikke i toppen: en kort titel skubbes ned, så
-        blokkens tyngdepunkt lander samme sted uanset om den fylder én eller tre
-        linjer. Halvdelen af de sparede linjer – resten bliver luft nedenunder. */ -}}
+  {{- /* The title block does not hang at the top: a short title is pushed down, so
+        the block's center of gravity lands in the same place whether it fills one or three
+        lines. Half of the saved lines – the rest becomes air below. */ -}}
   {{- $y := add $top (mul (sub 3 (len $lines)) (div $lead 2)) -}}
   {{- range $lines -}}
     {{- $filters = $filters | append (images.Text . (dict
@@ -69,8 +69,8 @@
     {{- $y = add $y $lead -}}
   {{- end -}}
 
-  {{- /* Nederst til venstre: sidens egen adresse, så kortet kan læses uden at
-        klikke. Modvægt til "macOS 26+ · free", der er malet ind i pladen. */ -}}
+  {{- /* Bottom left: the page's own address, so the card can be read without
+        clicking. A counterweight to "macOS 26+ · free", which is painted into the plate. */ -}}
   {{- $filters = $filters | append (images.Text (printf "hugokit.com%s" .RelPermalink) (dict
     "color" "#5F5C66" "size" 21 "x" 64 "y" 538 "font" $mono)) -}}
 

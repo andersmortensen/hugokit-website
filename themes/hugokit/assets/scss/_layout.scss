@@ -1,0 +1,127 @@
+/* ── Spec sheet – the front page's register ───────────────────────────────────
+   Layout v5 "spec sheet" (2026-07-19). Succeeds layout v4 "orca-editorial".
+   Approach: the page is one measured document, not a stack of sections. One
+   layout pattern throughout – label rail on the left, content on the right – and
+   hairlines rather than cards and shadows. The wordmark has moved from the hero to
+   the colophon at the bottom.
+
+   Adjustable parameters: --rail (the label column) · --rail-gap · --sect (the
+   vertical rhythm between sections) · --tick (the section marker's tick height).
+   Rollback: _Arkiv/diverse/hugokit-website-main-css-foer-spec-sheet-2026-07-19.css */
+
+:root {
+  --rail: 152px;
+  --rail-gap: 34px;
+  --sect: 80px;
+  --tick: 7px;
+  /* (--sheet-max removed 2026-07-21 – the panes fill the device, cf. .sheet) */
+}
+
+/* The panes fill the device (2026-07-21): no centering margin – the base is
+   only the deck seam (--deck-side + --deck-gap). The content's reading widths are
+   controlled INSIDE the panes (ch ceilings and rail grid), not by an outer measure. */
+.sheet { width: 100%; margin: 0 auto; }
+
+/* ── Soft deck (layout v6, 2026-07-21) ───────────────────────────────────────
+   The sections are PANES on the base – warm surface, 22px continuous-like corners,
+   zero borders and zero shadows (the surface contrast carries, as in the app's v8
+   window). The rhythm is carried by the deck gap, not by --sect. The download pane
+   is pane-2. Adjustable parameters: --deck-gap, --pane-r and pane padding below. */
+:root { --deck-gap: 18px; --pane-r: 22px; }
+main.sheet { display: flex; flex-direction: column; gap: var(--deck-gap); padding: 18px 0 90px; }
+main.sheet > section,
+main.sheet > .mast {
+  background: var(--plate);
+  border-radius: var(--pane-r);
+  padding: clamp(28px, 4vw, 52px);
+}
+main.sheet > .get { background: var(--stage); }
+
+/* ── Document primitives ─────────────────────────────────────────────────── */
+
+.lc {
+  display: grid;
+  grid-template-columns: var(--rail) minmax(0, 1fr);
+  gap: 0 var(--rail-gap);
+}
+
+.lab {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--faint);
+  padding-top: 5px;
+}
+
+/* The section marker: hairline with a tick at each end and index + name below
+   the line – like a measured span in a technical drawing. This is the move that
+   binds the page together; replaces v4's label pills. */
+/* The section marker on the deck: the pane's own label line – no hairline, no
+   ticks (the surfaces carry the separation). The spans remain: the bezel readout
+   reads index + name from here. */
+.rule {
+  position: relative;
+  margin-bottom: 26px;
+}
+.rule span {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+.rule .ix { color: var(--faint); margin-right: 14px; }
+.rule .nm { color: var(--muted); }
+
+/* (--sect removed with soft deck – the panes' padding + --deck-gap carry the rhythm) */
+
+.prose {
+  font-size: 17px; line-height: 1.62;
+  color: var(--muted);
+  max-width: 62ch;
+  text-wrap: pretty;
+}
+.prose + .prose { margin-top: 11px; }
+.prose strong { color: var(--ink); font-weight: 500; }
+
+.sheet h2 {
+  font-family: var(--display);
+  font-weight: 400; /* soft deck: hierarchy via size, not weight */
+  font-size: clamp(31px, 3.6vw, 41px); line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+.sheet h3 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 20.5px;
+  letter-spacing: -0.012em;
+}
+
+/* Inline code and shortcut keys in prose and bullet points */
+.sheet code {
+  font-family: var(--mono);
+  font-size: 0.88em;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+  border-radius: 3px;
+  padding: 1px 4px;
+  font-variant-ligatures: none;
+}
+
+/* The bullet list – dash as marker, not a dot in a circle */
+.pts { list-style: none; margin-top: 14px; }
+.pts li {
+  position: relative;
+  padding-left: 17px;
+  margin-top: 7px;
+  font-size: 15.5px; line-height: 1.55;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+.pts li::before {
+  content: "";
+  position: absolute; left: 2px; top: 8px;
+  width: 5px; height: 1px;
+  background: var(--line-strong);
+}
+

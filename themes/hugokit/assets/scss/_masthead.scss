@@ -1,0 +1,90 @@
+/* ── Masthead ────────────────────────────────────────────────────────────── */
+
+.mast .hero-heading {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(45.5px, 5.5vw, 74.5px);
+  line-height: 1.05;
+  letter-spacing: -0.026em;
+  max-width: 14ch;
+}
+.hh-dim { color: var(--muted); }
+
+/* Masthead grid: copy on the left, floating fact cards on the right (soft deck) */
+.mast-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 40px;
+  align-items: center;
+}
+.mast-grid .lab { margin-bottom: 22px; }
+
+/* The floating feature cards – pane-2 surfaces, slightly rotated; one feature per
+   card (loop, snapshots & undo, site health – 2026-07-22). Adjustable: min-height +
+   the rotation/positions (fc1–fc3) below. */
+.float-stack { position: relative; min-height: 460px; }
+.fcard {
+  position: absolute;
+  display: block;
+  background: var(--stage);
+  border-radius: 16px;
+  padding: 18px 20px;
+  width: min(232px, 80%);
+}
+.fcard-k {
+  display: block;
+  font-family: var(--mono);
+  font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--faint);
+}
+.fcard-v {
+  display: block;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 22px; letter-spacing: -0.02em; line-height: 1.14;
+  margin-top: 6px;
+}
+.fcard-s { display: block; font-size: 14px; color: var(--muted); margin-top: 6px; line-height: 1.45; }
+.fc1 { top: 0; right: 12%; transform: rotate(-2.5deg); }
+.fc2 { top: 33%; right: 0; transform: rotate(1.8deg); }
+.fc3 { top: 66%; right: 13%; transform: rotate(-1.4deg); }
+
+.hero-lead {
+  margin-top: 20px;
+  font-size: 18.5px; line-height: 1.55;
+  color: var(--muted);
+  max-width: 56ch;
+  text-wrap: pretty;
+}
+
+.mast-act {
+  margin-top: 26px;
+  display: flex; align-items: center; gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* The facts strip – its own pane-2 with large values and thin dividers (soft deck) */
+main.sheet > .facts-pane { background: var(--stage); }
+.facts {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+}
+.fact { position: relative; padding: 4px 22px 4px 0; }
+.fact + .fact { padding-left: 26px; }
+.fact + .fact::before {
+  content: "";
+  position: absolute; left: 0; top: 4px; bottom: 4px;
+  width: 1px; background: var(--line);
+}
+.fact-v {
+  font-family: var(--display);
+  font-weight: 400; font-size: clamp(27.5px, 3vw, 38.5px);
+  letter-spacing: -0.018em;
+  line-height: 1.1;
+}
+.fact-ic { display: block; margin-bottom: 13px; color: var(--muted); }
+.fact-ic .feature-glyph { width: 24px; height: 24px; }
+.fact-l { margin-top: 7px; font-size: 15px; line-height: 1.45; color: var(--muted); }
+
+/* (The hero media was removed 2026-07-21 with soft deck – the fact cards carry the
+   hero's right side; screenshots return as release material elsewhere.) */
+

@@ -1,0 +1,62 @@
+/* ── Footer ───────────────────────────────────────────────────────────────── */
+
+/* The footer is the site's colophon: mark and wordmark on top, who and what below,
+   the links last behind a hairline. It sits on the device GROUND below the window
+   (2026-07-23) – outside the bezel, the same way the nav bar sits above it. No
+   surface of its own; the body ground carries it. The content is held to the canvas
+   measure so the colophon lines up with the window's content above it. */
+.site-footer {
+  padding: 44px 0 20px;
+}
+.footer-inner {
+  max-width: var(--canvas-max);
+  margin: 0 auto;
+  padding: 0 var(--deck-side);
+}
+.footer-made { font-size: 15.5px; color: var(--muted); }
+/* The name is a link, not a signature: the underline carries it, the color responds */
+.footer-author {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--line-strong);
+  transition: text-decoration-color 160ms ease;
+}
+.footer-author:hover { text-decoration-color: var(--ink); }
+.footer-links {
+  display: flex; flex-wrap: wrap; align-items: baseline;
+  gap: 8px 20px;
+  margin-top: 26px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.footer-build {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 13px; letter-spacing: 0.04em;
+  color: var(--faint);
+}
+/* The cookies button is a <button> (it doesn't navigate, it reopens the banner),
+   but should read like the other footer links – hence the same rule, plus a reset
+   of the browser's own button surface. */
+.footer-links a,
+.footer-links button {
+  font-family: var(--mono);
+  font-size: 13px; letter-spacing: 0.04em;
+  color: var(--faint); text-decoration: none;
+  transition: color 160ms ease;
+}
+.footer-links button {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+.footer-links a:hover,
+.footer-links button:hover { color: var(--ink); }
+.footer-note {
+  font-size: 15.5px;
+  color: var(--muted);
+  margin-top: 3px;
+}
+

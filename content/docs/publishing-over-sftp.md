@@ -46,7 +46,7 @@ The alternative is an SSH key. Leave the password field empty, and HugoKit uses 
 
 `⌘P`. HugoKit:
 
-1. Builds the site with `hugo --gc --minify`.
+1. Builds the site with the flags set for it – `hugo --gc --minify` by default. See [Build flags](/docs/build-flags/).
 2. Works out what actually changed. `.hugokit/ftp-manifest.json` in your project holds a SHA-256 hash of every file it uploaded last time. Files with a new hash are uploaded, files you deleted locally are deleted on the server, and everything else is left alone:
    ```
    Smart sync: 3 to upload, 1 to delete, 214 unchanged

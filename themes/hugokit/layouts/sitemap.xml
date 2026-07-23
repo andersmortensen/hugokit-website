@@ -1,10 +1,10 @@
 {{ printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
-{{- /* Override af Hugos default-sitemap. Eneste ændring: liste-sider (forside,
-      /docs/, /changelog/) arver den nyeste lastmod blandt deres efterkommere i
-      stedet for git-datoen på deres eget _index.md. Uden det stod hub-siderne
-      som ældre end de docs de faktisk lister – Google anbefaler at lastmod
-      afspejler den seneste væsentlige ændring. Leaf-sider har ingen
-      RegularPagesRecursive, så $lastmod forbliver deres egen .Lastmod. */ -}}
+{{- /* Override of Hugo's default sitemap. The only change: list pages (home,
+      /docs/, /changelog/) inherit the newest lastmod among their descendants
+      instead of the git date on their own _index.md. Without it the hub pages stood
+      as older than the docs they actually list – Google recommends that lastmod
+      reflects the most recent significant change. Leaf pages have no
+      RegularPagesRecursive, so $lastmod remains their own .Lastmod. */ -}}
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   {{- range .Data.Pages }}

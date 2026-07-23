@@ -25,6 +25,8 @@ Edit anything and an amber **Edited** badge appears next to the title. That's th
 
 **Save** doesn't save. It builds the new file contents and shows you a diff: every changed key, old value against new. Approve it, and *then* it's written. **Revert** throws the edits away and reloads the file as it is on disk.
 
+{{< shot name="config-diff" alt="The Config editor's Review Changes diff: a changed key shown old value against new before anything is written to disk." h="776" >}}
+
 That means a mistyped key costs you a glance, not a broken build.
 
 And even an approved save has a way back: HugoKit snapshots the config as it was before writing, so the change can be undone from the site's **Snapshots** sheet. More on that in [Snapshots and undo](/docs/snapshots-and-undo/).

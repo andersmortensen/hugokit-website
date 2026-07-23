@@ -1,11 +1,11 @@
 {{ define "body" }}
-{{- /* Changelog-hub'en – sitets fulde layout (kanvas, nav, footer).
-      Release-noter loader DYNAMISK ind i hub'en: klik fetcher undersiden,
-      trækker .release-version/-date/-body ud og swapper view'et med en
-      view-transition + pushState – ingen browser-refresh. Hover prefetcher.
-      Uden JS navigeres der normalt til de kompakte release-sider, som
-      FORBLIVER minimale (Sparkle-kontrakten i RELEASING.md: releaseNotesLink
-      vises i update-vinduets WebView). */}}
+{{- /* The changelog hub – the site's full layout (canvas, nav, footer).
+      Release notes load DYNAMICALLY into the hub: a click fetches the subpage,
+      pulls out .release-version/-date/-body and swaps the view with a
+      view transition + pushState – no browser refresh. Hover prefetches.
+      Without JS you navigate normally to the compact release pages, which
+      REMAIN minimal (the Sparkle contract in RELEASING.md: releaseNotesLink
+      is shown in the update window's WebView). */}}
 <div class="canvas">
 
 
@@ -38,9 +38,9 @@
     </article>
   </main>
 
-  {{ partial "footer.html" . }}
-
 </div>
+
+{{ partial "footer.html" . }}
 
 <script>
   (function () {
@@ -115,7 +115,7 @@
         .catch(function () { location.href = a.href; });
     });
 
-    // Prefetch ved hover/fokus – klikket føles øjeblikkeligt
+    // Prefetch on hover/focus – the click feels instant
     list.addEventListener('mouseover', function (e) {
       var a = e.target.closest('.release-list a');
       if (a) load(a.href).catch(function () {});

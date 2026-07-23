@@ -1,0 +1,17 @@
+{{- /* Docs screenshot in light/dark. Renders the shot.html partial (mode-pic +
+      head.html's manual-toggle JS) inside a figure – raw HTML is off in goldmark
+      (unsafe = false), so a screenshot in a docs page has to come through here.
+      Params: name (required – /images/docs/<name>-{light,dark}.webp) · alt (required) ·
+      w/h (optional intrinsic px, default 1072×764 – set h for an off-ratio shot) ·
+      caption (optional). */ -}}
+{{- $name := .Get "name" -}}
+{{- $alt := .Get "alt" -}}
+{{- $w := .Get "w" | default 1072 -}}
+{{- $h := .Get "h" | default 764 -}}
+<figure class="doc-shot">
+  {{ partial "shot.html" (dict
+      "light" (printf "/images/docs/%s-light.webp" $name)
+      "dark" (printf "/images/docs/%s-dark.webp" $name)
+      "alt" $alt "w" $w "h" $h) }}
+  {{- with .Get "caption" }}<figcaption>{{ . }}</figcaption>{{ end -}}
+</figure>

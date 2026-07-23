@@ -50,6 +50,20 @@ The timeline shows **Save version → Push to GitHub → Build site → Deploy**
 
 After a successful publish, HugoKit probes the live URL – the dot on the target row tells you whether the site actually responds, and **Check if Live** in the target's **⋯** menu runs the same probe on demand. And if the site has more than one active target, **Publish to All Targets** on the Deploy page sends it to every one of them.
 
+The flags Hugo builds with – garbage collection, minify and a build environment – are set per site on the Deploy page. See [Build flags](/docs/build-flags/).
+
+## Git checks before a publish
+
+Publishing to GitHub Pages means committing and pushing, so what's in git decides what goes live. Before a publish, HugoKit reads the site's git state and shows it at the top of the Deploy page – the branch, whether anything is uncommitted, and how the remote compares.
+
+Three things it will stop for:
+
+- **Uncommitted changes** – work that isn't committed won't be in the push. Flagged as a warning.
+- **A different branch** – the publish pushes the branch the target is configured for; if you're working on another one, your changes aren't in that push at all. A warning.
+- **A remote that doesn't match** – the target points at one repository and `origin` points at another. Compared on the normalised `owner/repo`, so `https`, `ssh` and a `.git` suffix all count as the same repo. An error.
+
+Warnings and errors hold the publish until you've dealt with them; anything only worth noting is written to the log and doesn't interrupt. (An FTP/SFTP publish builds from your working tree and never touches git, so there the same state is just a note.)
+
 ## The subpath trap
 
 This one catches almost everyone, and it's the reason [preflight](/docs/preflight/) exists.

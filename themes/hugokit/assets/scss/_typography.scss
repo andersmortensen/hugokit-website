@@ -1,0 +1,37 @@
+/* ── Typography registers ─────────────────────────────────────────────────── */
+
+.section-label {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--faint);
+}
+
+.section-body {
+  font-size: 19px;
+  color: var(--muted);
+  max-width: 560px;
+}
+
+.fine-meta {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--faint);
+}
+
+/* (.label-pill removed 2026-07-19 – the sections are now carried by .rule, not by pills.) */
+
+/* Optical trim of the display scale: the line box's air above cap-height and below
+   the baseline is removed, so the headings sit precisely against edges and hairlines –
+   not typographically-technically. Chrome 133+/Safari 18.4+; all others stand as before.
+   Rollback: delete the block. */
+@supports (text-box: trim-both cap alphabetic) {
+  .sheet h2, .hero-heading, .colophon-word,
+  .hub-title, .doc-title, .page-title, .notfound-heading {
+    text-box: trim-both cap alphabetic;
+  }
+}
+

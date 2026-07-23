@@ -1,0 +1,88 @@
+/* ── Consent banner ───────────────────────────────────────────────────────── */
+/* Fixed at the bottom – not the top: Safari Tahoe samples sticky/fixed elements
+   at the TOP for the toolbar color, and a plate surface up there would override
+   the canvas's tone. z-index 96 floats it ABOVE the bezel frame (94) and bar (95),
+   under skip-link (100): on wide screens the frame's ground side-rail is painted
+   (box-shadow) over the left edge of the viewport, and at z-index 80 it covered the
+   banner's left – the dialog must sit on top of the device chrome, not inside it.
+   The buttons are the site's own (.btn / .btn-outline) – no new visual register. */
+/* The corner card: a dialog in the left corner, not a compliance bar across
+   the page. Same frosted glass as the nav bar – identical recipe, so the site
+   has only one material: semi-transparent surface, blur + saturation of everything behind. */
+.consent {
+  position: fixed;
+  left: 14px; bottom: 14px;
+  z-index: 96;
+  width: 340px;
+  max-width: calc(100% - 28px);
+  display: flex; flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--glass-lift);
+
+  background: var(--nav-glass);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+}
+/* Without backdrop-filter: opaque surface rather than legible text behind (like the nav bar) */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .consent { background: var(--plate); }
+}
+/* display: flex would otherwise kill [hidden] */
+.consent[hidden] { display: none; }
+
+.consent-head { display: flex; align-items: center; gap: 11px; }
+.consent-ic {
+  flex: none;
+  width: 32px; height: 32px;
+  border-radius: 9px;
+  display: grid; place-items: center;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--ink) 7%, transparent);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.consent-ic .feature-glyph { width: 17px; height: 17px; color: inherit; }
+.consent-title {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+/* The buttons share the width – the card is narrow enough that a choice should be one click */
+.consent-actions .btn,
+.consent-actions .btn-outline { flex: 1; }
+
+/* flex: none – the card is a column, so a flex-basis here would turn into height
+   (the old horizontal bar had 1 1 260px, and that gave 260px of empty space) */
+.consent-text {
+  flex: none;
+  font-size: 15.5px; line-height: 1.55;
+  color: var(--muted);
+}
+/* The banner must not ask for a choice without showing what the choice covers */
+.consent-text a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--line-strong);
+}
+.consent-text a:hover { text-decoration-color: var(--ink); }
+.consent-actions { display: flex; align-items: center; gap: 10px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .consent { animation: consent-in 320ms cubic-bezier(0.2, 0.7, 0.3, 1) both; }
+  @keyframes consent-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: none; }
+  }
+}
+
+@media (max-width: 520px) {
+  .consent { flex-direction: column; align-items: stretch; }
+  .consent-actions { justify-content: flex-end; }
+}
+

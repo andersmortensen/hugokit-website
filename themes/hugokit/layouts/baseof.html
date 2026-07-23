@@ -7,8 +7,8 @@
   <a class="skip-link" href="#main">Skip to content</a>
   {{ partial "bezel.html" . }}
   {{ block "body" . }}{{ end }}
-  {{- /* Begge sidst i body: DOM'en er parset, så tracking og banner kan binde
-        sig direkte uden at vente på DOMContentLoaded. */}}
+  {{- /* Both last in the body: the DOM is parsed, so tracking and banner can bind
+        directly without waiting for DOMContentLoaded. */}}
   {{ partial "consent.html" . }}
   {{ partial "analytics.html" . }}
 </body>

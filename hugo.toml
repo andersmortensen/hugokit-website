@@ -15,6 +15,7 @@ disableKinds = ['taxonomy', 'term']
 # Docs' JSON-LD (TechArticle → dateModified) læser den – ingen dato i front matter,
 # ingen dato der kan drive fra virkeligheden. Rollback: slet denne linje.
 enableGitInfo = true
+copyright = '2026'
 
 [frontmatter]
   # Faldkæde for .Lastmod: git-commit-datoen først, så en eksplicit lastmod i
@@ -62,13 +63,13 @@ enableGitInfo = true
   tagline = 'a Mac app for Hugo'
   description = 'A Mac app for Hugo: run the server, preview your pages and publish your site from one window. Free, native, no terminal – built by one person for his own sites.'
   # Appens aktuelle version — bruges i JSON-LD (softwareVersion); bump ved release.
-  version = '0.1.0'
+  version = '0.2.0'
   # Download-fakta under knappen. Skal matche den DMG appcast'en peger på —
   # størrelsen er enclosure length i static/appcast.xml (6.120.150 B = 5,8 MB),
   # datoen er dens pubDate, og arkitekturen er aflæst på binæren i dist/export
   # (Mach-O universal: x86_64 + arm64). Bumpes ved hver release, se RELEASING.md.
-  dmgSize = '5.8 MB'
-  releaseDate = '2026-07-13'
+  dmgSize = '6.8 MB'
+  releaseDate = '2026-07-23'
   architecture = 'Universal – Apple silicon and Intel'
   requires = 'macOS 26 or later'
   # Kort form til bezel-barens app-fakta – følg `requires` ved ændringer.

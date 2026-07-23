@@ -1,11 +1,11 @@
-{{- /* Definitions-række: term i venstre spor, forklaring i højre – til de steder
-      hvor en punktliste egentlig er en tabel (fx netværkskaldene på /privacy/).
-      Rå HTML er slået fra i goldmark (unsafe = false), så strukturen skal komme
-      herfra og ikke fra markdown'en.
+{{- /* Definition row: term in the left track, explanation in the right – for the places
+      where a bullet list is really a table (e.g. the network calls on /privacy/).
+      Raw HTML is turned off in goldmark (unsafe = false), so the structure must come
+      from here and not from the markdown.
 
-      Parret shortcode med én param: term. Indholdet mellem tags rendres som
-      markdown, så backticks og links virker. Rækkerne stables på hairlines;
-      den sidste lukker sig selv i CSS. */ -}}
+      A paired shortcode with one param: term. The content between the tags is rendered as
+      markdown, so backticks and links work. The rows stack on hairlines;
+      the last one closes itself in CSS. */ -}}
 <div class="def-row">
   <b>{{ .Get "term" }}</b>
   <span>{{ .Inner | markdownify }}</span>

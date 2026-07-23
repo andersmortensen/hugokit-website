@@ -1,0 +1,70 @@
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+
+/* Midpoint: the side columns (terminal, screenshots) drop below the text,
+   but the label rail remains – the sheet still reads as a sheet. */
+@media (max-width: 1020px) {
+  .hugo-split { grid-template-columns: minmax(0, 1fr); gap: 30px; }
+  .lstep-body { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .lstep-vis { max-width: 460px; }
+  .nav-links-mid { gap: 16px; }
+}
+
+/* Below 860px the label rail makes no sense: labels sit above the content
+   instead of beside it. It's one place, --rail, that controls the switch. */
+@media (max-width: 860px) {
+  :root { --rail: 0px; --rail-gap: 0px; --deck-gap: 12px; --pane-r: 16px; }
+  main.sheet > section, main.sheet > .mast { padding: clamp(22px, 5vw, 32px); }
+  .facts { grid-template-columns: 1fr; }
+  .fact { padding-right: 0; }
+  .fact + .fact { padding-left: 0; padding-top: 14px; margin-top: 14px; }
+  .fact + .fact::before { top: 0; bottom: auto; left: 0; right: 0; width: auto; height: 1px; }
+
+  .lc, .lstep, .get-facts > div, .fd-card { grid-template-columns: minmax(0, 1fr); }
+  .lab { padding-top: 0; margin-bottom: 9px; }
+  .lstep-head { flex-direction: row; align-items: baseline; gap: 12px; margin-bottom: 14px; }
+  .lstep-no { font-size: 18px; }
+  .fd-more { display: none; }
+  .fd-kind { margin-bottom: 6px; }
+
+  /* Collapsible features: reveal moves closer to the edge on narrow screens. */
+  :root { --feature-indent: 34px; }
+
+  /* FAQ falls back to one column */
+  .faq-list { columns: 1; }
+}
+
+@media (max-width: 620px) {
+  .canvas { border-radius: 18px; min-height: calc(100svh - 16px); }
+  body { padding: 8px; }
+
+  .nav-links-mid { display: none; }
+  .nav-version { display: none; }
+  .nav-actions .btn { height: 30px; padding: 0 12px; }
+
+  /* Collapsible feature row: the teaser gives way, so glyph + name + chevron stand clean */
+  .feature-teaser { display: none; }
+
+  /* Stacked: the divider moves from the side to the top, so the surface stays whole */
+  .facts { grid-template-columns: 1fr; }
+  .fact { padding-right: 0; }
+  .fact + .fact { padding-left: 0; border-top: 1px solid var(--line); }
+  .fact + .fact::before { display: none; }
+
+  .page-head { grid-template-columns: 1fr; align-items: start; gap: 14px; }
+  .page-glance { grid-template-columns: 1fr; }
+  .def-row { grid-template-columns: 1fr; gap: 4px; }
+
+  .mast-act { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .cta-buttons { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .cta-row { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .centered-row { align-items: center; }
+
+  .usp { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+
+  .get-foot { flex-direction: column; align-items: flex-start; gap: 26px; }
+  .get-note { max-width: none; }
+
+  .footer-inner { grid-template-columns: minmax(0, 1fr); gap: 22px; }
+  .footer-links { gap: 8px 16px; }
+}
+

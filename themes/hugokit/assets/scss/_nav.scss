@@ -1,0 +1,74 @@
+/* ── Nav – lives in the bezel bar (soft deck, 2026-07-21) ─────────────────────
+   The navigation IS the frame: lockup, links, version, mode-toggle and Download
+   sit in .bezel-bar (partial: bezel.html). The component rules below
+   (.nav-link, .nav-version, .lockup, .mode-toggle, .nav-actions) are the same
+   as before – only the shell (.site-nav/.nav-bar) is gone. */
+
+.nav-links-mid { display: flex; align-items: center; gap: 6px; margin-left: 10px; }
+
+.nav-actions { display: flex; align-items: center; gap: 14px; margin-left: auto; }
+
+.nav-link {
+  font-size: 15.5px;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 7px 13px;
+  border-radius: 999px;
+  transition: color 160ms ease, background-color 160ms ease;
+}
+.nav-link:hover {
+  color: var(--ink);
+  background: color-mix(in srgb, var(--ink) 4%, transparent);
+}
+/* Scrollspy/page marking: active = neutral pill fill + ink text (the app's
+   own sidebar-selection language). Fixed padding on all links, so the marking
+   never moves anything – only the surface lights up. */
+.nav-link[aria-current], .nav-version[aria-current] {
+  color: var(--ink);
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
+}
+.nav-version { border-radius: 999px; padding: 6px 11px; }
+
+/* The version in the bar: live product signal, same source as the download facts */
+.nav-version {
+  font-family: var(--mono);
+  font-size: 13px; letter-spacing: 0.04em;
+  color: var(--faint);
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+.nav-version:hover { color: var(--ink); }
+
+.lockup {
+  display: inline-flex; align-items: center; gap: 10px;
+  text-decoration: none;
+}
+.lockup-name {
+  font-family: var(--display);
+  font-weight: 700; /* the wordmark weight, always */
+  font-size: 19px;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+.mode-toggle {
+  position: relative;
+  display: inline-flex;
+  width: 26px; height: 26px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 160ms ease;
+}
+.mode-toggle:hover { background: color-mix(in srgb, var(--ink) 6%, transparent); }
+.mode-toggle svg {
+  position: absolute; inset: 5px;
+  width: 16px; height: 16px;
+}
+
+.nav-actions .btn { height: 32px; padding: 0 14px; font-size: 15px; }
+.i-moon { color: var(--icon-moon); }
+.i-sun { color: var(--icon-sun); }
+

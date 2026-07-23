@@ -1,0 +1,51 @@
+// ============================================================================
+//  HugoKit – hugokit.com (theme: themes/hugokit)
+//
+//  Identity v3 "Q2 v2": mark-first, quartet masonry.
+//  Layout v6 "soft deck" (2026-07-21): the canvas is a warm BASE, and content
+//  sits on it as rounded PANES – separation through surface contrast, no
+//  borders or shadows. Fraunces carries serif accents (h1-em + fact values);
+//  headings are weight 400. The quartet appears only muted (accent glyphs, badges).
+//  Light + dark follow the system preference (prefers-color-scheme) – both always.
+//
+//  Styling is split into component partials (2026-07-23) and transpiled with
+//  Dart Sass (css.Sass in head.html). The order below IS the cascade – it maps
+//  1:1 to the section order of the former monolithic main.css. Change it only
+//  deliberately.
+//
+//  Tokens: surround / canvas(base) / plate(pane) / stage(pane-2) / ink
+//  Fonts:  Hanken Grotesk (wordmark 700 · headings 400/500) + Inter +
+//          JetBrains Mono + Fraunces (accents).
+//  Brand spec: dokumentation → apps/hugokit/brand · geometry in static/brand/
+// ============================================================================
+
+// Foundation
+@use "fonts";
+@use "tokens";
+@use "base";
+@use "canvas";
+@use "typography";
+@use "buttons";
+
+// Navigation, layout, home
+@use "nav";
+@use "layout";
+@use "masthead";
+@use "home";
+@use "media";
+@use "footer";
+
+// Pages
+@use "changelog";
+@use "notfound";
+
+// Motion & responsive
+@use "motion";
+@use "responsive";
+
+// Docs
+@use "docs";
+
+// Chrome – fixed/sticky overlays, deliberately last (as in the old main.css)
+@use "consent";
+@use "bezel";

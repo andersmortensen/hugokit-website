@@ -1,15 +1,15 @@
-{{- /* Consent-banner (Consent Mode v2).
+{{- /* Consent banner (Consent Mode v2).
 
-      Defaulten står i head.html og er 'denied' – banneret her er kun det sted
-      brugeren kan ændre den. Valget huskes i localStorage ('hk-consent'), og
-      head.html gensender det ved næste besøg, før GA loader.
+      The default lives in head.html and is 'denied' – the banner here is only the place
+      the user can change it. The choice is remembered in localStorage ('hk-consent'), and
+      head.html resends it on the next visit, before GA loads.
 
-      Banneret starter [hidden] og vises kun hvis der ikke allerede står et
-      valg: ingen flash for brugere der har svaret.
+      The banner starts [hidden] and is only shown if there is not already a
+      choice: no flash for users who have answered.
 
-      Rollback: slet denne fil, dens kald i baseof.html og .consent-blokken i
-      main.css. Consent-defaulten i head.html skal så også fjernes – ellers
-      måler GA ingenting, fordi ingen kan give samtykke. */}}
+      Rollback: delete this file, its call in baseof.html and the .consent block in
+      main.css. The consent default in head.html must then also be removed – otherwise
+      GA measures nothing, because no one can give consent. */}}
 <div class="consent" id="consent" role="region" aria-label="Analytics consent" hidden>
   <div class="consent-head">
     <span class="consent-ic" aria-hidden="true">{{ partial "feature-glyph.html" (dict "glyph" "private") }}</span>
@@ -32,14 +32,14 @@
     var stored = null;
     try { stored = localStorage.getItem('hk-consent'); } catch (e) {}
 
-    // Førstegangsbesøg – intet svar endnu. Er der svaret, forbliver banneret
-    // skjult, men listenerne nedenfor bindes ALTID: footer-linket skal kunne
-    // kalde det frem igen.
+    // First visit – no answer yet. If answered, the banner stays hidden,
+    // but the listeners below are ALWAYS bound: the footer link must be able
+    // to call it up again.
     if (stored !== 'granted' && stored !== 'denied') el.hidden = false;
 
-    // Trukket samtykke: GA holder op med at skrive cookies, men dem den allerede
-    // har sat bliver liggende. De ryddes her – ellers er tilbagetrækningen kun
-    // halv. Sættes på både host og .host, da GA bruger domænet med prikken.
+    // Withdrawn consent: GA stops writing cookies, but the ones it already
+    // set remain. They are cleared here – otherwise the withdrawal is only
+    // half done. Set on both host and .host, since GA uses the domain with the dot.
     var clearGa = function () {
       document.cookie.split(';').forEach(function (c) {
         var name = c.split('=')[0].trim();
@@ -50,7 +50,7 @@
       });
     };
 
-    // Footer-linket ("Cookies") kalder banneret frem igen.
+    // The footer link ("Cookies") calls the banner up again.
     document.addEventListener('click', function (e) {
       if (!e.target.closest('[data-consent-reopen]')) return;
       el.hidden = false;

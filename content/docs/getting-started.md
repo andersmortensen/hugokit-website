@@ -47,10 +47,11 @@ Hugo extended is the build that can compile SCSS. Many themes need it, which is 
 
 ### Add your first site
 
-The third step offers three ways in, and they're the same three you'll use later from the **File** menu or the sidebar:
+The setup step gets you started, and the **File** menu and sidebar give you the same ways in later:
 
 - **Open Existing** – pick a folder that already holds a Hugo site (`⌘O`).
 - **Create New** – scaffold a fresh one (`⇧⌘N`).
+- **From a Git URL** – paste a repository and HugoKit clones it and adds it in one step.
 - **Watch Folder** – point HugoKit at a folder of projects and let it find the sites itself.
 
 You can add and remove sites at any time; nothing is locked in.
@@ -80,6 +81,14 @@ The folder is rescanned when the app starts, so a site you create later shows up
 - **Blank** – the plain output of `hugo new site`, with a small welcome page. Here you can also pick the config format.
 
 Both templates can initialise a git repository, open the site when it's done and start the local server right away.
+
+## Add a site from a Git URL
+
+If the site already lives in a Git repository, you don't have to clone it in a terminal first. The **From a Git URL** option in Add Site takes the repository's URL, lets you choose where to clone it, and does the clone and the add in one step.
+
+- The name comes from the repository, and it's cloned into a folder of that name under the location you pick.
+- A public repository clones with no sign-in. For a private GitHub repository, [connect GitHub](/docs/publishing-to-github-pages/#connect-github) first and HugoKit uses that token – and it's only ever sent to `github.com` URLs, never to any other host.
+- What you get is an ordinary site folder on your Mac, exactly as if you'd cloned it yourself. If it turns out not to be a Hugo site, it's added with the same "looks incomplete" warning as Open Existing rather than being turned away.
 
 ## Start the server
 
