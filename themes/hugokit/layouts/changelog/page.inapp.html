@@ -1,0 +1,31 @@
+{{- /* In-app release note – a chrome-less, JS-free render for Sparkle's update
+      WebView. Sparkle does not run the page's ?in-app JavaScript, so the chrome
+      cannot be stripped client-side (that path only works in a real browser).
+      This layout is standalone (no baseof, so no bezel / consent / footer) and
+      bakes class="in-app" onto <html>, so the existing .in-app rules in
+      _bezel.scss / _changelog.scss apply server-side. The full browser page stays
+      at /changelog/<version>/; this is /changelog/<version>/in-app.html, linked
+      from the appcast's releaseNotesLink. Keep the .release-* hooks verbatim. */ -}}
+<!doctype html>
+<html lang="{{ site.Language.LanguageCode }}" class="in-app">
+<head>
+  {{ partial "head.html" . }}
+</head>
+<body>
+  <div class="canvas">
+    <main id="main" class="release">
+      <div class="wrap release-wrap">
+        <header class="release-head">
+          {{- /* No lockup: Sparkle's update dialog already shows the app icon and
+                name above the note, so a second HugoKit mark here is redundant. */ -}}
+          <h1 class="release-version">{{ .Title }}</h1>
+          {{ with .Date }}<time class="release-date" datetime="{{ .Format "2006-01-02" }}">{{ .Format "2 January 2006" }}</time>{{ end }}
+        </header>
+        <article class="release-body">
+          {{ .Content }}
+        </article>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

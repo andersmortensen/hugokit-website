@@ -9,7 +9,7 @@
             <sparkle:shortVersionString>0.2.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
             <enclosure url="https://github.com/andersmortensen/hugokit/releases/download/v0.2.0/HugoKit-0.2.0.dmg" length="7115242" type="application/octet-stream" sparkle:edSignature="2BZDJlnSNtCh3U3A417S14d4YF5KYEDGer9/aUFYksSoGh4V5E8N3DD8dKeV8h8c7PvgqyPI5VDU5kH9Ih3GDw=="/>
-            <sparkle:releaseNotesLink>https://hugokit.com/changelog/0.2.0/?in-app</sparkle:releaseNotesLink>
+            <sparkle:releaseNotesLink>https://hugokit.com/changelog/0.2.0/in-app.html</sparkle:releaseNotesLink>
         </item>
     </channel>
 </rss>

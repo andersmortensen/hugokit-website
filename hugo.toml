@@ -45,6 +45,18 @@ copyright = '2026'
     isPlainText = true
     permalinkable = false
 
+  # Chrome-less render of changelog release notes for Sparkle's update WebView.
+  # Sparkle does not run the page's ?in-app JavaScript, so the chrome can't be
+  # stripped client-side; this renders a JS-free /changelog/<v>/in-app.html with
+  # class="in-app" baked in server-side (layout: changelog/page.inapp.html). The
+  # appcast's releaseNotesLink points here. Enabled per changelog page in front
+  # matter, so it never renders for docs pages.
+  [outputFormats.inapp]
+    mediaType = 'text/html'
+    baseName = 'in-app'
+    isHTML = true
+    notAlternative = true
+
 [outputs]
   home = ['html', 'llms']
   # Gælder alle enkeltsider – docs og changelog. Sektionsforsider beholder
