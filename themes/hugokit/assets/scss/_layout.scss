@@ -28,7 +28,7 @@
    window). The rhythm is carried by the deck gap, not by --sect. The download pane
    is pane-2. Adjustable parameters: --deck-gap, --pane-r and pane padding below. */
 :root { --deck-gap: 18px; --pane-r: 22px; }
-main.sheet { display: flex; flex-direction: column; gap: var(--deck-gap); padding: 18px 0 90px; }
+main.sheet { display: flex; flex-direction: column; gap: var(--deck-gap); padding: 18px 0; }
 main.sheet > section,
 main.sheet > .mast {
   background: var(--plate);

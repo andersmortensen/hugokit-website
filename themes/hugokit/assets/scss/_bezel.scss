@@ -46,7 +46,13 @@ html:has(.canvas) { --toolbar-color: var(--bezel-hi); }
 /* The canvas MUST paint its own surface: historically the body background showed
    through (surround = canvas in light), but now that the body carries the frame's
    tone, the window's interior would otherwise be frame-colored – and the frame invisible. */
-.canvas { background: var(--canvas); }
+/* The window's own edge lives on the canvas now (moved off the fixed .bezel-frame),
+   so the 1px line ends where the content ends and the footer on the ground below has
+   no rail beside it. On wide screens the canvas (max-width --canvas-max, centered)
+   already sits exactly at the frame's cutout edge, so the line aligns. On narrow
+   screens the canvas is full-width under the frame – if the edge needs to inset to
+   match there, add: max-width: min(var(--canvas-max), calc(100% - 2*var(--bezel-side))). */
+.canvas { background: var(--canvas); border: 1px solid var(--bezel-edge); }
 
 /* The window begins below the bar. The surround/device ground is now painted by the
    BODY: the fixed frame no longer closes at the bottom, so it can't paint the ground
@@ -74,6 +80,10 @@ html.in-app body:has(.canvas) {
   padding: 0;
   background-color: var(--canvas);
 }
+/* Flat, not framed: the Sparkle window draws its own frame, so the note sits on a
+   plain background – drop the canvas' rounded corners and grain texture. */
+html.in-app .canvas { border-radius: 0; }
+html.in-app .canvas::after { display: none; }
 /* The canvas fills the column – its own viewport min-height gives way to flex.
    width: 100% is required: as a flex item its `margin: 0 auto` (from _canvas.scss)
    turns off cross-axis stretch, which would otherwise shrink the canvas to its
@@ -110,8 +120,10 @@ body:has(.canvas) .canvas { flex: 1 0 auto; min-height: 0; width: 100%; }
   z-index: 94; /* over the canvas's grain (90), under skip-link (100) */
   border-radius: 26px 26px 0 0; /* rounded top only – the bottom is open */
   box-shadow: 0 0 0 200vmax var(--bezel-ground);
-  border: 1px solid var(--bezel-edge); /* the machine edge's inner edge */
-  border-bottom: 0; /* the frame does not close at the bottom */
+  /* The visible edge (rails) moved to the .canvas itself (see the .canvas rule
+     above): being in-flow it ends where the window/content ends, so the footer on
+     the ground below has no rail beside it. The fixed frame keeps ONLY the
+     box-shadow cutout that paints the surround. */
 }
 
 /* Sticky offsets below the bar – the nav lives in the bar itself now, so the

@@ -37,7 +37,7 @@ facts:
 # Loop-sektionen – de tre moments som nummererede trin (01/02/03).
 loop:
   label: "How it works"
-  heading: "The whole thing."
+  heading: "The whole loop."
   sub: "Preview, preflight, publish – in that order."
 
 # Den fulde feature-liste – hvert punkt er forankret i docs' features.md.
@@ -336,9 +336,12 @@ note:
   label: "Why it exists"
   text: "I write my own sites in Hugo, and I got tired of a terminal window, a browser tab and a deploy script for every small change. So I built HugoKit for myself – and kept building because I use it every day. It's a personal project, not a company."
   extra: "It's non-commercial and stays that way – nothing to buy, nothing to subscribe to. If you'd like to help cover the running costs, you can:"
+  author: "Anders Mortensen"
+  authorURL: "https://andersmortensen.com"
+  portrait: "/images/anders-portrait.jpg"
   donate:
-    label: "Buy me a coffee"
-    url: "https://buymeacoffee.com/andersmortensen"
+    label: "Donate"
+    url: "https://www.paypal.com/donate/?hosted_button_id=4XD6HC8ZESF7L"
 
 download:
   heading: "Download HugoKit"

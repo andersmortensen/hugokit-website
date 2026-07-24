@@ -11,12 +11,12 @@
 
 .usps { list-style: none; margin-top: 20px; border-top: 1px solid var(--line); }
 .usp {
-  display: grid; grid-template-columns: 118px minmax(0, 1fr);
+  display: grid; grid-template-columns: max-content minmax(0, 1fr);
   gap: 0 20px; align-items: baseline;
   padding: 11px 0;
   border-bottom: 1px solid var(--line);
 }
-.usp b { display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 16px; }
+.usp b { display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 16px; white-space: nowrap; }
 /* The quartet as marker – one color per USP, otherwise the page is monochrome */
 .usp-fct { width: 6px; height: 6px; border-radius: 50%; flex: none; }
 .usp-fct-1 { background: var(--pink); }
@@ -158,9 +158,13 @@
   border-color: var(--line-strong);
 }
 .feature-doc-ic { width: 14px; height: 14px; align-self: center; color: var(--muted); transition: color 160ms ease; }
+/* 'DOCS' as its own small pill inside the button (2026-07-24). */
 .feature-doc-kicker {
   font-size: 11px; letter-spacing: 0.11em; text-transform: uppercase;
   color: var(--faint);
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
+  border-radius: 5px;
+  padding: 2px 6px;
 }
 .feature-doc-title { color: var(--ink); }
 .feature-doc-sep { display: none; }
@@ -213,23 +217,21 @@
 .feature-name {
   flex: none;
   font-family: var(--display);
-  font-weight: 500; font-size: 17.5px;
+  font-weight: 500; font-size: 19.5px;
   letter-spacing: -0.01em;
 }
-.feature-teaser {
-  flex: 1; min-width: 0;
-  font-size: 15px; line-height: 1.5; color: var(--muted);
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-}
+/* Hidden in the collapsed row (2026-07-24): the row shows just the name; the
+   description appears in .feature-lead when the item is expanded. */
+.feature-teaser { display: none; }
 .feature-chevron {
-  flex: none; width: 18px; height: 18px; color: var(--faint);
+  flex: none; margin-left: auto; width: 18px; height: 18px; color: var(--faint);
   transition: transform 220ms cubic-bezier(0.19, 1, 0.22, 1), color 160ms ease;
 }
 .feature-item[open] .feature-chevron { transform: rotate(180deg); }
 .feature-summary:hover .feature-chevron { color: var(--muted); }
 
 .feature-reveal { padding: 2px 0 26px var(--feature-indent); max-width: 82ch; }
-.feature-lead { font-size: 17px; line-height: 1.62; color: var(--muted); text-wrap: pretty; }
+.feature-lead { font-size: 18.5px; line-height: 1.62; color: var(--muted); text-wrap: pretty; }
 .feature-lead code, .feature-points code {
   font-family: var(--mono); font-size: 0.88em; color: var(--ink);
   background: color-mix(in srgb, var(--ink) 6%, transparent);
@@ -238,7 +240,7 @@
 .feature-points { list-style: none; margin-top: 14px; }
 .feature-points li {
   position: relative; padding-left: 17px; margin-top: 7px;
-  font-size: 15.5px; line-height: 1.55; color: var(--muted);
+  font-size: 17px; line-height: 1.55; color: var(--muted);
   text-wrap: pretty;
 }
 .feature-points li::before {
@@ -304,7 +306,7 @@
 .faq-ic .feature-glyph { width: 17px; height: 17px; }
 .faq-q {
   font-family: var(--display);
-  font-weight: 500; font-size: 17.5px;
+  font-weight: 500; font-size: 19.5px;
   letter-spacing: -0.01em;
   color: var(--ink); /* the question is the title – held in ink, apart from the muted answer */
 }
@@ -321,7 +323,7 @@
 .faq-head:hover::after { color: var(--ink); }
 /* The answer sits indented under the question text (glyph 17 + gap 12) */
 .faq-answer { padding: 0 0 20px 29px; max-width: 74ch; }
-.faq-answer p { font-size: 16px; line-height: 1.6; color: var(--muted); text-wrap: pretty; }
+.faq-answer p { font-size: 17.5px; line-height: 1.6; color: var(--muted); text-wrap: pretty; }
 .faq-answer p + p { margin-top: 10px; }
 /* Smooth reveal where the browser can animate block-size to auto; elsewhere the
    item just snaps open (still fine). */
@@ -348,6 +350,26 @@
 }
 
 /* ── Why it exists ───────────────────────────────────────────────────────── */
+
+/* Byline in the colophon note: portrait + name linking to the author's own site.
+   Circular avatar with a hairline ring (the site favours hairlines over shadows);
+   object-position biases to the face in the upper part of the portrait. */
+.note-by {
+  display: inline-flex; align-items: center; gap: 13px;
+  margin-bottom: 20px;
+  text-decoration: none; color: inherit;
+}
+.note-portrait {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  object-fit: cover; object-position: center 22%;
+  flex: none;
+  box-shadow: 0 0 0 1px var(--line);
+}
+.note-by-text { display: flex; flex-direction: column; gap: 1px; }
+.note-by-name { font-weight: 500; color: var(--ink); font-size: 15.5px; }
+.note-by-site { font-family: var(--mono); font-size: 13px; color: var(--faint); transition: color 160ms ease; }
+.note-by:hover .note-by-site { color: var(--pink-ink); }
 
 .note-text { font-size: 18px; line-height: 1.6; color: var(--muted); max-width: 64ch; text-wrap: pretty; }
 .note-text + .note-text { margin-top: 11px; }

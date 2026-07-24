@@ -44,22 +44,31 @@
         </div>
       </div>
 
-      <div class="float-stack" aria-hidden="true">
-        <div class="fcard fc1">
+      {{- /* The three feature cards are decorative (they echo the feature section),
+            so they're aria-hidden; the pink release card is a real link to this
+            version's changelog entry, so it stays accessible and focusable. */}}
+      {{- $releaseURL := "changelog/" | relURL }}{{ with site.GetPage (printf "/changelog/%s" site.Params.version) }}{{ $releaseURL = .RelPermalink }}{{ end -}}
+      <div class="float-stack">
+        <div class="fcard fc1" aria-hidden="true">
           <span class="fcard-k">Workflow</span>
           <span class="fcard-v">Preview, preflight, publish</span>
           <span class="fcard-s">run, check and publish from one window</span>
         </div>
-        <div class="fcard fc2">
+        <div class="fcard fc2" aria-hidden="true">
           <span class="fcard-k">Safety net</span>
           <span class="fcard-v">Snapshots &amp; undo</span>
           <span class="fcard-s">nothing changes without a diff you can undo</span>
         </div>
-        <div class="fcard fc3">
+        <div class="fcard fc3" aria-hidden="true">
           <span class="fcard-k">Quality</span>
           <span class="fcard-v">Site health</span>
           <span class="fcard-s">links, alt text and deprecations, scored</span>
         </div>
+        <a class="fcard fc4" href="{{ $releaseURL }}">
+          <span class="fcard-k">Latest release</span>
+          <span class="fcard-v">Version {{ site.Params.version }}</span>
+          <span class="fcard-s">snapshots, undo and a lot more</span>
+        </a>
       </div>
     </div>
   </header>
@@ -245,13 +254,27 @@
     <div class="lc">
       <p class="lab">Colophon</p>
       <div>
+        {{- /* Byline (2026-07-24): the note's first-person voice gets a face and an
+              author, linking to Anders' own site. */ -}}
+        <a class="note-by" href="{{ .authorURL }}" target="_blank" rel="noopener">
+          {{ with .portrait }}<img class="note-portrait" src="{{ . | relURL }}" width="480" height="640" alt="{{ $.Params.note.author }}" loading="lazy">{{ end }}
+          <span class="note-by-text">
+            <span class="note-by-name">{{ .author }}</span>
+            <span class="note-by-site">{{ .authorURL | replaceRE "^https?://" "" | replaceRE "/+$" "" }}</span>
+          </span>
+        </a>
         <p class="note-text">{{ .text }}</p>
         {{ with .extra }}<p class="note-text">{{ . }}</p>{{ end }}
         {{ with .donate }}
-        <a class="btn-outline note-donate" href="{{ .url }}" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 9h11v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"/><path d="M16 10h1.5a2.5 2.5 0 0 1 0 5H16"/><path d="M8.5 3.5v2M12 3.5v2"/></svg>
+        {{- /* Our own button opens PayPal's donation modal: the PayPal SDK renders its
+              button into the hidden host below and this link proxies the click to it
+              (wired in head.html, SDK lazy-loaded on first intent). The href is the
+              no-JS fallback – it opens the same donation page in a new tab. */ -}}
+        <a class="btn-outline note-donate" href="{{ .url }}" target="_blank" rel="noopener" data-paypal-donate>
+          <svg viewBox="0 0 24 24" fill="#0070E0" aria-hidden="true"><path d="M15.607 4.653H8.941L6.645 19.251H1.82L4.862 0h7.995c3.754 0 6.375 2.294 6.473 5.513-.648-.478-2.105-.86-3.722-.86m6.57 5.546c0 3.41-3.01 6.853-6.958 6.853h-2.493L11.595 24H6.74l1.845-11.538h3.592c4.208 0 7.346-3.634 7.153-6.949a5.24 5.24 0 0 1 2.848 4.686M9.653 5.546h6.408c.907 0 1.942.222 2.363.541-.195 2.741-2.655 5.483-6.441 5.483H8.714Z"/></svg>
           {{ .label }}
         </a>
+        <span id="pp-donate-host" aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px"></span>
         {{ end }}
       </div>
     </div>
