@@ -14,6 +14,10 @@
   --ink: light-dark(#2A2521, #EFEAE2);
   --muted: light-dark(#6E6559, #A79E90);
   --faint: light-dark(#998F80, #6E6559);
+  /* Readable small-print: labels, dates, captions, kickers, version/build numbers.
+     --faint fails AA on the panes (3.01:1 light / 2.73:1 dark); --faint-text clears
+     it (4.86:1 / 4.65:1). --faint stays for decoration only – bullets and glyphs. */
+  --faint-text: light-dark(#766C5F, #948B7C);
   --line: light-dark(rgba(42, 37, 33, 0.10), rgba(239, 234, 226, 0.09));
   --line-strong: light-dark(rgba(42, 37, 33, 0.18), rgba(239, 234, 226, 0.16));
 
@@ -76,8 +80,8 @@
   --icon-moon: light-dark(#5F5C66, transparent);
   --icon-sun: light-dark(transparent, #9B98A3);
 
-  --display: 'Hanken Grotesk', system-ui, sans-serif;
-  --sans: 'Inter', -apple-system, system-ui, sans-serif;
+  --display: 'Hanken Grotesk', 'Hanken Grotesk Fallback', system-ui, sans-serif;
+  --sans: 'Inter', 'Inter Fallback', -apple-system, system-ui, sans-serif;
   --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
 
   --radius: 8px;

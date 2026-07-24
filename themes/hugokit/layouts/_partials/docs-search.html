@@ -1,0 +1,84 @@
+{{- /* Docs search – shared by the sidebar (docs-nav.html) and the docs hub
+      (section.html). Emits the inline index (one entry per docs page) once, plus the
+      search behaviour, which binds to whatever .doc-search-input / .doc-search-results
+      / [data-search-body] the surrounding layout renders. Config-free (no output
+      format), so touching it never restarts the dev server. Short keys keep the index
+      small: t title · u url · g group · d description · x text excerpt. */ -}}
+{{- $docs := site.GetPage "/docs" -}}
+<script type="application/json" id="hk-docs-index">
+{{- $idx := slice -}}
+{{- range $docs.RegularPages -}}
+  {{- $idx = $idx | append (dict
+      "t" (.Title | plainify | htmlUnescape)
+      "u" .RelPermalink
+      "g" (.Params.group | default "")
+      "d" (.Description | default "")
+      "x" (.Plain | htmlUnescape | truncate 400 "")) -}}
+{{- end -}}
+{{- /* safeJS: emit raw JSON, not a JS-escaped string literal. jsonify already
+      unicode-escapes < > &, so a stray </script> in the text can't break out. */ -}}
+{{- $idx | jsonify | safeJS -}}
+</script>
+<script>
+(function () {
+  var input = document.querySelector('.doc-search-input');
+  var results = document.querySelector('.doc-search-results');
+  var hideable = document.querySelector('[data-search-body]');
+  var clearBtn = document.querySelector('.doc-search-clear');
+  var idxEl = document.getElementById('hk-docs-index');
+  if (!input || !results || !hideable || !idxEl) return;
+  var index;
+  try { index = JSON.parse(idxEl.textContent); } catch (e) { return; }
+
+  var esc = function (s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  };
+  // Every term must land somewhere; a title hit outranks a description hit outranks
+  // a body hit, and a title that STARTS with the term ranks highest.
+  var score = function (it, terms) {
+    var t = (it.t || '').toLowerCase(), d = (it.d || '').toLowerCase(),
+        x = (it.x || '').toLowerCase(), s = 0;
+    for (var i = 0; i < terms.length; i++) {
+      var q = terms[i];
+      if (!q) continue;
+      if (t.indexOf(q) > -1) s += (t.indexOf(q) === 0 ? 14 : 9);
+      else if (d.indexOf(q) > -1) s += 5;
+      else if (x.indexOf(q) > -1) s += 2;
+      else return 0;
+    }
+    return s;
+  };
+  var render = function (q) {
+    var terms = q.toLowerCase().split(/\s+/).filter(Boolean);
+    var hits = index.map(function (it) { return { it: it, s: score(it, terms) }; })
+      .filter(function (h) { return h.s > 0; })
+      .sort(function (a, b) { return b.s - a.s; })
+      .slice(0, 8);
+    results.innerHTML = hits.length
+      ? hits.map(function (h) {
+          return '<li><a href="' + h.it.u + '"><span class="dsr-title">' + esc(h.it.t) + '</span>' +
+            (h.it.g ? '<span class="dsr-group">' + esc(h.it.g) + '</span>' : '') + '</a></li>';
+        }).join('')
+      : '<li class="doc-search-empty">No matches for &ldquo;' + esc(q) + '&rdquo;</li>';
+    results.hidden = false; hideable.hidden = true; if (clearBtn) clearBtn.hidden = false;
+  };
+  var reset = function () {
+    results.hidden = true; results.innerHTML = '';
+    hideable.hidden = false; if (clearBtn) clearBtn.hidden = true;
+  };
+  input.addEventListener('input', function () {
+    var q = input.value.trim();
+    if (q) render(q); else reset();
+  });
+  if (clearBtn) clearBtn.addEventListener('click', function () { input.value = ''; reset(); input.focus(); });
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { input.value = ''; reset(); }
+    else if (e.key === 'Enter') {
+      var a = results.querySelector('a');
+      if (a && !results.hidden) { e.preventDefault(); location.href = a.href; }
+    }
+  });
+})();
+</script>

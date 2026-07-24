@@ -12,7 +12,9 @@
   <main id="main" class="release-hub">
     <header class="hub-head">
       <h1 class="hub-title">Changelog</h1>
-      <p class="hub-sub">Release notes, newest first.</p>
+      {{- /* RSS lives right next to the readout: the Hugo audience is the RSS audience.
+            The feed comes from the section's own rss output (enabled in hugo.toml). */}}
+      <p class="hub-sub">Release notes, newest first.{{ with .OutputFormats.Get "rss" }} <a class="hub-rss" href="{{ .RelPermalink }}">RSS</a>{{ end }}</p>
     </header>
 
     <div id="release-list-view">
@@ -20,8 +22,17 @@
       <ul class="release-list hub-list">
         {{ range .Pages.ByDate.Reverse }}
         <li>
-          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-          {{ with .Date }}<time datetime="{{ .Format "2006-01-02" }}">{{ .Format "2 January 2006" }}</time>{{ end }}
+          <div class="rl-head">
+            {{- /* view-transition-name pairs with .release-version – both on the
+                  direct release page (page.html, cross-document) and on the hub's
+                  instant-nav view (set by showRelease below, same-document): the
+                  version number morphs from list row to heading and back. */}}
+            <a href="{{ .RelPermalink }}" style="view-transition-name: {{ printf "rel%s" (.RelPermalink | replaceRE `[^a-zA-Z0-9]` "-") }}">{{ .Title }}</a>
+            {{ with .Date }}<time datetime="{{ .Format "2006-01-02" }}">{{ .Format "2 January 2006" }}</time>{{ end }}
+          </div>
+          {{- /* One quiet line from the release's own front-matter description – enough
+                to tell the versions apart without opening them. Utility, not a pitch. */}}
+          {{ with .Description }}<p class="rl-desc">{{ . }}</p>{{ end }}
         </li>
         {{ end }}
       </ul>
@@ -41,6 +52,7 @@
 </div>
 
 {{ partial "footer.html" . }}
+{{ partial "release-filter.html" . }}
 
 <script>
   (function () {
@@ -83,13 +95,21 @@
     }
 
     function showRelease(data, url, push) {
+      // Same-document counterpart of the list row's view-transition-name: the
+      // hidden list's names go inert (display: none), so the heading can carry
+      // the slug and the version number morphs row → heading. Must match the
+      // Hugo-side formula on the <a> above (RelPermalink, non-alphanumerics → "-").
+      var vtName = 'rel' + new URL(url, location.href).pathname.replace(/[^a-zA-Z0-9]/g, '-');
       transition(function () {
-        view.querySelector('.release-version').textContent = data.title;
+        var vEl = view.querySelector('.release-version');
+        vEl.textContent = data.title;
+        vEl.style.viewTransitionName = vtName;
         var time = view.querySelector('.release-date');
         time.textContent = data.dateText;
         if (data.dateAttr) time.setAttribute('datetime', data.dateAttr);
         time.hidden = !data.dateText;
         view.querySelector('.release-body').innerHTML = data.body;
+        if (window.hkReleaseFilter) window.hkReleaseFilter(view);
         list.hidden = true;
         view.hidden = false;
         document.title = data.title + ' · HugoKit';

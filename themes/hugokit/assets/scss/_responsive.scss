@@ -29,15 +29,19 @@
   /* Collapsible features: reveal moves closer to the edge on narrow screens. */
   :root { --feature-indent: 34px; }
 
-  /* FAQ falls back to one column */
-  .faq-list { columns: 1; }
+  /* FAQ falls back to one column: the two lists stack, left then right */
+  .faq-list { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 620px) {
   .canvas { border-radius: 18px; min-height: calc(100svh - 16px); }
   body { padding: 8px; }
 
-  .nav-links-mid { display: none; }
+  /* Keep the Docs link in the bar – docs is the site's SEO spine – but drop the four
+     section links: they point at the home page's own sections, so they're moot on a
+     subpage. Those four carry a # in their href; Docs (a plain /docs/ path) stays. */
+  .nav-links-mid { gap: 2px; margin-left: 4px; }
+  .nav-links-mid .nav-link[href*="#"] { display: none; }
   .nav-version { display: none; }
   .nav-actions .btn { height: 30px; padding: 0 12px; }
 

@@ -86,7 +86,7 @@
 .lstep-label {
   font-family: var(--mono);
   font-size: 12.5px; letter-spacing: 0.13em;
-  text-transform: uppercase; color: var(--faint);
+  text-transform: uppercase; color: var(--faint-text);
 }
 .lstep-body {
   display: grid; grid-template-columns: minmax(0, 1fr) 300px;
@@ -106,7 +106,7 @@
 .pf-bar {
   display: flex; justify-content: space-between;
   font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--faint);
+  color: var(--faint-text);
   margin-bottom: 11px;
 }
 .pf-row {
@@ -115,7 +115,7 @@
 }
 .pf-del { color: var(--del); background: color-mix(in srgb, var(--del) 10%, transparent); }
 .pf-add { color: var(--add); background: color-mix(in srgb, var(--add) 12%, transparent); margin-top: 3px; }
-.pf-foot { margin-top: 11px; display: flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--faint); }
+.pf-foot { margin-top: 11px; display: flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--faint-text); }
 .pf-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); flex: none; }
 
 /* The server and deploy panes (same shell as the diff): status lines with a dot,
@@ -126,7 +126,7 @@
   color: var(--ink);
   white-space: nowrap; overflow: hidden;
 }
-.pf-quiet { color: var(--faint); padding-left: 12px; }
+.pf-quiet { color: var(--faint-text); padding-left: 12px; }
 .pf-cmd {
   margin-top: 8px;
   padding: 5px 8px;
@@ -161,7 +161,7 @@
 /* 'DOCS' as its own small pill inside the button (2026-07-24). */
 .feature-doc-kicker {
   font-size: 11px; letter-spacing: 0.11em; text-transform: uppercase;
-  color: var(--faint);
+  color: var(--faint-text);
   background: color-mix(in srgb, var(--ink) 8%, transparent);
   border-radius: 5px;
   padding: 2px 6px;
@@ -264,7 +264,7 @@
 .fd-card:hover { opacity: 0.62; }
 .fd-kind {
   font-family: var(--mono); font-size: 12px;
-  letter-spacing: 0.13em; text-transform: uppercase; color: var(--faint);
+  letter-spacing: 0.13em; text-transform: uppercase; color: var(--faint-text);
 }
 .fd-title {
   display: block;
@@ -279,7 +279,7 @@
 .fd-more {
   font-family: var(--mono); font-size: 12.5px;
   letter-spacing: 0.06em; text-transform: uppercase;
-  color: var(--faint); text-align: right;
+  color: var(--faint-text); text-align: right;
 }
 
 /* ── FAQ – collapsible, packed into two columns ───────────────────────────────
@@ -288,9 +288,16 @@
    The two-column CSS-columns setting is kept; each item is a <details> with its
    own hairline. Adjustable parameter: column-gap below. */
 
-.faq-list { columns: 2; column-gap: 56px; }
+/* Two independent columns: a grid with one list per side. Opening a disclosure
+   grows only its own column – items never reflow across (which CSS multi-column did). */
+.faq-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 56px;
+  align-items: start;
+}
+.faq-col { min-width: 0; }
 .faq-item {
-  break-inside: avoid;
   border-top: 1px solid var(--line);
 }
 /* The summary is the toggle – click to expand. No default disclosure triangle. */
@@ -316,7 +323,7 @@
   position: absolute; right: 2px; top: 50%;
   transform: translateY(-50%);
   font-family: var(--mono); font-size: 16px;
-  color: var(--faint);
+  color: var(--faint-text);
   transition: transform 220ms ease, color 160ms ease;
 }
 .faq-item[open] .faq-head::after { transform: translateY(-50%) rotate(45deg); color: var(--ink); }
@@ -343,7 +350,7 @@
 .faq-chips li {
   font-family: var(--mono); font-size: 12px;
   letter-spacing: 0.07em; text-transform: uppercase;
-  color: var(--faint);
+  color: var(--faint-text);
   border: 1px solid var(--line);
   border-radius: 4px;
   padding: 3px 8px;
@@ -368,12 +375,19 @@
 }
 .note-by-text { display: flex; flex-direction: column; gap: 1px; }
 .note-by-name { font-weight: 500; color: var(--ink); font-size: 15.5px; }
-.note-by-site { font-family: var(--mono); font-size: 13px; color: var(--faint); transition: color 160ms ease; }
+.note-by-site { font-family: var(--mono); font-size: 13px; color: var(--faint-text); transition: color 160ms ease; }
 .note-by:hover .note-by-site { color: var(--pink-ink); }
 
 .note-text { font-size: 18px; line-height: 1.6; color: var(--muted); max-width: 64ch; text-wrap: pretty; }
 .note-text + .note-text { margin-top: 11px; }
-.note-donate { margin-top: 18px; }
+/* Inline at the end of the extra line ("…you can Donate"), not on its own row –
+   compact so it sits with the sentence rather than dominating it. */
+.note-donate {
+  margin: 0;
+  vertical-align: middle;
+  padding: 5px 13px;
+  font-size: 15px;
+}
 
 /* ── Download ────────────────────────────────────────────────────────────── */
 
@@ -381,7 +395,7 @@
   display: flex; align-items: flex-end; justify-content: space-between;
   gap: 30px; flex-wrap: wrap;
 }
-.get-note { font-size: 15.5px; line-height: 1.5; color: var(--faint); max-width: 34ch; }
+.get-note { font-size: 15.5px; line-height: 1.5; color: var(--faint-text); max-width: 34ch; }
 .get-facts { margin-top: 30px; border-top: 1px solid var(--line); }
 .get-facts > div {
   display: grid;
@@ -393,7 +407,7 @@
 .get-facts dt {
   font-family: var(--mono); font-size: 12.5px;
   letter-spacing: 0.13em; text-transform: uppercase;
-  color: var(--faint);
+  color: var(--faint-text);
   padding-top: 2px;
 }
 .get-facts dd { font-family: var(--mono); font-size: 15px; letter-spacing: 0.02em; }

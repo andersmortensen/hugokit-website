@@ -1,39 +1,53 @@
 {{ define "body" }}
-{{- /* Release note – one page, two layouts. In the browser it wears the site's
-      full chrome (bezel nav + footer) like every other page. Sparkle's update
-      WebView loads the SAME url with ?in-app, and that strips the chrome down to
-      the note alone (flag set flash-free in head.html, hidden in _bezel.scss).
-      The .release-version / -date / -body hooks are kept verbatim: the changelog
-      hub fetches this page and pulls them out for its instant-nav view. */}}
+{{- /* Release note – one page, two layouts. In the browser it wears the site's full
+      chrome (bezel nav + footer) and lays out as a two-zone editorial spread: a left
+      rail (version, date, Anders' note) and a right column that leads with the intro
+      line and then the categorised changes. All of that layout is scoped to
+      html:not(.in-app) in _changelog.scss. Sparkle's update WebView loads the SAME
+      url with ?in-app through page.inapp.html, which keeps the compact single column
+      (flag set flash-free in head.html, chrome hidden in _bezel.scss). The
+      .release-version / -date / -body hooks are kept verbatim: the changelog hub
+      fetches this page and pulls them out for its instant-nav view. */}}
 <div class="canvas">
 
 
   <main id="main" class="release">
     <div class="wrap release-wrap">
-      <header class="release-head">
-        <a class="lockup" href="{{ "" | relURL }}" aria-label="HugoKit – home">
-          {{ partial "mark.html" (dict "size" 22) }}
-          <span class="lockup-name lockup-name-sm">HugoKit</span>
-        </a>
-        <h1 class="release-version">{{ .Title }}</h1>
-        {{ with .Date }}<time class="release-date" datetime="{{ .Format "2006-01-02" }}">{{ .Format "2 January 2006" }}</time>{{ end }}
-      </header>
-      {{- /* A personal note from Anders, website only: this template carries it, the
-            in-app (Sparkle) template deliberately does not. A few words on what the
-            release is and why. */ -}}
-      {{ with .Params.note }}
-      <aside class="release-note">
-        <p class="release-note-label">From Anders</p>
-        <div class="release-note-body">{{ . | markdownify }}</div>
-      </aside>
-      {{ end }}
-      <article class="release-body">
-        {{ .Content }}
-      </article>
+      <div class="release-rail">
+        <header class="release-head">
+          <a class="lockup" href="{{ "" | relURL }}" aria-label="HugoKit – home">
+            {{ partial "mark.html" (dict "size" 22) }}
+            <span class="lockup-name lockup-name-sm">HugoKit</span>
+          </a>
+          {{- /* view-transition-name pairs with the hub list row (section.html):
+                cross-document navigation morphs the version number into this H1.
+                The in-app (Sparkle) template has no bezel chrome and no name. */}}
+          <h1 class="release-version" style="view-transition-name: {{ printf "rel%s" (.RelPermalink | replaceRE `[^a-zA-Z0-9]` "-") }}">{{ .Title }}</h1>
+          {{ with .Date }}<time class="release-date" datetime="{{ .Format "2006-01-02" }}">{{ .Format "2 January 2006" }}</time>{{ end }}
+        </header>
+        {{- /* A personal note from Anders, website only: this template carries it, the
+              in-app (Sparkle) template deliberately does not. A few words on what the
+              release is and why. */ -}}
+        {{ with .Params.note }}
+        <aside class="release-note">
+          <div class="release-note-head">
+            <img class="release-note-portrait" src="{{ "images/anders-portrait.jpg" | relURL }}" width="480" height="640" alt="Anders Mortensen" loading="lazy">
+            <p class="release-note-label">From Anders</p>
+          </div>
+          <div class="release-note-body">{{ . | markdownify }}</div>
+        </aside>
+        {{ end }}
+      </div>
+      <div class="release-main">
+        <article class="release-body">
+          {{ .Content }}
+        </article>
+      </div>
     </div>
   </main>
 
 </div>
 
 {{ partial "footer.html" . }}
+{{ partial "release-filter.html" . }}
 {{ end }}

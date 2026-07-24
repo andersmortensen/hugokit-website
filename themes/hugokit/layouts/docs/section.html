@@ -9,13 +9,22 @@
     <header class="hub-head">
       <h1 class="hub-title">Docs</h1>
       <p class="section-body">{{ .Description }}</p>
+      {{- /* Full-width search under the subtitle (docs hub only). Same behaviour as
+            the sidebar search on the subpages, wired by docs-search.html below. */ -}}
+      <div class="docs-hub-search">
+        <div class="doc-search">
+          <input type="search" class="doc-search-input" placeholder="Search the docs&hellip;" aria-label="Search the documentation" autocomplete="off" spellcheck="false">
+          <button type="button" class="doc-search-clear" aria-label="Clear search" hidden>&times;</button>
+        </div>
+        <ul class="doc-search-results" hidden></ul>
+      </div>
     </header>
 
     {{ $pages := .RegularPages }}
     {{ $groups := .Params.groups | default slice }}
     {{ $placed := slice }}
 
-    <div class="doc-groups">
+    <div class="doc-groups" data-search-body>
       {{ range $group := $groups }}
         {{ $in := (where $pages "Params.group" $group).ByWeight }}
         {{ with $in }}
@@ -30,7 +39,7 @@
               <li>
                 <a href="{{ .RelPermalink }}">
                   <span class="doc-index-text">
-                    <span class="doc-index-title">{{ .Title }}</span>
+                    <span class="doc-index-title" style="view-transition-name: {{ printf "doc%s" (.RelPermalink | replaceRE `[^a-zA-Z0-9]` "-") }}">{{ .Title }}</span>
                     {{ with .Description }}<span class="doc-index-desc">{{ . }}</span>{{ end }}
                   </span>
                   {{ partial "doc-updated.html" (dict "page" . "format" "hub") }}
@@ -72,4 +81,5 @@
 </div>
 
 {{ partial "footer.html" . }}
+{{ partial "docs-search.html" . }}
 {{ end }}

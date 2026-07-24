@@ -1,0 +1,15 @@
+{{- /* Search index for the docs sidebar search: one entry per docs page, with the
+      plain text truncated so the file stays small. Fetched by docs-nav.html on first
+      focus. Output format `searchindex` (hugo.toml), enabled via docs/_index.md
+      outputs. */ -}}
+{{- $idx := slice -}}
+{{- range .RegularPages -}}
+  {{- $idx = $idx | append (dict
+      "title" (.Title | plainify | htmlUnescape)
+      "url" .RelPermalink
+      "group" (.Params.group | default "")
+      "desc" (.Description | default "")
+      "text" (.Plain | htmlUnescape | truncate 3000 "")
+  ) -}}
+{{- end -}}
+{{- $idx | jsonify -}}

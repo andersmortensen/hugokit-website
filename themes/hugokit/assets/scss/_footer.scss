@@ -34,7 +34,7 @@
   margin-left: auto;
   font-family: var(--mono);
   font-size: 13px; letter-spacing: 0.04em;
-  color: var(--faint);
+  color: var(--faint-text);
 }
 /* The cookies button is a <button> (it doesn't navigate, it reopens the banner),
    but should read like the other footer links – hence the same rule, plus a reset
@@ -43,7 +43,7 @@
 .footer-links button {
   font-family: var(--mono);
   font-size: 13px; letter-spacing: 0.04em;
-  color: var(--faint); text-decoration: none;
+  color: var(--faint-text); text-decoration: none;
   transition: color 160ms ease;
 }
 .footer-links button {

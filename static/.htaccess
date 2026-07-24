@@ -39,13 +39,14 @@
   Header always set Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=(), usb=()"
 
   # CSP kun som Report-Only i fase 1 – blokerer INTET, rapporterer kun afvigelser.
-  # Policyen tillader nuværende site (inkl. GA4 via googletagmanager/analytics).
+  # Policyen tillader nuværende site (inkl. GA4 via googletagmanager/analytics +
+  # PayPal donate-modal via paypalobjects/paypal.com – SDK, knap-GIF, popup).
   # 'unsafe-inline' på script/style dækker sidens mange inline-scripts og
   # inline-styles; fase 2 = erstat med sha256-hashes (nonces duer ikke med
   # fuldt cachede sider). Gates/fjernes GA senere, kan de google-origins slettes.
   # NB: uden en rapport-endpoint ses violations kun i hver besøgendes devtools;
   #     tilføj report-to + Reporting-Endpoints (eller en collector) for at samle dem.
-  Header always set Content-Security-Policy-Report-Only "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.googletagmanager.com https://*.google-analytics.com; font-src 'self'; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'"
+  Header always set Content-Security-Policy-Report-Only "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.paypalobjects.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.googletagmanager.com https://*.google-analytics.com https://www.paypalobjects.com; font-src 'self'; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://www.paypal.com https://www.paypalobjects.com; frame-src 'self' https://www.paypal.com https://www.paypalobjects.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'"
 
   # ── Bonus (ikke i feedbacken – matcher din preview-house-style; slet linjen for at fortryde) ──
   # nosniff: du bruger den allerede på preview; nul risiko.

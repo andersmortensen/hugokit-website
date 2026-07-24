@@ -2,11 +2,38 @@
     live in static/fonts/ and carry Google's version in the name (v12/v20/v24);
     they are never overwritten, so .htaccess can cache them immutable. font-display:
     swap matches the CDN's former &display=swap. */
-@font-face { font-family: 'Hanken Grotesk'; font-style: normal; font-weight: 400 500; font-display: swap; src: url('/fonts/hanken-grotesk-v12-latin-400-500.woff2') format('woff2'); }
-@font-face { font-family: 'Hanken Grotesk'; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/hanken-grotesk-v12-latin-700.woff2') format('woff2'); }
-@font-face { font-family: 'Hanken Grotesk'; font-style: normal; font-weight: 800; font-display: swap; src: url('/fonts/hanken-grotesk-v12-latin-800.woff2') format('woff2'); }
+/*  The 400-500 file is a full-axis variable font (wght 100–900, verified with
+    fonttools) – so one face covers everything, including the wordmark's 700. The
+    former static 700/800 dupes are dropped (the 800 was referenced by no rule). */
+@font-face { font-family: 'Hanken Grotesk'; font-style: normal; font-weight: 100 900; font-display: swap; src: url('/fonts/hanken-grotesk-v12-latin-400-500.woff2') format('woff2'); }
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/inter-v20-latin-regular.woff2') format('woff2'); }
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/inter-v20-latin-500.woff2') format('woff2'); }
+/* Real italic – the docs prose uses emphasis (e.g. hugo-found-no-layout-file.md);
+   without this face the browser skews Inter, which reads cheap. 400 covers all
+   emphasis, since strong sits at 500 upright, never italic. */
+@font-face { font-family: 'Inter'; font-style: italic; font-weight: 400; font-display: swap; src: url('/fonts/inter-v20-latin-italic.woff2') format('woff2'); }
 @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/jetbrains-mono-v24-latin-regular.woff2') format('woff2'); }
 @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/jetbrains-mono-v24-latin-500.woff2') format('woff2'); }
+
+/*  Metric-matched fallbacks. swap without size-adjust reflows the whole deck the
+    moment the webfont lands (the system font has different metrics). These faces
+    render the local system font in the webfont's metrics, so the swap is invisible.
+    Overrides computed with @capsizecss against Helvetica Neue (Mac, first in src);
+    Arial (Windows) differs <1%. Recompute only if the webfont files change. */
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Helvetica Neue'), local('Arial');
+  size-adjust: 106.12%;
+  ascent-override: 91.29%;
+  descent-override: 22.73%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Hanken Grotesk Fallback';
+  src: local('Helvetica Neue'), local('Arial');
+  size-adjust: 100%;
+  ascent-override: 100%;
+  descent-override: 30.30%;
+  line-gap-override: 0%;
+}
 

@@ -328,6 +328,10 @@ faq:
       glyph: "mac"
       a: "Any Mac running macOS 26 (Tahoe) or later."
       chips: ["macOS 26+"]
+    - q: "How do updates work?"
+      glyph: "bell"
+      a: "HugoKit updates itself – there's no App Store in the loop. It checks hugokit.com for a newer version, shows you the release notes in the app, and installs the update once you agree. The check sends nothing about you: it just asks whether a new version exists, with Sparkle's system profiling switched off."
+      chips: ["Built-in updates", "Release notes in-app", "Signed"]
     - q: "Who's behind it?"
       glyph: "person"
       a: "One person: me, Anders, in Denmark. HugoKit is something I built for my own sites and keep working on because I use it every day. There's no company and no roadmap – if something's broken or missing, email me."
@@ -335,7 +339,7 @@ faq:
 note:
   label: "Why it exists"
   text: "I write my own sites in Hugo, and I got tired of a terminal window, a browser tab and a deploy script for every small change. So I built HugoKit for myself – and kept building because I use it every day. It's a personal project, not a company."
-  extra: "It's non-commercial and stays that way – nothing to buy, nothing to subscribe to. If you'd like to help cover the running costs, you can:"
+  extra: "It's non-commercial and stays that way – nothing to buy, nothing to subscribe to. If you'd like to help cover the running costs, you can"
   author: "Anders Mortensen"
   authorURL: "https://andersmortensen.com"
   portrait: "/images/anders-portrait.jpg"

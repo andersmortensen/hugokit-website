@@ -109,6 +109,8 @@ body:has(.canvas) .canvas { flex: 1 0 auto; min-height: 0; width: 100%; }
 }
 .bezel-bar .lockup-name { font-size: 20px; }
 .bezel-bar .nav-actions { margin-left: auto; }
+/* The CTA's phone label is hidden on wide screens (swapped in at <620px) */
+.bezel-bar .cta-narrow { display: none; }
 
 .bezel-frame {
   position: fixed;
@@ -139,6 +141,17 @@ html { scroll-padding-top: calc(var(--bezel-top) + 24px); }
 @media (max-width: 620px) {
   :root { --bezel-top: 60px; --bezel-bottom: 8px; --bezel-side: 8px; }
   .bezel-bar { padding: 0 14px; gap: 12px; }
-  /* Links and version give way (as before in the nav); lockup + toggle + Download remain */
-  .bezel-frame { border-radius: 18px 18px 0 0; } /* = the canvas's mobile radius, top only */
+  /* Links and version give way (as before in the nav); lockup + toggle + CTA remain */
+
+  /* On a phone the bar stops being fixed: an always-visible download is dead
+     weight on a device that can't install the app, so it scrolls away with the
+     top of the page. The decorative frame stays put; its top closes to 0 so no
+     ground gap opens where the bar used to sit (chosen 2026-07-24). */
+  .bezel-bar { position: static; }
+  .bezel-frame { top: 0; border-radius: 18px 18px 0 0; } /* radius = the canvas's mobile radius, top only */
+  body:has(.canvas) { padding-top: 0; }
+
+  /* The CTA states the requirement instead of offering an impossible action */
+  .bezel-bar .cta-wide { display: none; }
+  .bezel-bar .cta-narrow { display: inline; }
 }

@@ -1,0 +1,92 @@
+{{- /* Category filter for the web release page: All / New / Improved / Fixed.
+      Built by JS just under the intro line, it shows/hides the categorised sections.
+      Progressive: without JS every section stays visible. Defined on window so BOTH
+      the direct release page (page.html) and the changelog hub's instant-nav view
+      (section.html) can build it on their own .release-body. It never runs in
+      Sparkle's in-app view – that view has no JS and no .release-main. Rollback:
+      remove the partial calls in page.html + section.html and this file. */ -}}
+<script>
+(function () {
+  var LABELS = { new: 'New', improved: 'Improved', fixed: 'Fixed' };
+  var ORDER = ['new', 'improved', 'fixed'];
+
+  window.hkReleaseFilter = function (scope) {
+    var body = scope && scope.querySelector('.release-body');
+    if (!body || body.querySelector('.release-filter')) return; // none, or already built
+
+    // Group each <h2> with the nodes that follow it until the next <h2>.
+    var groups = {}, id = null;
+    Array.prototype.forEach.call(body.childNodes, function (node) {
+      if (node.nodeType === 1 && node.tagName === 'H2') {
+        id = node.id || ('_' + node.textContent.toLowerCase());
+        groups[id] = [node];
+      } else if (id && groups[id]) {
+        groups[id].push(node);
+      }
+    });
+
+    var present = ORDER.filter(function (k) { return groups[k]; });
+    if (present.length < 2) return; // nothing worth filtering
+
+    // Show only the chosen category; 'all' shows every section (Notes included).
+    var setVis = function (nodes, vis) {
+      nodes.forEach(function (n) { if (n.nodeType === 1) n.style.display = vis ? '' : 'none'; });
+    };
+    var apply = function (key) {
+      Object.keys(groups).forEach(function (gid) {
+        var vis = key === 'all' || key === gid;
+        setVis(groups[gid], vis);
+      });
+      Array.prototype.forEach.call(bar.children, function (b) {
+        b.setAttribute('aria-selected', b.dataset.key === key ? 'true' : 'false');
+      });
+    };
+
+    // Build the bar.
+    var bar = document.createElement('div');
+    bar.className = 'release-filter';
+    bar.setAttribute('role', 'tablist');
+    bar.setAttribute('aria-label', 'Filter changes by category');
+    // Filter clicks crossfade instead of cutting: the sections swap display
+    // inside a view transition (260ms root crossfade from _motion.scss). The
+    // initial apply('all') below stays direct – nothing visible changes there.
+    var run = function (key) {
+      if (document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.startViewTransition(function () { apply(key); });
+      } else {
+        apply(key);
+      }
+    };
+
+    var add = function (key, text) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'rf-btn';
+      b.dataset.key = key;
+      b.textContent = text;
+      b.setAttribute('role', 'tab');
+      b.addEventListener('click', function () { run(key); });
+      bar.appendChild(b);
+    };
+    add('all', 'All');
+    present.forEach(function (k) { add(k, LABELS[k]); });
+
+    // Place it right under the intro line (the body's first paragraph).
+    var intro = body.querySelector(':scope > p');
+    if (intro) intro.insertAdjacentElement('afterend', bar);
+    else body.insertBefore(bar, body.firstChild);
+
+    apply('all');
+  };
+
+  // Direct visit to a release page (page.html has .release-main; the in-app view
+  // does not, and runs no JS anyway).
+  if (document.querySelector('.release-main .release-body')) {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function () { window.hkReleaseFilter(document); });
+    } else {
+      window.hkReleaseFilter(document);
+    }
+  }
+})();
+</script>

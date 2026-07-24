@@ -6,7 +6,7 @@
       Rollback: replace details/summary with the flat .feature-item-grid from before
       (all visible). Keyboard shortcuts are written `⌘P` in _index.md → <code>. */ -}}
 
-<details class="feature-item{{ with .accent }} fi-{{ . }}{{ end }}">
+<details class="feature-item{{ with .accent }} fi-{{ . }}{{ end }}" id="feature-{{ .name | urlize }}">
   <summary class="feature-summary">
     <span class="feature-glyph-slot">{{ partial "feature-glyph.html" (dict "glyph" .glyph) }}</span>
     <span class="feature-name">{{ .name }}</span>

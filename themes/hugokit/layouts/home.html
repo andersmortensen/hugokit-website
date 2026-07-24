@@ -44,30 +44,40 @@
         </div>
       </div>
 
-      {{- /* The three feature cards are decorative (they echo the feature section),
-            so they're aria-hidden; the pink release card is a real link to this
-            version's changelog entry, so it stays accessible and focusable. */}}
+      {{- /* The feature list (variant D, 2026-07-24): four rows, each a link to where
+            the feature is explained – the release to its changelog entry, workflow to
+            the loop section, the two others to their docs pages. The release row keeps
+            a version tag; the three features carry a quiet chevron. Hover only tints
+            the surface / deepens the chevron – nothing moves (house rule). */}}
       {{- $releaseURL := "changelog/" | relURL }}{{ with site.GetPage (printf "/changelog/%s" site.Params.version) }}{{ $releaseURL = .RelPermalink }}{{ end -}}
-      <div class="float-stack">
-        <div class="fcard fc1" aria-hidden="true">
-          <span class="fcard-k">Workflow</span>
-          <span class="fcard-v">Preview, preflight, publish</span>
-          <span class="fcard-s">run, check and publish from one window</span>
-        </div>
-        <div class="fcard fc2" aria-hidden="true">
-          <span class="fcard-k">Safety net</span>
-          <span class="fcard-v">Snapshots &amp; undo</span>
-          <span class="fcard-s">nothing changes without a diff you can undo</span>
-        </div>
-        <div class="fcard fc3" aria-hidden="true">
-          <span class="fcard-k">Quality</span>
-          <span class="fcard-v">Site health</span>
-          <span class="fcard-s">links, alt text and deprecations, scored</span>
-        </div>
-        <a class="fcard fc4" href="{{ $releaseURL }}">
-          <span class="fcard-k">Latest release</span>
-          <span class="fcard-v">Version {{ site.Params.version }}</span>
-          <span class="fcard-s">snapshots, undo and a lot more</span>
+      <div class="mast-features">
+        <a class="mfeat mfeat-rel" href="{{ $releaseURL }}">
+          <span class="mfeat-body">
+            <span class="mfeat-k">Latest release</span>
+            <span class="mfeat-v">Version {{ site.Params.version }}</span>
+          </span>
+          <span class="mfeat-tag">v{{ site.Params.version }}</span>
+        </a>
+        <a class="mfeat" href="#loop">
+          <span class="mfeat-body">
+            <span class="mfeat-k">Workflow</span>
+            <span class="mfeat-v">Preview, preflight, publish</span>
+          </span>
+          <span class="mfeat-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span>
+        </a>
+        <a class="mfeat" href="#feature-snapshots-and-undo">
+          <span class="mfeat-body">
+            <span class="mfeat-k">Safety net</span>
+            <span class="mfeat-v">Snapshots &amp; undo</span>
+          </span>
+          <span class="mfeat-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span>
+        </a>
+        <a class="mfeat" href="#feature-site-health">
+          <span class="mfeat-body">
+            <span class="mfeat-k">Quality</span>
+            <span class="mfeat-v">Site health</span>
+          </span>
+          <span class="mfeat-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span>
         </a>
       </div>
     </div>
@@ -209,7 +219,10 @@
       <a class="fd-card" href="{{ .RelPermalink }}">
         <span class="fd-kind">{{ .Params.group }}</span>
         <span>
-          <span class="fd-title">{{ .LinkTitle }}</span>
+          {{- /* Shared view-transition-name with the doc page's H1 (docs/page.html):
+                cross-document view transitions morph the title from card to page.
+                Derived from RelPermalink → identical on both sides, unique per page. */}}
+          <span class="fd-title" style="view-transition-name: {{ printf "doc%s" (.RelPermalink | replaceRE `[^a-zA-Z0-9]` "-") }}">{{ .LinkTitle }}</span>
           <span class="fd-desc">{{ .Description }}</span>
         </span>
         <span class="fd-more" aria-hidden="true">Read →</span>
@@ -221,28 +234,23 @@
   {{ end }}
 
   {{ with .Params.faq }}
-  {{- /* 05 – the questions, all answers visible (no disclosures – the spec-sheet
-        decision 2026-07-21). Two CSS columns pack them tightly; each item
-        opens with its own hairline, so the column tops align. */}}
+  {{- /* 05 – the questions as <details> disclosures: closed by default, each opens
+        on click. Two CSS columns pack them tightly; each item carries its own
+        hairline, so the column tops align. */}}
   <section class="faq reveal" id="faq" aria-label="Frequently asked questions">
     <div class="rule"><span class="ix">05</span><span class="nm">{{ .title }}</span></div>
+    {{- /* Two INDEPENDENT columns (not CSS multi-column): a grid with a list per
+          column, so opening a disclosure grows only its own column and never reflows
+          an item across to the other side. First half left, the rest right. */}}
+    {{ $items := .items }}
+    {{ $half := math.Ceil (div (len $items) 2.0) | int }}
     <div class="faq-list">
-      {{ range .items }}
-      <details class="faq-item">
-        <summary class="faq-head">
-          <span class="faq-ic" aria-hidden="true">{{ partial "feature-glyph.html" (dict "glyph" .glyph) }}</span>
-          <span class="faq-q">{{ .q }}</span>
-        </summary>
-        <div class="faq-answer">
-          {{ .a | markdownify }}
-          {{ with .chips }}
-          <ul class="faq-chips">
-            {{ range . }}<li>{{ . }}</li>{{ end }}
-          </ul>
-          {{ end }}
-        </div>
-      </details>
-      {{ end }}
+      <div class="faq-col">
+        {{ range first $half $items }}{{ partial "faq-item.html" . }}{{ end }}
+      </div>
+      <div class="faq-col">
+        {{ range after $half $items }}{{ partial "faq-item.html" . }}{{ end }}
+      </div>
     </div>
   </section>
   {{ end }}
@@ -264,18 +272,15 @@
           </span>
         </a>
         <p class="note-text">{{ .text }}</p>
-        {{ with .extra }}<p class="note-text">{{ . }}</p>{{ end }}
-        {{ with .donate }}
-        {{- /* Our own button opens PayPal's donation modal: the PayPal SDK renders its
-              button into the hidden host below and this link proxies the click to it
-              (wired in head.html, SDK lazy-loaded on first intent). The href is the
-              no-JS fallback – it opens the same donation page in a new tab. */ -}}
-        <a class="btn-outline note-donate" href="{{ .url }}" target="_blank" rel="noopener" data-paypal-donate>
-          <svg viewBox="0 0 24 24" fill="#0070E0" aria-hidden="true"><path d="M15.607 4.653H8.941L6.645 19.251H1.82L4.862 0h7.995c3.754 0 6.375 2.294 6.473 5.513-.648-.478-2.105-.86-3.722-.86m6.57 5.546c0 3.41-3.01 6.853-6.958 6.853h-2.493L11.595 24H6.74l1.845-11.538h3.592c4.208 0 7.346-3.634 7.153-6.949a5.24 5.24 0 0 1 2.848 4.686M9.653 5.546h6.408c.907 0 1.942.222 2.363.541-.195 2.741-2.655 5.483-6.441 5.483H8.714Z"/></svg>
-          {{ .label }}
-        </a>
-        <span id="pp-donate-host" aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px"></span>
+        {{- /* The donate button sits inline at the end of the extra line ("…you can Donate"),
+              not on its own row. Our own button opens PayPal's donation modal: the PayPal
+              SDK renders its button into the hidden host below and this link proxies the
+              click to it (wired in head.html, SDK lazy-loaded on first intent). The href is
+              the no-JS fallback – it opens the same donation page in a new tab. */ -}}
+        {{ with .extra }}
+        <p class="note-text">{{ . }}{{ with $.Params.note.donate }} <a class="btn-outline note-donate" href="{{ .url }}" target="_blank" rel="noopener" data-paypal-donate><svg viewBox="0 0 24 24" fill="#0070E0" aria-hidden="true"><path d="M15.607 4.653H8.941L6.645 19.251H1.82L4.862 0h7.995c3.754 0 6.375 2.294 6.473 5.513-.648-.478-2.105-.86-3.722-.86m6.57 5.546c0 3.41-3.01 6.853-6.958 6.853h-2.493L11.595 24H6.74l1.845-11.538h3.592c4.208 0 7.346-3.634 7.153-6.949a5.24 5.24 0 0 1 2.848 4.686M9.653 5.546h6.408c.907 0 1.942.222 2.363.541-.195 2.741-2.655 5.483-6.441 5.483H8.714Z"/></svg>{{ .label }}</a>{{ end }}</p>
         {{ end }}
+        {{ with .donate }}<span id="pp-donate-host" aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px"></span>{{ end }}
       </div>
     </div>
   </section>

@@ -50,7 +50,7 @@ main.sheet > .get { background: var(--stage); }
   font-size: 12.5px;
   letter-spacing: 0.13em;
   text-transform: uppercase;
-  color: var(--faint);
+  color: var(--faint-text);
   padding-top: 5px;
 }
 
@@ -70,7 +70,7 @@ main.sheet > .get { background: var(--stage); }
   letter-spacing: 0.13em;
   text-transform: uppercase;
 }
-.rule .ix { color: var(--faint); margin-right: 14px; }
+.rule .ix { color: var(--faint-text); margin-right: 14px; }
 .rule .nm { color: var(--muted); }
 
 /* (--sect removed with soft deck – the panes' padding + --deck-gap carry the rhythm) */
@@ -82,7 +82,6 @@ main.sheet > .get { background: var(--stage); }
   text-wrap: pretty;
 }
 .prose + .prose { margin-top: 11px; }
-.prose strong { color: var(--ink); font-weight: 500; }
 
 .sheet h2 {
   font-family: var(--display);

@@ -6,7 +6,7 @@
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.18em;
-  color: var(--faint);
+  color: var(--faint-text);
 }
 
 .section-body {
@@ -19,7 +19,7 @@
   font-family: var(--mono);
   font-size: 13px;
   letter-spacing: 0.04em;
-  color: var(--faint);
+  color: var(--faint-text);
 }
 
 /* (.label-pill removed 2026-07-19 – the sections are now carried by .rule, not by pills.) */
@@ -34,4 +34,10 @@
     text-box: trim-both cap alphabetic;
   }
 }
+
+/* Balance the ragged edge of multi-line headings: a two–three-line title gets even
+   line lengths instead of one long line + one short. pretty is for prose, balance
+   is for headings – the site used pretty everywhere and balance nowhere. Adjustable:
+   the selector list (the wordmark's .colophon-word is one word, so it's left out). */
+.hero-heading, .sheet h2, .doc-title, .page-title, .mfeat-v { text-wrap: balance; }
 

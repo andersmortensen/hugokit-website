@@ -14,7 +14,10 @@
       <article class="doc-article">
         <header class="doc-head">
           {{ with .Params.group }}<p class="section-label">{{ . }}</p>{{ end }}
-          <h1 class="doc-title">{{ .Title }}</h1>
+          {{- /* view-transition-name pairs with fd-title (home.html) and
+                doc-index-title (docs/section.html): navigation morphs the clicked
+                title into this H1. Same RelPermalink-derived name on all three. */}}
+          <h1 class="doc-title" style="view-transition-name: {{ printf "doc%s" (.RelPermalink | replaceRE `[^a-zA-Z0-9]` "-") }}">{{ .Title }}</h1>
           {{ with .Description }}<p class="doc-lead">{{ . }}</p>{{ end }}
           {{ partial "doc-updated.html" (dict "page" . "format" "page") }}
         </header>

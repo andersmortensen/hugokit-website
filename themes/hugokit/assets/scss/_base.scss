@@ -35,6 +35,11 @@ img, svg { display: block; max-width: 100%; }
 
 a { color: inherit; }
 
+/* Emphasis at the base layer: Inter ships 400 + 500, no 700 – so a bare <strong>
+   would synthesize a fake bold. 500 is the site's emphasis weight; registers that
+   never scoped their own rule (changelog, FAQ) inherit it here instead of faking 700. */
+strong { color: var(--ink); font-weight: 500; }
+
 .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 28px; }
 
 .skip-link {

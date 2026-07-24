@@ -7,6 +7,17 @@
 {{ $pages := .RegularPages }}
 {{ $placed := slice }}
 <nav class="doc-nav" aria-label="Documentation">
+  {{- /* Sidebar search over the docs pages (title + description + a text excerpt),
+        indexed inline in the JSON script below – no output format, so touching it
+        never restarts the dev server. Without JS the field is inert and the full
+        nav shows. */ -}}
+  <div class="doc-search">
+    <input type="search" class="doc-search-input" placeholder="Search docs&hellip;" aria-label="Search the documentation" autocomplete="off" spellcheck="false">
+    <button type="button" class="doc-search-clear" aria-label="Clear search" hidden>&times;</button>
+  </div>
+  <ul class="doc-search-results" hidden></ul>
+
+  <div class="doc-nav-body" data-search-body>
   <a class="doc-nav-home" href="{{ .RelPermalink }}">All docs</a>
 
   {{ range $group := .Params.groups }}
@@ -53,5 +64,8 @@
     </ul>
   </div>
   {{ end }}
+  </div>{{- /* .doc-nav-body */ -}}
 </nav>
+
+{{ partial "docs-search.html" . }}
 {{ end }}

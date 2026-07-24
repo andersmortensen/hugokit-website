@@ -4,8 +4,8 @@
 //  Identity v3 "Q2 v2": mark-first, quartet masonry.
 //  Layout v6 "soft deck" (2026-07-21): the canvas is a warm BASE, and content
 //  sits on it as rounded PANES – separation through surface contrast, no
-//  borders or shadows. Fraunces carries serif accents (h1-em + fact values);
-//  headings are weight 400. The quartet appears only muted (accent glyphs, badges).
+//  borders or shadows. Headings are weight 400. The quartet appears only muted
+//  (accent glyphs, badges).
 //  Light + dark follow the system preference (prefers-color-scheme) – both always.
 //
 //  Styling is split into component partials (2026-07-23) and transpiled with
@@ -15,7 +15,7 @@
 //
 //  Tokens: surround / canvas(base) / plate(pane) / stage(pane-2) / ink
 //  Fonts:  Hanken Grotesk (wordmark 700 · headings 400/500) + Inter +
-//          JetBrains Mono + Fraunces (accents).
+//          JetBrains Mono.
 //  Brand spec: dokumentation → apps/hugokit/brand · geometry in static/brand/
 // ============================================================================
 

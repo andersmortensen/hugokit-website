@@ -1,0 +1,16 @@
+{{- /* One FAQ disclosure. Context: a single item from faq.items. Split out so the
+      two columns (home.html) can each render their half without duplicating markup. */ -}}
+<details class="faq-item">
+  <summary class="faq-head">
+    <span class="faq-ic" aria-hidden="true">{{ partial "feature-glyph.html" (dict "glyph" .glyph) }}</span>
+    <span class="faq-q">{{ .q }}</span>
+  </summary>
+  <div class="faq-answer">
+    {{ .a | markdownify }}
+    {{ with .chips }}
+    <ul class="faq-chips">
+      {{ range . }}<li>{{ . }}</li>{{ end }}
+    </ul>
+    {{ end }}
+  </div>
+</details>

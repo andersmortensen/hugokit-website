@@ -21,6 +21,60 @@
     } catch (e) {}
   })();
 </script>
+{{- /* Cross-document view transitions (@view-transition in _motion.scss) swallow the
+      fragment scroll when you arrive at /#section from another page: the smooth
+      scroll-behavior is cancelled while the transition runs, so you land on the hero
+      or a stale offset instead of the section. pagereveal fires just after the
+      incoming page is revealed – re-assert the jump there, once and instant (which
+      overrides scroll-behavior for this one call and honours scroll-padding-top).
+      Where pagereveal is missing the browser isn't running the transition and scrolls
+      the fragment itself, so there's nothing to fix. Rollback: delete this script. */}}
+<script>
+  (function () {
+    var revealAndOpen = function (el) {
+      // Reveal the section the target lives in (or the target itself) so you don't
+      // land mid-fade on a blank screen, and open it if it's a <details> (a feature
+      // row linked from the hero).
+      var rev = el.classList.contains('reveal') ? el : el.closest('.reveal');
+      if (rev) rev.classList.add('in');
+      if (el.tagName === 'DETAILS') el.open = true;
+    };
+    var jump = function () {
+      if (!location.hash) return;
+      var el;
+      try { el = document.getElementById(decodeURIComponent(location.hash.slice(1))); }
+      catch (e) { return; }
+      if (!el) return;
+      revealAndOpen(el);
+      requestAnimationFrame(function () {
+        el.scrollIntoView({ block: 'start', behavior: 'instant' });
+      });
+    };
+    // After a cross-document view transition (Chromium) the fragment scroll is
+    // otherwise swallowed; pagereveal is the exact hook. Where it's missing, the
+    // DOMContentLoaded pass still corrects a hash landing.
+    if ('onpagereveal' in window) window.addEventListener('pagereveal', jump);
+    addEventListener('DOMContentLoaded', function () { if (location.hash) jump(); });
+    addEventListener('hashchange', jump);
+    // Same-page hash links (the hero feature rows use pure #… hrefs): handle the click
+    // ourselves and jump INSTANTLY to the opened target. The browser's own smooth
+    // scroll would slide down through sections that haven't revealed yet – a blank
+    // cream screen the whole way. This makes it land at once, section shown, details
+    // open. Only plain #… links are caught; /#… nav links keep their normal behaviour.
+    document.addEventListener('click', function (e) {
+      var a = e.target && e.target.closest ? e.target.closest('a[href^="#"]') : null;
+      if (!a || a.getAttribute('href') === '#') return;
+      var el;
+      try { el = document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1))); }
+      catch (err) { return; }
+      if (!el) return;
+      e.preventDefault();
+      try { history.replaceState(null, '', a.getAttribute('href')); } catch (err) {}
+      revealAndOpen(el);
+      el.scrollIntoView({ block: 'start', behavior: 'instant' });
+    });
+  })();
+</script>
 {{- /* Google Analytics 4 (gtag.js) + Consent Mode v2.
 
       dataLayer and gtag() are ALWAYS defined – also outside production. gtag() is
@@ -231,9 +285,10 @@
 
 {{- /* Fonts are self-hosted (woff2, latin) – @font-face lives in main.css, the files in
       static/fonts/. No Google Fonts CDN and thus no preconnect or
-      render-blocking external stylesheet. The wordmark font (Hanken 700) paints
-      the hero lockup and is therefore preloaded. */}}
-<link rel="preload" href="{{ "fonts/hanken-grotesk-v12-latin-700.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+      render-blocking external stylesheet. The wordmark weight (Hanken 700) now
+      lives in the variable 100–900 file, which paints the hero lockup and is
+      therefore preloaded. */}}
+<link rel="preload" href="{{ "fonts/hanken-grotesk-v12-latin-400-500.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
 
 {{ with resources.Get "scss/main.scss" }}
   {{ $css := . | css.Sass (dict "targetPath" "css/main.css" "transpiler" "dartsass") | minify | fingerprint }}
@@ -302,7 +357,7 @@
       entries.forEach(function (e) {
         if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
       });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    }, { rootMargin: '0px 0px 12% 0px', threshold: 0.08 });
     all.forEach(function (el) { io.observe(el); });
 
     // Copy button on docs code blocks. Inserted only where the clipboard API exists
@@ -405,8 +460,11 @@
         closeBtn.setAttribute('aria-label', 'Close');
         closeBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>';
         inner.appendChild(lbImg);
-        inner.appendChild(closeBtn);
         box.appendChild(inner);
+        // Close sits on the box, not inside .lightbox-inner: the inner has a
+        // transform (scale), which would pin a fixed button to the image instead of
+        // the viewport. On the box it can anchor to the viewport corner.
+        box.appendChild(closeBtn);
         document.body.appendChild(box);
         box.addEventListener('click', function (e) { if (e.target !== lbImg) close(); });
       };
@@ -431,6 +489,53 @@
       });
       document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') close();
+      });
+    })();
+
+    // PayPal donate: keep the site's own button but open PayPal's donation modal (the
+    // SDK popup) instead of a new tab. The SDK is loaded lazily on first intent
+    // (hover / focus / touch), rendered into the hidden #pp-donate-host, and the button
+    // proxies its click to the SDK's button. If the SDK isn't ready yet (or fails), the
+    // button's href opens the donation page in a new tab as a fallback.
+    (function () {
+      var btn = document.querySelector('[data-paypal-donate]');
+      var host = document.getElementById('pp-donate-host');
+      if (!btn || !host) return;
+      var m = (btn.getAttribute('href') || '').match(/hosted_button_id=([^&]+)/);
+      var hostedId = m ? decodeURIComponent(m[1]) : null;
+      if (!hostedId) return;
+      var loading = false;
+
+      var load = function () {
+        if (loading) return; loading = true;
+        var s = document.createElement('script');
+        s.src = 'https://www.paypalobjects.com/donate/sdk/donate-sdk.js';
+        s.charset = 'UTF-8';
+        s.onload = function () {
+          if (!window.PayPal || !window.PayPal.Donation) return;
+          try {
+            PayPal.Donation.Button({
+              env: 'production',
+              hosted_button_id: hostedId,
+              image: {
+                src: 'https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif',
+                alt: 'Donate with PayPal',
+                title: 'PayPal'
+              }
+            }).render('#pp-donate-host');
+          } catch (err) {}
+        };
+        document.head.appendChild(s);
+      };
+
+      ['pointerenter', 'focus', 'touchstart'].forEach(function (ev) {
+        btn.addEventListener(ev, load, { once: true, passive: true });
+      });
+
+      btn.addEventListener('click', function (e) {
+        var pp = host.querySelector('img') || host.querySelector('button, a') || host.firstElementChild;
+        if (pp) { e.preventDefault(); pp.click(); }
+        // else: SDK not ready → let the href fallback open a new tab
       });
     })();
 

@@ -36,7 +36,7 @@
   font-family: var(--mono);
   font-size: 13px;
   font-variant-numeric: tabular-nums;
-  color: var(--faint);
+  color: var(--faint-text);
 }
 
 @media (max-width: 900px) {
@@ -95,7 +95,7 @@
   font-size: 14px;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.02em;
-  color: var(--faint);
+  color: var(--faint-text);
   white-space: nowrap;
 }
 
@@ -132,12 +132,78 @@
   font-family: var(--mono);
   font-size: 13px; font-weight: 500;
   letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--faint);
+  color: var(--muted);
   text-decoration: none;
   margin-bottom: 20px;
   transition: color 160ms ease;
 }
 .doc-nav-home:hover { color: var(--ink); }
+
+/* Sidebar search (docs-nav.html) */
+.doc-search { position: relative; margin-bottom: 18px; }
+.doc-search-input {
+  width: 100%;
+  font-family: var(--sans);
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--stage);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 30px 8px 12px;
+  transition: border-color 160ms ease, background 160ms ease;
+}
+.doc-search-input::placeholder { color: var(--faint-text); }
+.doc-search-input:focus { outline: none; border-color: var(--line-strong); background: var(--plate); }
+.doc-search-input::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; }
+.doc-search-clear {
+  position: absolute; right: 5px; top: 50%; transform: translateY(-50%);
+  width: 24px; height: 24px;
+  display: grid; place-items: center;
+  background: transparent; border: 0; cursor: pointer;
+  color: var(--faint-text); font-size: 19px; line-height: 1;
+  border-radius: 50%;
+  transition: color 160ms ease, background 160ms ease;
+}
+.doc-search-clear:hover { color: var(--ink); background: var(--stage); }
+.doc-search-results { list-style: none; display: grid; gap: 1px; margin-bottom: 8px; }
+.doc-search-results a {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 8px 10px; margin-left: -10px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 160ms ease;
+}
+.doc-search-results a:hover { background: var(--stage); }
+.dsr-title { font-size: 16px; line-height: 1.3; color: var(--ink); }
+.dsr-group {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--faint-text);
+}
+.doc-search-empty { padding: 8px 10px; font-size: 14px; color: var(--faint-text); }
+
+/* Docs hub: a large, full-width search under the subtitle. Reuses the .doc-search-*
+   controls at a bigger scale; results replace the group list while searching. */
+.docs-hub-search { position: relative; margin-top: clamp(20px, 3vw, 30px); }
+.docs-hub-search .doc-search-input {
+  font-size: 17px;
+  padding: 14px 52px 14px 18px;
+  border-radius: 12px;
+}
+.docs-hub-search .doc-search-clear { right: 12px; width: 30px; height: 30px; font-size: 21px; }
+.docs-hub-search .doc-search-results {
+  margin-top: 16px;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px clamp(24px, 4vw, 52px);
+  align-items: start;
+}
+.docs-hub-search .doc-search-results a { padding: 12px 14px; margin-left: 0; border-radius: 8px; }
+.docs-hub-search .dsr-title { font-size: 18px; }
+.docs-hub-search .doc-search-empty { grid-column: 1 / -1; padding: 12px 14px; font-size: 15px; }
+
+/* [hidden] loses to the grid/flex display on these containers, so restore it – both
+   the hub's group list and the sidebar nav must actually disappear while searching. */
+[data-search-body][hidden] { display: none; }
 .doc-nav-group + .doc-nav-group { margin-top: 22px; }
 .doc-nav-group .section-label { display: block; margin-bottom: 9px; }
 .doc-nav ul { list-style: none; display: grid; gap: 1px; }
@@ -162,7 +228,7 @@
   margin-left: 0;
   padding: 4px 8px;
   font-size: 15.5px;
-  color: var(--faint);
+  color: var(--muted);
 }
 .doc-nav-frag a:hover { color: var(--ink); }
 
@@ -194,7 +260,7 @@
   font-size: 12.5px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--faint);
+  color: var(--faint-text);
   margin-bottom: 16px;
 }
 .page-eyebrow::before { content: ""; width: 18px; height: 1px; background: var(--line-strong); }
@@ -258,7 +324,7 @@
   font-size: 13px;
   font-weight: 400;
   letter-spacing: 0.14em;
-  color: var(--faint);
+  color: var(--faint-text);
 }
 .page-body p { max-width: 68ch; }
 
@@ -308,7 +374,7 @@
   font-size: 14px;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.02em;
-  color: var(--faint);
+  color: var(--faint-text);
 }
 
 /* The prose */
@@ -318,6 +384,10 @@
   color: var(--muted);
 }
 .doc-body > * + * { margin-top: 16px; }
+/* Reading measure: the prose text elements cap at ~70ch (the article itself runs
+   to 860px). Code, tables and images keep the full width – only running text needs
+   the shorter line. Adjustable: the 70ch here. */
+.doc-body p, .doc-body ul, .doc-body ol { max-width: 70ch; }
 .doc-body h2 {
   font-family: var(--display);
   font-weight: 500;
@@ -336,7 +406,6 @@
   margin-top: 30px;
   scroll-margin-top: 26px;
 }
-.doc-body strong { color: var(--ink); font-weight: 500; }
 .doc-body a {
   color: var(--ink);
   text-decoration: underline;
@@ -363,7 +432,7 @@
   font-family: var(--mono);
   font-size: 14.5px;
   line-height: 1.9;
-  color: var(--faint);
+  color: var(--faint-text);
 }
 .doc-body li > ul, .doc-body li > ol { margin-top: 9px; }
 
@@ -427,7 +496,7 @@
   font-family: var(--mono);
   font-size: 12.5px; font-weight: 500;
   letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--faint);
+  color: var(--faint-text);
   padding: 0 16px 10px 0;
   border-bottom: 1px solid var(--line-strong);
 }
@@ -473,7 +542,7 @@
   margin-top: 11px;
   font-family: var(--mono);
   font-size: 13px; letter-spacing: 0.02em;
-  color: var(--faint);
+  color: var(--faint-text);
 }
 
 .doc-foot {

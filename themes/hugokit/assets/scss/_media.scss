@@ -20,7 +20,7 @@ img.shot { cursor: zoom-in; }
 
 .lightbox {
   position: fixed; inset: 0; z-index: 200;
-  display: grid; place-items: center;
+  display: flex; align-items: center; justify-content: center;
   padding: clamp(16px, 4vw, 56px);
   background: transparent;
   -webkit-backdrop-filter: blur(24px);
@@ -40,12 +40,17 @@ img.shot { cursor: zoom-in; }
 .lightbox.is-open .lightbox-inner { transform: scale(1); }
 .lightbox-img {
   display: block;
-  max-width: min(1072px, 100%);
+  /* Sized against the VIEWPORT, not the (transform-scaled) inner box – a % here
+     made the inner stretch and the image sit left of centre in a wide window. */
+  max-width: min(1072px, calc(100vw - 2 * clamp(16px, 4vw, 56px)));
   max-height: 92vh;
   width: auto; height: auto;
 }
 .lightbox-close {
-  position: absolute; top: 12px; right: 12px;
+  /* Fixed to the viewport corner (not the image corner): the button is a child of
+     the box, so it anchors to the viewport however wide the image lands. */
+  position: fixed; top: clamp(12px, 1.5vw, 18px); right: clamp(12px, 1.5vw, 18px);
+  z-index: 201;
   width: 34px; height: 34px;
   display: grid; place-items: center;
   color: var(--ink);

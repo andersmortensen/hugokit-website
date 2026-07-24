@@ -50,7 +50,7 @@
 
 @media (prefers-reduced-motion: no-preference) {
   html.js .mast .mast-grid > div:first-child { animation: rise-in 700ms cubic-bezier(0.19, 1, 0.22, 1) 90ms both; }
-  html.js .mast .float-stack { animation: rise-in 700ms cubic-bezier(0.19, 1, 0.22, 1) 240ms both; }
+  html.js .mast .mast-features { animation: rise-in 700ms cubic-bezier(0.19, 1, 0.22, 1) 240ms both; }
 }
 
 @keyframes rise-in {
@@ -76,6 +76,69 @@
 .btn-ghost:hover { text-decoration-color: currentColor; }
 .hugo-link { transition: opacity 160ms ease; }
 .hugo-link:hover { opacity: 0.7; }
+
+/* Press states: rows and chrome darken one step the instant they are pressed –
+   `transition: none` inside :active is what makes the press instant; the release
+   eases back through each component's own transition. The macOS list-row
+   acknowledgment, nothing moves. */
+.nav-link:active { background: color-mix(in srgb, var(--ink) 10%, transparent); transition: none; }
+.mode-toggle:active { background: color-mix(in srgb, var(--ink) 12%, transparent); transition: none; }
+.mfeat:active { background: color-mix(in srgb, var(--ink) 9%, transparent); transition: none; }
+.mfeat-rel:active { background: color-mix(in srgb, var(--pink) 26%, var(--stage)); transition: none; }
+.doc-index a:active,
+.doc-nav a:active,
+.doc-search-results a:active { background: color-mix(in srgb, var(--ink) 6%, var(--stage)); transition: none; }
+.feature-doc:active { background: color-mix(in srgb, var(--ink) 10%, var(--stage)); transition: none; }
+.fd-card:active { opacity: 0.45; transition: none; }
+.rf-btn:active { background: color-mix(in srgb, var(--ink) 6%, transparent); transition: none; }
+
+/* Mode toggle: moon/sun visibility is color-driven (light-dark() in _tokens), so a
+   color transition IS the crossfade – covers the manual toggle and live system-scheme
+   changes alike. Adjustable: the 240ms below. */
+.mode-toggle svg { transition: color 240ms ease; }
+
+/* ── The assembly – the lockup mark clicks together on hover ─────────────────
+   The quartet facets (mk-q1–q4, prepared in mark.html since the Q2 v2 mark) fly
+   in from a slightly exploded state and settle 50ms apart. Scoped to .lockup, so
+   every lockup (bezel, release rail, footer) plays the same move; the element
+   itself never moves – all motion is inside the SVG. Offsets are viewBox units
+   (100-box at 26px ≈ 0.26px per unit) along each facet's outward direction.
+   Adjustable: the --mk-d offsets, the 50ms stagger, the 360ms settle. */
+.mk-q1 { --mk-dx: -5px; --mk-dy: -3px; }
+.mk-q2 { --mk-dx: 3px;  --mk-dy: -5px; }
+.mk-q3 { --mk-dx: -3px; --mk-dy: 5px; }
+.mk-q4 { --mk-dx: 5px;  --mk-dy: 3px; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .lockup:hover .mk-q, .lockup:focus-visible .mk-q {
+    animation: mk-assemble 360ms cubic-bezier(0.19, 1, 0.22, 1) both;
+  }
+  .lockup:hover .mk-q2, .lockup:focus-visible .mk-q2 { animation-delay: 50ms; }
+  .lockup:hover .mk-q3, .lockup:focus-visible .mk-q3 { animation-delay: 100ms; }
+  .lockup:hover .mk-q4, .lockup:focus-visible .mk-q4 { animation-delay: 150ms; }
+}
+@keyframes mk-assemble {
+  from { opacity: 0; transform: translate(var(--mk-dx, 0), var(--mk-dy, 0)); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Copy button receipt: a small settle when "Copied" lands – the overshoot lives in
+   the easing, not the keyframe. is-copied is toggled by the JS in head.html. */
+@media (prefers-reduced-motion: no-preference) {
+  .doc-copy.is-copied { animation: copy-pop 260ms cubic-bezier(0.34, 1.56, 0.64, 1); }
+}
+@keyframes copy-pop {
+  from { transform: scale(0.92); }
+  to   { transform: none; }
+}
+
+/* Docs search results land instead of popping: [hidden] flips in docs-search.html,
+   the animation runs once per appearance. */
+@media (prefers-reduced-motion: no-preference) {
+  .doc-search-results:not([hidden]) { animation: land-in 180ms cubic-bezier(0.19, 1, 0.22, 1); }
+}
+@keyframes land-in {
+  from { opacity: 0; transform: translateY(3px); }
+}
 
 /* ── The mode switch as a soft crossfade (View Transitions API, progressive) ─ */
 
@@ -115,7 +178,8 @@
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .btn, .btn-ghost, .btn-outline, .nav-link, .nav-version, .mode-toggle,
-  .footer-links a, .fd-card, .feature-doc, .doc-copy { transition: none; }
+  .footer-links a, .fd-card, .feature-doc, .doc-copy,
+  .mode-toggle svg, .nav-pill { transition: none; }
   .term-caret { animation: none; }
 }
 
