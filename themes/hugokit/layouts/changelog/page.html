@@ -18,6 +18,15 @@
         <h1 class="release-version">{{ .Title }}</h1>
         {{ with .Date }}<time class="release-date" datetime="{{ .Format "2006-01-02" }}">{{ .Format "2 January 2006" }}</time>{{ end }}
       </header>
+      {{- /* A personal note from Anders, website only: this template carries it, the
+            in-app (Sparkle) template deliberately does not. A few words on what the
+            release is and why. */ -}}
+      {{ with .Params.note }}
+      <aside class="release-note">
+        <p class="release-note-label">From Anders</p>
+        <div class="release-note-body">{{ . | markdownify }}</div>
+      </aside>
+      {{ end }}
       <article class="release-body">
         {{ .Content }}
       </article>

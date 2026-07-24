@@ -68,6 +68,27 @@ html:not(.in-app) .release-head .lockup { display: none; }
   margin-top: 6px;
 }
 
+/* The author's personal note on a release – website only (page.html), never the
+   in-app Sparkle view. A few words in Anders' voice about what the release is and
+   why. Marked with a mono label, not a left border (house rule). */
+.release-note {
+  margin-top: 22px;
+  background: var(--stage);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.release-note-label {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 8px;
+}
+.release-note-body { font-size: 16.5px; line-height: 1.62; color: var(--muted); text-wrap: pretty; }
+.release-note-body p + p { margin-top: 9px; }
+
 .release-body { margin-top: 22px; font-size: 18px; color: var(--muted); }
 .release-body h2 {
   font-family: var(--display);

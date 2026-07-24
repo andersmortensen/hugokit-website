@@ -2,7 +2,12 @@
 title: "X.Y.Z"
 date: 2026-07-11
 description: "Skabelon for release notes."
+note: >
+  A couple of personal lines: what this release is really about, and why it exists.
+  Website only – this never shows in the in-app (Sparkle) view. Delete if a release
+  doesn't need one.
 draft: true
+outputs: ['html', 'md', 'inapp']
 ---
 
 <!-- SKABELON – kopiér til X.Y.Z.md ved release, fjern draft: true.
