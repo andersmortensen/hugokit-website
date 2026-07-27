@@ -164,6 +164,7 @@
   border-radius: 50%;
   transition: color 160ms ease, background 160ms ease;
 }
+.doc-search-clear[hidden], .doc-search-results[hidden] { display: none; }
 .doc-search-clear:hover { color: var(--ink); background: var(--stage); }
 .doc-search-results { list-style: none; display: grid; gap: 1px; margin-bottom: 8px; }
 .doc-search-results a {
@@ -231,6 +232,23 @@
   color: var(--muted);
 }
 .doc-nav-frag a:hover { color: var(--ink); }
+
+/* The page index is a normal open sidebar on desktop and one compact native
+   disclosure above the article on narrow screens. */
+.doc-nav-menu > summary { display: none; }
+.doc-nav-menu:not([open]) > .doc-nav-body { display: block; }
+.doc-nav-menu-summary {
+  list-style: none;
+  cursor: pointer;
+}
+.doc-nav-menu-summary::-webkit-details-marker { display: none; }
+.doc-nav-menu-summary svg {
+  width: 18px;
+  height: 18px;
+  color: var(--faint-text);
+  transition: transform 200ms ease, color 160ms ease;
+}
+.doc-nav-menu[open] .doc-nav-menu-summary svg { transform: rotate(180deg); }
 
 /* Standalone root page (e.g. /privacy/): same prose register as docs, but
    centered on the base – one pane with no section nav to balance against. */
@@ -561,10 +579,42 @@
 .doc-foot a:hover { color: var(--ink); }
 
 @media (max-width: 1020px) {
-  .doc-layout { grid-template-columns: 1fr; gap: 32px; }
-  .doc-nav { position: static; padding-bottom: 26px; border-bottom: 1px solid var(--line); }
+  .doc-layout { grid-template-columns: 1fr; gap: 20px; }
+  .doc-nav { position: static; padding: 20px 0 0; }
   .doc-nav ul { gap: 0; }
   .doc-nav-frag { display: none; }
+  .doc-nav-menu > summary {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 3px 16px;
+    padding: 13px 14px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--stage);
+  }
+  .doc-nav-menu-summary span {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--faint-text);
+  }
+  .doc-nav-menu-summary strong {
+    grid-column: 1;
+    font-family: var(--display);
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .doc-nav-menu-summary svg { grid-column: 2; grid-row: 1 / span 2; }
+  .doc-nav-menu:not([open]) > .doc-nav-body { display: none; }
+  .doc-nav-menu[open] > .doc-nav-body {
+    display: block;
+    margin-top: 14px;
+    padding: 16px 14px 22px;
+    border-bottom: 1px solid var(--line);
+  }
 }
 
 @media (max-width: 620px) {
@@ -572,4 +622,3 @@
   .doc-body table { display: block; overflow-x: auto; }
   .doc-foot { flex-direction: column; gap: 12px; }
 }
-

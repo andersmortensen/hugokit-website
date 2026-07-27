@@ -109,8 +109,6 @@ body:has(.canvas) .canvas { flex: 1 0 auto; min-height: 0; width: 100%; }
 }
 .bezel-bar .lockup-name { font-size: 20px; }
 .bezel-bar .nav-actions { margin-left: auto; }
-/* The CTA's phone label is hidden on wide screens (swapped in at <620px) */
-.bezel-bar .cta-narrow { display: none; }
 
 .bezel-frame {
   position: fixed;
@@ -151,7 +149,4 @@ html { scroll-padding-top: calc(var(--bezel-top) + 24px); }
   .bezel-frame { top: 0; border-radius: 18px 18px 0 0; } /* radius = the canvas's mobile radius, top only */
   body:has(.canvas) { padding-top: 0; }
 
-  /* The CTA states the requirement instead of offering an impossible action */
-  .bezel-bar .cta-wide { display: none; }
-  .bezel-bar .cta-narrow { display: inline; }
 }

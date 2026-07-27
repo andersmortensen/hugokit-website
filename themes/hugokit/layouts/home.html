@@ -20,17 +20,13 @@
   <main id="main" class="sheet">
 
   {{ with .Params.hero }}
-  {{- /* 00 Masthead: what it is. Asymmetric (soft deck): copy on the left,
-        three floating feature cards on the right – one feature per card (the loop,
-        snapshots & undo, site health), anchored in moments/features. Price and
-        size are MOVED away from here (2026-07-22, the feedback round): 'free' stood
-        above the fold in the bezel, facts and download – the cards now sell function, not
-        numbers. The hero video was removed 2026-07-21; the screenshot/video fields in front
-        matter remain unused for the release material. */}}
+  {{- /* 00 Masthead: show the product before explaining the inventory. Copy stays
+        compact on the left; the real app recording is the dominant proof on the
+        right. Static screenshots cover reduced motion and no-JS. */}}
   <header class="mast">
     <div class="mast-grid">
-      <div>
-        <p class="lab">Overview</p>
+      <div class="mast-copy">
+        <p class="lab">A native Mac app for Hugo</p>
         {{- /* Two-tone headline: the subject is dimmed, the point stands in ink */}}
         <h1 class="hero-heading">{{ with .headingDim }}<span class="hh-dim">{{ . }}</span> {{ end }}{{ .heading }}</h1>
         <p class="hero-lead">{{ .lead }}</p>
@@ -40,45 +36,21 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4.5v10.5"/><path d="m7 10.5 5 4.5 5-4.5"/><path d="M5.5 19.5h13"/></svg>
             {{ $.Params.download.cta }}
           </a>
-          <span class="fine-meta">{{ $.Params.download.meta }}</span>
+          <a class="btn-ghost" href="#loop">{{ .more }}</a>
         </div>
+        <span class="fine-meta mast-meta">{{ $.Params.download.meta }}</span>
       </div>
 
-      {{- /* The feature list (variant D, 2026-07-24): four rows, each a link to where
-            the feature is explained – the release to its changelog entry, workflow to
-            the loop section, the two others to their docs pages. The release row keeps
-            a version tag; the three features carry a quiet chevron. Hover only tints
-            the surface / deepens the chevron – nothing moves (house rule). */}}
+      {{- /* Release metadata stays visible without competing with the app preview. */}}
       {{- $releaseURL := "changelog/" | relURL }}{{ with site.GetPage (printf "/changelog/%s" site.Params.version) }}{{ $releaseURL = .RelPermalink }}{{ end -}}
-      <div class="mast-features">
-        <a class="mfeat mfeat-rel" href="{{ $releaseURL }}">
-          <span class="mfeat-body">
-            <span class="mfeat-k">Latest release</span>
-            <span class="mfeat-v">Version {{ site.Params.version }}</span>
-          </span>
-          <span class="mfeat-tag">v{{ site.Params.version }}</span>
+      <div class="mast-media">
+        <a class="hero-release" href="{{ $releaseURL }}">
+          <span>Latest release</span>
+          <b>v{{ site.Params.version }}</b>
         </a>
-        <a class="mfeat" href="#loop">
-          <span class="mfeat-body">
-            <span class="mfeat-k">Workflow</span>
-            <span class="mfeat-v">Preview, preflight, publish</span>
-          </span>
-          <span class="mfeat-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span>
-        </a>
-        <a class="mfeat" href="#feature-snapshots-and-undo">
-          <span class="mfeat-body">
-            <span class="mfeat-k">Safety net</span>
-            <span class="mfeat-v">Snapshots &amp; undo</span>
-          </span>
-          <span class="mfeat-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span>
-        </a>
-        <a class="mfeat" href="#feature-site-health">
-          <span class="mfeat-body">
-            <span class="mfeat-k">Quality</span>
-            <span class="mfeat-v">Site health</span>
-          </span>
-          <span class="mfeat-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span>
-        </a>
+        <div class="mast-shot">
+          {{ partial "hero-video.html" (dict "v" .video "alt" .alt "light" .screenshot "dark" .screenshotDark) }}
+        </div>
       </div>
     </div>
   </header>
@@ -148,117 +120,53 @@
   {{ end }}
 
   {{ if .Params.features.items }}
-  {{- /* 02 – the WHOLE toolbox. The quartet cards from v4 are dissolved in here, so
-        the list is the one place everything stands. Each row unfolds to prose,
-        points and docs links (feature-item.html). */}}
+  {{- /* 02 – lead with the three differentiators. The full product inventory stays
+        on the page, but behind one explicit disclosure instead of occupying the
+        entire sales journey by default. */}}
   <section class="features reveal" id="features" aria-label="Features">
     <div class="rule"><span class="ix">02</span><span class="nm">Features</span></div>
-    <div class="lc" style="margin-bottom:24px">
-      <p class="lab">Inventory</p>
+    <div class="lc feature-intro">
+      <p class="lab">Why HugoKit</p>
       <div>
         <h2>{{ .Params.features.title }}</h2>
-        <p class="fine-meta features-meta">{{ len .Params.features.items }} entries</p>
+        <p class="feature-intro-copy">A safer way to work with the Hugo sites and tools you already have.</p>
       </div>
     </div>
-    <div class="feature-list">
-      {{ range .Params.features.items }}
-      {{ partial "feature-item.html" (dict "name" .name "glyph" .glyph "text" .text "detail" .detail "points" .points "shortcut" .shortcut "docs" .docs "accent" .accent) }}
-      {{ end }}
-    </div>
-  </section>
-  {{ end }}
 
-  {{ with .Params.whatishugo }}
-  {{- /* 03 – background material for the person who landed here without knowing Hugo. Deliberately
-        AFTER loop and features: the home page speaks to Hugo users, and the product's
-        core argument should not stand behind an explanation of Hugo. The terminal shows
-        what HugoKit runs. */}}
-  <section class="hugo-panel reveal" id="hugo" aria-label="{{ .title }}">
-    <div class="rule"><span class="ix">03</span><span class="nm">What is Hugo</span></div>
-    <div class="lc">
-      <p class="lab">Background</p>
-      <div class="hugo-split">
-        <div>
-          <h2 class="hugo-h">{{ .title }}</h2>
-          {{ range .body }}<p class="hugo-body">{{ . }}</p>{{ end }}
-          {{ with .usps }}
-          <ul class="usps" aria-label="{{ .label }}">
-            {{ range $i, $u := .items }}
-            <li class="usp">
-              <b><span class="usp-fct usp-fct-{{ add $i 1 }}" aria-hidden="true"></span>{{ $u.name }}</b>
-              <span>{{ $u.text }}</span>
-            </li>
-            {{ end }}
-          </ul>
-          {{ end }}
-          {{ with .bridge }}<p class="hugo-bridge">{{ . }}</p>{{ end }}
-          <a class="hugo-link" href="https://gohugo.io" target="_blank" rel="noopener">{{ .link }} →</a>
-        </div>
-        <div class="term" role="img" aria-label="Terminal running hugo server">
-          <div class="term-bar">
-            <span class="hw-tl hw-r"></span><span class="hw-tl hw-y"></span><span class="hw-tl hw-g"></span>
-          </div>
-          <div class="term-body">
-            <span class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">hugo server</span><span class="term-caret"></span></span>
-            <span class="term-out">Web Server is available at http://localhost:1313/</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  {{ end }}
-
-  {{ with .Params.fromdocs }}
-  {{- /* 04 – three curated pages from docs. Title and description are taken from
-        the pages themselves – if a page does not exist, its row is not rendered. */}}
-  <section class="fromdocs reveal" id="reading" aria-label="{{ .label }}">
-    <div class="rule"><span class="ix">04</span><span class="nm">{{ .label }}</span></div>
-    <div class="fromdocs-list">
-      {{ range .pages }}
-      {{ with site.GetPage . }}
-      <a class="fd-card" href="{{ .RelPermalink }}">
-        <span class="fd-kind">{{ .Params.group }}</span>
+    <div class="feature-highlights">
+      {{ range where .Params.features.items "featured" true }}
+      <a class="feature-highlight{{ with .accent }} fi-{{ . }}{{ end }}" href="#feature-{{ .name | urlize }}">
+        <span class="feature-glyph-slot" aria-hidden="true">{{ partial "feature-glyph.html" (dict "glyph" .glyph) }}</span>
         <span>
-          {{- /* Shared view-transition-name with the doc page's H1 (docs/page.html):
-                cross-document view transitions morph the title from card to page.
-                Derived from RelPermalink → identical on both sides, unique per page. */}}
-          <span class="fd-title" style="view-transition-name: {{ printf "doc%s" (.RelPermalink | replaceRE `[^a-zA-Z0-9]` "-") }}">{{ .LinkTitle }}</span>
-          <span class="fd-desc">{{ .Description }}</span>
+          <span class="feature-highlight-name">{{ .name }}</span>
+          <span class="feature-highlight-copy">{{ .text }}</span>
         </span>
-        <span class="fd-more" aria-hidden="true">Read →</span>
+        <span class="feature-highlight-arrow" aria-hidden="true">→</span>
       </a>
       {{ end }}
-      {{ end }}
     </div>
-  </section>
-  {{ end }}
 
-  {{ with .Params.faq }}
-  {{- /* 05 – the questions as <details> disclosures: closed by default, each opens
-        on click. Two CSS columns pack them tightly; each item carries its own
-        hairline, so the column tops align. */}}
-  <section class="faq reveal" id="faq" aria-label="Frequently asked questions">
-    <div class="rule"><span class="ix">05</span><span class="nm">{{ .title }}</span></div>
-    {{- /* Two INDEPENDENT columns (not CSS multi-column): a grid with a list per
-          column, so opening a disclosure grows only its own column and never reflows
-          an item across to the other side. First half left, the rest right. */}}
-    {{ $items := .items }}
-    {{ $half := math.Ceil (div (len $items) 2.0) | int }}
-    <div class="faq-list">
-      <div class="faq-col">
-        {{ range first $half $items }}{{ partial "faq-item.html" . }}{{ end }}
+    <details class="feature-catalog">
+      <summary class="feature-catalog-summary">
+        <span>
+          <b>Explore every feature</b>
+          <small>{{ len .Params.features.items }} features, grouped in one list</small>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </summary>
+      <div class="feature-list">
+        {{ range .Params.features.items }}
+        {{ partial "feature-item.html" (dict "name" .name "glyph" .glyph "text" .text "detail" .detail "points" .points "shortcut" .shortcut "docs" .docs "accent" .accent) }}
+        {{ end }}
       </div>
-      <div class="faq-col">
-        {{ range after $half $items }}{{ partial "faq-item.html" . }}{{ end }}
-      </div>
-    </div>
+    </details>
   </section>
   {{ end }}
 
   {{ with .Params.note }}
-  {{- /* 06 – why the app exists. The page's only place with a first-person voice. */}}
+  {{- /* 03 – trust before support material: the page's only first-person voice. */}}
   <section class="note reveal" id="why">
-    <div class="rule"><span class="ix">06</span><span class="nm">{{ .label }}</span></div>
+    <div class="rule"><span class="ix">03</span><span class="nm">{{ .label }}</span></div>
     <div class="lc">
       <p class="lab">Colophon</p>
       <div>
@@ -286,13 +194,31 @@
   </section>
   {{ end }}
 
+  {{ with .Params.faq }}
+  {{- /* 04 – the questions as <details> disclosures: closed by default, each opens
+        on click. Two independent columns keep the page compact on desktop. */}}
+  <section class="faq reveal" id="faq" aria-label="Frequently asked questions">
+    <div class="rule"><span class="ix">04</span><span class="nm">{{ .title }}</span></div>
+    {{ $items := .items }}
+    {{ $half := math.Ceil (div (len $items) 2.0) | int }}
+    <div class="faq-list">
+      <div class="faq-col">
+        {{ range first $half $items }}{{ partial "faq-item.html" . }}{{ end }}
+      </div>
+      <div class="faq-col">
+        {{ range after $half $items }}{{ partial "faq-item.html" . }}{{ end }}
+      </div>
+    </div>
+  </section>
+  {{ end }}
+
   {{ with .Params.download }}
-  {{- /* 07 – what is actually downloaded. Self-distributed download without an App Store
+  {{- /* 05 – what is actually downloaded. Self-distributed download without an App Store
         means the user must be able to see what the file is, before it opens:
         version, size, architecture, requirements and date. The numbers live in hugo.toml
         and must match the DMG the appcast points to. */}}
   <section class="get reveal" id="download">
-    <div class="rule"><span class="ix">07</span><span class="nm">Download</span></div>
+    <div class="rule"><span class="ix">05</span><span class="nm">Download</span></div>
     <div class="lc">
       <p class="lab">Get it</p>
       <div>

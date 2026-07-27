@@ -6,8 +6,8 @@ hero:
   # To-tone headline: headingDim dæmpes (muted), heading bærer pointen i ink.
   headingDim: "Hugo,"
   heading: "without the terminal."
-  lead: "HugoKit is a Mac app that runs, previews and publishes the Hugo sites you already have. Same Hugo, same files – no terminal."
-  more: "Learn more"
+  lead: "Run, inspect and publish the Hugo sites already on your Mac – all from one native window."
+  more: "See how it works"
   # Hero-mediet: loopende app-optagelse. Screenshottene bliver stående som
   # fallback (noscript) og som kilde til vinduesramme + skygge i videofilerne.
   screenshot: "/images/app/dashboard-light.webp"
@@ -42,7 +42,7 @@ loop:
 
 # Den fulde feature-liste – hvert punkt er forankret i docs' features.md.
 features:
-  title: "Everything HugoKit does"
+  title: "What makes HugoKit different"
   items:
     - name: "All your sites"
       glyph: "sites"
@@ -77,6 +77,7 @@ features:
     - name: "Site health"
       glyph: "health"
       accent: "blue"
+      featured: true
       spot:
         key: "⇧⌘H"
         text: "From anywhere"
@@ -137,6 +138,8 @@ features:
         - "TOML, YAML or JSON – the format is read from the file, and keys you never touched keep their place, their spelling and their comments."
     - name: "Snapshots and undo"
       glyph: "snapshots"
+      accent: "pink"
+      featured: true
       text: "Before HugoKit writes to any file in your site, it keeps a copy. Every change is a diff you can read – and undo, file by file."
       docs:
         - "/docs/snapshots-and-undo/"
@@ -202,6 +205,7 @@ features:
     - name: "Native and private"
       glyph: "private"
       accent: "gold"
+      featured: true
       spot:
         text: "Keychain · no sign-in"
       text: "SwiftUI throughout, credentials in the macOS Keychain. No account – nothing ever leaves your Mac."
@@ -245,46 +249,44 @@ moments:
     heading: "The server, on a button."
     text: "Start and stop Hugo's server with one click – drafts included, logs translated into plain language."
     points:
-      - "Toggles for drafts, future and expired content – no flags to remember."
-      - "Colour-coded live logs, with errors translated into plain language."
-      - "A monospace preview shows the exact command before it runs."
-      - "Hugo's deprecation notices are collected into one list on the dashboard – each one once, however often it repeats."
+      - "Toggle drafts, future and expired content without remembering flags."
+      - "Read colour-coded logs and see the exact command HugoKit runs."
+      - "Open the local preview from the same window."
     screenshot: "/images/app/server-light.webp"
     screenshotDark: "/images/app/server-dark.webp"
     alt: "The Server view: live URL, stop and restart actions, and toggles for drafts, future and expired content."
     docs:
       - "/docs/running-the-server/"
-    detail: "HugoKit runs the same hugo server you would run in a terminal. It just remembers the flags, picks a port that is actually free, and turns Hugo's output into something you can read. The exact command is written to the log before it runs, so you always know what the app asked Hugo to do."
+    detail: "HugoKit runs the same `hugo server` command you would run yourself. It remembers the flags, finds a free port and turns Hugo's output into a readable live log."
   - label: "Preflight"
     glyph: "preflight"
     heading: "It checks before it publishes."
     text: "Every publish runs a check first: build, config, assets, broken links and subpath traps. Fixes are shown as a diff you approve."
     points:
-      - "Runs automatically before every publish – build, config, assets and subpath traps."
-      - "Each fix is shown as a red/green diff first; approve it, and preflight re-checks."
-      - "Issues are ranked error, warning or info – and the fixes are applied for you."
+      - "Checks the build, config, assets and common subpath traps."
+      - "Shows every suggested fix as a diff before writing anything."
+      - "Ranks findings as errors, warnings or information."
     screenshot: "/images/app/preflight-light.webp"
     screenshotDark: "/images/app/preflight-dark.webp"
     alt: "HugoKit's preflight check presenting a fix as a diff before publishing."
     docs:
       - "/docs/preflight/"
-    detail: "A Hugo site that builds perfectly on your Mac can still land broken on the web. The build is not what breaks – the paths are. Preflight runs before every publish, and `⇧⌘P` runs it on its own when you just want to know where the site stands."
+    detail: "A site can build perfectly on your Mac and still break after deployment. Preflight checks the paths, config and assets before every publish."
   - label: "Publish"
     glyph: "publish"
     heading: "Publish where you already publish."
     text: "GitHub Pages, or your own server over FTP/SFTP. Set it up once per site – after that it's ⌘P."
     points:
-      - "GitHub Pages or your own server over FTP/SFTP – one target or several, published one at a time or all at once, each built to its own folder and uploaded in parallel."
-      - "Each target shows its own status, and after every publish HugoKit checks that the live site actually responds."
-      - "Before a GitHub Pages publish, HugoKit shows the site's git state – uncommitted work, a branch or remote that doesn't match – and holds back a push that would send the wrong thing."
-      - "Deploy credentials go in the macOS Keychain, and `⌘P` publishes from anywhere."
+      - "Publish to GitHub Pages, FTP or SFTP – one target or several."
+      - "See status and history per target, followed by a live-site check."
+      - "Keep deploy credentials in the macOS Keychain."
     screenshot: "/images/app/deploy-light.webp"
     screenshotDark: "/images/app/deploy-dark.webp"
     alt: "The Deploy view: a configured deploy target with Add Deploy Target and a history of successful deploys."
     docs:
       - "/docs/publishing-to-github-pages/"
       - "/docs/publishing-over-sftp/"
-    detail: "Set a destination up once, and publishing is a single keystroke: `⌘P`. GitHub Pages builds in the cloud through Actions or locally on your Mac; FTP and SFTP build on your Mac and upload only the files that actually changed. A site can hold several destinations at once – publish them all in one go, pause the one you are not using – and each target keeps its own status and history. Hugo's build flags are set per site, with the exact command line shown before it runs."
+    detail: "Set up a destination once, then publish with `⌘P`. Each target keeps its own build settings, status and history, and HugoKit checks the live site when it finishes."
 
 # Docs-teaser på forsiden – tre kuraterede sider, forankret i keyword-planen
 # (SEO-sporet: intern linking fra forsiden til landingssiderne). Titel og

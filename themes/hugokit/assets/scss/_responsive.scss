@@ -3,6 +3,7 @@
 /* Midpoint: the side columns (terminal, screenshots) drop below the text,
    but the label rail remains – the sheet still reads as a sheet. */
 @media (max-width: 1020px) {
+  .mast-grid { grid-template-columns: minmax(0, 0.8fr) minmax(390px, 1.2fr); gap: 28px; }
   .hugo-split { grid-template-columns: minmax(0, 1fr); gap: 30px; }
   .lstep-body { grid-template-columns: minmax(0, 1fr); gap: 24px; }
   .lstep-vis { max-width: 460px; }
@@ -14,6 +15,11 @@
 @media (max-width: 860px) {
   :root { --rail: 0px; --rail-gap: 0px; --deck-gap: 12px; --pane-r: 16px; }
   main.sheet > section, main.sheet > .mast { padding: clamp(22px, 5vw, 32px); }
+  .mast-grid { grid-template-columns: minmax(0, 1fr); gap: 30px; }
+  .mast-copy { max-width: 680px; }
+  .mast-media { width: 100%; max-width: 760px; }
+  .hero-release { margin-left: 0; }
+  .feature-highlights { grid-template-columns: minmax(0, 1fr); }
   .facts { grid-template-columns: 1fr; }
   .fact { padding-right: 0; }
   .fact + .fact { padding-left: 0; padding-top: 14px; margin-top: 14px; }
@@ -33,6 +39,14 @@
   .faq-list { grid-template-columns: 1fr; }
 }
 
+/* The full desktop link row becomes crowded before the phone layout itself is
+   needed. Keep the product, Docs and Download visible through this middle band. */
+@media (max-width: 760px) {
+  .nav-links-mid .nav-link[href*="#"] { display: none; }
+  .nav-version { display: none; }
+  .nav-links-mid { gap: 2px; margin-left: 4px; }
+}
+
 @media (max-width: 620px) {
   .canvas { border-radius: 18px; min-height: calc(100svh - 16px); }
   body { padding: 8px; }
@@ -44,6 +58,13 @@
   .nav-links-mid .nav-link[href*="#"] { display: none; }
   .nav-version { display: none; }
   .nav-actions .btn { height: 30px; padding: 0 12px; }
+
+  .mast .hero-heading { max-width: 9ch; }
+
+  .feature-catalog-summary > span { display: block; }
+  .feature-catalog-summary small { display: block; margin-top: 4px; }
+  .feature-name { flex: 1 1 auto; }
+  .feature-reveal { padding-left: 0; }
 
   /* Collapsible feature row: the teaser gives way, so glyph + name + chevron stand clean */
   .feature-teaser { display: none; }
@@ -71,4 +92,3 @@
   .footer-inner { grid-template-columns: minmax(0, 1fr); gap: 22px; }
   .footer-links { gap: 8px 16px; }
 }
-

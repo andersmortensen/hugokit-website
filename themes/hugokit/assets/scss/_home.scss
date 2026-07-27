@@ -173,16 +173,88 @@
 .feature-doc:hover .feature-doc-title,
 .feature-doc:hover .feature-doc-arrow { color: var(--ink); }
 
-/* ── Features – the whole toolbox, collapsible ────────────────────────────────
-   Feedback round (2026-07-22): each feature is a <details>. <summary> is the
-   always-visible row (glyph slot + name + teaser + chevron); .feature-reveal
-   unfolds detail (lead), points and docs links on click – and click through to
-   docs from there. Replaces the datasheet decision (all visible, 2026-07-21).
-   Rollback: re-grid .feature-item + move the reveal content out of <details>.
-   Adjustable: --feature-indent (reveal indent) + summary padding below. */
+/* ── Features – three differentiators, then the complete inventory ───────── */
 
 :root { --feature-indent: 45px; }
-.features-meta { margin-top: 11px; }
+.feature-intro { margin-bottom: 24px; }
+.feature-intro-copy {
+  margin-top: 12px;
+  max-width: 56ch;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+.feature-highlights {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.feature-highlight {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 14px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--stage);
+  color: inherit;
+  text-decoration: none;
+  transition: background-color 160ms ease, border-color 160ms ease;
+}
+.feature-highlight:hover {
+  background: color-mix(in srgb, var(--ink) 5%, var(--stage));
+  border-color: var(--line-strong);
+}
+.feature-highlight-name {
+  display: block;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 19.5px;
+  letter-spacing: -0.01em;
+}
+.feature-highlight-copy {
+  display: block;
+  margin-top: 7px;
+  font-size: 15.5px;
+  line-height: 1.5;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+.feature-highlight-arrow {
+  color: var(--faint-text);
+  transition: color 160ms ease;
+}
+.feature-highlight:hover .feature-highlight-arrow { color: var(--ink); }
+
+.feature-catalog { margin-top: 26px; border-top: 1px solid var(--line); }
+.feature-catalog-summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 18px 2px;
+}
+.feature-catalog-summary::-webkit-details-marker { display: none; }
+.feature-catalog-summary > span { display: flex; align-items: baseline; gap: 14px; }
+.feature-catalog-summary b {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 19.5px;
+}
+.feature-catalog-summary small { font-size: 14px; color: var(--muted); }
+.feature-catalog-summary svg {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  color: var(--faint-text);
+  transition: transform 220ms cubic-bezier(0.19, 1, 0.22, 1), color 160ms ease;
+}
+.feature-catalog[open] > .feature-catalog-summary svg { transform: rotate(180deg); }
+.feature-catalog-summary:hover svg { color: var(--ink); }
 .feature-list { border-top: 1px solid var(--line); }
 
 .feature-item { border-bottom: 1px solid var(--line); }
@@ -215,14 +287,19 @@
 .fi-gold .feature-glyph { color: var(--gold-ink); background: var(--gold-soft); }
 
 .feature-name {
-  flex: none;
+  flex: 0 0 210px;
   font-family: var(--display);
   font-weight: 500; font-size: 19.5px;
   letter-spacing: -0.01em;
 }
-/* Hidden in the collapsed row (2026-07-24): the row shows just the name; the
-   description appears in .feature-lead when the item is expanded. */
-.feature-teaser { display: none; }
+.feature-teaser {
+  min-width: 0;
+  flex: 1 1 auto;
+  font-size: 15.5px;
+  line-height: 1.45;
+  color: var(--muted);
+  text-wrap: pretty;
+}
 .feature-chevron {
   flex: none; margin-left: auto; width: 18px; height: 18px; color: var(--faint);
   transition: transform 220ms cubic-bezier(0.19, 1, 0.22, 1), color 160ms ease;

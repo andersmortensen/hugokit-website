@@ -17,6 +17,12 @@
   </div>
   <ul class="doc-search-results" hidden></ul>
 
+  <details class="doc-nav-menu">
+    <summary class="doc-nav-menu-summary">
+      <span>Browse documentation</span>
+      <strong>{{ $current.LinkTitle }}</strong>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+    </summary>
   <div class="doc-nav-body" data-search-body>
   <a class="doc-nav-home" href="{{ .RelPermalink }}">All docs</a>
 
@@ -65,7 +71,25 @@
   </div>
   {{ end }}
   </div>{{- /* .doc-nav-body */ -}}
+  </details>
 </nav>
 
 {{ partial "docs-search.html" . }}
+<script>
+  (function () {
+    var menu = document.querySelector('.doc-nav-menu');
+    if (!menu || !('matchMedia' in window)) return;
+    var narrow = matchMedia('(max-width: 1020px)');
+    var sync = function () {
+      if (narrow.matches) {
+        if (!menu.dataset.mobileReady) menu.open = false;
+        menu.dataset.mobileReady = 'true';
+      } else {
+        menu.open = true;
+      }
+    };
+    sync();
+    narrow.addEventListener('change', sync);
+  })();
+</script>
 {{ end }}

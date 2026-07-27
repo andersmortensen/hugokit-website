@@ -37,7 +37,13 @@
       // row linked from the hero).
       var rev = el.classList.contains('reveal') ? el : el.closest('.reveal');
       if (rev) rev.classList.add('in');
-      if (el.tagName === 'DETAILS') el.open = true;
+      // A highlighted feature can target a nested <details> inside the closed
+      // full catalogue. Open the target and every disclosure that contains it.
+      var node = el;
+      while (node) {
+        if (node.tagName === 'DETAILS') node.open = true;
+        node = node.parentElement;
+      }
     };
     var jump = function () {
       if (!location.hash) return;
