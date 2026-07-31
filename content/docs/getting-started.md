@@ -26,21 +26,24 @@ The setup wizard has four steps: **Welcome**, Hugo, **Add Your First Site**, and
 
 ### Hugo
 
-HugoKit looks for a Hugo binary in these locations, in order:
+HugoKit uses the same executable resolver for onboarding, builds, preflight,
+publishing and automatic fixes. It looks in these locations, in order:
 
 ```
 /opt/homebrew/bin/hugo
 /usr/local/bin/hugo
-~/.local/bin/hugo
 /usr/bin/hugo
 /home/linuxbrew/.linuxbrew/bin/hugo
+~/.local/bin/hugo
 ```
 
-If none of them is there, it falls back to `which hugo`. When Hugo is found, the step shows the version and moves on.
+If none of them is there, it falls back to `which hugo`. When Hugo is found,
+the step shows the version and moves on. That same resolved path is then used
+by builds, preflight, publishing and Hugo error fixes.
 
 When it isn't, you get two options:
 
-- **Install Hugo** – if Homebrew is installed, HugoKit runs `brew install hugo`. If it isn't, HugoKit downloads the latest **Hugo extended** release from GitHub and installs it to `~/.local/bin/hugo`.
+- **Install Hugo** – if Homebrew is installed, HugoKit runs `brew install hugo`. If it isn't, HugoKit downloads the latest **Hugo extended** release from GitHub, verifies its release checksum and `hugo version`, then installs it to `~/.local/bin/hugo` through a staged atomic replacement. A failed or interrupted download leaves an existing Hugo binary in place.
 - **I'll install it myself** – the step shows the `brew install hugo` command and a link to Hugo's own installation page, plus a **Retry Detection** button.
 
 Hugo extended is the build that can compile SCSS. Many themes need it, which is why HugoKit installs that variant.
