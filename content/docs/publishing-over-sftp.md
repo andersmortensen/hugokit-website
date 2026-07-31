@@ -47,11 +47,11 @@ The alternative is an SSH key. Leave the password field empty, and HugoKit uses 
 `⌘P`. HugoKit:
 
 1. Builds the site with the flags set for it – `hugo --gc --minify` by default. See [Build flags](/docs/build-flags/).
-2. Works out what actually changed. `.hugokit/ftp-manifest.json` in your project holds a SHA-256 hash of every file it uploaded last time. Files with a new hash are uploaded, files you deleted locally are deleted on the server, and everything else is left alone:
+2. Works out what actually changed. A target-keyed manifest under `.hugokit/` holds a SHA-256 hash of every file it uploaded last time. The manifest is tied to the protocol, canonical host, port, username and remote root as well, so changing any part of the endpoint starts a safe full upload rather than using another target's state. Files with a new hash are uploaded, files you deleted locally are deleted on the server, and everything else is left alone:
    ```
    Smart sync: 3 to upload, 1 to delete, 214 unchanged
    ```
-3. Uploads, then updates the manifest.
+3. Uploads, then updates the manifest. If the server refuses one delete, that path stays pending and appears in the next diff. If the file is already gone, HugoKit treats the delete as successful.
 
 Dotfiles come along: `.htaccess`, `.well-known`, `.nojekyll` all upload. Only Finder junk (`.DS_Store`, `._*`) is filtered out.
 
@@ -59,7 +59,7 @@ Nothing changed since last time? `No files to sync – site is up to date`.
 
 If the target has a **Public URL**, HugoKit probes it after the upload – the dot on the target row tells you whether the live site actually responds, and **Check if Live** in the target's **⋯** menu runs the same probe on demand.
 
-Change the host or the remote path and the manifest no longer applies – HugoKit does a full upload. Note that files on the *old* server are left where they are.
+Change the protocol, host, port, username or remote path and the manifest no longer applies – HugoKit does a full upload. Note that files on the *old* server are left where they are.
 
 ## Plain FTP
 
