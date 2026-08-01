@@ -75,13 +75,13 @@ copyright = '2026'
   tagline = 'a Mac app for Hugo'
   description = 'A Mac app for Hugo: run the server, preview your pages and publish your site from one window. Free, native, no terminal – built by one person for his own sites.'
   # Appens aktuelle version — bruges i JSON-LD (softwareVersion); bump ved release.
-  version = '0.2.0'
+  version = '0.3.0'
   # Download-fakta under knappen. Skal matche den DMG appcast'en peger på —
-  # størrelsen er enclosure length i static/appcast.xml (7.115.242 B = 6,8 MB),
+  # størrelsen er enclosure length i static/appcast.xml (7.588.292 B = 7,2 MB),
   # datoen er dens pubDate, og arkitekturen er aflæst på binæren i dist/export
   # (Mach-O universal: x86_64 + arm64). Bumpes ved hver release, se RELEASING.md.
-  dmgSize = '6.8 MB'
-  releaseDate = '2026-07-23'
+  dmgSize = '7.2 MB'
+  releaseDate = '2026-08-01'
   architecture = 'Universal – Apple silicon and Intel'
   requires = 'macOS 26 or later'
   # Kort form til bezel-barens app-fakta – følg `requires` ved ændringer.
