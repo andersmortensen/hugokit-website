@@ -48,7 +48,7 @@ What it can fix, and what the fix does:
 
 | Finding | The fix |
 |---|---|
-| Hardcoded asset paths in templates | `src="/js/app.js"` becomes `src="{{ "js/app.js" \| relURL }}"` – Hugo then adds the subpath for you. |
+| Hardcoded asset paths in templates | A leading slash – `/js/app.js` – becomes `{{ "js/app.js" \| relURL }}`, and Hugo adds the subpath for you. |
 | Dynamic paths missing `relURL` | Paths built inside templates (`printf "/img/%s.svg"`, `dict "url" "/thoughts/"`) get the same treatment. |
 | Hardcoded paths in static JS | Injects `window.__basePath` into your head template, then rewrites `fetch('/index.json')` to go through it. Hugo doesn't process `static/`, so this is the only way. |
 | `baseURL` missing, localhost, or wrong | Sets it to the URL the site actually deploys to. |
