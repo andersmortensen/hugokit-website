@@ -1,12 +1,12 @@
 ---
 title: "Publishing to GitHub Pages"
-description: "Connect a Hugo site to a GitHub repository and publish it to GitHub Pages from HugoKit – cloud builds, local builds, and the subpath trap that breaks most first deploys."
+description: "Connect a Hugo site to a repository and publish it to GitHub Pages with GitHub Actions or a locally built `gh-pages` branch."
 group: "Publishing"
 weight: 10
 tags: [publishing, github-pages]
 ---
 
-HugoKit publishes to GitHub Pages the way you'd do it by hand: it commits your project, pushes it, and lets GitHub Actions build the site. The difference is that you never open a terminal, and the checks that usually bite you run first.
+HugoKit can commit and push the project for a GitHub Actions build or publish a local build to `gh-pages`. Preflight runs first.
 
 ## Before you start
 
@@ -46,9 +46,9 @@ When you press **Done**, HugoKit wires the folder up: it makes it a git reposito
 4. Watches the Actions run and shows the live step names – you see the build progress in the app instead of on a browser tab.
 5. Waits a moment for the CDN, then reports the site as live.
 
-The timeline shows **Save version → Push to GitHub → Build site → Deploy**. If the workflow doesn't finish within five minutes, HugoKit stops waiting and tells you to check Actions on github.com – the build usually failed there.
+The timeline shows **Save version → Push to GitHub → Build site → Deploy**. After five minutes without completion, HugoKit reports a timeout and links to the Actions run.
 
-After a successful publish, HugoKit probes the live URL – the dot on the target row tells you whether the site actually responds, and **Check if Live** in the target's **⋯** menu runs the same probe on demand. And if the site has more than one active target, **Publish to All Targets** on the Deploy page sends it to every one of them.
+After publishing, HugoKit checks the public URL. **Check if Live** repeats the check, and **Publish to All Targets** publishes to every active target.
 
 The flags Hugo builds with – garbage collection, minify and a build environment – are set per site on the Deploy page. See [Build flags](/docs/build-flags/).
 
@@ -64,9 +64,9 @@ Three things it will stop for:
 
 Warnings and errors hold the publish until you've dealt with them; anything only worth noting is written to the log and doesn't interrupt. (An FTP/SFTP publish builds from your working tree and never touches git, so there the same state is just a note.)
 
-## The subpath trap
+## Repository subpaths
 
-This one catches almost everyone, and it's the reason [preflight](/docs/preflight/) exists.
+GitHub Pages project sites are published below a repository subpath. [Preflight](/docs/preflight/) checks paths that can break there.
 
 A repository named `my-blog` deploys to `https://you.github.io/my-blog/` – not to the root of the domain. Every absolute path in your templates (`/css/main.css`, `/js/app.js`) now points at `https://you.github.io/css/main.css`, which doesn't exist. The HTML loads; the styling doesn't.
 
@@ -76,7 +76,7 @@ A repository named exactly `<your-username>.github.io` deploys to the root and h
 
 ## Custom domains
 
-Put a `CNAME` file with your domain in `static/CNAME`, as GitHub expects. HugoKit reads it and builds with that domain as the `baseURL`, and preflight then stops nagging about the subpath – a custom domain doesn't have one. HugoKit doesn't create the file for you.
+Add the custom domain to `static/CNAME`. HugoKit uses it as the `baseURL`, and Preflight no longer applies repository-subpath checks. HugoKit does not create the file.
 
 ## When something goes wrong
 

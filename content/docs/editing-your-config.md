@@ -1,12 +1,12 @@
 ---
 title: "Editing your config"
-description: "Edit hugo.toml from HugoKit – a visual form for the fields you actually change, a raw text tab for everything else, and a diff you approve before anything is written."
+description: "Edit TOML, YAML or JSON as fields or raw text, with a diff before HugoKit saves anything."
 group: "Working in the app"
 weight: 10
 tags: [config]
 ---
 
-Your Hugo config is the file most likely to break a site, and the one you edit least often – so you never quite remember what the keys are called. HugoKit gives it a form, a raw editor, and one rule: nothing is written to disk until you've seen the diff.
+Open the Hugo configuration as structured fields or raw text. Whichever view you use, HugoKit shows a diff and waits for approval before saving.
 
 ## Two tabs, one file
 
@@ -19,17 +19,15 @@ The two tabs are the same document. Switch between them and your edits follow �
 
 **Additional Fields** is where the keys HugoKit has no field for end up. They aren't hidden, and they aren't dropped on save.
 
-## Nothing is written until you approve it
+## Review before saving
 
-Edit anything and an amber **Edited** badge appears next to the title. That's the only thing that has happened so far – the file on disk is untouched.
+Editing shows an amber **Edited** badge. The file on disk remains unchanged until the diff is approved.
 
-**Save** doesn't save. It builds the new file contents and shows you a diff: every changed key, old value against new. Approve it, and *then* it's written. **Revert** throws the edits away and reloads the file as it is on disk.
+**Save** prepares the new file and opens a diff of the changed keys. Approving the diff writes the file. **Revert** discards the edits and reloads the current file from disk.
 
 {{< shot name="config-diff" alt="The Config editor's Review Changes diff: a changed key shown old value against new before anything is written to disk." h="776" >}}
 
-That means a mistyped key costs you a glance, not a broken build.
-
-And even an approved save has a way back: HugoKit snapshots the config as it was before writing, so the change can be undone from the site's **Snapshots** sheet. More on that in [Snapshots and undo](/docs/snapshots-and-undo/).
+HugoKit snapshots the configuration before writing it. The change can be restored from **Snapshots**; see [Snapshots and undo](/docs/snapshots-and-undo/).
 
 ## When Hugo disagrees
 

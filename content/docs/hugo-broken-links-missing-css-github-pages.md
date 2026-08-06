@@ -1,20 +1,20 @@
 ---
 title: "Broken links and missing CSS after deploying to GitHub Pages"
-description: "Your Hugo site works locally but loses its CSS on GitHub Pages. The cause is the repository subpath in baseURL – and relURL doesn't fix it the way you'd expect."
+description: "The site works locally, but GitHub Pages has lost its CSS, images or links below the repository subpath."
 group: "Fixing common Hugo problems"
 weight: 10
 tags: [publishing, github-pages, troubleshooting]
 ---
 
-The site is fine on `localhost:1313`. You deploy it, open `https://you.github.io/my-blog/`, and get unstyled HTML: the text is there, the CSS is gone, the images 404, and half the links go nowhere.
+The site works on `localhost:1313`, but the GitHub Pages deployment has missing CSS, image 404s or links that point outside the repository subpath.
 
-Nothing is wrong with your build. The problem is that your site no longer lives at the root of a domain.
+The deployed site is served below `/my-blog/` rather than at the domain root.
 
 ## What's actually happening
 
 A GitHub Pages project site is served from a **subpath**: `https://you.github.io/my-blog/`, not `https://you.github.io/`.
 
-Locally, your site *is* at the root, so a template that writes `/css/main.css` works. In production that same path resolves to `https://you.github.io/css/main.css` – one level above your site, where nothing exists. Every absolute path you wrote by hand is now pointing outside your own site.
+Locally, `/css/main.css` resolves from the domain root. On a project site it still resolves to `https://you.github.io/css/main.css`, outside `/my-blog/`.
 
 ## Fix step 1: baseURL
 
@@ -28,7 +28,7 @@ A repository named exactly `you.github.io` is the exception – it's served from
 
 ## Fix step 2: stop writing absolute paths
 
-Setting `baseURL` alone doesn't save you, and this is where most people lose an afternoon. Hugo's `relURL` **ignores anything starting with a slash**. Real output from a site with `baseURL = 'https://example.org/my-blog/'`:
+`baseURL` alone does not change root-relative paths. Hugo's `relURL` **leaves values beginning with a slash at the domain root**. For `baseURL = 'https://example.org/my-blog/'`:
 
 ```
 {{ "/css/main.css" | relURL }}   →  /css/main.css            ← unchanged. Still broken.
@@ -42,7 +42,7 @@ Setting `baseURL` alone doesn't save you, and this is where most people lose an 
 {{ "/css/main.css" | absURL }}   →  https://example.org/css/main.css
 ```
 
-So the rule is: **drop the leading slash, then pipe through `relURL`.**
+Remove the leading slash before passing the path to `relURL`.
 
 ```go-html-template
 <!-- Broken on a subpath -->
@@ -95,10 +95,10 @@ grep -o 'href="/[^"]*"' public/index.html
 grep -o 'src="/[^"]*"' public/index.html
 ```
 
-Anything that comes back as `/css/…` rather than `/my-blog/css/…` is still broken.
+For a project site, output such as `/css/…` still points outside `/my-blog/`.
 
 ## Or avoid the subpath entirely
 
-A custom domain has no subpath. Add a `CNAME` file in `static/` with your domain, point the DNS at GitHub, and set `baseURL` to `https://yourdomain.com/`. The whole class of problem disappears.
+With a custom domain, add the domain to `static/CNAME`, configure DNS and set `baseURL` to that domain. Repository-subpath handling is then unnecessary.
 
-> HugoKit runs these checks automatically before every publish: it compares `baseURL` against where the site actually deploys, scans the built HTML for paths missing the subpath, and finds hardcoded paths in templates and in `static/` JavaScript. Each fix is shown as a diff before it touches a file. See [Preflight](/docs/preflight/).
+> **In HugoKit:** Preflight checks `baseURL` and subpath-sensitive asset paths before publishing.

@@ -1,0 +1,68 @@
+.v3-dialog {
+  inset: 0;
+  width: min(calc(100% - 32px), 780px);
+  max-height: min(86vh, 900px);
+  margin: auto;
+  padding: 0;
+  overflow: auto;
+  border: 1px solid var(--line-strong);
+  border-radius: 20px;
+  background-color: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--shadow-window), inset 0 1px 0 var(--window-ring);
+}
+.v3-dialog::backdrop { background: rgba(13, 13, 12, .64); backdrop-filter: blur(10px); }
+.v3-dialog[open] { animation: v3-dialog-in .42s var(--ease-out); }
+@keyframes v3-dialog-in {
+  from { opacity: 0; transform: translateY(14px) scale(.985); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .v3-dialog[open] { animation: none; }
+}
+.v3-dialog-inner { padding: clamp(28px, 5vw, 52px); }
+.v3-dialog-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
+.v3-dialog-top h2 {
+  margin: 0;
+  font-size: clamp(40px, 6vw, 64px);
+  font-weight: 650;
+  letter-spacing: -.055em;
+  line-height: 1;
+}
+.v3-dialog-close {
+  width: 36px;
+  height: 36px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background-color .2s ease, border-color .2s ease;
+}
+.v3-dialog-close:hover { border-color: var(--ink); background-color: var(--surface-raised); }
+.v3-dialog-body { margin: 28px 0 0; color: var(--muted); font-size: 18px; }
+.v3-usp-label { margin: 34px 0 12px; color: var(--faint); }
+.v3-usp-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+.v3-usp { padding: 18px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.v3-usp b { display: block; color: var(--ink); font-size: 14px; }
+.v3-usp span { display: block; margin-top: 5px; color: var(--muted); font-size: 13px; }
+.v3-dialog-bridge { margin: 28px 0 0; font-weight: 600; }
+.v3-dialog-link {
+  display: inline-block;
+  margin-top: 18px;
+  border-bottom: 1px solid var(--line-strong);
+  color: var(--muted);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  text-decoration: none;
+}
+.v3-dialog-link:hover { border-color: var(--blue); color: var(--blue); }

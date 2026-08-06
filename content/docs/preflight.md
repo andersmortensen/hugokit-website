@@ -1,18 +1,18 @@
 ---
 title: "Preflight – what it checks and why"
-description: "Before every publish, HugoKit builds your Hugo site and checks the config, baseURL, assets, templates and static JavaScript – then offers to fix what it finds, as a diff you approve."
+description: "Catch broken paths, configuration and assets before they reach the published site."
 group: "Publishing"
 weight: 30
 tags: [publishing, checks]
 ---
 
-A Hugo site that builds perfectly on your Mac can still land broken on the web. The build isn't the thing that breaks – the *paths* are. Preflight runs before every publish and looks for exactly the failures that only show up once the site is live.
+A local Hugo build can look fine and still break after deployment. Preflight checks the paths, configuration and assets before every publish.
 
 {{< shot name="preflight" alt="HugoKit's preflight report: the pre-publish checks, with a fix offered as a red and green diff to approve." >}}
 
 ## When it runs
 
-Automatically, before every publish. If it finds nothing, the publish just continues. If it finds something, you get the report and decide what to do.
+Preflight runs automatically before publishing. A clean report continues to the publish; findings open the report first.
 
 You can also run it on its own with `⇧⌘P`.
 
@@ -28,19 +28,19 @@ You can also run it on its own with `⇧⌘P`.
 | 6 | Deploy config | An Actions workflow that contradicts the publishing mode you chose. |
 | 7 | Static JavaScript | Hardcoded paths inside JS files in `static/` – the files Hugo never processes. |
 
-If the build fails, preflight stops there. Everything after step 1 reads the built site, and there's no point checking a `public/` folder that Hugo didn't finish writing.
+If the build fails, Preflight stops because the remaining checks require completed build output.
 
-**Steps 5 and 7 only run when your site deploys to a subpath** – `you.github.io/my-blog/` rather than the root of a domain. That's where absolute paths turn into 404s, and where the checks earn their keep.
+**Steps 5 and 7 run only for subpath deployments**, such as `you.github.io/my-blog/`, where root-relative paths can point outside the site.
 
 ## Errors block, warnings don't
 
 Every issue is an **error**, a **warning** or **info**.
 
-Errors stop the publish: *Errors must be resolved before publishing.* Warnings don't: *Warnings found – you can still publish.* Your call.
+Errors must be resolved before publishing. Warnings are reported but do not block the publish.
 
 ## Fixes are a diff you approve
 
-Most of what preflight finds, it can fix. Press the fix button and you get a **Fix Preview**: the files that would change, line by line, red and green. Nothing is written until you press **Apply** – and after it's applied, preflight runs again from the top to confirm the issue is really gone.
+When a finding has an automatic fix, **Fix Preview** shows the affected files and line changes. **Apply** writes the approved change, then Preflight runs again.
 
 Applied fixes also go through the app's snapshot layer: every file a fix touches is copied first, and the change can be undone – file by file or all at once. See [Snapshots and undo](/docs/snapshots-and-undo/).
 
@@ -56,7 +56,7 @@ What it can fix, and what the fix does:
 | Raw HTML omitted from Markdown | Adds `ignoreLogs` for Goldmark's raw-HTML warning. |
 | Actions workflow vs. `gh-pages` conflict | Removes the workflow and switches Pages to the branch you're actually pushing to. |
 
-Some findings have no automatic fix. Those come with a hint instead of a button – preflight tells you what to change and where, rather than guessing.
+Findings without an automatic fix include the file location and a suggested manual change.
 
 ## Why `relURL` and not just a path
 

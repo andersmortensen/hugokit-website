@@ -1,12 +1,12 @@
 ---
 title: "Running the server"
-description: "Start Hugo's development server from HugoKit: ports, drafts, the live log, and what to do when the port is already taken."
+description: "Start Hugo's development server, change ports and content flags, and keep the parsed log beside it."
 group: "Running Hugo"
 weight: 10
 tags: [server, preview]
 ---
 
-HugoKit runs the same `hugo server` you'd run in a terminal. It just remembers the flags, picks a free port, and turns Hugo's output into something you can read.
+HugoKit runs `hugo server` for you, with the settings saved for each site and the command output laid out as a readable log.
 
 ## Start and stop
 
@@ -23,7 +23,7 @@ HugoKit always overrides `--baseURL` with `http://localhost:<port>/` for the loc
 
 ## Ports
 
-The first site gets port **1313**. Every site you add after that gets the next port that is actually free – HugoKit tries to bind the port before offering it, so two sites can run side by side without you thinking about it.
+The first site uses port **1313**. Each later site uses the next port HugoKit can bind, allowing several servers to run at once.
 
 If the port you've chosen is taken, the Server page says so before you start:
 
@@ -32,7 +32,7 @@ If the port you've chosen is taken, the Server page says so before you start:
 | `Port 1313 is also used by "my-site"` | Another site in HugoKit has the same port. Change one of them. |
 | `Port 1313 is already in use by another process` | Something outside HugoKit holds the port – often a `hugo server` you started in a terminal. |
 
-The warning doesn't stop you from starting. If Hugo then fails with *address already in use*, HugoKit looks for the server that's already running on that port and attaches to it instead of fighting it:
+The warning does not block **Start Server**. If Hugo returns *address already in use*, HugoKit checks whether the existing process serves the same project and attaches to it when it does:
 
 ```
 – Port 1313 is already in use – looking for existing server…
@@ -58,11 +58,11 @@ Draft counts elsewhere in the app come from `hugo list drafts`, so they match wh
 
 ## The log
 
-Hugo's output is parsed rather than dumped. Each line becomes an event with a time, a severity colour and a summary you can scan: `Server running`, `File changed – rebuilding`, `Build complete (430 ms) · 78 pages · 12 static files`. Errors and warnings keep their file references (`layouts/index.html:14:3`).
+Hugo's output is parsed into timestamped events with a severity and summary. Errors and warnings retain their file references, such as `layouts/index.html:14:3`.
 
 The log page has **Copy**, **Export** (saves it as a file) and **Clear**.
 
-Hugo's deprecation notices get their own treatment: instead of scrolling past in the log, they're collected into one list on the site's dashboard – each notice once, with a count of how often it fired. A config key Hugo is about to drop doesn't have to be caught mid-scroll.
+Deprecation notices are grouped on the site dashboard, with one entry per notice and a count of occurrences.
 
 ## LiveReload
 

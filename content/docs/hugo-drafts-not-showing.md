@@ -1,14 +1,14 @@
 ---
 title: "Your post doesn't show up"
-description: "The file is there, the build is clean, and the page doesn't exist. Hugo hides drafts, future-dated posts and expired ones by default – three flags, three fixes."
+description: "The file exists, but Hugo has left it out of the build. One of three publication states usually explains it."
 group: "Fixing common Hugo problems"
 weight: 120
 tags: [content, troubleshooting]
 ---
 
-You wrote the post. The file is in `content/posts/`. Hugo builds without a word. And the post isn't on the site – not on the front page, not at its own URL, not anywhere.
+The content file exists and the build succeeds, but Hugo does not generate the page.
 
-Hugo isn't losing it. Hugo is hiding it, deliberately, for one of three reasons.
+In most cases, one of three page states explains it: draft, future-dated or expired.
 
 ## 1. It's a draft
 
@@ -33,7 +33,7 @@ Or keep it a draft and tell the server to render drafts anyway:
 hugo server --buildDrafts
 ```
 
-That's the one you want while you're writing – you see the post locally, and it still won't ship until you clear the flag.
+`--buildDrafts` includes the page in that server run without changing `draft: true` in the file.
 
 ## 2. It's dated in the future
 
@@ -41,13 +41,13 @@ That's the one you want while you're writing – you see the post locally, and i
 date: 2027-01-01
 ```
 
-Hugo skips pages whose `date` is later than the moment of the build. This is the useful one and the confusing one: it's how you schedule a post, and it's also what happens when you fat-finger the year.
+Hugo skips pages whose `date` is later than the build time. Check the year and time zone when the date was not meant as a schedule.
 
 ```bash
 hugo server --buildFuture
 ```
 
-Worth knowing: a scheduled post only appears when something builds the site *after* its date passes. A static site has no clock. If nothing rebuilds, nothing publishes – you need a scheduled build, or you rebuild it yourself.
+A scheduled page appears only after the site is built again following its publication date. Use a scheduled build or rebuild manually.
 
 ## 3. It's expired
 
@@ -55,7 +55,7 @@ Worth knowing: a scheduled post only appears when something builds the site *aft
 expiryDate: 2024-01-01
 ```
 
-Past that date, the page drops out of the build. Rare, and worth remembering when an old page disappears without anyone touching it.
+After `expiryDate`, Hugo excludes the page from the build.
 
 ```bash
 hugo server --buildExpired
@@ -69,7 +69,7 @@ hugo list future
 hugo list expired
 ```
 
-Three commands, three answers. If your file is in one of those lists, you've found it. If it's in none of them, the problem is elsewhere – a filename Hugo skips (`_index.md` is a section page, not a post), a file outside `content/`, or a section with no template. See [Hugo builds fine, but the page is blank](/docs/hugo-found-no-layout-file/).
+If the file appears in one of these lists, its publication state explains the missing page. Otherwise check its location, page kind and template; see [Hugo builds fine, but the page is blank](/docs/hugo-found-no-layout-file/).
 
 ## The flag that publishes your drafts by accident
 
@@ -79,6 +79,6 @@ There's a difference between passing `--buildDrafts` on the command line and put
 buildDrafts = true
 ```
 
-The flag affects the one command you're running. The config key affects **every** build, including the one that publishes your site – so every draft you have goes live. It's a reasonable setting for a personal notebook and a bad one for anything else. Know which of the two you're changing.
+The command-line flag affects one build. `buildDrafts = true` in the configuration affects local and production builds until the setting is changed.
 
-> HugoKit has all three as toggles in the server settings – drafts, future, expired – and restarts the server when you flip one, so the post appears without you thinking about flags. Those toggles only affect the preview. The config keys are separate, in the config editor, and they're the ones that change what gets published. [Site health](/docs/site-health/) also tells you when more than half your content is drafts, which is usually the moment you find the post you forgot. See [Running the server](/docs/running-the-server/).
+> **In HugoKit:** server settings expose draft, future and expired content as preview-only toggles.

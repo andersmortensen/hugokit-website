@@ -1,12 +1,12 @@
 ---
 title: "Getting started"
-description: "Install HugoKit, add a Hugo site and start the server. Setup takes a few minutes, and you don't need the terminal for any of it."
+description: "Bring an existing Hugo site into HugoKit, or create a new one, and get the local server running."
 group: "Start"
 weight: 10
 tags: [basics]
 ---
 
-HugoKit is a Mac app that runs the Hugo you already use. It doesn't convert your site, doesn't move your files and doesn't need an account – it starts `hugo server`, checks the site before it ships, and publishes it.
+HugoKit works with the Hugo projects already on your Mac. Add one, start the development server and keep using the editor you already know.
 
 ## What you need
 
@@ -50,14 +50,14 @@ Hugo extended is the build that can compile SCSS. Many themes need it, which is 
 
 ### Add your first site
 
-The setup step gets you started, and the **File** menu and sidebar give you the same ways in later:
+The setup step, **File** menu and sidebar offer the same four ways to add a site:
 
 - **Open Existing** – pick a folder that already holds a Hugo site (`⌘O`).
 - **Create New** – scaffold a fresh one (`⇧⌘N`).
 - **From a Git URL** – paste a repository and HugoKit clones it and adds it in one step.
 - **Watch Folder** – point HugoKit at a folder of projects and let it find the sites itself.
 
-You can add and remove sites at any time; nothing is locked in.
+Sites can be added or removed at any time. Removing a site from HugoKit does not delete its folder.
 
 ## What counts as a Hugo site
 
@@ -80,22 +80,22 @@ The folder is rescanned when the app starts, so a site you create later shows up
 
 **Create New Site** (`⇧⌘N`) asks for a name and a location, and gives you two templates:
 
-- **HugoKit Starter** – a complete, working site: a home page, a 404 page, `robots.txt`, a sitemap, an RSS feed, an SEO partial, light and dark mode. You choose what else comes along: a blog with sample posts, a projects section, an about page, a theme toggle and tags. It's TOML-only, and it needs **Hugo 0.146 or newer** – on an older Hugo the option is disabled and the app says so.
+- **HugoKit Starter** – creates a home page, 404 page, `robots.txt`, sitemap, RSS feed, SEO partial and light/dark styles. Optional sections include a sample blog, projects, about page, theme toggle and tags. The template uses TOML and requires Hugo 0.146 or newer.
 - **Blank** – the plain output of `hugo new site`, with a small welcome page. Here you can also pick the config format.
 
 Both templates can initialise a git repository, open the site when it's done and start the local server right away.
 
 ## Add a site from a Git URL
 
-If the site already lives in a Git repository, you don't have to clone it in a terminal first. The **From a Git URL** option in Add Site takes the repository's URL, lets you choose where to clone it, and does the clone and the add in one step.
+**From a Git URL** accepts a repository URL, clones it into the selected folder and adds the resulting site.
 
 - The name comes from the repository, and it's cloned into a folder of that name under the location you pick.
 - A public repository clones with no sign-in. For a private GitHub repository, [connect GitHub](/docs/publishing-to-github-pages/#connect-github) first and HugoKit uses that token – and it's only ever sent to `github.com` URLs, never to any other host.
-- What you get is an ordinary site folder on your Mac, exactly as if you'd cloned it yourself. If it turns out not to be a Hugo site, it's added with the same "looks incomplete" warning as Open Existing rather than being turned away.
+- The result is a regular repository folder on your Mac. If no complete Hugo structure is found, HugoKit adds it with the same warning used by **Open Existing**.
 
 ## Start the server
 
-Select the site and hit **Start Server** in the toolbar. The first site gets port **1313**; every site you add after that gets the next port that's actually free, so two sites can run side by side.
+Select the site and choose **Start Server**. The first site uses port **1313**; later sites use the next port HugoKit can bind.
 
 The server settings hold the flags you'd otherwise have to remember:
 
@@ -117,28 +117,28 @@ Open **Deploy** and add a deploy target. There are two kinds:
 
 A site can have several targets at once – production and staging, or GitHub Pages plus a copy to your own host. Each target publishes on its own and shows its own status; with two or more active targets, **Publish to All Targets** sends the site to every one of them. A target you're not using can be paused rather than removed.
 
-Every publish runs [preflight](/docs/preflight/) first: it builds the site, then checks the config, the `baseURL`, the assets in `public/`, your templates and any JavaScript in `static/`. Most of what it finds, it can fix – and each fix is shown as a diff you approve before anything is written. Errors block the publish; warnings don't. Once a target is set up, publishing is `⌘P`.
+Every publish runs [Preflight](/docs/preflight/) first. It builds the site and checks its configuration, `baseURL`, generated assets, templates and static JavaScript. Errors block publishing; warnings do not. Suggested fixes require approval.
 
 The full walkthroughs: [Publishing to GitHub Pages](/docs/publishing-to-github-pages/) · [Publishing over SFTP](/docs/publishing-over-sftp/).
 
 ## Your content
 
-The **Content** page counts what's in the site – pages, sections, words and images – and lists the files. Open one and you get a preview, plus a **Raw** tab: a plain monospaced editor with an explicit **Save** (`⌘S`), a line count and an *edited* marker while you have unsaved changes. Close it with changes pending and HugoKit asks first.
+The **Content** page lists pages, sections, words and images. Opening a file shows its preview, front matter and a **Raw** text editor with **Save** (`⌘S`), line count and unsaved-change state.
 
-It's for a typo, a front matter field, a date. Real writing stays in your own editor – there's an **Open in editor** button one click away, and the dev server reloads on save either way.
+Use **Open in editor** for longer writing or template work. The development server reloads when either editor saves the file.
 
 Saves from HugoKit go through the app's snapshot layer: the file as it was is kept, and the change can be undone from the site's **Snapshots** sheet. See [Snapshots and undo](/docs/snapshots-and-undo/).
 
 ## Outside the window
 
-HugoKit doesn't need its window open to be useful.
+Closing the main window leaves HugoKit running in the menu bar.
 
 - **Menu bar icon** – every site, its status, and start/stop without opening the window. The status dot follows the server: green running, amber busy, red failed, grey idle. Turn it off in **Settings → General**.
 - **Notifications** – native macOS notifications for six events, each with its own toggle in **Settings → Notifications**: server started, server stopped unexpectedly, build succeeded, build failed, publish succeeded, publish failed. If you've denied notification permission, HugoKit says so and links straight to System Settings.
 
 ## Hugo Reference
 
-`⌘2` opens a searchable copy of Hugo's reference material inside the app: **195 entries** across twelve categories – functions, methods, page and site variables, templates, partials, shortcodes, front matter, config, content, build and performance. It's there so a forgotten function name doesn't cost you a browser tab.
+`⌘2` opens 195 searchable Hugo reference entries across twelve categories, including functions, methods, variables, templates, front matter, configuration, content and builds.
 
 ## Shortcuts worth knowing
 

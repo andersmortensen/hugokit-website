@@ -494,7 +494,7 @@
 .colophon-mark { display: flex; align-items: center; gap: 13px; }
 .colophon-word {
   font-family: var(--display);
-  font-weight: 700; /* the wordmark weight, always – cf. the lockup spec */
+  font-weight: 600; /* the Manrope wordmark weight, loaded locally */
   font-size: 36px;
   letter-spacing: -0.015em;
   line-height: 1;

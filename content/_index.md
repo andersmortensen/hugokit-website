@@ -1,18 +1,18 @@
 ---
 title: "HugoKit"
-description: "A Mac app for Hugo: run the server, preview your pages and publish your site from one window. Free, native, no terminal – built by one person for his own sites."
+description: "HugoKit is a Mac app for running Hugo sites locally and publishing them to GitHub Pages, FTP or SFTP."
 
 hero:
   # To-tone headline: headingDim dæmpes (muted), heading bærer pointen i ink.
   headingDim: "Hugo,"
   heading: "without the terminal."
-  lead: "Run, inspect and publish the Hugo sites already on your Mac – all from one native window."
+  lead: "Run Hugo locally, review the site and publish when you're ready – from one Mac app."
   more: "See how it works"
   # Hero-mediet: loopende app-optagelse. Screenshottene bliver stående som
   # fallback (noscript) og som kilde til vinduesramme + skygge i videofilerne.
   screenshot: "/images/app/dashboard-light.webp"
   screenshotDark: "/images/app/dashboard-dark.webp"
-  alt: "The HugoKit main window: starting the server, checking the site, editing content, watching the build log and publishing – all from one window."
+  alt: "HugoKit showing server controls, site health, content, build logs and publishing."
   video:
     lightMp4: "/video/hero-light.mp4"
     darkMp4: "/video/hero-dark.mp4"
@@ -20,29 +20,28 @@ hero:
     posterDark: "/video/hero-poster-dark.webp"
 
 about:
-  intro: "The same Hugo you already use – run, preview and publish, all from one window."
+  intro: "HugoKit works with the Hugo executable and project files already on your Mac – nothing to move or convert."
 
 # Fakta-rækken – tre bånd-fakta. Fakta som fakta, ikke tal-formede ikke-tal.
 facts:
   - value: "Free"
-    label: "no license, no subscription"
+    label: "no license or subscription"
     glyph: "free"
   - value: "Any editor"
-    label: "works beside your editor and AI agents"
+    label: "works with the project files on disk"
     glyph: "editor"
-  - value: "No cloud"
-    label: "no account; your files stay on your Mac"
+  - value: "Local projects"
+    label: "no account required"
     glyph: "lock"
 
 # Loop-sektionen – de tre moments som nummererede trin (01/02/03).
 loop:
   label: "How it works"
-  heading: "The whole loop."
-  sub: "Preview, preflight, publish – in that order."
+  heading: "Preview, preflight and publish."
 
 # Den fulde feature-liste – hvert punkt er forankret i docs' features.md.
 features:
-  title: "What makes HugoKit different"
+  title: "What you can do"
   items:
     - name: "All your sites"
       glyph: "sites"
@@ -52,7 +51,7 @@ features:
       spot:
         key: "⌘O"
         text: "Add a site"
-      text: "Add sites one by one, clone one from a Git URL, or point HugoKit at a folder and it finds them itself. Pin your favourites; give each site its own emoji."
+      text: "Keep your Hugo sites together: add one, clone from Git or scan a folder of projects."
       docs:
         - "/docs/getting-started/#watch-a-folder"
       detail: "Every Hugo site you have, in one sidebar. Add them one at a time with `⌘O`, clone one straight from a Git URL, or point HugoKit at the folder you keep your projects in and let it find them itself."
@@ -64,7 +63,7 @@ features:
         - "Each site keeps its own settings – its port, its content toggles, its deploy destinations."
     - name: "Create new sites"
       glyph: "create"
-      text: "Start from the HugoKit Starter template – pick sections and features up front – or from a blank Hugo site. Git init included."
+      text: "Start with the HugoKit Starter or Hugo's blank template, with Git setup if you want it."
       # docs: kun sider der faktisk beskriver funktionen. Titlen hentes fra siden selv.
       docs:
         - "/docs/getting-started/#create-a-new-site"
@@ -81,7 +80,7 @@ features:
       spot:
         key: "⇧⌘H"
         text: "From anywhere"
-      text: "Every site gets a score: front matter checks, content stats and a build trend, with the issues listed out. ⇧⌘H from anywhere."
+      text: "Find broken links, missing alt text, large images, deprecated config and content issues."
       docs:
         - "/docs/site-health/"
       detail: "Preflight blocks what breaks a deployed site. Site health – `⇧⌘H` from anywhere – tells you what the site is like to read: broken links, images without alt text, a config key Hugo deprecated two versions ago. It points; you decide."
@@ -92,7 +91,7 @@ features:
         - "It reads the built site in public/, so build before you read too much into the score."
     - name: "Template preview"
       glyph: "templates"
-      text: "Browse your theme's layout files and see each one rendered live – ⇧⌘T from anywhere."
+      text: "Choose a layout and see it rendered with a matching page while the server is running."
       docs:
         - "/docs/themes-and-template-preview/#template-preview"
       detail: "A layout file is invisible until a page renders it. Template Preview (`⇧⌘T`) puts your layouts on the left and the rendered page on the right, served by your own dev server – so you can see what single.html actually does without hunting for a URL that exercises it."
@@ -103,7 +102,7 @@ features:
         - "It needs the dev server running – if it is stopped, the panel says so and offers to start it."
     - name: "Theme scaffolding"
       glyph: "themes"
-      text: "See each site's installed themes, scaffold a blank one to build on, and preview its templates as you go."
+      text: "See installed themes, create a blank one and preview its layouts as you work."
       docs:
         - "/docs/themes-and-template-preview/#new-blank-theme"
       detail: "The Themes page lists what is installed in themes/. New Blank Theme scaffolds a placeholder to build on – minimal layouts and styles, not a finished design – by running Hugo's own hugo new theme underneath."
@@ -114,7 +113,7 @@ features:
         - "Removing a theme deletes themes/<name> and touches nothing else in the site."
     - name: "Content overview"
       glyph: "content"
-      text: "Pages, sections, word counts and images per site – with a front matter inspector and quick edits built in. Real writing stays in your own editor."
+      text: "Browse pages, sections, word counts and images, with quick edits for front matter and text."
       docs:
         - "/docs/getting-started/#your-content"
         - "/docs/editing-content/"
@@ -127,7 +126,7 @@ features:
         - "Open in editor is one click away, in whatever editor you already use."
     - name: "Config editor"
       glyph: "config"
-      text: "Edit your Hugo config visually or as raw text, with a diff preview before anything is saved."
+      text: "Edit the Hugo config as fields or raw text, then check the diff before anything is saved."
       docs:
         - "/docs/editing-your-config/"
       detail: "Your config is the file most likely to break a site, and the one you edit least often – so you never quite remember what the keys are called. HugoKit gives it a form, a raw text tab, and one rule: nothing is written to disk until you have seen the diff."
@@ -140,7 +139,7 @@ features:
       glyph: "snapshots"
       accent: "pink"
       featured: true
-      text: "Before HugoKit writes to any file in your site, it keeps a copy. Every change is a diff you can read – and undo, file by file."
+      text: "Before HugoKit changes a file, it keeps a snapshot and records a diff you can restore."
       docs:
         - "/docs/snapshots-and-undo/"
       detail: "Nothing changes without a diff, and everything can be undone. Whenever HugoKit writes to your site – a preflight fix, a config save, a content edit, a theme switch – it snapshots the affected files first."
@@ -151,7 +150,7 @@ features:
         - "Per site, you decide: turn the layer off, or set how many versions of each file to keep."
     - name: "Hugo Reference"
       glyph: "reference"
-      text: "Searchable Hugo documentation built into the app – 195 entries across twelve categories, no browser needed."
+      text: "Look up 195 Hugo reference entries without leaving the app."
       docs:
         - "/docs/getting-started/#hugo-reference"
       detail: "Hugo's reference material, indexed and searchable inside the app, in a window of its own (`⌘2`). It is there so a forgotten function name does not cost you a browser tab and twenty minutes."
@@ -160,7 +159,7 @@ features:
         - "Opens in its own window and stays out of the way of the site you are working on."
     - name: "Keyboard shortcuts"
       glyph: "palette"
-      text: "Publish with ⌘P, preflight with ⇧⌘P, site health with ⇧⌘H, template preview with ⇧⌘T – and ⌘K opens the command palette."
+      text: "Use shortcuts for Publish, Preflight, Site Health, Template Preview and the command palette."
       docs:
         - "/docs/getting-started/#shortcuts-worth-knowing"
       detail: "The things you do every day have a key. Everything else is one `⌘K` away in the command palette."
@@ -170,7 +169,7 @@ features:
         - "`⌘O` open a site · `⇧⌘N` create one · `⌘,` settings"
     - name: "Menu bar extra"
       glyph: "menubar"
-      text: "A dynamic menu bar icon with controls for your sites – without opening the window."
+      text: "Start and stop sites, open previews and check server status without opening the main window."
       docs:
         - "/docs/getting-started/#outside-the-window"
       detail: "HugoKit does not need its window open to be useful. Close it and the app keeps running in the menu bar, with every site and its status one click away."
@@ -180,7 +179,7 @@ features:
         - "Don't want it? Turn the icon off in Settings → General."
     - name: "Notifications"
       glyph: "bell"
-      text: "Native notifications when the server stops, a build fails or a publish finishes – every event has its own toggle."
+      text: "Choose which server, build and publish events are worth a macOS notification."
       docs:
         - "/docs/getting-started/#outside-the-window"
       detail: "Native macOS notifications for the things that finish while you are looking at something else. Every event has its own toggle, so you can keep the publish result and silence the rest."
@@ -193,7 +192,7 @@ features:
       accent: "green"
       spot:
         text: "Homebrew or direct download"
-      text: "HugoKit finds your Hugo install automatically – and if there isn't one, it installs it for you."
+      text: "Already have Hugo? HugoKit finds it. If not, it can install Hugo Extended for you."
       docs:
         - "/docs/getting-started/#first-launch"
       detail: "You shouldn't have to install a Go binary to write a blog post. HugoKit looks for Hugo where Hugo usually lives, and installs it for you if it isn't there."
@@ -208,7 +207,7 @@ features:
       featured: true
       spot:
         text: "Keychain · no sign-in"
-      text: "SwiftUI throughout, credentials in the macOS Keychain. No account – nothing ever leaves your Mac."
+      text: "Built in SwiftUI, with deploy credentials in Keychain and no account system or backend."
       detail: "SwiftUI throughout – no Electron, no account, no backend. HugoKit talks to Hugo, Git and your host, and to nothing else."
       points:
         - "Your files stay where they are: nothing is converted, moved or copied into an app format."
@@ -221,23 +220,23 @@ whatishugo:
   cta: "What is Hugo?"
   title: "What is Hugo?"
   body:
-    - "Hugo is a free, open-source static site generator – one of the most popular ways to build a website. You write your content as simple text files, pick a theme, and Hugo turns it into a complete site."
+    - "Hugo is an open-source static site generator: you write content and templates, and Hugo turns them into a complete site of static files."
   usps:
     label: "Why people use it"
     items:
       - name: "Fast"
-        text: "Most sites build in a fraction of a second – even with thousands of pages."
+        text: "Hugo builds most sites in less than a second, including sites with thousands of pages."
       - name: "Live preview"
-        text: "A built-in local server renders your site as you write, and reloads the page the moment you save."
+        text: "`hugo server` rebuilds the site and reloads the browser after a file is saved."
       - name: "Plain files"
-        text: "Content is Markdown text files – easy to edit, back up and move."
+        text: "Content is stored in Markdown files that can be edited, copied and versioned."
       - name: "Host anywhere"
-        text: "The output is plain HTML – no database, no server code."
-      - name: "Batteries included"
-        text: "Menus, taxonomies, image processing, RSS and sitemaps are built in – no plugins to wire up."
+        text: "The build output is HTML, CSS, JavaScript and other static files."
+      - name: "Built-in tools"
+        text: "Hugo includes menus, taxonomies, image processing, RSS and sitemap generation."
       - name: "Free and open source"
-        text: "No cost, no license, no lock-in."
-  bridge: "HugoKit runs Hugo for you – same sites, same files, just with buttons. Pair it with any editor, human or AI."
+        text: "Hugo is free and open source."
+  bridge: "HugoKit runs that same setup from a Mac interface, alongside whichever editor you prefer."
   link: "Learn more at gohugo.io"
 
 # De tre feature-øjeblikke – tabs i loop-panelet. points uddyber hvert trin;
@@ -246,8 +245,8 @@ whatishugo:
 moments:
   - label: "Preview"
     glyph: "preview"
-    heading: "The server, on a button."
-    text: "Start and stop Hugo's server with one click – drafts included, logs translated into plain language."
+    heading: "Run your site locally."
+    text: "Start or stop Hugo's server, adjust content flags and keep the build log in view."
     points:
       - "Toggle drafts, future and expired content without remembering flags."
       - "Read colour-coded logs and see the exact command HugoKit runs."
@@ -257,11 +256,11 @@ moments:
     alt: "The Server view: live URL, stop and restart actions, and toggles for drafts, future and expired content."
     docs:
       - "/docs/running-the-server/"
-    detail: "HugoKit runs the same `hugo server` command you would run yourself. It remembers the flags, finds a free port and turns Hugo's output into a readable live log."
+    detail: "HugoKit runs `hugo server` with the settings saved for the site and shows the exact command and output."
   - label: "Preflight"
     glyph: "preflight"
-    heading: "It checks before it publishes."
-    text: "Every publish runs a check first: build, config, assets, broken links and subpath traps. Fixes are shown as a diff you approve."
+    heading: "Check the site before you publish."
+    text: "Preflight builds the site and looks for problems in its config, assets, links, templates and static JavaScript."
     points:
       - "Checks the build, config, assets and common subpath traps."
       - "Shows every suggested fix as a diff before writing anything."
@@ -271,11 +270,11 @@ moments:
     alt: "HugoKit's preflight check presenting a fix as a diff before publishing."
     docs:
       - "/docs/preflight/"
-    detail: "A site can build perfectly on your Mac and still break after deployment. Preflight checks the paths, config and assets before every publish."
+    detail: "Preflight runs before every publish. Suggested fixes are shown as diffs and applied only after approval."
   - label: "Publish"
     glyph: "publish"
-    heading: "Publish where you already publish."
-    text: "GitHub Pages, or your own server over FTP/SFTP. Set it up once per site – after that it's ⌘P."
+    heading: "Publish where your site lives."
+    text: "Use GitHub Pages, FTP or SFTP, with the settings kept for each site."
     points:
       - "Publish to GitHub Pages, FTP or SFTP – one target or several."
       - "See status and history per target, followed by a live-site check."
@@ -286,7 +285,7 @@ moments:
     docs:
       - "/docs/publishing-to-github-pages/"
       - "/docs/publishing-over-sftp/"
-    detail: "Set up a destination once, then publish with `⌘P`. Each target keeps its own build settings, status and history, and HugoKit checks the live site when it finishes."
+    detail: "Each target stores its own build settings, status and history. HugoKit checks the public URL after publishing when one is configured."
 
 # Docs-teaser på forsiden – tre kuraterede sider, forankret i keyword-planen
 # (SEO-sporet: intern linking fra forsiden til landingssiderne). Titel og
@@ -303,45 +302,45 @@ faq:
   items:
     - q: "Does it work with my existing Hugo site?"
       glyph: "sites"
-      a: "Yes. HugoKit runs the Hugo you already use – point it at your site's folder (or a folder full of sites) and it shows up in the sidebar. Nothing is converted, nothing is locked in; your site stays a plain Hugo site."
+      a: "Yes – add the site's folder or watch a parent folder. HugoKit uses the project as it is, without converting its files."
     - q: "Does it replace my editor?"
       glyph: "create"
-      a: "No – it sits beside it. HugoKit runs the server, the checks and the publish; the writing happens wherever you like. Your content is plain Markdown on disk, so your editor – or an AI coding agent working in the same folder – changes the files, and the preview reloads on save."
-      chips: ["Any editor", "AI agents", "Plain Markdown"]
+      a: "No – keep writing in the editor you already use. HugoKit handles the server, checks and publishing, and reloads the preview when files change."
+      chips: ["Any editor", "Plain Markdown"]
     - q: "Do I need Hugo installed first?"
       glyph: "hugo"
-      a: "No. HugoKit finds your Hugo install automatically – and if there isn't one, it installs it for you."
+      a: "Not necessarily. If Hugo is already installed, HugoKit uses it; otherwise it offers to install Hugo Extended during setup."
       chips: ["Auto-install"]
     - q: "Where does my content live?"
       glyph: "private"
-      a: "On your Mac, as the plain files Hugo already uses. There's no account and no cloud – deploy credentials go in the macOS Keychain, and nothing ever leaves your machine."
+      a: "Right where it already is: in the project folder on your Mac. HugoKit does not copy content into its own format."
     - q: "What if HugoKit breaks something?"
       glyph: "snapshots"
-      a: "Before HugoKit writes to any file in your site – a preflight fix, a config save, a content edit – it keeps a copy of the file as it was. Every change is recorded as a diff you can read, and undo works per file or per operation. Preflight fixes are shown as a diff you approve before they're applied at all."
+      a: "That's what snapshots are for. Before HugoKit writes to a file, it keeps a copy and records a diff. You can restore one file or the full operation, and Preflight fixes still require approval."
       chips: ["Snapshots", "Diffs", "Undo"]
     - q: "Where can it publish to?"
       glyph: "publish"
-      a: "GitHub Pages, and your own server over FTP/SFTP – one target or several per site. Cloud hosts like Netlify or Vercel aren't supported – if you deploy through them, their git integration already does this job."
+      a: "GitHub Pages, FTP and SFTP. You can keep one target or several for each site. Netlify and Vercel are not supported as direct targets."
       chips: ["GitHub Pages", "FTP / SFTP", "Multiple targets"]
     - q: "Is it really free?"
       glyph: "free"
-      a: "Yes – free to download, free to use, no account and no subscription. It's a personal project, not a business."
+      a: "Yes. It's free to download and use, with no account or subscription."
     - q: "Which Macs does it run on?"
       glyph: "mac"
       a: "Any Mac running macOS 26 (Tahoe) or later."
       chips: ["macOS 26+"]
     - q: "How do updates work?"
       glyph: "bell"
-      a: "HugoKit updates itself – there's no App Store in the loop. It checks hugokit.com for a newer version, shows you the release notes in the app, and installs the update once you agree. The check sends nothing about you: it just asks whether a new version exists, with Sparkle's system profiling switched off."
+      a: "HugoKit uses Sparkle to check for signed updates from hugokit.com. It shows the release notes and asks before installing. Sparkle system profiling is disabled."
       chips: ["Built-in updates", "Release notes in-app", "Signed"]
     - q: "Who's behind it?"
       glyph: "person"
-      a: "One person: me, Anders, in Denmark. HugoKit is something I built for my own sites and keep working on because I use it every day. There's no company and no roadmap – if something's broken or missing, email me."
+      a: "I'm Anders Mortensen, based in Denmark. I built HugoKit for the Hugo sites I maintain and continue to develop it as a personal project. Bug reports and feature requests are welcome by email."
 
 note:
   label: "Why it exists"
-  text: "I write my own sites in Hugo, and I got tired of a terminal window, a browser tab and a deploy script for every small change. So I built HugoKit for myself – and kept building because I use it every day. It's a personal project, not a company."
-  extra: "It's non-commercial and stays that way – nothing to buy, nothing to subscribe to. If you'd like to help cover the running costs, you can"
+  text: "I build and maintain several Hugo sites, and I wanted one place to start the server, check a build and publish. HugoKit started as a tool for my own work, and it's still the app I use on those sites."
+  extra: "HugoKit is a personal, non-commercial project. Donations help cover its running costs:"
   author: "Anders Mortensen"
   authorURL: "https://andersmortensen.com"
   portrait: "/images/anders-portrait.jpg"
@@ -352,11 +351,11 @@ note:
 download:
   heading: "Download HugoKit"
   cta: "Download for macOS"
-  meta: "free · macOS 26 or later · no account, no cloud"
-  note: "No newsletter, no upsell. If something breaks, email me."
+  meta: "free · macOS 26 or later"
+  note: "Questions and bug reports are welcome at hello@hugokit.com."
 
 footer:
-  made: "Made in Denmark by"
+  made: "Made in Aalborg by"
   author: "Anders Mortensen"
   authorURL: "https://andersmortensen.com"
   note: "This site runs on Hugo."

@@ -2,10 +2,11 @@
     live in static/fonts/ and carry Google's version in the name (v12/v20/v24);
     they are never overwritten, so .htaccess can cache them immutable. font-display:
     swap matches the CDN's former &display=swap. */
-/*  The 400-500 file is a full-axis variable font (wght 100–900, verified with
-    fonttools) – so one face covers everything, including the wordmark's 700. The
-    former static 700/800 dupes are dropped (the 800 was referenced by no rule). */
-@font-face { font-family: 'Hanken Grotesk'; font-style: normal; font-weight: 100 900; font-display: swap; src: url('/fonts/hanken-grotesk-v12-latin-400-500.woff2') format('woff2'); }
+/*  Manrope is self-hosted as the site's unified display and interface family.
+    The local WOFF2 files serve the 400–700 range used by the theme. */
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 400 600; font-display: swap; src: url('/fonts/manrope-v20-latin-400-600.woff2') format('woff2'); }
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/manrope-v20-latin-700.woff2') format('woff2'); }
+@font-face { font-family: 'DM Sans'; font-style: normal; font-weight: 300 700; font-display: swap; src: url('/fonts/dm-sans-v17-latin-variable.woff2') format('woff2'); }
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/inter-v20-latin-regular.woff2') format('woff2'); }
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/inter-v20-latin-500.woff2') format('woff2'); }
 /* Real italic – the docs prose uses emphasis (e.g. hugo-found-no-layout-file.md);
@@ -28,12 +29,3 @@
   descent-override: 22.73%;
   line-gap-override: 0%;
 }
-@font-face {
-  font-family: 'Hanken Grotesk Fallback';
-  src: local('Helvetica Neue'), local('Arial');
-  size-adjust: 100%;
-  ascent-override: 100%;
-  descent-override: 30.30%;
-  line-gap-override: 0%;
-}
-

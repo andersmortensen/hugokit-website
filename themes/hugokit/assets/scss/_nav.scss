@@ -70,7 +70,7 @@
 }
 .lockup-name {
   font-family: var(--display);
-  font-weight: 700; /* the wordmark weight, always */
+  font-weight: 600; /* the locally loaded Manrope wordmark weight */
   font-size: 19px;
   letter-spacing: -0.015em;
   color: var(--ink);
@@ -96,4 +96,3 @@
 .nav-actions .btn { height: 32px; padding: 0 14px; font-size: 15px; }
 .i-moon { color: var(--icon-moon); }
 .i-sun { color: var(--icon-sun); }
-

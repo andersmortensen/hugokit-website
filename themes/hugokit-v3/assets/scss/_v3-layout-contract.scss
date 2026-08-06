@@ -1,0 +1,218 @@
+/*
+   0.3.0 layout contract
+   This layer owns only hierarchy, order and spatial relationships. Surface,
+   colour, typography and motion remain in the existing component layers.
+*/
+
+/* Hero – editorial asym: copy 2/3, meta 1/3, product media below. */
+.v3-hero { overflow: clip; padding-bottom: clamp(52px, 6vw, 88px); }
+.v3-hero-main {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(220px, 1fr);
+  gap: clamp(32px, 6vw, 104px);
+  align-items: end;
+  padding: clamp(48px, 6vw, 88px) 0 clamp(34px, 4vw, 58px);
+}
+.v3-hero-copy { min-width: 0; }
+.v3-hero-copy .v3-hero-kicker { margin-bottom: 28px; }
+.v3-hero-heading { max-width: 8.7ch; }
+.v3-hero-meta {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  align-self: end;
+  margin: 0;
+}
+.v3-hero-lead,
+.v3-hero-cta { grid-column: auto; }
+.v3-hero-cta { text-align: left; }
+.v3-hero-actions { justify-content: flex-start; }
+.v3-hero-media-bleed { width: min(100%, var(--section-max)); margin-inline: auto; }
+.v3-hero-media-bleed .v3-hero-window-wrap { border-radius: 0; }
+
+/* Facts – badges row. */
+.v3-facts { padding: 0 0 clamp(64px, 7vw, 104px); }
+.v3-facts-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink);
+  list-style: none;
+}
+.v3-fact {
+  min-height: 0;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 11px;
+  border: 1px solid var(--line-strong);
+  background: transparent;
+}
+.v3-fact + .v3-fact { border-left: 1px solid var(--line-strong); }
+.v3-fact::before { display: none; }
+.v3-fact-dot { position: static; width: 6px; height: 6px; }
+.v3-fact strong { display: inline; color: var(--ink); font-size: 13px; font-weight: 650; letter-spacing: -.015em; line-height: 1.25; }
+.v3-fact span:last-child { max-width: none; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.25; }
+
+/* Loop – all three moments live inside one in-app frame. */
+.v3-loop-app { overflow: hidden; border: 1px solid var(--line-strong); }
+.v3-loop-app-bar {
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 14px;
+  border-bottom: 1px solid var(--line);
+}
+.v3-loop-app-bar > span { width: 8px; height: 8px; border-radius: 50%; background: var(--faint); }
+.v3-loop-app-bar > i { flex: 1; }
+.v3-loop-app-bar > b { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; }
+.v3-loop-app-body { display: grid; grid-template-columns: 184px minmax(0, 1fr); }
+.v3-loop-app-nav {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  margin: 0;
+  padding: 18px 12px;
+  border-right: 1px solid var(--line);
+  list-style: none;
+}
+.v3-loop-app-nav li { display: flex; align-items: baseline; gap: 9px; padding: 8px; }
+.v3-loop-app-nav span,
+.v3-loop-app-nav b { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
+.v3-loop-app-nav span { color: var(--faint); }
+.v3-loop-app-nav b { color: var(--ink); font-weight: 550; }
+.v3-loop-grid { border: 0; }
+.v3-loop-card {
+  grid-template-columns: minmax(0, 4fr) minmax(0, 5fr);
+  gap: clamp(24px, 4vw, 56px);
+  padding: clamp(32px, 4vw, 56px);
+}
+.v3-loop-card::before { display: none; }
+.v3-loop-copy { grid-column: 1; grid-row: auto; padding: 0; }
+.v3-loop-card-head { display: flex; align-items: baseline; gap: 10px; margin: 0 0 22px; padding: 0; }
+.v3-loop-shot { grid-column: 2; grid-row: auto; align-self: start; }
+
+/* Features – bento with three declared featured items first. */
+.v3-feature-grid { grid-auto-flow: row dense; }
+.v3-feature-card:nth-child(13),
+.v3-feature-card:nth-child(14) { grid-column: span 3; }
+.v3-feature-card.is-featured-primary { min-height: 530px; grid-column: span 6; grid-row: span 2; }
+.v3-feature-card.is-featured:not(.is-featured-primary) { min-height: 264px; grid-column: span 3; }
+
+/* Note – portrait panel. */
+.v3-note-inner {
+  max-width: 900px;
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: clamp(28px, 5vw, 68px);
+  margin-inline: auto;
+  padding: 0 !important;
+  text-align: left;
+}
+.v3-note-identity { display: flex; flex-direction: column; align-items: flex-start; }
+.v3-note-inner .v3-section-label { justify-content: flex-start; }
+.v3-note-byline { display: grid; align-items: start; gap: 12px; margin-top: 26px; }
+.v3-note-portrait { width: 100%; height: auto; aspect-ratio: 4 / 5; border-radius: 0; }
+.v3-note-quote { margin: 0; font-size: clamp(38px, 5vw, 72px); }
+.v3-donate-line { max-width: none; margin: 32px 0 0; }
+
+/* Download – one narrow receipt-like specification card. */
+.v3-download-receipt {
+  max-width: 480px;
+  display: grid;
+  gap: 22px;
+  margin-inline: auto;
+  padding: clamp(24px, 4vw, 38px);
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+}
+.v3-download-receipt-head { display: flex; gap: 16px; align-items: center; }
+.v3-download-receipt .v3-app-icon { width: 64px; height: 64px; flex: none; border-radius: 0; }
+.v3-download-receipt .v3-app-icon svg { width: 42px; height: 42px; }
+.v3-download-receipt .v3-store-copy h2 { font-size: clamp(28px, 4vw, 40px); }
+.v3-download-receipt .v3-store-description { margin-top: 8px; font-size: 14px; }
+.v3-download-receipt .v3-store-facts {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin: 0;
+  border: 0;
+}
+.v3-download-receipt .v3-store-facts dl,
+.v3-download-receipt .v3-store-facts dl + dl { display: flex; justify-content: space-between; gap: 24px; padding: 10px 0; border: 0; border-top: 1px dashed var(--line-strong); }
+.v3-download-receipt .v3-store-facts dl:last-child { border-bottom: 1px dashed var(--line-strong); }
+.v3-download-receipt .v3-store-facts dd { margin: 0; text-align: right; }
+.v3-download-receipt .v3-store-action { align-self: auto; }
+.v3-download-receipt .v3-store-action .v3-button { width: 100%; }
+.v3-download-receipt .v3-store-foot { display: grid; gap: 8px; margin: 0; }
+.v3-download-receipt .v3-store-meta { text-align: left; }
+
+/* Footer – four navigable columns and a separate build line. */
+.v3-footer-mega {
+  display: grid;
+  grid-template-columns: minmax(180px, 1.45fr) repeat(4, minmax(0, 1fr));
+  gap: clamp(22px, 4vw, 56px);
+}
+.v3-footer-brand { display: flex; align-items: center; gap: 12px; color: var(--ink); font-size: 22px; font-weight: 650; letter-spacing: -.04em; }
+.v3-footer-group { display: grid; align-content: start; gap: 8px; }
+.v3-footer-group h2 { margin: 0 0 5px; color: var(--faint); font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; }
+.v3-footer-group a,
+.v3-footer-group button { padding: 0; border: 0; background: transparent; color: var(--ink); font: inherit; font-size: 13px; text-align: left; text-decoration: none; cursor: pointer; }
+.v3-footer-bottom {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px 28px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+}
+.v3-footer-bottom a { color: var(--ink); text-decoration: none; }
+
+@media (max-width: 900px) {
+  .v3-hero-main { grid-template-columns: 1fr; gap: 34px; }
+  .v3-hero-heading { max-width: 9.6ch; }
+  .v3-hero-meta { max-width: 38rem; }
+  .v3-loop-app-body { grid-template-columns: 1fr; }
+  .v3-loop-app-nav { grid-template-columns: repeat(3, 1fr); border-right: 0; border-bottom: 1px solid var(--line); }
+  .v3-loop-card { grid-template-columns: 1fr; }
+  .v3-loop-shot { grid-column: 1; }
+  .v3-feature-card.is-featured-primary { min-height: 430px; }
+  .v3-note-inner { grid-template-columns: 120px minmax(0, 1fr); }
+  .v3-footer-mega { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .v3-footer-brand { grid-column: 1 / -1; }
+}
+
+@media (max-width: 640px) {
+  .v3-hero { padding-bottom: 56px; }
+  .v3-hero-main { padding-top: 42px; }
+  .v3-hero-copy .v3-hero-kicker { margin-bottom: 22px; }
+  .v3-hero-actions { flex-direction: column; }
+  .v3-hero-actions .v3-button { width: 100%; }
+  .v3-facts-row { justify-content: flex-start; }
+  .v3-loop-app-nav { grid-template-columns: 1fr; }
+  .v3-loop-card { padding: 24px 18px; }
+  .v3-feature-card,
+  .v3-feature-card:nth-child(13),
+  .v3-feature-card:nth-child(14),
+  .v3-feature-card.is-featured-primary,
+  .v3-feature-card.is-featured:not(.is-featured-primary) { min-height: 220px; grid-column: 1 / -1; grid-row: auto; }
+  .v3-note-inner { grid-template-columns: 1fr; }
+  .v3-note-identity { display: grid; grid-template-columns: 1fr 96px; align-items: start; gap: 20px; }
+  .v3-note-byline { grid-column: 2; grid-row: 1; margin: 0; }
+  .v3-note-byline > span { display: none; }
+  .v3-download-receipt { padding: 22px; }
+  .v3-footer-mega { grid-template-columns: 1fr 1fr; }
+  .v3-footer-bottom { align-items: flex-start; flex-direction: column; }
+}

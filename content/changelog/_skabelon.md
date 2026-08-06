@@ -8,33 +8,33 @@ note: >
   doesn't need one.
 draft: true
 outputs: ['html', 'md', 'inapp']
+weight: 10
 ---
 
 <!-- SKABELON – kopiér til X.Y.Z.md ved release, fjern draft: true.
-     Registeret: prosa-nære bullets, ingen marketing-sprog.
-     Kategorierne rendrer som badges via deres heading-id (main.css):
-     ## New (grøn) · ## Improved (blå) · ## Fixed (neutral) · ## Removed (pink)
-     · ## Notes (mono-label). Udelad tomme kategorier.
+     Release bullets: describe one user-visible change per sentence. Keep implementation
+     details and test evidence in the hidden release-evidence block. Available headings:
+     `## New`, `## Improved`, `## Fixed`, `## Removed` and `## Notes`.
      URL'en bliver /changelog/X.Y.Z/ – linkes fra appcast'en (releaseNotesLink). -->
 
-One line on what this release is about.
+One factual sentence describing the main user-visible change.
 
 ## New
 
-- Each new feature as one plain sentence – what it does, where it lives
+- **Feature name:** describe what changed and where the user finds it.
 
 ## Improved
 
-- Behaviour that changed for the better – name the old and new where it helps
+- **Area:** describe the previous and new behaviour when the difference matters.
 
 ## Fixed
 
-- Bugs squashed – describe the symptom that is gone
+- Describe the user-visible symptom that no longer occurs.
 
 ## Removed
 
-- Anything taken out, and what replaces it
+- Name the removed behaviour and its replacement, if any.
 
 ## Notes
 
-- Requirements, known issues, upgrade notes
+- Requirements, known issues or required upgrade steps.

@@ -1,16 +1,16 @@
 ---
 title: "GitHub Pages keeps serving the old version of your site"
-description: "You pushed. The build was green. The live site is unchanged. Usually two deploy mechanisms are fighting over the same repository – and only one of them is winning."
+description: "The push worked, but the site still looks unchanged. Check the Pages source, workflow and cache."
 group: "Fixing common Hugo problems"
 weight: 110
 tags: [publishing, github-pages, troubleshooting]
 ---
 
-You publish. Git accepts the push. GitHub reports no failure. And hugokit.com – or whatever your site is called – shows exactly what it showed yesterday.
+The push succeeds and GitHub reports no failure, but the published site still shows the previous version.
 
 Before you look at anything else: **open the site in a private window.** A stale service worker or a cached HTML file explains this often enough to be worth thirty seconds.
 
-If it's still old, the cause is almost always this one.
+If the private window shows the old version too, check the Pages deployment source.
 
 ## Two deploy mechanisms, one repository
 
@@ -23,17 +23,17 @@ The setting lives in **Settings → Pages → Build and deployment → Source**.
 
 Now the failure: your repository has a workflow in `.github/workflows/` that uses `actions/deploy-pages`, and the Pages source is set to **GitHub Actions**. Meanwhile you – or your tool – are building locally and pushing to `gh-pages`.
 
-Both of those things happen. Both succeed. And Pages ignores the branch entirely, because it's listening to the workflow. Your `gh-pages` branch fills up with builds nobody serves.
+When the source is **GitHub Actions**, Pages ignores builds pushed to `gh-pages`.
 
-The reverse happens too: the source is set to a branch, and the Actions workflow runs on every push, builds beautifully, uploads its artifact, and GitHub throws it away.
+When the source is a branch, Pages ignores artifacts uploaded by the Actions workflow.
 
 ## Pick one
 
-**If you want GitHub to build:** leave the workflow, set the source to GitHub Actions, and stop pushing to `gh-pages`. The branch is dead weight – delete it so it can't confuse the next person.
+**To build with GitHub Actions:** keep the workflow, set the Pages source to **GitHub Actions** and stop publishing to `gh-pages`.
 
-**If you want to build locally:** delete the workflow file, set the source to *Deploy from a branch* → `gh-pages` → `/ (root)`, and push your `public/` folder there.
+**To build locally:** remove the Pages workflow, set the source to **Deploy from a branch → `gh-pages` → `/ (root)`**, and publish the built files to that branch.
 
-Building locally has one real advantage: what you tested is byte-for-byte what ships. Cloud builds run a different Hugo version than the one on your machine unless you pin it, and a version skew you can't reproduce locally is a bad afternoon.
+A local build publishes the files built on your machine. For cloud builds, pin the Hugo version so local and GitHub builds use the same release.
 
 ## The other suspects
 
@@ -47,4 +47,4 @@ If the source is right and the site is still stale:
 
 If the deploy landed and the page is up but the CSS is gone, that's a different problem – it's [baseURL and the repository subpath](/docs/hugo-broken-links-missing-css-github-pages/).
 
-> HugoKit checks for exactly this conflict before it publishes. If it's set to build locally and push to `gh-pages`, and it finds a workflow in `.github/workflows/` that deploys to Pages, it stops and tells you – because pushing would look like it worked. The auto-fix is the destructive one in the app, so read the diff: it deletes the workflow file, commits, pushes, and switches your Pages source over to `gh-pages` through the GitHub API. See [Publishing to GitHub Pages](/docs/publishing-to-github-pages/) and [Preflight](/docs/preflight/).
+> **In HugoKit:** Preflight reports a conflict between a Pages workflow and a `gh-pages` target before publishing.

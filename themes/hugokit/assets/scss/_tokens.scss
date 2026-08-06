@@ -80,8 +80,8 @@
   --icon-moon: light-dark(#5F5C66, transparent);
   --icon-sun: light-dark(transparent, #9B98A3);
 
-  --display: 'Hanken Grotesk', 'Hanken Grotesk Fallback', system-ui, sans-serif;
-  --sans: 'Inter', 'Inter Fallback', -apple-system, system-ui, sans-serif;
+  --display: 'Manrope', -apple-system, system-ui, sans-serif;
+  --sans: 'Manrope', -apple-system, system-ui, sans-serif;
   --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
 
   --radius: 8px;
@@ -92,8 +92,8 @@
   --deck-side: clamp(16px, 1.6vw, 24px);
 
   /* The display scale – the spec sheet register: hierarchy via size, not weight.
-     Hanken Grotesk 500 carries the headings; 700 is reserved for the wordmark
-     (nav lockup and colophon). --t-giant removed with the wordmark hero 2026-07-19. */
+     Manrope 500 carries the headings and wordmark. --t-giant removed with the
+     wordmark hero 2026-07-19. */
   --t-title: clamp(33.5px, 4.1vw, 48px);
 
   /* Utility CTA: ink pill in light, inverted in dark (warm ink, warm surface) */
@@ -105,4 +105,3 @@
 /* Manual mode override */
 :root[data-theme="light"] { color-scheme: light; }
 :root[data-theme="dark"] { color-scheme: dark; }
-

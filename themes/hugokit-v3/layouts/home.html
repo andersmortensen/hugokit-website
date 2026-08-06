@@ -1,0 +1,214 @@
+{{ define "body" }}
+  {{- $releaseURL := printf "/changelog/%s/" site.Params.version | relURL -}}
+  {{- $releaseDate := time.AsTime site.Params.releaseDate -}}
+  <main id="main">
+    <header class="v3-hero" id="hero">
+      <div class="v3-quartz" aria-hidden="true"></div>
+      <div class="v3-shell v3-hero-shell">
+        <div class="v3-hero-main">
+          <div class="v3-hero-copy">
+            {{- /* Word-mask reveal: every word wrapped in a clipping span, indexed
+                  for the stagger. Dim words come from headingDim, ink from heading. */}}
+            {{- $words := slice -}}
+            {{- range split .Params.hero.headingDim " " }}{{ $words = $words | append (dict "w" . "dim" true) }}{{ end -}}
+            {{- range split .Params.hero.heading " " }}{{ $words = $words | append (dict "w" . "dim" false) }}{{ end -}}
+            <h1 class="v3-hero-heading">
+              {{- range $i, $word := $words }}
+              {{- if $i }} {{ end -}}
+              <span class="v3-w" style="--wd:{{ $i }}"><span class="v3-wi{{ if $word.dim }} v3-wi-dim{{ end }}">{{ $word.w }}</span></span>
+              {{- end -}}
+            </h1>
+          </div>
+          <aside class="v3-hero-meta">
+            <p class="v3-hero-lead">{{ .Params.hero.lead }}</p>
+            <div class="v3-hero-cta">
+              <div class="v3-hero-actions">
+                <a class="v3-button" href="#download">Download for macOS</a>
+                <a class="v3-button v3-button-secondary" href="#loop">{{ .Params.hero.more }}</a>
+                <button class="v3-text-action v3-hero-what" type="button" data-dialog-open>{{ .Params.whatishugo.cta }}</button>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+      <div class="v3-hero-media-bleed">
+        <figure class="v3-hero-window-wrap" aria-label="HugoKit preview">
+          <div class="v3-hero-window">
+            {{ partial "hero-video.html" (dict "v" .Params.hero.video "alt" .Params.hero.alt "light" .Params.hero.screenshot "dark" .Params.hero.screenshotDark) }}
+          </div>
+        </figure>
+      </div>
+    </header>
+
+    <section class="v3-facts" id="facts" aria-label="Facts">
+      <div class="v3-shell">
+        <ul class="v3-facts-row">
+        {{ range .Params.facts }}
+          <li class="v3-fact"><span class="v3-fact-dot" aria-hidden="true"></span><strong>{{ .value }}</strong><span>{{ .label }}</span></li>
+        {{ end }}
+        </ul>
+      </div>
+    </section>
+
+    <section class="v3-section" id="loop">
+      <div class="v3-shell">
+        <div class="v3-section-heading-row">
+          <p class="v3-eyebrow v3-section-label">{{ partial "v3-quartet.html" . }}{{ .Params.loop.label }}</p>
+          <div>
+            <h2 class="v3-section-title">{{ .Params.loop.heading }}</h2>
+            <p class="v3-section-subtitle">{{ .Params.loop.sub }}</p>
+          </div>
+        </div>
+
+        <div class="v3-loop-app">
+          <div class="v3-loop-app-bar" aria-hidden="true"><span></span><span></span><span></span><i></i><b>HugoKit</b></div>
+          <div class="v3-loop-app-body">
+            <ol class="v3-loop-app-nav" aria-label="How it works">
+              {{ range $index, $moment := .Params.moments }}
+                <li><span>{{ printf "%02d" (add $index 1) }}</span><b>{{ $moment.label }}</b></li>
+              {{ end }}
+            </ol>
+            <div class="v3-loop-grid">
+              {{ range $index, $moment := .Params.moments }}
+                <article class="v3-loop-card">
+                  <div class="v3-loop-copy">
+                    <p class="v3-loop-card-head"><span class="v3-loop-number">{{ printf "%02d" (add $index 1) }}</span><span class="v3-loop-label">{{ $moment.label }}</span></p>
+                    <h3>{{ $moment.heading }}</h3>
+                    <p class="v3-loop-intro">{{ $moment.text }}</p>
+                    {{- /* .RenderString, not markdownify: render hooks need page
+                          context, and render-codespan.html is what tags a terminal
+                          command. The points went through neither, so their own
+                          backticks rendered literally – bonus fix, same one-liner. */}}
+                    <div class="v3-loop-detail">{{ $.RenderString $moment.detail }}</div>
+                    <ul class="v3-loop-points">{{ range $moment.points }}<li>{{ $.RenderString . }}</li>{{ end }}</ul>
+                    <div class="v3-doc-links">{{ partial "doc-links.html" $moment.docs }}</div>
+                  </div>
+                  <div class="v3-loop-shot">{{ partial "shot.html" (dict "light" $moment.screenshot "dark" $moment.screenshotDark "alt" $moment.alt) }}</div>
+                </article>
+              {{ end }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="v3-section v3-features-band" id="features">
+      <div class="v3-shell">
+        <div class="v3-section-heading-row">
+          <div class="v3-eyebrow v3-section-label" aria-hidden="true">{{ partial "v3-quartet.html" . }}</div>
+          <h2 class="v3-section-title">{{ .Params.features.title }}</h2>
+        </div>
+        <div class="v3-feature-grid">
+          {{ range .Params.features.items }}
+            {{ if .featured }}{{ partial "feature-item.html" (dict "item" . "featured" true "primary" (eq .name "Site health")) }}{{ end }}
+          {{ end }}
+          {{ range .Params.features.items }}
+            {{ if not .featured }}{{ partial "feature-item.html" (dict "item" .) }}{{ end }}
+          {{ end }}
+        </div>
+      </div>
+    </section>
+
+    <section class="v3-section v3-note-section" id="note">
+      <div class="v3-shell">
+        <div class="v3-note-inner">
+          <div class="v3-note-identity">
+            <p class="v3-eyebrow v3-section-label">{{ partial "v3-quartet.html" . }}{{ .Params.note.label }}</p>
+            <a class="v3-note-byline" href="{{ .Params.note.authorURL }}">
+              <img class="v3-note-portrait" src="{{ .Params.note.portrait | relURL }}" alt="{{ .Params.note.author }}" width="480" height="640">
+              <span><span class="v3-note-name">{{ .Params.note.author }}</span><span class="v3-note-site">andersmortensen.com</span></span>
+            </a>
+          </div>
+          <div class="v3-note-copy">
+            <p class="v3-note-quote">{{ .RenderString .Params.note.text }}</p>
+            <p class="v3-donate-line">{{ .Params.note.extra }} <a href="{{ .Params.note.donate.url }}">{{ .Params.note.donate.label }}</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="v3-section" id="faq">
+      <div class="v3-shell">
+        <div class="v3-section-heading-row">
+          <div class="v3-eyebrow v3-section-label" aria-hidden="true">{{ partial "v3-quartet.html" . }}</div>
+          <h2 class="v3-section-title">{{ .Params.faq.title }}</h2>
+        </div>
+        {{- $faqItems := .Params.faq.items -}}
+        {{- $faqHalf := div (add (len $faqItems) 1) 2 -}}
+        <div class="v3-faq-grid">
+          <div class="v3-faq-column">{{ range $i, $item := first $faqHalf $faqItems }}{{ partial "faq-item.html" (dict "item" $item "num" (add $i 1)) }}{{ end }}</div>
+          <div class="v3-faq-column">{{ range $i, $item := after $faqHalf $faqItems }}{{ partial "faq-item.html" (dict "item" $item "num" (add (add $i $faqHalf) 1)) }}{{ end }}</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="v3-section v3-download-section" id="download">
+      <div class="v3-shell">
+        <article class="v3-download-receipt">
+          <header class="v3-download-receipt-head">
+            <div class="v3-app-icon" aria-hidden="true">{{ partial "mark.html" (dict "size" 72) }}</div>
+            <div class="v3-store-copy">
+              <h2>{{ .Params.download.heading }}</h2>
+              <p class="v3-store-description">{{ site.Params.description }}</p>
+            </div>
+          </header>
+          {{- /* The spec used to be one prose sentence. As a small table the same
+                facts can be scanned in a glance, which is what this row is for. */}}
+          <div class="v3-store-facts">
+            <dl><dt>Version</dt><dd>{{ site.Params.version }}</dd></dl>
+            <dl><dt>Size</dt><dd>{{ site.Params.dmgSize }}</dd></dl>
+            <dl><dt>Architecture</dt><dd>{{ site.Params.architecture }}</dd></dl>
+            <dl><dt>Requires</dt><dd>{{ site.Params.requires }}</dd></dl>
+            <dl><dt>Released</dt><dd>{{ $releaseDate | time.Format "January 2006" }}</dd></dl>
+          </div>
+          <div class="v3-store-action"><a class="v3-button" href="{{ site.Params.downloadURL }}">{{ .Params.download.cta }}</a></div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="v3-site-footer" id="footer">
+    <div class="v3-shell v3-footer-mega">
+      <div class="v3-footer-brand">
+        {{ partial "mark.html" (dict "size" 34 "class" "v3-footer-mark") }}
+        <span>HugoKit</span>
+      </div>
+      <nav class="v3-footer-group" aria-label="Product">
+        <h2>Product</h2>
+        <a href="#loop">How it works</a><a href="#features">Features</a><a href="#download">Download</a>
+      </nav>
+      <nav class="v3-footer-group" aria-label="Resources">
+        <h2>Resources</h2>
+        <a href="{{ "docs/" | relURL }}">Docs</a><a href="#faq">FAQ</a><a href="{{ "changelog/" | relURL }}">Changelog</a>
+      </nav>
+      <nav class="v3-footer-group" aria-label="Project">
+        <h2>Project</h2>
+        <a href="{{ site.Params.githubURL }}">GitHub</a><a href="mailto:{{ site.Params.feedbackEmail }}">Feedback</a><a href="{{ .Params.footer.authorURL }}">{{ .Params.footer.author }}</a>
+      </nav>
+      <nav class="v3-footer-group" aria-label="Legal">
+        <h2>Legal</h2>
+        <a href="{{ "privacy/" | relURL }}">Privacy</a><button type="button" data-consent-reopen>Cookies</button><a href="https://gohugo.io/">gohugo.io</a>
+      </nav>
+      <div class="v3-footer-bottom">
+        <span>{{ .Params.footer.made }} <a href="{{ .Params.footer.authorURL }}">{{ .Params.footer.author }}</a></span>
+        <span>This site runs on <a href="https://gohugo.io/">Hugo</a>.</span>
+        <span><button class="v3-footer-release" type="button" data-release-dialog-open aria-haspopup="dialog" aria-controls="release-dialog">v{{ site.Params.version }}</button> · {{ $releaseDate | time.Format "January 2006" }}</span>
+      </div>
+    </div>
+  </footer>
+
+  <dialog class="v3-dialog" id="hugo-dialog" aria-labelledby="hugo-dialog-title">
+    <div class="v3-dialog-inner">
+      <div class="v3-dialog-top"><h2 id="hugo-dialog-title">{{ .Params.whatishugo.title }}</h2><button class="v3-dialog-close" type="button" aria-label="Close" data-dialog-close>×</button></div>
+      {{ range .Params.whatishugo.body }}<p class="v3-dialog-body">{{ . }}</p>{{ end }}
+      <p class="v3-eyebrow v3-usp-label">{{ .Params.whatishugo.usps.label }}</p>
+      <div class="v3-usp-grid">{{ range .Params.whatishugo.usps.items }}<div class="v3-usp"><b>{{ .name }}</b><span>{{ .text }}</span></div>{{ end }}</div>
+      <p class="v3-dialog-bridge">{{ .Params.whatishugo.bridge }}</p>
+      <a class="v3-dialog-link" href="https://gohugo.io/">{{ .Params.whatishugo.link }}</a>
+    </div>
+  </dialog>
+  {{- /* The full-size lightbox was removed 6 August 2026 – the clip runs at its
+        native size on the page, so there was nothing to expand it to. The wiring
+        in v3-home.js is guarded and simply does not run without this markup. */}}
+  {{ partial "v3-scripts.html" . }}
+{{ end }}

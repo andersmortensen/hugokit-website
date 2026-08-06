@@ -1,0 +1,10 @@
+{{- $item := .item -}}
+<article class="v3-feature-card{{ with $item.accent }} v3-accent-{{ . }}{{ end }}{{ if .featured }} is-featured{{ end }}{{ if .primary }} is-featured-primary{{ end }}">
+  <div class="v3-feature-top">
+    {{ partial "feature-glyph.html" (dict "glyph" $item.glyph) }}
+    <span class="v3-feature-num"><span class="v3-feature-accent" aria-hidden="true"></span></span>
+  </div>
+  <h3>{{ $item.name }}</h3>
+  <p>{{ $item.text }}</p>
+  {{ with $item.spot }}<div class="v3-feature-spot">{{ with .key }}<b>{{ . }}</b>{{ end }}{{ with .text }}<span>{{ . }}</span>{{ end }}</div>{{ end }}
+</article>

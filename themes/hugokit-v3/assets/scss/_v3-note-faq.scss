@@ -1,0 +1,124 @@
+/* Why it exists – a quiet field: the page surface lifts one step, the type
+   does the talking. Two-tone quote: base sits back, strong carries the point. */
+.v3-note-section { background-color: var(--page); transition: background-color .35s ease; }
+.v3-note-inner { max-width: var(--page-max); margin-inline: auto; padding-inline: clamp(24px, 8vw, 120px) !important; text-align: center; }
+.v3-note-inner .v3-section-label { justify-content: center; margin-bottom: 0; color: var(--muted); }
+.v3-note-quote {
+  margin: 46px 0 0;
+  color: var(--faint);
+  font-size: clamp(40px, 6vw, 96px);
+  font-weight: 490;
+  letter-spacing: -.052em;
+  line-height: 1.01;
+  text-wrap: balance;
+}
+.v3-note-quote strong { color: var(--ink); font-weight: 560; }
+.v3-note-byline {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 50px;
+  color: var(--ink);
+  text-align: left;
+  text-decoration: none;
+}
+.v3-note-byline:hover .v3-note-site { border-color: var(--ink); }
+.v3-note-portrait {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+}
+.v3-note-name { display: block; font-size: 15px; font-weight: 650; letter-spacing: -.015em; }
+.v3-note-site {
+  display: block;
+  margin-top: 2px;
+  border-bottom: 1px solid transparent;
+  color: var(--muted);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10.5px;
+  transition: border-color .2s ease;
+}
+.v3-donate-line { max-width: 680px; margin: 36px auto 0; color: var(--muted); font-size: 16px; line-height: 1.55; }
+.v3-donate-line a { border-bottom: 1px solid currentColor; color: var(--ink); font-weight: 650; text-decoration: none; transition: border-color .2s ease, color .2s ease; }
+.v3-donate-line a:hover { border-color: var(--pink); color: var(--pink); }
+
+/* FAQ – bare hairline rows, no surface tints. The row is typography,
+   a number and a plus; hover lives in colour, never in a box. */
+.v3-faq-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 clamp(48px, 5vw, 88px); }
+.v3-faq-column { border-top: 1px solid var(--line-strong); }
+.v3-faq-item {
+  border: 0;
+  border-bottom: 1px solid var(--line-strong);
+  border-radius: 0;
+  background-color: transparent;
+}
+.v3-faq-item + .v3-faq-item { margin-top: 0; }
+.v3-faq-item summary {
+  position: relative;
+  min-height: 92px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 26px 52px 26px 0;
+  color: var(--ink);
+  font-size: clamp(19px, 1.6vw, 23px);
+  font-weight: 555;
+  letter-spacing: -.026em;
+  line-height: 1.22;
+  list-style: none;
+  cursor: pointer;
+  transition: color .2s ease;
+}
+.v3-faq-item summary::-webkit-details-marker { display: none; }
+.v3-faq-num {
+  flex: none;
+  width: 52px;
+  color: var(--faint);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: .08em;
+}
+.v3-faq-item summary::after {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  content: "+";
+  color: var(--faint);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1;
+  transform: translateY(-50%);
+  transition: transform .3s var(--ease-out), color .2s ease;
+}
+.v3-faq-item summary:hover { color: var(--blue); }
+.v3-faq-item summary:hover::after { color: var(--ink); }
+.v3-faq-item summary:focus-visible { outline: 1.5px solid currentColor; outline-offset: -1.5px; }
+.v3-faq-item[open] summary::after { color: var(--ink); transform: translateY(-50%) rotate(45deg); }
+.v3-faq-answer { padding: 0 52px 30px 52px; color: var(--muted); font-size: 16px; line-height: 1.55; }
+.v3-faq-answer p { margin: 0; }
+
+/* No CSS open/close animation.
+   Two approaches were measured in Chrome on 6 August 2026 and both left the
+   disclosure unable to open at all:
+     · block-size 0 → auto behind @supports (interpolate-size) – the version
+       this file shipped with. ::details-content reported content-visibility
+       hidden and block-size 0 for the whole open state.
+     · a 0fr → 1fr grid track on ::details-content – same result, the [open]
+       rule never took effect.
+   Safari skips the @supports guard entirely, which is why the bug only ever
+   showed as "no animation" rather than "does not open".
+   Native behaviour is correct in every engine, so that is what stands until
+   the animation is done in JS against a measured height. */
+
+.v3-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 16px; }
+.v3-chip {
+  padding: 4px 8px;
+  border: 1px solid var(--line-strong);
+  border-radius: 3px;
+  color: var(--muted);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+}

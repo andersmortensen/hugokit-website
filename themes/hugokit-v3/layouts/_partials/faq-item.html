@@ -1,0 +1,8 @@
+{{- /* Receives dict: item (q/a/chips) + num (1-based, for the mono index). */ -}}
+<details class="v3-faq-item">
+  <summary><span class="v3-faq-num" aria-hidden="true">{{ printf "%02d" .num }}</span>{{ .item.q }}</summary>
+  <div class="v3-faq-answer">
+    <p>{{ .item.a }}</p>
+    {{ with .item.chips }}<div class="v3-chips">{{ range . }}<span class="v3-chip">{{ . }}</span>{{ end }}</div>{{ end }}
+  </div>
+</details>

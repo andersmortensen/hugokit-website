@@ -1,6 +1,6 @@
 ---
 title: "hugo server won't start: port already in use"
-description: "Hugo exits with \"address already in use\" on port 1313. Find what's holding the port, free it, or just run on another one."
+description: "Another process already has port 1313. Reuse it, stop it or choose another port."
 group: "Fixing common Hugo problems"
 weight: 20
 tags: [server, troubleshooting]
@@ -12,7 +12,7 @@ You run `hugo server` and get:
 Error: listen tcp 127.0.0.1:1313: bind: address already in use
 ```
 
-Something is already listening on port 1313. Nine times out of ten it's a `hugo server` you started earlier – in a terminal tab you closed without stopping it, or in another window.
+Nothing is wrong with the site – another process is already listening on port 1313. It may be an earlier `hugo server` process.
 
 ## The quick way out: use another port
 
@@ -20,7 +20,7 @@ Something is already listening on port 1313. Nine times out of ten it's a `hugo 
 hugo server --port 1314
 ```
 
-That's it. Nothing is broken; two servers just can't share one port.
+Two processes cannot listen on the same address and port.
 
 ## Find what's holding the port
 
@@ -51,11 +51,11 @@ If it isn't Hugo, look at the `COMMAND` column before you kill anything – 1313
 
 Two cases worth knowing about:
 
-- **The old process is a zombie.** `lsof` shows a Hugo PID, but the browser gets nothing. `kill` it and start again.
+- **The old process no longer responds.** If `lsof` still shows its Hugo PID, stop that process and restart the server.
 - **You're behind a different address.** `hugo server` binds to `127.0.0.1` by default. Something bound to `0.0.0.0:1313` (a container, a VM) occupies the same port from your machine's point of view.
 
-## Don't fight the port – reuse the server
+## Reuse the existing server
 
-If the server that owns the port is already serving the site you're working on, you don't need a new one. Open `http://localhost:1313/` and keep working; Hugo is already watching your files.
+If the process already serves the same project, open `http://localhost:1313/` and use the existing server.
 
-> HugoKit gives every site its own port – it tests the port by actually binding it before offering it, so two sites can run side by side. It warns you before you start if the port is taken, and if Hugo does fail with *address already in use*, HugoKit looks for the server that's already running on that port and attaches to it instead of starting a second one. See [Running the server](/docs/running-the-server/).
+> **In HugoKit:** each site has its own tested port, and HugoKit can attach to an existing server for the same project.

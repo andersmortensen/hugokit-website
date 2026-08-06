@@ -148,8 +148,8 @@
       in the browser; the toolbar there matches --bezel-hi like any canvas page.
       In Sparkle's in-app view there is no browser toolbar, so this does not apply. */}}
 {{- $flat := eq .Kind "404" }}
-{{- $tbLight := cond $flat "#F1EAE0" "#ECE4D7" }}
-{{- $tbDark := cond $flat "#141312" "#1A1917" }}
+{{- $tbLight := "#F0F0EC" }}
+{{- $tbDark := "#0D0E0F" }}
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="{{ $tbLight }}">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="{{ $tbDark }}">
 <script>
@@ -291,10 +291,10 @@
 
 {{- /* Fonts are self-hosted (woff2, latin) – @font-face lives in main.css, the files in
       static/fonts/. No Google Fonts CDN and thus no preconnect or
-      render-blocking external stylesheet. The wordmark weight (Hanken 700) now
-      lives in the variable 100–900 file, which paints the hero lockup and is
-      therefore preloaded. */}}
-<link rel="preload" href="{{ "fonts/hanken-grotesk-v12-latin-400-500.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+      render-blocking external stylesheet. Manrope powers the site's display and
+      interface copy, so its local WOFF2 is preloaded. */}}
+<link rel="preload" href="{{ "fonts/manrope-v20-latin-400-600.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ "fonts/dm-sans-v17-latin-variable.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
 
 {{ with resources.Get "scss/main.scss" }}
   {{ $css := . | css.Sass (dict "targetPath" "css/main.css" "transpiler" "dartsass") | minify | fingerprint }}
@@ -401,7 +401,7 @@
     };
     if (document.documentElement.dataset.theme) syncPics(document.documentElement.dataset.theme);
 
-    var mt = document.querySelector('.mode-toggle');
+    var mt = document.querySelector('.mode-toggle, .v3-theme-toggle');
     if (mt) mt.addEventListener('click', function () {
       var apply = function () {
         var root = document.documentElement;

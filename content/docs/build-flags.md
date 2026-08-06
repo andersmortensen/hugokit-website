@@ -1,12 +1,12 @@
 ---
 title: "Build flags"
-description: "Set Hugo's build flags per site in HugoKit – garbage collection, minify and a build environment – with the exact command line shown before it runs."
+description: "Configure garbage collection, minification and the Hugo build environment per site."
 group: "Publishing"
 weight: 30
 tags: [publishing, build]
 ---
 
-Every publish builds the site first. The **Build** section on the Deploy page decides how – the same Hugo flags you'd type by hand, set per site and shown as the exact command line before anything runs.
+Every publish builds the site first. The **Build** section stores its Hugo flags per site and shows the resulting command.
 
 ## The flags
 
@@ -16,11 +16,11 @@ On the **Deploy** page, per site:
 - **`--minify`** – minify the built output.
 - **Environment** – the build environment Hugo runs in (`--environment`), for config and templates that switch on it. Leave it blank for Hugo's default.
 
-Both flags are **on by default** – exactly what every HugoKit build did before this was a setting, so upgrading doesn't change what your site builds to. The command line under the toggles updates as you change them, so you always see what will run: `hugo --gc --minify`, or `hugo`, or `hugo --gc --minify --environment staging`.
+Both flags are enabled by default, matching builds made before the settings were added. The displayed command updates when a setting changes.
 
 ## The environment field
 
-The two flags are switches; the environment is the one field you type into, so it's the one HugoKit guards. It takes letters, numbers, hyphens and underscores – a normal environment name – and **rejects** anything else rather than quietly cleaning it up. A value that starts with a `-`, or a pasted line with a space and a second command in it, is refused out loud instead of being handed to Hugo as another flag. The field says why, and the command line stays as it was.
+The environment field accepts letters, numbers, hyphens and underscores. Values beginning with `-` or containing spaces and additional command text are rejected, and the generated command remains unchanged.
 
 ## Where it applies
 

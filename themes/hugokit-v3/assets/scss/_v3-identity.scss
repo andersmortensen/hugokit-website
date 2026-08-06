@@ -1,0 +1,1173 @@
+/*
+   HugoKit home – a sparse editorial register. The left column carries context;
+   the right column carries the product story. Colour stays functional and never
+   becomes a surface treatment.
+*/
+
+html.v3-page {
+  --v3-page: light-dark(#f0f0ec, #0d0e0f);
+  --v3-surface: light-dark(#f8f8f5, #121315);
+  --v3-ink: light-dark(#111213, #f0efeb);
+  --v3-muted: light-dark(#656762, #969893);
+  --v3-line: light-dark(rgba(17, 18, 19, .18), rgba(240, 239, 235, .16));
+  --v3-line-soft: light-dark(rgba(17, 18, 19, .09), rgba(240, 239, 235, .08));
+  --v3-accent: #0594cb;
+  --toolbar-color: #f0f0ec;
+  /* Full bleed: every route runs to the viewport edge less one shared gutter.
+     --v3-gutter is the single knob – raise it for more air at the edges, and
+     both caps stay off because --page-max/--section-max resolve to 100%. */
+  --v3-gutter: 24px;
+  --page-max: 100%;
+  --section-max: 100%;
+  /* The hero clip is a 958×652 recording, so it goes soft the moment it is
+     scaled past its native size. It stays capped while the rest runs full bleed. */
+  --v3-media-max: 800px;
+  /* Radius system – decided 6 August 2026 from the radius studio.
+     One value across all four roles; the split into roles exists so a single
+     one can be pulled out later without hunting through the stylesheets.
+     Anything under ~64px tall resolves to a pill at this value – that is the
+     shape 32 means on a control, not a bug. */
+  --r-nav: 32px;
+  --r-surface: 32px;
+  --r-control: 32px;
+  --r-chip: 32px;
+  background-color: var(--v3-page);
+  scroll-padding-top: 86px;
+}
+
+html.v3-page[data-theme="dark"] { --toolbar-color: #0d0e0f; }
+
+body.v3-home,
+.v3-home button,
+.v3-home input,
+.v3-home textarea,
+.v3-home select {
+  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+}
+
+body.v3-home {
+  background-color: var(--v3-page);
+  color: var(--v3-ink);
+  font-size: 24px;
+  font-weight: 300;
+  letter-spacing: -.008em;
+  line-height: 1.5;
+}
+
+.v3-nav-inner { font-family: "Manrope", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif; font-size: 16px; font-weight: 400; letter-spacing: normal; line-height: normal; }
+.v3-nav button { font-family: inherit; }
+.v3-nav .v3-nav-release { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; font-weight: 500; letter-spacing: .08em; line-height: 1; }
+
+.v3-home .v3-eyebrow,
+.v3-home code {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* Floating site rail */
+.v3-nav {
+  top: 14px;
+  height: 58px;
+  border: 0;
+  background: transparent;
+}
+
+.v3-nav-inner {
+  width: calc(100% - var(--v3-gutter) * 2);
+  min-height: 58px;
+  padding: 0 14px;
+  border: 1px solid color-mix(in srgb, var(--v3-line) 82%, transparent);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--toolbar-color) 76%, transparent);
+  box-shadow: 0 10px 24px rgba(12, 13, 14, .08), inset 0 1px 0 rgba(255, 255, 255, .08);
+  -webkit-backdrop-filter: blur(20px) saturate(1.22);
+  backdrop-filter: blur(20px) saturate(1.22);
+}
+
+.v3-lockup { gap: 11px; color: var(--v3-ink); }
+.v3-lockup-mark { width: 26px; height: 26px; }
+.v3-lockup-word { font-size: 17px; font-weight: 700; letter-spacing: -.035em; }
+.v3-nav-links { gap: clamp(20px, 2.6vw, 40px); }
+.v3-nav-links a {
+  padding: 18px 0;
+  color: var(--v3-ink);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -.012em;
+}
+.v3-nav-links a:hover,
+.v3-nav-links a:focus-visible,
+.v3-nav-links a.is-current { color: var(--v3-ink); }
+.v3-nav-links a::after,
+.v3-nav-links a:nth-child(n)::after { height: 1px; background: var(--v3-ink); }
+
+.v3-theme-toggle,
+.v3-nav-menu {
+  border-color: transparent;
+  border-radius: 0;
+  color: var(--v3-ink);
+}
+/* Nav actions – one height (--v3-nav-control), one radius. The version chip
+   stays a quiet outlined pill; Download is the only filled thing in the rail,
+   so the eye lands on it without any colour being introduced. */
+.v3-nav-actions { gap: 10px; }
+.v3-theme-toggle {
+  width: var(--v3-nav-control, 40px);
+  height: var(--v3-nav-control, 40px);
+  border: 1px solid var(--v3-line);
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--v3-ink) 6%, transparent);
+}
+.v3-theme-toggle:hover { border-color: color-mix(in srgb, var(--v3-ink) 28%, transparent); background: color-mix(in srgb, var(--v3-ink) 12%, transparent); color: var(--v3-ink); }
+.v3-theme-toggle svg { width: 17px; height: 17px; }
+.v3-nav-download-group { display: inline-flex; align-items: stretch; gap: 8px; }
+.v3-nav-release {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--v3-nav-control, 40px);
+  padding: 0 12px;
+  border: 1px solid var(--v3-line);
+  border-radius: 9px;
+  background: transparent;
+  color: var(--v3-muted);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-decoration: none;
+  appearance: none;
+  cursor: pointer;
+  transition: border-color .2s ease, color .2s ease;
+}
+.v3-nav-release:hover { border-color: color-mix(in srgb, var(--v3-ink) 30%, transparent); color: var(--v3-ink); }
+.v3-nav-download {
+  min-height: var(--v3-nav-control, 40px);
+  padding: 0 0 0 16px;
+  border-color: var(--v3-ink);
+  border-radius: 9px;
+  background: var(--v3-ink);
+  color: var(--v3-page) !important;
+  font-size: 13px;
+  font-weight: 650;
+  letter-spacing: -.01em;
+}
+.v3-nav-download:hover { border-color: var(--v3-accent); background: var(--v3-accent); color: #fff !important; box-shadow: none; }
+/* Hairline instead of a bordered cell – the arrow reads as part of the button. */
+.v3-nav-download-arrow {
+  width: 34px;
+  height: calc(var(--v3-nav-control, 40px) - 2px);
+  margin-left: 14px;
+  border-left: 1px solid color-mix(in srgb, currentColor 24%, transparent);
+  font-size: 15px;
+}
+
+/* Hero – register left, reading field right. */
+.v3-hero {
+  overflow: visible;
+  padding: 0;
+  background: var(--v3-page);
+  color: var(--v3-ink);
+}
+
+.v3-hero > .v3-shell,
+.v3-facts > .v3-shell {
+  width: calc(100% - var(--v3-gutter) * 2);
+}
+
+.v3-hero-main {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 0 clamp(20px, 2vw, 38px);
+  align-items: start;
+  padding: clamp(108px, 13vw, 184px) 0 clamp(58px, 7vw, 104px);
+}
+
+.v3-hero-copy { display: contents; }
+.v3-hero-heading {
+  grid-column: 3 / -1;
+  grid-row: 1;
+  max-width: 10ch;
+  margin: 0;
+  color: var(--v3-ink);
+  font-size: clamp(74px, 9.8vw, 156px);
+  font-weight: 500;
+  letter-spacing: -.055em;
+  line-height: .94;
+  text-wrap: balance;
+}
+
+.v3-w {
+  overflow: visible;
+  padding: .03em 0 .12em;
+  margin: -.03em 0 -.12em;
+}
+.v3-wi-dim { color: var(--v3-muted); font-weight: 400; }
+
+.v3-hero-meta {
+  grid-column: 3 / -1;
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(220px, .8fr);
+  gap: clamp(30px, 6vw, 100px);
+  align-items: start;
+  margin-top: clamp(46px, 6vw, 84px);
+  padding: 20px 0 0;
+  border: 0;
+  border-top: 1px solid var(--v3-line);
+  border-radius: 0;
+  background: transparent;
+}
+
+.v3-hero-lead {
+  grid-column: 1;
+  max-width: 28ch;
+  margin: 0;
+  color: var(--v3-ink);
+  font-size: clamp(19px, 1.5vw, 24px);
+  font-weight: 400;
+  letter-spacing: -.035em;
+  line-height: 1.35;
+}
+.v3-hero-cta { grid-column: 2; text-align: left; }
+.v3-hero-actions { justify-content: flex-start; gap: 10px; }
+/* The three hero actions carry the page – they are sized to be read from
+   across the room. --v3-cta-height is the knob for the whole row. */
+.v3-hero .v3-button {
+  min-height: var(--v3-cta-height, 60px);
+  padding: 0 28px;
+  border-color: var(--v3-ink);
+  border-radius: 3px;
+  background: var(--v3-ink);
+  color: var(--v3-page) !important;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -.012em;
+}
+.v3-hero .v3-button:hover { border-color: var(--v3-accent); background: var(--v3-accent); box-shadow: none; }
+.v3-hero .v3-button-secondary { background: transparent; color: var(--v3-ink) !important; }
+.v3-hero .v3-button-secondary:hover { border-color: var(--v3-ink); background: transparent; color: var(--v3-accent) !important; }
+.v3-hero-fine { margin: 17px 0 0; color: var(--v3-muted); font-size: 10px; letter-spacing: .035em; line-height: 1.65; }
+.v3-hero .v3-text-action {
+  min-height: var(--v3-cta-height, 60px);
+  padding: 0 10px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--v3-muted);
+  font-size: 14px;
+  font-weight: 650;
+  letter-spacing: .02em;
+  white-space: nowrap;
+}
+.v3-hero .v3-text-action:hover { color: var(--v3-accent); }
+
+/* The recording is 958×652, so at full bleed it upscales. --v3-media-max is the
+   knob: set it back to 800px to pin the old, sharper size. */
+.v3-hero-media-bleed { width: calc(100% - var(--v3-gutter) * 2); max-width: var(--v3-media-max, 100%); margin: 0 auto; }
+.v3-hero-window-wrap {
+  overflow: hidden;
+  border: 0;
+  border-top: 1px solid var(--v3-line);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.v3-hero-product-rail {
+  min-height: 48px;
+  padding: 0;
+  color: var(--v3-muted);
+  font-size: 9px;
+  letter-spacing: .11em;
+}
+.v3-hero-product-name { color: var(--v3-ink); }
+.v3-hero-product-name > span { width: 6px; height: 6px; background: var(--green); }
+/* No dark plate behind the clip: at any width object-fit leaves sub-pixel
+   slack, and a #111215 fill read as a black hairline hugging the video. */
+.v3-hero-window { aspect-ratio: 958 / 652; margin: 0; border: 0; border-top: 1px solid var(--v3-line); border-radius: 0; background: transparent; }
+.v3-hero-window .shot,
+.v3-hero-window video,
+.v3-hero-window img { object-fit: contain; border-radius: 0; }
+.v3-hero-media-open {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  margin-top: 12px;
+  padding: 0;
+  border: 1px solid var(--v3-line);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--v3-ink) 8%, transparent);
+  color: var(--v3-ink);
+  place-items: center;
+  cursor: pointer;
+}
+.v3-hero-media-open svg { width: 16px; height: 16px; }
+.v3-hero-media-open:hover { border-color: color-mix(in srgb, var(--v3-ink) 28%, transparent); background: color-mix(in srgb, var(--v3-ink) 13%, transparent); color: var(--v3-accent); }
+
+.v3-media-lightbox {
+  width: min(calc(100vw - 48px), 1560px);
+  max-width: none;
+  max-height: none;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  color: var(--v3-ink);
+}
+.v3-media-lightbox[open] { position: fixed; inset: 0; display: grid; place-items: center; margin: auto; }
+.v3-media-lightbox::backdrop {
+  background: rgba(8, 9, 10, .68);
+  -webkit-backdrop-filter: blur(22px) saturate(1.18);
+  backdrop-filter: blur(22px) saturate(1.18);
+}
+.v3-media-lightbox-frame { position: relative; }
+.v3-media-lightbox-slot { overflow: hidden; background: #111215; }
+.v3-media-lightbox-slot .v3-hero-window { width: min(calc(100vw - 48px), 1160px); aspect-ratio: 958 / 652; border: 0; }
+.v3-media-lightbox-slot .v3-hero-window .shot,
+.v3-media-lightbox-slot .v3-hero-window video,
+.v3-media-lightbox-slot .v3-hero-window img { object-fit: contain; }
+.v3-media-lightbox-close {
+  position: absolute;
+  top: -42px;
+  right: 0;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #f0efeb;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.v3-release-dialog {
+  width: min(calc(100vw - 40px), 620px);
+  max-width: none;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  border-radius: 18px;
+  background: transparent;
+  color: var(--v3-ink);
+}
+.v3-release-dialog[open] { position: fixed; inset: 0; display: grid; place-items: center; margin: auto; }
+.v3-release-dialog::backdrop { background: color-mix(in srgb, var(--v3-page) 62%, transparent); -webkit-backdrop-filter: blur(20px) saturate(1.14); backdrop-filter: blur(20px) saturate(1.14); }
+.v3-release-dialog-card { overflow: hidden; border: 1px solid color-mix(in srgb, var(--v3-line) 95%, transparent); border-radius: 18px; background: color-mix(in srgb, var(--v3-surface) 94%, transparent); box-shadow: 0 28px 80px rgba(0, 0, 0, .24), inset 0 1px 0 rgba(255, 255, 255, .08); }
+.v3-release-dialog-banner { min-height: 160px; display: grid; border-bottom: 1px solid var(--v3-line); background: color-mix(in srgb, var(--v3-ink) 8%, var(--v3-surface)); place-items: center; }
+.v3-release-dialog-mark { width: 82px; height: 82px; display: grid; border: 1px solid color-mix(in srgb, var(--v3-line) 92%, transparent); border-radius: 20px; background: color-mix(in srgb, var(--v3-surface) 72%, transparent); place-items: center; }
+.v3-release-dialog-mark svg { width: 48px; height: 48px; }
+.v3-release-dialog-body { position: relative; padding: 34px 36px 32px; }
+.v3-release-dialog-close { position: absolute; top: 18px; right: 18px; width: 32px; height: 32px; padding: 0; border: 1px solid var(--v3-line); border-radius: 8px; background: color-mix(in srgb, var(--v3-ink) 6%, transparent); color: var(--v3-muted); font-size: 20px; line-height: 1; cursor: pointer; }
+.v3-release-dialog-close:hover { border-color: color-mix(in srgb, var(--v3-ink) 28%, transparent); color: var(--v3-ink); }
+.v3-release-dialog-kicker { margin: 0 0 14px; color: var(--v3-muted); font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; }
+.v3-release-dialog h2 { max-width: 11ch; margin: 0; color: var(--v3-ink); font-size: clamp(36px, 5vw, 54px); font-weight: 500; letter-spacing: -.065em; line-height: .95; }
+.v3-release-dialog-summary { max-width: 40ch; margin: 18px 0 0; color: var(--v3-muted); font-size: 16px; letter-spacing: -.025em; line-height: 1.48; }
+.v3-release-dialog-features { display: grid; gap: 0; margin: 24px 0 0; padding: 0; border-top: 1px solid var(--v3-line); list-style: none; }
+.v3-release-dialog-features li { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 12px; padding: 13px 0; border-bottom: 1px solid var(--v3-line); }
+.v3-release-dialog-feature-index { padding-top: 2px; color: var(--v3-accent); font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10px; font-weight: 600; letter-spacing: .09em; }
+.v3-release-dialog-features strong { display: block; color: var(--v3-ink); font-size: 14px; font-weight: 700; letter-spacing: -.025em; }
+.v3-release-dialog-features small { display: block; margin-top: 3px; color: var(--v3-muted); font-size: 12px; letter-spacing: -.012em; line-height: 1.45; }
+.v3-release-dialog-actions { display: flex; align-items: center; gap: 18px; margin-top: 30px; }
+.v3-release-dialog-primary { min-height: 42px; display: inline-flex; align-items: center; gap: 20px; padding: 0 16px; border: 1px solid var(--v3-ink); border-radius: 8px; background: var(--v3-ink); color: var(--v3-page) !important; font-size: 12px; font-weight: 700; letter-spacing: -.01em; text-decoration: none; }
+.v3-release-dialog-primary:hover { border-color: var(--v3-accent); background: color-mix(in srgb, var(--v3-ink) 88%, var(--v3-accent)); }
+.v3-release-dialog-dismiss,
+.v3-footer-release { padding: 0; border: 0; background: transparent; color: inherit; font: inherit; cursor: pointer; }
+.v3-release-dialog-dismiss { color: var(--v3-muted); font-size: 12px; font-weight: 700; }
+.v3-release-dialog-dismiss:hover,
+.v3-footer-release:hover { color: var(--v3-accent); }
+
+/* Facts become a footer to the product proof, not a row of badges. */
+.v3-facts { padding: 0 0 clamp(118px, 15vw, 228px); background: var(--v3-page); }
+/* Rule-free: neither the line under the media nor the columns between the
+   facts. The dot and the spacing carry the grouping on their own. */
+.v3-facts-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  overflow: visible;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--v3-ink);
+}
+.v3-fact { min-height: 0; display: flex; flex-direction: column; align-items: flex-start; padding: 32px 0 36px; border: 0; border-radius: 0; background: transparent; box-shadow: none !important; }
+.v3-fact + .v3-fact { padding-left: clamp(18px, 3vw, 48px); border-top: 0; border-left: 0; }
+.v3-fact::before { display: none; }
+.v3-fact-dot { position: static; width: 6px; height: 6px; margin: 0 0 22px; }
+.v3-fact strong { display: block; color: var(--v3-ink); font-size: clamp(31px, 3.3vw, 52px); font-weight: 500; letter-spacing: -.06em; line-height: .96; }
+.v3-fact span:last-child { display: block; max-width: 19ch; margin: 12px 0 0; color: var(--v3-muted); font-size: 15px; letter-spacing: -.02em; line-height: 1.4; }
+
+/* The page reads as a sequence of entries, not stacked panels. */
+#loop,
+#features,
+#note,
+#faq,
+#download {
+  position: static;
+  isolation: auto;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: var(--v3-page);
+  color: var(--v3-ink);
+  box-shadow: none;
+}
+
+.v3-section { padding: clamp(100px, 13vw, 190px) 0; border-top: 1px solid var(--v3-line); }
+.v3-section-heading-row,
+#loop .v3-section-heading-row {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 0 clamp(20px, 2vw, 38px);
+  align-items: start;
+  margin: 0 0 clamp(52px, 7vw, 106px);
+}
+.v3-section-label,
+#loop .v3-section-label {
+  grid-column: 1 / span 3;
+  margin: 10px 0 0;
+  color: var(--v3-muted);
+}
+.v3-section-heading-row > div,
+#loop .v3-section-heading-row > div { grid-column: 4 / -1; }
+.v3-section-title,
+#loop .v3-section-title,
+#features .v3-section-title {
+  max-width: 10ch;
+  margin: 0;
+  color: var(--v3-ink);
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(56px, 7.5vw, 120px);
+  font-weight: 500;
+  letter-spacing: -.06em;
+  line-height: .94;
+}
+.v3-section-subtitle,
+#loop .v3-section-subtitle { max-width: 35ch; margin: 24px 0 0; color: var(--v3-muted); font-size: 18px; letter-spacing: -.022em; }
+
+/* Run, inspect, publish is a three-entry schedule. */
+.v3-loop-app { overflow: visible; border: 0; background: transparent; }
+.v3-loop-app-bar,
+.v3-loop-app-nav { display: none; }
+.v3-loop-app-body { display: block; }
+.v3-loop-grid { padding: 0; border-top: 1px solid var(--v3-line); border-bottom: 0; }
+.v3-loop-card {
+  position: relative;
+  top: auto;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 0 clamp(20px, 2vw, 38px);
+  align-items: start;
+  margin: 0;
+  padding: clamp(56px, 7vw, 110px) 0;
+  border: 0;
+  border-bottom: 1px solid var(--v3-line);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none !important;
+}
+.v3-loop-card::before {
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 2px;
+  background: var(--v3-accent);
+}
+.v3-loop-card:nth-child(2)::before { background: var(--pink); }
+.v3-loop-card:nth-child(3)::before { background: var(--green); }
+.v3-loop-card-head { grid-column: 1 / span 2; display: grid; gap: 7px; margin: 2px 0 0; padding: 0; }
+.v3-loop-number,
+.v3-loop-label { font-size: 10px; letter-spacing: .12em; }
+.v3-loop-number { color: var(--v3-muted); }
+.v3-loop-label { color: var(--v3-ink); font-weight: 600; }
+.v3-loop-copy { grid-column: 3 / span 4; grid-row: auto; padding: 0; }
+.v3-loop-copy h3 {
+  max-width: 10ch;
+  margin: 0;
+  color: var(--v3-ink);
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(38px, 4.3vw, 66px);
+  font-weight: 500;
+  letter-spacing: -.06em;
+  line-height: .96;
+}
+.v3-loop-intro { max-width: 29ch; margin: 23px 0 0; color: var(--v3-ink); font-size: 17px; letter-spacing: -.02em; line-height: 1.48; }
+.v3-loop-detail,
+.v3-loop-points li { color: var(--v3-muted); }
+.v3-loop-points { margin-top: 27px; border-top-color: var(--v3-line); }
+.v3-loop-points li { border-bottom-color: var(--v3-line); }
+.v3-loop-points li::before { background: var(--v3-accent); }
+.v3-loop-card:nth-child(2) .v3-loop-points li::before { background: var(--pink); }
+.v3-loop-card:nth-child(3) .v3-loop-points li::before { background: var(--green); }
+.v3-doc-links { margin-top: 28px; padding-top: 0; }
+.v3-doc-links .feature-doc { border: 0; color: var(--v3-ink); }
+.v3-doc-links .feature-doc:hover { border: 0; color: var(--v3-accent); }
+.v3-loop-shot {
+  grid-column: 8 / -1;
+  grid-row: auto;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.v3-loop-shot .shot { border-radius: 0; }
+
+/* Features return to an even, complete grid. */
+#features .v3-section-heading-row > .v3-section-label { grid-column: 1 / span 3; }
+#features .v3-section-heading-row > .v3-section-title { grid-column: 4 / -1; }
+/* The grid stays; the line-work goes. It used to be a 1px rule net (gap: 1px
+   over a --v3-line backdrop, plus an outer border), which put a stroke on every
+   single edge. The tiles now separate on tone and air instead – the surface step
+   from --v3-page to --v3-surface is enough to read them as cards.
+   --v3-tile-gap is the knob. */
+.v3-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--v3-tile-gap, clamp(10px, .9vw, 16px));
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.v3-feature-card,
+.v3-feature-card:nth-child(13),
+.v3-feature-card:nth-child(14),
+.v3-feature-card.is-featured-primary,
+.v3-feature-card.is-featured:not(.is-featured-primary) {
+  min-height: 252px;
+  grid-column: auto;
+  grid-row: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: clamp(26px, 2.2vw, 34px);
+  border: 0;
+  border-radius: 0;
+  background: var(--v3-surface);
+  color: var(--v3-ink);
+  box-shadow: none;
+  transition: background-color .22s ease;
+}
+/* Hover deepens the tile instead of flattening it into the page – with the
+   rules gone, fading towards --v3-page would make the card disappear. */
+.v3-feature-card:hover { background: color-mix(in srgb, var(--v3-ink) 6%, var(--v3-surface)); }
+.v3-feature-top { grid-column: auto; align-items: flex-start; }
+.v3-feature-top .feature-glyph { width: 22px; height: 22px; color: var(--v3-muted); }
+.v3-feature-num { color: var(--v3-muted); font-size: 10px; letter-spacing: .1em; }
+.v3-feature-accent { display: none !important; }
+.v3-feature-card h3 {
+  grid-column: auto;
+  margin: auto 0 0;
+  padding-top: 42px;
+  color: var(--v3-ink);
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(21px, 2vw, 30px);
+  font-weight: 500;
+  letter-spacing: -.045em;
+  line-height: 1.05;
+}
+.v3-feature-card p { grid-column: auto; margin: 12px 0 0; color: var(--v3-muted); font-size: 15px; line-height: 1.52; }
+.v3-feature-card:hover h3 { color: var(--v3-ink); }
+.v3-feature-card:hover p,
+.v3-feature-card:hover .feature-glyph,
+.v3-feature-card:hover .v3-feature-num { color: var(--v3-muted); }
+.v3-feature-spot { grid-column: auto; margin: 16px 0 0; color: var(--v3-muted); }
+/* Shortcut chips read as a tinted plate, not another outlined box. */
+.v3-feature-spot b { border-color: transparent; background: color-mix(in srgb, var(--v3-ink) 8%, transparent); color: var(--v3-ink); }
+
+/* The remaining content keeps the same reading rhythm. */
+#note { background: var(--v3-surface); }
+.v3-note-inner { max-width: none; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0 clamp(20px, 2vw, 38px); padding: 0 !important; text-align: left; }
+.v3-note-identity { grid-column: 1 / span 3; align-items: flex-start; }
+.v3-note-inner .v3-section-label { justify-content: flex-start; color: var(--v3-muted); }
+.v3-note-byline { margin-top: 30px; }
+.v3-note-portrait { border-color: var(--v3-line); border-radius: 0; }
+.v3-note-copy { grid-column: 4 / -1; }
+.v3-note-quote { max-width: 24ch; margin: 0; color: var(--v3-muted); font-size: clamp(30px, 3.5vw, 56px); font-weight: 400; letter-spacing: -.052em; line-height: 1.03; text-wrap: balance; }
+.v3-note-quote strong { color: var(--v3-ink); font-weight: 500; }
+.v3-donate-line { max-width: 56ch; margin: 38px 0 0; color: var(--v3-muted); }
+
+#faq .v3-section-heading-row > .v3-section-label { grid-column: 1 / span 3; }
+#faq .v3-section-heading-row > .v3-section-title { grid-column: 4 / -1; }
+.v3-faq-column { border-top-color: var(--v3-line); }
+.v3-faq-item { border-bottom-color: var(--v3-line); }
+.v3-faq-item summary { color: var(--v3-ink); font-weight: 500; }
+.v3-faq-num,
+.v3-faq-item summary::after,
+.v3-faq-answer { color: var(--v3-muted); }
+.v3-faq-item summary:hover,
+.v3-faq-item summary:hover::after { color: var(--v3-accent); }
+
+#download { background: var(--v3-surface); }
+.v3-download-section { padding-block: clamp(100px, 13vw, 190px); }
+.v3-download-receipt {
+  max-width: none;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(190px, .42fr);
+  gap: clamp(28px, 6vw, 110px);
+  align-items: start;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-top: 1px solid var(--v3-line);
+  border-bottom: 1px solid var(--v3-line);
+  background: transparent;
+}
+/* The last thing before the footer now carries weight: mark at icon scale,
+   heading in the section-title register, the spec as a scannable row.
+   Still no card and no box – the two hairlines on .v3-download-receipt and
+   the air inside them do all the framing. */
+.v3-download-receipt-head { align-items: center; gap: clamp(24px, 3vw, 46px); padding: clamp(44px, 5vw, 72px) 0 clamp(38px, 4vw, 56px); }
+.v3-download-receipt .v3-app-icon { width: clamp(76px, 7vw, 104px); height: clamp(76px, 7vw, 104px); flex: none; border: 0; border-radius: 0; background: transparent; }
+.v3-download-receipt .v3-app-icon svg { width: 100%; height: 100%; }
+.v3-download-receipt .v3-store-copy h2 { color: var(--v3-ink); font-size: clamp(44px, 6vw, 96px); font-weight: 500; letter-spacing: -.06em; line-height: .94; }
+.v3-download-receipt .v3-store-description { max-width: 42ch; margin-top: 16px; color: var(--v3-muted); font-size: clamp(18px, 1.5vw, 22px); letter-spacing: -.02em; }
+
+/* Spec row – mono labels over values, no rules between the columns so it reads
+   the same way the facts row under the hero does. */
+.v3-download-receipt .v3-store-facts {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0 clamp(20px, 2vw, 38px);
+  margin: 0;
+  padding: clamp(26px, 3vw, 40px) 0 clamp(38px, 4.5vw, 60px);
+  border: 0;
+  border-top: 1px solid var(--v3-line);
+}
+.v3-download-receipt .v3-store-facts dl,
+.v3-download-receipt .v3-store-facts dl + dl {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.v3-download-receipt .v3-store-facts dt { color: var(--v3-muted); font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; font-weight: 500; letter-spacing: .13em; text-transform: uppercase; }
+.v3-download-receipt .v3-store-facts dd { margin: 0; color: var(--v3-ink); font-size: clamp(19px, 1.8vw, 27px); font-weight: 500; letter-spacing: -.038em; line-height: 1.15; text-align: left; }
+
+.v3-download-receipt .v3-store-action { grid-column: 2; grid-row: 1; padding-top: clamp(44px, 5vw, 72px); }
+.v3-download-receipt .v3-store-action .v3-button { width: 100%; min-height: var(--v3-cta-height, 60px); padding: 0 28px; border-radius: 3px; background: var(--v3-ink); color: var(--v3-page) !important; font-size: 16px; font-weight: 600; letter-spacing: -.012em; }
+.v3-download-receipt .v3-store-action .v3-button:hover { border-color: var(--v3-accent); background: var(--v3-accent); box-shadow: none; }
+
+.v3-home .v3-site-footer { padding: 54px 0 44px; border-top: 0; background: var(--v3-surface); }
+.v3-footer-brand { color: var(--v3-ink); font-weight: 600; }
+.v3-footer-group h2 { color: var(--v3-muted); }
+.v3-footer-group a,
+.v3-footer-group button { color: var(--v3-ink); }
+.v3-footer-bottom { border-top-color: var(--v3-line); color: var(--v3-muted); }
+
+@media (max-width: 900px) {
+  html.v3-page { scroll-padding-top: 72px; }
+  .v3-nav { height: 62px; }
+  .v3-nav-inner { width: calc(100% - 40px); min-height: 62px; }
+  .v3-nav-links { top: 62px; right: -20px; left: -20px; padding: 8px 20px; border: 0; border-bottom: 1px solid var(--v3-line); border-radius: 0; background: var(--v3-page); box-shadow: none; }
+  .v3-nav-links a { padding: 14px 0; }
+  .v3-hero > .v3-shell,
+  .v3-facts > .v3-shell { width: calc(100% - 40px); }
+  .v3-hero-main { grid-template-columns: 1fr; gap: 0; padding-top: 104px; }
+  .v3-hero-heading,
+  .v3-hero-meta { grid-column: 1; grid-row: auto; }
+  .v3-hero-heading { max-width: 10.5ch; }
+  .v3-hero-meta { grid-template-columns: minmax(0, 1.2fr) minmax(210px, .8fr); }
+  .v3-section-heading-row,
+  #loop .v3-section-heading-row { grid-template-columns: 1fr; gap: 26px; }
+  .v3-section-label,
+  #loop .v3-section-label,
+  .v3-section-heading-row > div,
+  #loop .v3-section-heading-row > div,
+  #features .v3-section-heading-row > .v3-section-label,
+  #features .v3-section-heading-row > .v3-section-title,
+  #faq .v3-section-heading-row > .v3-section-label,
+  #faq .v3-section-heading-row > .v3-section-title { grid-column: 1; }
+  .v3-section-label,
+  #loop .v3-section-label { margin: 0; }
+  .v3-loop-card { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .v3-loop-card-head { grid-column: 1 / span 2; }
+  .v3-loop-copy { grid-column: 3 / span 5; }
+  .v3-loop-shot { grid-column: 8 / -1; }
+  .v3-feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .v3-feature-card,
+  .v3-feature-card:nth-child(13),
+  .v3-feature-card:nth-child(14),
+  .v3-feature-card.is-featured-primary,
+  .v3-feature-card.is-featured:not(.is-featured-primary) { min-height: 232px; padding: 22px; }
+  .v3-note-inner { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .v3-note-identity { grid-column: 1 / span 3; }
+  .v3-note-copy { grid-column: 4 / -1; }
+  .v3-download-receipt { grid-template-columns: minmax(0, 1fr) minmax(190px, .42fr); }
+  .v3-download-receipt .v3-store-facts { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px clamp(20px, 2vw, 38px); }
+}
+
+@media (max-width: 640px) {
+  .v3-nav { height: 58px; }
+  .v3-nav-inner { min-height: 58px; }
+  .v3-nav-download { width: 36px; min-width: 36px; min-height: 36px; padding: 0; }
+  .v3-nav-download-arrow { width: 36px; height: 36px; margin: 0; border: 0; }
+  .v3-nav-release { display: none; }
+  .v3-theme-toggle,
+  .v3-nav-menu { width: 36px; height: 36px; }
+  .v3-hero > .v3-shell,
+  .v3-facts > .v3-shell { width: calc(100% - 36px); }
+  .v3-hero-main { padding: 84px 0 52px; }
+  .v3-hero-heading { max-width: 9.8ch; font-size: clamp(60px, 17.2vw, 86px); letter-spacing: -.052em; line-height: .97; }
+  .v3-hero-meta { grid-template-columns: 1fr; gap: 28px; margin-top: 42px; }
+  .v3-hero-cta { grid-column: 1; }
+  .v3-hero-actions { flex-direction: column; }
+  .v3-hero-actions .v3-button { width: 100%; }
+  .v3-hero-product-rail { grid-template-columns: 1fr auto; min-height: 42px; }
+  .v3-hero-product-flow { display: none; }
+  .v3-facts { padding-bottom: 112px; }
+  .v3-facts-row { grid-template-columns: 1fr; }
+  .v3-fact { padding: 17px 0; }
+  .v3-fact + .v3-fact { padding-left: 0; border-top: 0; border-left: 0; }
+  .v3-section { padding: 90px 0; }
+  .v3-loop-card { grid-template-columns: 1fr; gap: 26px; padding: 52px 0; }
+  .v3-loop-card-head,
+  .v3-loop-copy,
+  .v3-loop-shot { grid-column: 1; }
+  .v3-loop-card-head { grid-template-columns: auto 1fr; align-items: baseline; gap: 14px; }
+  .v3-loop-copy h3 { max-width: 12ch; font-size: 44px; }
+  .v3-hero-media-bleed { width: calc(100% - 36px); }
+  .v3-media-lightbox { width: min(calc(100vw - 24px), 1560px); }
+  .v3-media-lightbox-close { top: -38px; }
+  .v3-feature-grid { grid-template-columns: 1fr; }
+  .v3-feature-card,
+  .v3-feature-card:nth-child(13),
+  .v3-feature-card:nth-child(14),
+  .v3-feature-card.is-featured-primary,
+  .v3-feature-card.is-featured:not(.is-featured-primary) { min-height: 218px; padding: 22px; }
+  .v3-note-inner { grid-template-columns: 1fr; gap: 34px; }
+  .v3-note-identity,
+  .v3-note-copy { grid-column: 1; }
+  .v3-note-identity { display: grid; grid-template-columns: 1fr auto; gap: 20px; }
+  .v3-note-byline { margin: 0; }
+  .v3-note-byline > span { display: none; }
+  .v3-note-quote { font-size: clamp(42px, 12vw, 62px); }
+  .v3-download-receipt { display: block; }
+  .v3-download-receipt-head,
+  .v3-download-receipt .v3-store-action { padding: 30px 0; }
+  .v3-download-receipt-head { align-items: flex-start; flex-direction: column; gap: 22px; }
+  .v3-download-receipt .v3-app-icon { width: 72px; height: 72px; }
+  .v3-download-receipt .v3-store-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 20px; padding: 26px 0 30px; }
+  .v3-download-receipt .v3-store-action { padding-top: 0; }
+  .v3-footer-mega { grid-template-columns: 1fr 1fr; }
+  .v3-footer-bottom { flex-direction: column; }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Reading scale
+   The display type was already large; everything under it was not, so the page
+   read as one huge headline sitting on top of fine print. This block lifts the
+   body and interface sizes only – hero, section titles, the note quote and the
+   loop headings are deliberately untouched.
+   To revert the whole pass: delete this block. Nothing else depends on it.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Mono eyebrows and labels */
+.v3-home .v3-eyebrow { font-size: 12px; }
+.v3-hero-product-rail { font-size: 10.5px; }
+.v3-hero-fine { font-size: 12px; }
+
+/* Hero and section leads */
+.v3-hero-lead { font-size: clamp(21px, 1.7vw, 27px); }
+.v3-section-subtitle,
+#loop .v3-section-subtitle { max-width: 38ch; font-size: clamp(19px, 1.5vw, 23px); }
+
+/* Facts under the media */
+.v3-fact span:last-child { max-width: 21ch; font-size: 17px; }
+
+/* Run, inspect, publish */
+.v3-loop-number,
+.v3-loop-label { font-size: 11.5px; }
+.v3-loop-intro { max-width: 31ch; font-size: 19.5px; }
+.v3-loop-detail { max-width: 46ch; font-size: 16.5px; }
+.v3-loop-points li { font-size: 15px; }
+.v3-doc-links .feature-doc { font-size: 12.5px; }
+
+/* Feature grid */
+.v3-feature-num { font-size: 11.5px; }
+.v3-feature-card h3 { font-size: clamp(23px, 2.2vw, 33px); }
+.v3-feature-card p { font-size: 17px; }
+.v3-feature-spot { font-size: 11.5px; }
+
+/* Why it exists */
+.v3-donate-line { font-size: 18px; }
+.v3-note-name { font-size: 17px; }
+.v3-note-site { font-size: 11.5px; }
+
+/* FAQ */
+.v3-faq-item summary { font-size: clamp(21px, 1.8vw, 26px); }
+.v3-faq-num { font-size: 12.5px; }
+.v3-faq-answer { font-size: 18px; }
+.v3-chip { font-size: 11.5px; }
+
+/* What is Hugo? dialog */
+.v3-dialog-body { font-size: 19.5px; }
+.v3-usp b { font-size: 16px; }
+.v3-usp span { font-size: 15px; }
+
+/* Footer */
+.v3-footer-brand { font-size: 24px; }
+.v3-footer-group h2 { font-size: 11.5px; }
+.v3-footer-group a,
+.v3-footer-group button { font-size: 15px; }
+.v3-footer-bottom { font-size: 11.5px; }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Rule reduction – home
+   The design had a hairline on almost every boundary: between sections, around
+   the media, under every loop row and list item, above and below the download
+   block. Air and tonal fields do that work now.
+   Deliberately kept: the FAQ rows (the hairline IS the row) and the nav
+   controls (a borderless button stops reading as a control).
+   To revert: delete this block.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Section boundaries – separation comes from the ~190px of padding instead. */
+.v3-section { border-top: 0; }
+
+/* Hero */
+.v3-hero-meta { border-top: 0; padding-top: 0; }
+.v3-hero-window-wrap { border-top: 0; }
+.v3-hero-window { border-top: 0; }
+
+/* Run, inspect, publish */
+.v3-loop-grid { border-top: 0; }
+.v3-loop-card { border-bottom: 0; }
+.v3-loop-points { border-top: 0; }
+.v3-loop-points li { border-bottom: 0; }
+
+/* Why it exists */
+.v3-note-portrait { border: 0; }
+
+/* Download */
+.v3-download-receipt { border-top: 0; border-bottom: 0; }
+.v3-download-receipt .v3-store-facts { border-top: 0; }
+
+/* Footer */
+.v3-footer-bottom { border-top: 0; }
+
+/* Chips read as tinted plates, like the shortcut chips in the feature grid. */
+.v3-chip { border-color: transparent; background: color-mix(in srgb, var(--v3-ink) 8%, transparent); color: var(--v3-muted); }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Display voice – home
+   Two decisions from the type sheet (_Arkiv/mockups/…-familier-2026-08-06T17-37):
+   one display face, and behandling B – the tracking loosened.
+
+   Family: everything display now runs in Manrope. The hero, the note quote and
+   the Download header used to inherit DM Sans from the body, which put two
+   display faces on the same page. DM Sans keeps body, leads, FAQ rows and the
+   download spec values – the places that already read clean.
+
+   Tracking: −.06em is the same relative value at 30px and 96px, but negative
+   letter-spacing also eats the word space, twice. At 96px that was ~11px off the
+   gap, which is why "Download HugoKit" ran together. Now −.03em above ~40px and
+   −.035/−.04em below, where the crowding never happens.
+   --v3-track-display is the knob. To revert: delete this block.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+html.v3-page { --v3-track-display: -.03em; }
+
+.v3-hero-heading,
+.v3-note-quote,
+.v3-fact strong,
+.v3-download-receipt .v3-store-copy h2,
+.v3-release-dialog h2 { font-family: "Manrope", sans-serif; }
+
+/* ≥ ~40px */
+.v3-hero-heading,
+.v3-section-title,
+#loop .v3-section-title,
+#features .v3-section-title,
+.v3-loop-copy h3,
+.v3-note-quote,
+.v3-fact strong,
+.v3-download-receipt .v3-store-copy h2,
+.v3-release-dialog h2 { letter-spacing: var(--v3-track-display); }
+
+/* < ~40px – a touch tighter, since the word space is never at risk here. */
+.v3-feature-card h3 { letter-spacing: -.04em; }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Facts – three cards
+   The row spent three rounds as free-standing text on the page and never found
+   an edge to belong to: at 800px it was a caption to a clip it wasn't, at full
+   width it was three stacks floating in a lot of nothing. As cards they carry
+   their own edges, so the width stops being the thing that has to hold them
+   together.
+
+   Same surface language as the feature grid – a tonal step from --v3-page to
+   --v3-surface, no borders, air between – and the same --v3-tile-gap, so the
+   two grids on the page read as one system.
+
+   The dot pins to the top and the value/label pair sits on the card floor, the
+   way the feature cards hang their titles. That keeps all three baselines level
+   regardless of how the labels wrap.
+   Knobs: --v3-fact-value (value size), --v3-fact-card (card height).
+   ───────────────────────────────────────────────────────────────────────────── */
+.v3-facts > .v3-shell { max-width: none; width: calc(100% - var(--v3-gutter) * 2); margin-inline: auto; }
+.v3-facts-row {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: none;
+  justify-content: normal;
+  justify-items: stretch;
+  align-items: stretch;
+  width: 100%;
+  max-width: none;
+  gap: var(--v3-tile-gap, clamp(10px, .9vw, 16px));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.v3-fact {
+  box-sizing: border-box;
+  grid-row: auto;
+  min-height: var(--v3-fact-card, clamp(200px, 17vw, 264px));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: clamp(26px, 2.2vw, 34px);
+  border: 0;
+  border-radius: 0;
+  background: var(--v3-surface);
+  box-shadow: none !important;
+}
+.v3-fact + .v3-fact { padding-left: clamp(26px, 2.2vw, 34px); }
+/* Dot at the ceiling, the pair on the floor. */
+.v3-fact-dot { width: 8px; height: 8px; margin: 0 0 auto; }
+.v3-fact strong { margin-top: clamp(38px, 4vw, 60px); font-size: var(--v3-fact-value, clamp(28px, 2.8vw, 46px)); }
+.v3-fact span:last-child { max-width: none; margin: 12px 0 0; font-size: 17px; }
+
+@media (max-width: 900px) {
+  .v3-facts-row { grid-template-columns: 1fr; }
+  .v3-fact { min-height: 0; padding: 26px; }
+  .v3-fact + .v3-fact { padding-left: 26px; }
+  .v3-fact strong { margin-top: 30px; }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Radius system – home
+   Every corner on the site now points at one of four tokens instead of carrying
+   its own number. Before this the same page ran 0, 3, 5, 8, 9, 10, 12, 14, 16,
+   18, 20 and 999 – the cards were square while the nav was rounded, which is
+   the mismatch that started this.
+   Tokens live in html.v3-page above. To revert: delete this block; the original
+   per-element values are still in their own rules further up.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Nav – the floating rail */
+.v3-nav-inner { border-radius: var(--r-nav); }
+
+/* Surfaces – cards, the media frame, dialogs, the consent sheet */
+.v3-fact { border-radius: var(--r-surface); }
+.v3-feature-card,
+.v3-feature-card:nth-child(13),
+.v3-feature-card:nth-child(14),
+.v3-feature-card.is-featured-primary,
+.v3-feature-card.is-featured:not(.is-featured-primary) { border-radius: var(--r-surface); }
+/* The wrap clips its contents, so the window inside stays square. */
+.v3-hero-media-bleed .v3-hero-window-wrap,
+.v3-hero-window-wrap { overflow: hidden; border-radius: var(--r-surface); }
+.v3-hero-window { border-radius: 0; }
+.v3-media-lightbox-slot { border-radius: var(--r-surface); }
+.v3-dialog,
+.v3-release-dialog,
+.v3-release-dialog-card { border-radius: var(--r-surface); }
+.v3-release-dialog-mark { border-radius: var(--r-surface); }
+.v3-home .consent { border-radius: var(--r-surface); }
+
+/* Controls – buttons, toggles, the version chip */
+.v3-theme-toggle,
+.v3-nav-menu,
+.v3-nav-release { border-radius: var(--r-control); }
+/* overflow so the arrow divider cannot cross the rounded end. */
+.v3-nav-download { overflow: hidden; border-radius: var(--r-control); }
+.v3-hero .v3-button,
+.v3-hero .v3-button-secondary,
+.v3-download-receipt .v3-store-action .v3-button { border-radius: var(--r-control); }
+.v3-hero-media-open,
+.v3-release-dialog-close,
+.v3-release-dialog-primary { border-radius: var(--r-control); }
+
+/* Chips – tags, shortcut plates */
+.v3-chip,
+.v3-feature-spot b,
+.v3-release-stamp { border-radius: var(--r-chip); }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Hero media – corners and the air below
+   The dark corners were a clipping failure, not a fill: WebKit does not clip a
+   compositing child against a rounded parent, and <video> is always its own
+   layer. overflow: hidden on the wrap therefore left the clip's own square
+   corners – and the recording's dark matte – sitting outside the radius. The
+   radius goes on the element itself, which WebKit does honour.
+   ───────────────────────────────────────────────────────────────────────────── */
+.v3-hero-window,
+.v3-hero-window .shot,
+.v3-hero-window video,
+.v3-hero-window img { border-radius: var(--r-surface); }
+
+/* Air between the clip and the cards. The hero used to end straight into the
+   facts row; --v3-media-gap is that distance. */
+.v3-facts { padding-top: var(--v3-media-gap, clamp(56px, 6vw, 100px)); }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Loop – leading, and the copy scaled to its column
+   Leading now loosens as the type gets smaller. .94–.96 is fine on a 156px hero
+   where a line is a whole visual block, but at 66px "Run your site / locally."
+   drops the descenders of one line into the cap heights of the next.
+   The hero is deliberately left at .94 – it has never been the one that reads
+   cramped. --v3-leading-loop is the knob if the loop wants more still.
+   ───────────────────────────────────────────────────────────────────────────── */
+.v3-loop-copy h3 { line-height: var(--v3-leading-loop, 1.05); }
+.v3-section-title,
+#loop .v3-section-title,
+#features .v3-section-title,
+.v3-download-receipt .v3-store-copy h2 { line-height: .99; }
+
+/* The loop column is ~570px wide; the copy was sized for something narrower. */
+.v3-loop-intro { max-width: 30ch; font-size: 22px; line-height: 1.45; }
+.v3-loop-detail { max-width: 44ch; font-size: 19px; line-height: 1.5; }
+.v3-loop-points li { padding: 13px 0 13px 22px; font-size: 18px; line-height: 1.45; }
+/* Marker keeps its optical spot as the type grows. */
+.v3-loop-points li::before { top: calc(13px + .5em); width: 6px; height: 6px; }
+
+/* Docs chip – the "DOCS →" pair was the smallest thing in the card. */
+.v3-doc-links { gap: 16px; padding-top: 32px; }
+.v3-doc-links .feature-doc { gap: 10px; font-size: 14.5px; }
+.v3-doc-links .feature-doc-kicker {
+  padding: 5px 11px;
+  border-radius: var(--r-chip);
+  font-size: 13px;
+  letter-spacing: .1em;
+}
+.v3-doc-links .feature-doc-arrow { font-size: 16px; }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Loop – shot alignment, terminal code, list and docs link
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* The card was top-aligned, so a short copy column left the shot hanging from
+   the ceiling. Both halves now share a centre line. */
+.v3-loop-shot { align-self: center; }
+
+/* `hugo server` is a command, so it wears a terminal plate rather than the
+   page's inline-code box. Fixed dark in both modes – a terminal that inverts
+   with the colour scheme stops reading as a terminal.
+   --v3-term-bg / --v3-term-ink are the knobs. */
+.v3-loop-detail code,
+.v3-loop-intro code {
+  padding: .16em .5em .2em;
+  border: 0;
+  border-radius: calc(var(--r-chip) * .25);
+  background: var(--v3-term-bg, #17181b);
+  color: var(--v3-term-ink, #f0efeb);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: .82em;
+  font-weight: 400;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+/* Bullets up another step. */
+.v3-loop-points li { padding: 14px 0 14px 24px; font-size: 20px; }
+.v3-loop-points li::before { top: calc(14px + .5em); width: 7px; height: 7px; }
+
+/* The docs link showed only the kicker and an arrow – the partial already
+   resolves the real page (or heading) title from the documentation itself, so
+   the label can never drift. Now it is visible. */
+.v3-doc-links .feature-doc-title { display: inline; color: var(--v3-ink); }
+.v3-doc-links .feature-doc { flex-wrap: wrap; }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Terminal commands – .term-cmd
+   The class is set by layouts/_markup/render-codespan.html, which only tags
+   codespans that actually start with a command. Paths, keys and shortcuts stay
+   ordinary <code>. Styled here without a route scope, so the same command looks
+   the same on the home page, in the docs and in the release notes.
+   Knobs: --v3-term-bg, --v3-term-ink, --v3-term-blink.
+   ───────────────────────────────────────────────────────────────────────────── */
+code.term-cmd {
+  padding: .16em .5em .2em;
+  border: 0;
+  border-radius: calc(var(--r-chip) * .25);
+  background: var(--v3-term-bg, #17181b);
+  color: var(--v3-term-ink, #f0efeb);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: .82em;
+  font-weight: 400;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+/* The caret. steps(1) so it snaps on and off the way a real one does, rather
+   than fading – a fading cursor reads as a loading state. */
+code.term-cmd::after {
+  content: "";
+  display: inline-block;
+  width: .52em;
+  height: 1.02em;
+  margin-left: .4em;
+  vertical-align: -.16em;
+  background: currentColor;
+  animation: v3-term-blink var(--v3-term-blink, 1.06s) steps(1, end) infinite;
+}
+@keyframes v3-term-blink {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  code.term-cmd::after { animation: none; opacity: .55; }
+}
+
+/* The loop's own code rule is superseded by .term-cmd – anything left here is
+   a path or a key, and those keep the page's quiet inline treatment. */
+.v3-loop-detail code:not(.term-cmd),
+.v3-loop-intro code:not(.term-cmd),
+.v3-loop-points code:not(.term-cmd) {
+  padding: .12em .38em;
+  border-radius: calc(var(--r-chip) * .18);
+  background: color-mix(in srgb, var(--v3-ink) 8%, transparent);
+  color: var(--v3-ink);
+  font-size: .84em;
+  white-space: nowrap;
+}
+
+/* Bullets – tighter set, more weight. */
+.v3-loop-points li { padding: 9px 0 9px 24px; font-weight: 450; }
+.v3-loop-points li::before { top: calc(9px + .5em); }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Nav controls – hover, and the feature cards' lack of one
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Both quiet controls now answer the pointer the same way the Download button
+   does: the plate fills, nothing moves. */
+.v3-theme-toggle:hover,
+.v3-theme-toggle:focus-visible,
+.v3-nav-release:hover,
+.v3-nav-release:focus-visible {
+  border-color: color-mix(in srgb, var(--v3-ink) 34%, transparent);
+  background: color-mix(in srgb, var(--v3-ink) 14%, transparent);
+  color: var(--v3-ink);
+}
+.v3-nav-release { transition: border-color .2s ease, background-color .2s ease, color .2s ease; }
+
+/* Feature cards are not interactive – they were only tinting on hover because
+   the tint stood in for the border that used to separate them. */
+.v3-feature-card,
+.v3-feature-card:hover { background: var(--v3-surface); transition: none; }
+.v3-feature-card:hover h3 { color: var(--v3-ink); }
+.v3-feature-card:hover p,
+.v3-feature-card:hover .feature-glyph,
+.v3-feature-card:hover .v3-feature-num { color: var(--v3-muted); }

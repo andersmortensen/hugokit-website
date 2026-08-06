@@ -1,22 +1,22 @@
 ---
 title: "Hugo builds fine, but the page is blank"
-description: "Hugo says \"found no layout file\" and writes an empty page. Nothing is broken – Hugo just has no template for that kind of page, and the fix is one file with the right name."
+description: "Hugo built the page but had no layout to render it with. Add the template that matches the page kind."
 group: "Fixing common Hugo problems"
 weight: 60
 tags: [templates, troubleshooting]
 ---
 
-The build succeeds. The server starts. And the page in the browser is empty – no error, no content, nothing to click. Somewhere in the log:
+The build succeeds, but the generated page is empty and the log contains:
 
 ```
 WARN  found no layout file for "html" for kind "home"
 ```
 
-The exact wording moves around between Hugo versions, but the shape is always the same: *kind* and *no layout file*.
+The content is still there; Hugo just had nowhere to put it. The wording varies by version, but the warning identifies a page *kind* with no layout file.
 
 ## Why
 
-Hugo doesn't render Markdown to HTML on its own. It hands each page to a template, and the template decides what the HTML looks like. If it can't find a template for a page, it doesn't guess and it doesn't fail – it writes the page with nothing in it and moves on.
+Hugo passes each content page to a layout template. When no layout matches the page kind and output format, Hugo can generate an empty page and continue the build.
 
 *Kind* is the word Hugo uses for what sort of page it is. There are five you'll meet:
 
@@ -28,7 +28,7 @@ Hugo doesn't render Markdown to HTML on its own. It hands each page to a templat
 | `taxonomy` | the list of all tags |
 | `term` | one tag's page |
 
-Each kind is looked up separately. That's why a site can render its blog posts perfectly and still hand you a blank front page: `page` had a template, `home` didn't.
+Layout lookup runs separately for each kind. A site can therefore render regular pages while the home page remains empty.
 
 ## The fix
 
@@ -42,7 +42,7 @@ layouts/
 └── section.html   ← kind: section
 ```
 
-`baseof.html` holds the `<html>`, the `<head>` and whatever wraps every page, with a hole in the middle:
+`baseof.html` defines the shared document structure and a block for page-specific content:
 
 ```go-html-template
 <!doctype html>
@@ -73,11 +73,11 @@ And each kind fills the hole. `layouts/page.html`:
 {{ end }}
 ```
 
-That's the whole mechanism. A template per kind, one shell around them.
+Each page kind needs a matching layout, which can extend the shared base template.
 
 ## If you're using a theme
 
-Then the theme has these templates already, and a blank page usually means Hugo isn't finding the theme at all:
+When a theme should provide the layouts, verify that Hugo can load it:
 
 - Is `theme = "your-theme"` in the config, spelled exactly like the folder in `themes/`?
 - Is `themes/your-theme/` actually there, with files in it? A theme added as a Git submodule is an empty folder until the submodule is fetched.
@@ -101,4 +101,4 @@ Because you named the taxonomies, and `tag` and `category` weren't on the list. 
   category = "categories"
 ```
 
-> HugoKit's preflight reads this warning out of the build log and offers to write the missing templates for you – it checks which kinds have no template, and generates them as `{{ define "main" }}` blocks if your `baseof.html` exists, or as standalone pages if it doesn't. The taxonomy trap is a separate check: HugoKit notices when `[taxonomies]` is defined without `tag` and `category` and offers to add them back. Both fixes are shown as a diff before anything is written. See [Preflight](/docs/preflight/).
+> **In HugoKit:** Preflight reports missing layouts and can propose templates in an approved diff.

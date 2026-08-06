@@ -1,14 +1,14 @@
 ---
 title: "Hugo without the terminal"
-description: "A command-by-command map from the Hugo CLI to HugoKit – what each button actually runs, what it does that no command does, and the parts where the terminal is still the honest answer."
+description: "See which everyday Hugo commands have a control in HugoKit, and which jobs still belong in the terminal."
 group: "Start"
 weight: 20
 tags: [basics]
 ---
 
-Hugo is a command-line tool, and using it means knowing a handful of commands, a handful of flags, and which of them you need right now. That's a small amount of knowledge, and it's fine – until it isn't. Until you write once a month and have to relearn it every time. Until the flag you need is one you've never used. Until something goes wrong and the error is about Go template internals.
+Hugo's everyday jobs are controlled through commands and flags. HugoKit puts the common ones in a Mac app, while leaving the less common work in the terminal.
 
-HugoKit runs the same Hugo binary you already have. Same commands, same files, same output – with the flags on buttons instead of in your memory. This page is the map.
+HugoKit runs the installed Hugo binary against the existing project files. The table below maps each control to its command.
 
 ## The map
 
@@ -30,26 +30,24 @@ HugoKit runs the same Hugo binary you already have. Same commands, same files, s
 
 ## What isn't in the table
 
-Some of what HugoKit does has no command behind it, because Hugo doesn't do it:
+Some HugoKit features combine Hugo output with checks performed by the app:
 
-**Preflight.** Before it publishes anything, HugoKit builds the site and then reads the result – the config, the `baseURL`, the assets that ended up in `public/`, your templates, the JavaScript in `static/`. It's the class of mistake that builds cleanly and breaks in production: a `baseURL` still pointing at localhost, a stylesheet referenced with an absolute path that 404s under a repository subpath, a key in `hugo.toml` that slid under `[params]` and stopped being read. Most of what it finds, it offers to fix, and every fix arrives as a diff you approve. See [Preflight](/docs/preflight/).
+**Preflight** builds the site and checks its configuration, `baseURL`, generated assets, templates and static JavaScript. Suggested fixes are shown as diffs and require approval. See [Preflight](/docs/preflight/).
 
-**Site health.** A score out of 100, and the list behind it: broken internal links, images with no alt text, images heavy enough to matter, config keys that have been dead for years, pages missing a title. See [Site health](/docs/site-health/).
+**Site Health** reports a score and findings for internal links, alt text, image size, deprecated configuration and missing front matter. See [Site health](/docs/site-health/).
 
-**Template preview.** Render one layout file, on its own, against real content (`⇧⌘T`) – without hunting for a page that happens to use it. See [Themes and template preview](/docs/themes-and-template-preview/).
+**Template Preview** renders a selected layout against a matching content page (`⇧⌘T`). See [Themes and template preview](/docs/themes-and-template-preview/).
 
-## Where the terminal is still the right answer
+## Tasks that still use the terminal
 
-HugoKit is not a shell, and pretending otherwise would waste your time:
-
-- **Git beyond publishing.** Branches, merges, history, anything that isn't *commit this build and push it*.
-- **Anything scripted.** CI, cron, a build server – that's the CLI's job and it's good at it.
-- **Hugo commands with no button.** `hugo list drafts`, `hugo config`, `hugo env`. Diagnostic one-liners; open a terminal, run one, close it.
+- **Git workflows:** branches, merges, history and repository maintenance.
+- **Automation:** CI, scheduled builds and server-side scripts.
+- **Other Hugo commands:** commands such as `hugo list drafts`, `hugo config` and `hugo env`.
 
 ## It doesn't own your files
 
-Worth saying plainly, because most tools in this space don't work this way: HugoKit adds nothing to your project. No lock file, no manifest, no config of its own, no proprietary content model. It reads a Hugo site and runs Hugo against it.
+HugoKit does not add a lock file, app configuration or proprietary content model to the project. It reads the existing Hugo site and runs Hugo against it.
 
-Which means it sits beside whatever else you use. Write in Obsidian or iA Writer, edit templates in your editor of choice, let an AI agent rewrite half the layouts – HugoKit is watching the same folder, and the preview reloads on save. Delete the app and your site is exactly what it was: a folder of Markdown, a config file, and Hugo.
+Edit content and templates in any tool that works with the project folder. HugoKit watches those files and the preview reloads after a save. Removing the app does not change the project format.
 
-> New here? [Getting started](/docs/getting-started/) is the ten-minute version: install, add a site, start the server.
+> See [Getting started](/docs/getting-started/) for installation, adding a site and starting the server.

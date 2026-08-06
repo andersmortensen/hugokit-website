@@ -1,0 +1,7 @@
+{{- with resources.Get "js/v3-home.js" -}}
+  {{- if hugo.IsProduction -}}
+    {{- with . | minify | fingerprint -}}<script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>{{- end -}}
+  {{- else -}}
+    <script src="{{ .RelPermalink }}?v={{ now.UnixNano }}"></script>
+  {{- end -}}
+{{- end -}}

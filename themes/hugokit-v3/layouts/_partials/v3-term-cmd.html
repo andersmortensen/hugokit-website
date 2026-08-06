@@ -1,0 +1,50 @@
+{{- /* Terminal commands – tags inline codespans that are actually commands.
+
+      Hugo has no render hook for inline code. Its markup hooks are blockquote,
+      codeblock, heading, image, link, passthrough and table; render-codeblock
+      covers fenced blocks only, so an inline `hugo server` cannot be reached
+      from a template. The classification therefore happens here, once, on every
+      route – home, docs and release notes share it.
+
+      Most inline code on this site is not a command: paths (public, .git), keys
+      (draft: true), shortcuts (⌘K), filenames (llms.txt). The prefix list is
+      deliberately literal so what gets the terminal plate is readable at a
+      glance and easy to extend.
+
+      Code inside <pre> is skipped: fenced blocks are already whole terminal
+      transcripts and carry their own styling.
+
+      Rollback: remove the partial call in baseof.html. Every codespan falls
+      back to the page's quiet inline treatment. */ -}}
+<script>
+  (function () {
+    var PREFIXES = ['hugo ', 'git ', 'npm ', 'npx ', 'brew ', 'sudo ', 'cd ', 'ls ', 'curl ', 'ssh ', '$ '];
+    var EXACT = ['hugo'];
+
+    function isCommand(text) {
+      if (EXACT.indexOf(text) !== -1) return true;
+      for (var i = 0; i < PREFIXES.length; i++) {
+        if (text.lastIndexOf(PREFIXES[i], 0) === 0) return true;
+      }
+      return false;
+    }
+
+    function tag(root) {
+      var nodes = (root || document).querySelectorAll('code:not(.term-cmd)');
+      for (var i = 0; i < nodes.length; i++) {
+        var el = nodes[i];
+        if (el.closest('pre')) continue;
+        if (isCommand(el.textContent.trim())) el.classList.add('term-cmd');
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function () { tag(); });
+    } else {
+      tag();
+    }
+
+    // The changelog hub swaps release notes in without a page load.
+    document.addEventListener('hk:content-swapped', function (e) { tag(e.target); });
+  })();
+</script>

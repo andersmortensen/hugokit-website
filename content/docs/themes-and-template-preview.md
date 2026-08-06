@@ -1,12 +1,12 @@
 ---
 title: "Themes and template preview"
-description: "See a site's installed themes, scaffold a blank one to build on, and render any layout file live with Template Preview (⇧⌘T)."
+description: "See the themes already in a site, create a blank one and preview layouts while you work."
 group: "Working in the app"
 weight: 20
 tags: [templates]
 ---
 
-Hugo's layouts are the part you can't see until the page renders. HugoKit's **Themes** page lists what's installed, and **Template Preview** renders any single layout file next to its source – without you guessing which URL exercises it.
+**Themes** lists installed themes. **Template Preview** renders a selected layout beside its source using a matching content page.
 
 ## Installed themes
 
@@ -37,13 +37,13 @@ HugoKit scans two places and shows them as one tree:
 - your site's own `layouts/`
 - the `layouts/` folder of each theme in `themes/`
 
-Where both define the same file, **the project's version wins** – the same override rule Hugo itself uses. Theme files that aren't overridden are listed with their theme in brackets, so you always know which file you're looking at.
+When the project and theme define the same layout, the project's file takes precedence. Theme files are labelled with their theme name.
 
 Templates are grouped by folder – `_default`, `partials`, `shortcodes`, `_markup` and the rest.
 
 ### Preview with
 
-A layout file isn't a page: `single.html` renders *some* post, `list.html` renders *some* section. So the panel picks a page for you – a real page from your content that the selected template actually renders – and shows which one under **Preview with**. Partials, shortcodes and `baseof.html` fall back to the home page, since they only exist inside another template.
+**Preview with** shows the content page selected for the layout. Partials, shortcodes and `baseof.html` use the home page because they render only within another template.
 
 The preview is live: save the file in your editor, and it reloads like any other page on the dev server.
 

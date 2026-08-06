@@ -1,45 +1,45 @@
 ---
 title: "A desktop app for Hugo"
-description: "Hugo is a command-line tool with no GUI of its own. HugoKit is a native Mac app that puts a window around it – run, preview, check and publish, no terminal. How a desktop app differs from a Hugo CMS, and who each one suits."
+description: "A closer look at running Hugo from a native Mac app, and where that differs from using a browser-based CMS."
 group: "Start"
 weight: 30
 tags: [basics]
 ---
 
-Hugo is a command-line tool. There's no official app, no window, no buttons – you drive it from a terminal. So it's a reasonable thing to go looking for: a GUI, a desktop app, a Mac app, something with an interface. This page is the honest answer to that search.
+Hugo is a command-line tool and has no official desktop interface. If you like its file-based setup but would rather not keep a terminal open, desktop apps and browser-based CMS tools offer two different ways forward.
 
 ## HugoKit is a native Mac app for Hugo
 
-HugoKit runs the same Hugo binary you already have and puts a window around it. Start the server, preview your pages, check the site and publish it – from one place, with the flags on buttons instead of in your memory. It's free, it's native SwiftUI (no Electron), and it needs no account.
+HugoKit runs the installed Hugo binary from a native SwiftUI app. It controls the server, site checks and publishing, and requires no account.
 
-What it isn't is a new way to build sites. Your project stays a plain Hugo site – the same content files, the same config, the same output. It reads a Hugo site and runs Hugo against it, and adds nothing of its own to the folder. Delete the app and your site is exactly what it was.
+HugoKit does not introduce a new project format. It reads the existing content, configuration and templates and does not add app-specific files to the site folder.
 
 ## What's in the window
 
-- **All your sites** in one sidebar – add them one at a time, or point HugoKit at a folder and it finds them itself.
-- **The server on a button** – drafts, future and expired content as toggles, with a live log next to it.
-- **Preflight before every publish** – it builds the site, then reads the result, and catches the mistakes that build cleanly and break in production.
-- **Site health** – a score out of 100 with the issues behind it: broken links, images with no alt text, config keys Hugo deprecated years ago.
-- **Template preview** – render one layout file on its own against real content.
-- **Config editor** – a form for the fields you change, a raw tab for the rest, and a diff before anything is written to disk.
-- **Publish** to GitHub Pages or your own server over FTP/SFTP, with `⌘P`.
-- **Hugo, managed** – it finds your Hugo install, and installs it for you if there isn't one.
+- **Sites:** add individual projects or scan a parent folder.
+- **Server:** start or stop Hugo, change content flags and read the build log.
+- **Preflight:** build the site and check configuration, assets, templates and deployment paths.
+- **Site Health:** scan for broken links, missing alt text, deprecated configuration and other issues.
+- **Template Preview:** render a layout against a matching content page.
+- **Configuration:** edit structured fields or raw text and review the diff before saving.
+- **Publish:** send the site to GitHub Pages, FTP or SFTP.
+- **Hugo installation:** use an existing binary or install Hugo Extended during setup.
 
 ## A GUI or a CMS? They're not the same thing
 
-People searching for a "Hugo GUI" and a "Hugo CMS" often want two different things:
+A desktop Hugo app and a Hugo CMS have different roles:
 
-- A **desktop app** like HugoKit runs on your Mac, drives Hugo directly, and keeps your files local. It's for the person who runs the site – build, check and publish from your own machine.
-- A **CMS** – Decap or Pages CMS in the browser, or desktop ones like Hokus and Quiqr – is mostly about editing content, often through a form, often for someone who isn't the developer.
+- A **desktop app** runs Hugo on the local machine and manages development and publishing tasks around the existing project files.
+- A **CMS**, such as Decap, Pages CMS, Hokus or Quiqr, provides an editing interface for content authors.
 
-HugoKit is the first kind. It runs, checks and publishes, and leaves the writing to whatever editor you already use – human or AI agent – working in the same folder. If what you need is a content form for a non-technical editor, a CMS is the honest answer, not HugoKit.
+HugoKit is a desktop app rather than a CMS. Content editing remains in the project's files and external editor. Choose a CMS when editors need browser-based forms or remote access.
 
-## Mac only – the honest part
+## Platform support
 
-HugoKit is a native Mac app and runs on macOS 26 (Tahoe) or later. There's no Windows or Linux version. If you're not on a Mac, **Hokus** and **Quiqr** are cross-platform desktop options worth a look.
+HugoKit requires macOS 26 (Tahoe) or later. There is no Windows or Linux version. **Hokus** and **Quiqr** are cross-platform desktop alternatives.
 
-## Try it
+## Download
 
-HugoKit is free – no license, no subscription, no account. [Download it](/#download), point it at a Hugo site you already have, and you've got a window around the Hugo you already use.
+HugoKit is free to use and requires no account. [Download it](/#download) and add an existing Hugo site.
 
-> New to Hugo itself? [Getting started](/docs/getting-started/) is the ten-minute version, and [Hugo without the terminal](/docs/hugo-without-the-terminal/) maps every Hugo command to its button in the app.
+> See [Getting started](/docs/getting-started/) for setup and [Hugo without the terminal](/docs/hugo-without-the-terminal/) for a command-to-control reference.

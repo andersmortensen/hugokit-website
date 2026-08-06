@@ -3,7 +3,7 @@ languageCode = 'en'
 title = 'HugoKit'
 timeZone = 'Europe/Copenhagen'
 # Sitets layouts/assets bor i temaet — roden ejer kun content, config og static.
-theme = 'hugokit'
+theme = ['hugokit-v3', 'hugokit']
 # 'section' er aktiv igen: /changelog/ er en rigtig Hugo-sektion (Sparkle-kontrakten).
 # RSS er aktivt (fjernet fra disableKinds 2026-07-16): docs og changelog får
 # /docs/index.xml og /changelog/index.xml via Hugos indbyggede template, og
@@ -16,6 +16,7 @@ disableKinds = ['taxonomy', 'term']
 # ingen dato der kan drive fra virkeligheden. Rollback: slet denne linje.
 enableGitInfo = true
 copyright = '2026'
+ignoreLogs = ['warning-goldmark-raw-html']
 
 [frontmatter]
   # Faldkæde for .Lastmod: git-commit-datoen først, så en eksplicit lastmod i
@@ -73,7 +74,7 @@ copyright = '2026'
 [params]
   # Tagline — bruges i forsidens <title> (SERP) sammen med sitets navn.
   tagline = 'a Mac app for Hugo'
-  description = 'A Mac app for Hugo: run the server, preview your pages and publish your site from one window. Free, native, no terminal – built by one person for his own sites.'
+  description = 'HugoKit is a Mac app for running Hugo sites locally and publishing them to GitHub Pages, FTP or SFTP.'
   # Appens aktuelle version — bruges i JSON-LD (softwareVersion); bump ved release.
   version = '0.3.0'
   # Download-fakta under knappen. Skal matche den DMG appcast'en peger på —

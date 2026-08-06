@@ -1,0 +1,209 @@
+.v3-hero {
+  position: relative;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background-color: var(--surround);
+}
+.v3-hero > .v3-quartz { display: none; }
+.v3-hero > .v3-shell { position: relative; z-index: 1; }
+.v3-hero > .v3-shell,
+.v3-facts > .v3-shell {
+  box-sizing: border-box;
+  width: min(calc(100% - 48px), var(--page-max));
+  padding-inline: 0;
+  border: 0;
+}
+.v3-hero-topline {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 30px 0 0;
+}
+.v3-hero-kicker { max-width: 650px; color: var(--faint); }
+.v3-release-stamp {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 9px;
+  border: 1px solid var(--line-strong);
+  border-radius: 5px;
+  color: var(--ink);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+  transition: background-color .2s ease, border-color .2s ease;
+}
+.v3-release-stamp:hover { border-color: var(--gold); background-color: var(--gold-wash); }
+.v3-release-stamp::before { width: 6px; height: 6px; content: ""; background: var(--gold); }
+.v3-hero-main {
+  display: block;
+  padding: clamp(52px, 6vw, 82px) 0 clamp(34px, 3.5vw, 48px);
+}
+.v3-hero-heading {
+  max-width: 10.8ch;
+  margin: 0;
+  font-size: clamp(78px, 9.4vw, 136px);
+  font-weight: 600;
+  letter-spacing: -.064em;
+  line-height: .86;
+  text-wrap: balance;
+}
+/* Word-mask reveal: each word sits in a clipping span and slides up into
+   place once the motion layer is ready. Static (and identical) without JS. */
+.v3-w {
+  display: inline-block;
+  overflow: clip;
+  vertical-align: bottom;
+  padding: .06em .025em .18em;
+  margin: -.06em -.025em -.18em;
+}
+.v3-wi { display: inline-block; }
+.v3-wi-dim { color: var(--faint); font-weight: 460; }
+.v3-hero-meta {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  align-items: flex-end;
+  gap: 24px;
+  margin-top: clamp(30px, 3vw, 42px);
+}
+.v3-hero-lead {
+  max-width: 31ch;
+  grid-column: 1 / span 5;
+  margin: 0;
+  font-size: clamp(20px, 1.55vw, 23px);
+  letter-spacing: -.024em;
+  line-height: 1.38;
+  text-wrap: pretty;
+}
+.v3-hero-cta { grid-column: 7 / -1; text-align: right; }
+.v3-hero-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; }
+.v3-hero-fine {
+  margin: 20px 0 0;
+  color: var(--faint);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: .015em;
+  line-height: 1.65;
+}
+.v3-text-action {
+  display: inline-block;
+  margin: 0;
+  padding: 0 0 1px;
+  border: 0;
+  border-bottom: 1px solid var(--line-strong);
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  cursor: pointer;
+  transition: border-color .2s ease, color .2s ease;
+}
+.v3-text-action:hover { border-color: var(--blue); color: var(--blue); }
+.v3-hero-window-wrap {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, .11);
+  border-radius: 18px 18px 0 0;
+  background: #16171a;
+  box-shadow: 0 24px 64px rgba(30, 26, 21, .12);
+}
+.v3-hero-product-rail {
+  min-height: 48px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  gap: 18px;
+  padding: 0 17px;
+  color: rgba(255, 255, 255, .58);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 9.5px;
+  letter-spacing: .08em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.v3-hero-product-name { display: inline-flex; align-items: center; gap: 9px; color: rgba(255, 255, 255, .88); }
+.v3-hero-product-name > span { width: 7px; height: 7px; background: var(--green); }
+.v3-hero-product-flow { display: flex; align-items: center; justify-content: center; gap: 8px; }
+.v3-hero-product-flow i { width: 3px; height: 3px; background: rgba(255, 255, 255, .28); }
+.v3-hero-product-mode { text-align: right; }
+.v3-hero-window {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 0;
+  background: #111215;
+  box-shadow: none;
+}
+.v3-hero-window .shot,
+.v3-hero-window video,
+.v3-hero-window img { width: 100%; height: 100%; object-fit: cover; object-position: center top; border-radius: 0; box-shadow: none; }
+
+/* Scroll-driven settle: the window drifts the last few pixels into place as
+   it enters. CSS-only, skipped when unsupported or motion is reduced. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .v3-hero-window {
+      animation: v3-window-settle linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 46%;
+    }
+  }
+}
+@keyframes v3-window-settle {
+  from { transform: translateY(26px) scale(.988); }
+  to { transform: none; }
+}
+
+.v3-facts {
+  padding: 0 0 clamp(52px, 5.5vw, 78px);
+  border: 0;
+  border-radius: 0;
+  background-color: var(--surround);
+}
+.v3-facts-row {
+  counter-reset: v3-fact;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, .11);
+  border-top-color: rgba(255, 255, 255, .18);
+  border-radius: 0 0 18px 18px;
+  background-color: #16171a;
+  color: #f6f4ef;
+}
+.v3-fact {
+  counter-increment: v3-fact;
+  position: relative;
+  min-height: 138px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 24px 28px 27px;
+}
+.v3-fact + .v3-fact { border-left: 1px solid rgba(255, 255, 255, .11); }
+.v3-fact::before {
+  position: absolute;
+  top: 25px;
+  left: 28px;
+  content: "0" counter(v3-fact);
+  color: rgba(255, 255, 255, .38);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 9.5px;
+  letter-spacing: .1em;
+}
+.v3-fact-dot { position: absolute; top: 27px; right: 28px; width: 7px; height: 7px; background: var(--pink); }
+.v3-fact:nth-child(2) .v3-fact-dot { background: var(--blue); }
+.v3-fact:nth-child(3) .v3-fact-dot { background: var(--green); }
+.v3-fact strong { display: block; color: #f6f4ef; font-size: clamp(32px, 3vw, 46px); font-weight: 540; letter-spacing: -.048em; line-height: .98; }
+.v3-fact span:last-child { max-width: 27ch; margin-top: 9px; color: rgba(255, 255, 255, .55); font-size: 13px; letter-spacing: -.005em; line-height: 1.4; }

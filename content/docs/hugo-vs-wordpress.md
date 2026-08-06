@@ -1,14 +1,14 @@
 ---
 title: "Hugo vs WordPress"
-description: "Two very different ways to build a website – a static site generator and a database-driven CMS. Where each one wins, who should choose which, and where HugoKit fits if you like Hugo but not the terminal."
+description: "A practical comparison of Hugo's file-based workflow and WordPress's browser-based CMS."
 group: "Start"
 weight: 40
 tags: [basics]
 ---
 
-Hugo and WordPress both build websites, and roughly there the similarity ends. WordPress is a database-driven CMS: content lives in a database, you edit it in a browser admin, and a server assembles each page when someone visits. Hugo is a static site generator: content lives in Markdown files, you build the whole site into plain HTML once, and a host just serves those files.
+WordPress and Hugo start from different assumptions. WordPress is a database-driven CMS with browser editing; Hugo builds Markdown content and templates into static files.
 
-Neither is "better". They make different trade-offs, and the right pick depends on who runs the site and what it needs to do.
+The useful question is not which one is better, but which workflow fits the people maintaining the site and what the site needs to do.
 
 ## Where WordPress wins
 
@@ -21,18 +21,18 @@ If several non-technical people update the site, or it leans on dynamic function
 
 ## Where Hugo wins
 
-- **Speed.** No database, no server-side rendering – just static files, loading about as fast as the web allows.
-- **Security and upkeep.** No database to breach, no plugins to patch, no login to brute-force. A static site has almost no attack surface and needs almost no maintenance.
-- **Free, simple hosting.** Plain HTML runs anywhere, and GitHub Pages hosts it for free.
-- **Your content is just files.** Markdown in a folder, under version control – easy to back up, move, diff, or hand to an AI agent. Nothing locked in a database or an app format.
+- **Speed.** Hugo serves prebuilt static files without a database or server-side page rendering.
+- **Security and upkeep.** A static site has no application database or public admin login, though its build tools and dependencies still require maintenance.
+- **Hosting.** Static files can be hosted on GitHub Pages or another static web host.
+- **File-based content.** Markdown files can be versioned, copied, moved and edited with standard tools.
 
-If you're comfortable editing text files and want a fast, cheap, low-maintenance site you fully own, Hugo fits.
+Hugo fits sites maintained as files and built before deployment.
 
-## The catch with Hugo – and where HugoKit comes in
+## Where HugoKit fits
 
-Hugo's weak spot is exactly WordPress's home turf: starting and running it. Hugo is a command-line tool. Installing it, running the server, remembering the flags, publishing – it all happens in a terminal, and for a lot of people that's the wall they hit.
+Hugo is controlled from the command line. Local development and publishing therefore require its commands, flags and a separate deployment workflow.
 
-That's the gap HugoKit closes. It runs the same Hugo, with the server, the checks and publishing on buttons instead of commands – so you get Hugo's speed, ownership and low upkeep without living in a terminal. See [Hugo without the terminal](/docs/hugo-without-the-terminal/).
+HugoKit provides a Mac interface for the local server, site checks and publishing. It does not change Hugo's project or output format. See [Hugo without the terminal](/docs/hugo-without-the-terminal/).
 
 What HugoKit doesn't do is turn Hugo into WordPress. There's no browser admin for a non-technical editor, and content is still Markdown files rather than a database. It makes Hugo easier to run; it doesn't change what Hugo is.
 
@@ -45,6 +45,6 @@ What HugoKit doesn't do is turn Hugo into WordPress. There's no browser admin fo
 | You want to edit from any browser, anywhere | You want speed, low cost and near-zero maintenance |
 | You rely on a particular plugin ecosystem | You want to own your content as plain files |
 
-A blog, a documentation site, a portfolio, a small business site with no live functionality – that's Hugo's sweet spot, and where a lot of people land when they leave WordPress upkeep behind. If that's you, and the terminal is what held you back, [HugoKit](/#download) is built for exactly that.
+Hugo is commonly used for blogs, documentation, portfolios and brochure sites that do not require server-side features. HugoKit can manage its local server and publishing workflow on a Mac.
 
-> Not sure Hugo is right yet? [Getting started](/docs/getting-started/) is the ten-minute version – add a site, start the server, and see what it feels like.
+> See [Getting started](/docs/getting-started/) for the HugoKit setup process.

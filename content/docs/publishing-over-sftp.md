@@ -1,12 +1,12 @@
 ---
 title: "Publishing over SFTP"
-description: "Upload a Hugo site to your own web host from HugoKit over SFTP or plain FTP – what to fill in, how the smart sync works, and why passwords need sshpass."
+description: "Connect a regular web host over SFTP or FTP, verify the login and publish only what changed."
 group: "Publishing"
 weight: 20
 tags: [publishing, sftp]
 ---
 
-If you have a web host rather than a GitHub Pages site, HugoKit builds the site on your Mac and uploads it. It only sends the files that actually changed.
+If your site lives on a regular web host, HugoKit can build it locally and upload the generated files directly over SFTP or FTP.
 
 ## Before you start
 
@@ -20,7 +20,7 @@ Set your real `baseURL` in `hugo.toml` first. Unlike the GitHub Pages path, Hugo
 
 | Field | Notes |
 |---|---|
-| Protocol | **SFTP** (port 22) by default – encrypted, uses SSH keys or a password. **FTP (legacy)** (port 21) is unencrypted; only use it if your host can't do SFTP. |
+| Protocol | **SFTP** uses port 22 and supports SSH keys or passwords. **FTP (legacy)** uses port 21 and is unencrypted; use it only when the host does not support SFTP. |
 | Host | Just the server: `ssh.example.com` or an IP. HugoKit strips anything else you paste – a `sftp://` scheme, a `user@` prefix, a `:port`, a trailing path – and refuses to continue if what's left isn't a host name. |
 | Port | Follows the protocol unless you change it. |
 | Username | Your host's SFTP user. |
@@ -28,7 +28,7 @@ Set your real `baseURL` in `hugo.toml` first. Unlike the GitHub Pages path, Hugo
 | Remote path | Where the site is served from, e.g. `/public_html`. |
 | Public URL | Optional. Gives the target an **Open Live Site** action. |
 
-The **Verify** step is a real login: HugoKit connects to the server and logs out again. You can't finish the wizard until it succeeds – better to find out here than halfway through a deploy.
+**Verify** connects to the server and logs out. The wizard cannot be completed until the login succeeds.
 
 ## Password authentication needs sshpass
 
@@ -40,22 +40,22 @@ brew install sshpass
 
 Without it, you'll get: *Password auth requires sshpass – install with: brew install sshpass. Or leave password blank to use SSH key auth.*
 
-The alternative is an SSH key. Leave the password field empty, and HugoKit uses the key in `~/.ssh` – no extra tool, and no password anywhere.
+Leave the password empty to use an SSH key from `~/.ssh`; this does not require `sshpass`.
 
 ## Publish
 
 `⌘P`. HugoKit:
 
 1. Builds the site with the flags set for it – `hugo --gc --minify` by default. See [Build flags](/docs/build-flags/).
-2. Works out what actually changed. A target-keyed manifest under `.hugokit/` holds a SHA-256 hash of every file it uploaded last time. The manifest is tied to the protocol, canonical host, port, username and remote root as well, so changing any part of the endpoint starts a safe full upload rather than using another target's state. Files with a new hash are uploaded, files you deleted locally are deleted on the server, and everything else is left alone:
+2. Compares the build with a target-specific manifest under `.hugokit/`. The manifest stores each file's SHA-256 hash and the target's protocol, host, port, username and remote root. Changed files are uploaded, removed files are deleted and unchanged files are skipped:
    ```
    Smart sync: 3 to upload, 1 to delete, 214 unchanged
    ```
 3. Uploads, then updates the manifest. If the server refuses one delete, that path stays pending and appears in the next diff. If the file is already gone, HugoKit treats the delete as successful.
 
-Dotfiles come along: `.htaccess`, `.well-known`, `.nojekyll` all upload. Only Finder junk (`.DS_Store`, `._*`) is filtered out.
+Dotfiles such as `.htaccess`, `.well-known` and `.nojekyll` are uploaded. Finder metadata (`.DS_Store`, `._*`) is excluded.
 
-Nothing changed since last time? `No files to sync – site is up to date`.
+When no files changed, the log reports `No files to sync – site is up to date`.
 
 If the target has a **Public URL**, HugoKit probes it after the upload – the dot on the target row tells you whether the live site actually responds, and **Check if Live** in the target's **⋯** menu runs the same probe on demand.
 

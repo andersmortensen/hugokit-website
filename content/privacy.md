@@ -1,19 +1,19 @@
 ---
 title: "Privacy"
-description: "What the app sends, what the website measures, and how to turn the measuring off."
+description: "What HugoKit sends over the network, what hugokit.com measures and how to change analytics consent."
 date: 2026-07-14
 # Kvitteringen øverst på siden: svaret før prosaen. Hver linje er et faktum der
 # også står i teksten – ikke et løfte der kun står her.
 glance:
   - glyph: "person"
-    text: "No account, ever"
+    text: "No account"
   - glyph: "content"
     text: "No analytics in the app"
   - glyph: "config"
-    text: "Cookies off until you accept"
+    text: "Website analytics require consent"
 ---
 
-HugoKit is a Mac app that runs on your machine. This page says exactly what leaves it, and what this website records when you visit.
+This page lists the network requests made by HugoKit and the analytics data recorded by hugokit.com.
 
 ## The app
 
@@ -47,7 +47,7 @@ Your choice is stored in your browser under the key `hk-consent`. It is not a co
 
 You can change your mind at any time: the **Cookies** link in the footer reopens the banner.
 
-No ads, no tracking pixels, no data sold or handed to anyone beyond Google Analytics itself.
+The site has no advertising or tracking pixels. Analytics data is sent only to Google Analytics.
 
 ## Questions
 

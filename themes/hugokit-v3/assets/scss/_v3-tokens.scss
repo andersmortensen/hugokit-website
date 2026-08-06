@@ -1,0 +1,50 @@
+html.v3-page {
+  color-scheme: light dark;
+  --surround: light-dark(#f1f0eb, #0c0d0f);
+  --page: light-dark(#faf9f5, #131416);
+  --surface: light-dark(#fffefa, #18191c);
+  --surface-raised: light-dark(#e8e7e1, #202125);
+  --surface-soft: light-dark(#e2e1db, #26272b);
+  --ink: light-dark(#17181c, #f4f2ed);
+  --muted: light-dark(#666763, #aaa7a0);
+  --faint: light-dark(#92918b, #74736e);
+  --line: light-dark(rgba(23, 24, 28, .1), rgba(244, 242, 237, .11));
+  --line-strong: light-dark(rgba(23, 24, 28, .22), rgba(244, 242, 237, .22));
+  --feature-bg: light-dark(#17181b, #eceae5);
+  --feature-card: light-dark(#1e1f22, #f8f6f1);
+  --feature-ink: light-dark(#f5f3ee, #191a1e);
+  --feature-muted: light-dark(#a6a49e, #686963);
+  --feature-line: light-dark(rgba(245, 243, 238, .12), rgba(25, 26, 30, .14));
+  --mark-top: light-dark(#f1f0eb, #f2f0f4);
+  --pink: #ff4088;
+  --blue: #0594cb;
+  --green: #33ba91;
+  --gold: #ebb951;
+  --pink-wash: light-dark(#f5d8e1, #4a2533);
+  --blue-wash: light-dark(#d4e7ea, #173b46);
+  --green-wash: light-dark(#d8e7dc, #1d3e34);
+  --gold-wash: light-dark(#ede1c5, #483b20);
+  /* Quartz – the app's default window base (Quartet) carried onto the site:
+     the four Hugo colours as barely-there corner washes. Tuned per mode. */
+  --q-pink: transparent;
+  --q-blue: transparent;
+  --q-green: transparent;
+  --q-gold: transparent;
+  --nav-bg: #242429;
+  --nav-ink: #f5f0e7;
+  --nav-muted: #b8b4ae;
+  --nav-line: rgba(255, 255, 255, .12);
+  --window-ring: light-dark(rgba(255, 255, 255, .38), rgba(255, 255, 255, .09));
+  --shadow-window: light-dark(0 24px 64px rgba(30, 26, 21, .12), 0 28px 72px rgba(0, 0, 0, .42));
+  --shadow-panel: light-dark(0 10px 28px rgba(30, 26, 21, .07), 0 14px 38px rgba(0, 0, 0, .2));
+  --radius-window: 16px;
+  --radius-section: 30px;
+  --page-max: 1360px;
+  --section-max: 1720px;
+  --ease-out: cubic-bezier(.22, 1, .36, 1);
+  --ease-expo: cubic-bezier(.19, 1, .22, 1);
+  --toolbar-color: var(--surround);
+  background-color: var(--surround);
+  scroll-padding-top: 84px;
+  scroll-behavior: smooth;
+}

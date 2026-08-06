@@ -1,12 +1,12 @@
 ---
 title: "Hugo won't build: front matter errors"
-description: "\"mapping values are not allowed\", \"cannot unmarshal into time.Time\", \"did not find expected key\" – three YAML errors from one Markdown file, and what each one is really telling you."
+description: "A front matter error looks cryptic, but the usual causes are colons, dates, quotes, indentation or delimiters."
 group: "Fixing common Hugo problems"
 weight: 90
 tags: [content, troubleshooting]
 ---
 
-You add a post, Hugo refuses to build, and the error is about YAML rather than about anything you recognise as your problem. Here are the three you'll actually meet.
+YAML errors are terse, but the underlying fixes are usually small. These are the messages you are most likely to meet.
 
 ## "mapping values are not allowed in this context"
 
@@ -31,7 +31,7 @@ title: "Hugo: a static site generator"
 ---
 ```
 
-A colon inside a value always needs quotes. So does a value starting with `#`, `-`, `*`, `&`, `{`, `[` or `@`. When in doubt, quote it – there's no cost to quoting a string that didn't need it.
+Quote strings containing a colon or beginning with YAML indicator characters such as `#`, `-`, `*`, `&`, `{`, `[` or `@`.
 
 ## "cannot unmarshal ... into Go value of type time.Time"
 
@@ -46,7 +46,7 @@ date: 2024-03-05
 date: 2024-03-05T09:30:00+01:00   # with a time and a zone
 ```
 
-`5/3/24` is ambiguous in a way no parser can resolve – 5 March or 3 May depends on which country wrote it. Hugo won't guess, and neither should you.
+`5/3/24` is ambiguous between date conventions. Use an ISO 8601 date.
 
 The same applies to `publishDate`, `expiryDate` and `lastmod`.
 
@@ -56,7 +56,7 @@ The same applies to `publishDate`, `expiryDate` and `lastmod`.
 Error: yaml: line 4: did not find expected key
 ```
 
-Usually an unclosed quote. The parser runs past the end of the value, swallows the next line as part of the string, and then trips on the line after that – which is why the reported line number is often one or two below the actual mistake:
+An unclosed quote can make YAML parse later lines as part of the same value, so the reported line may appear below the actual error:
 
 ```yaml
 ---
@@ -66,7 +66,7 @@ draft: false                 ← error reported here
 ---
 ```
 
-The other cause is indentation. YAML uses spaces, never tabs, and a tab character you can't see will produce exactly this error.
+Invalid indentation can produce the same error. Use spaces rather than tab characters in YAML.
 
 ## The delimiters matter too
 
@@ -90,7 +90,7 @@ title = "TOML"
 }
 ```
 
-An opening `---` with a closing `+++` is not front matter. It's a page whose content begins with a stray dash.
+Opening and closing delimiters must use the same front matter format.
 
 ## Find the file, not just the error
 
@@ -100,6 +100,6 @@ Hugo names the file it choked on. If it doesn't, or if you want to know how many
 hugo --logLevel debug
 ```
 
-Build failures stop at the first bad file, so fixing one and rebuilding is a loop you may run a few times.
+Hugo may stop at the first invalid file. Rebuild after each fix to find any remaining errors.
 
-> HugoKit fixes all three: it quotes values with a stray colon, converts a date to ISO 8601, and closes an unclosed quote – but only when the value clearly *started* with a quote, so that `title: Don't Panic` is left alone. It also scans your whole `content/` folder for pages missing a `title`, a `date` or a `draft` flag and reports them in [Site health](/docs/site-health/), which is how you find the other twelve files before Hugo does.
+> **In HugoKit:** Preflight reports recognised front matter parse errors, and Site Health reports missing `title`, `date` and `draft` fields.

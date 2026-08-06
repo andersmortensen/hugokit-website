@@ -37,9 +37,16 @@
         var vis = key === 'all' || key === gid;
         setVis(groups[gid], vis);
       });
-      Array.prototype.forEach.call(bar.children, function (b) {
-        b.setAttribute('aria-selected', b.dataset.key === key ? 'true' : 'false');
+      var active = null;
+      Array.prototype.forEach.call(bar.querySelectorAll('.rf-btn'), function (b) {
+        var selected = b.dataset.key === key;
+        b.setAttribute('aria-selected', selected ? 'true' : 'false');
+        if (selected) active = b;
       });
+      if (active) {
+        indicator.style.width = active.offsetWidth + 'px';
+        indicator.style.transform = 'translateX(' + active.offsetLeft + 'px)';
+      }
     };
 
     // Build the bar.
@@ -47,6 +54,14 @@
     bar.className = 'release-filter';
     bar.setAttribute('role', 'tablist');
     bar.setAttribute('aria-label', 'Filter changes by category');
+    var label = document.createElement('span');
+    label.className = 'release-filter-label';
+    label.textContent = 'Filter changes';
+    bar.appendChild(label);
+    var indicator = document.createElement('span');
+    indicator.className = 'release-filter-indicator';
+    indicator.setAttribute('aria-hidden', 'true');
+    bar.appendChild(indicator);
     // Filter clicks crossfade instead of cutting: the sections swap display
     // inside a view transition (260ms root crossfade from _motion.scss). The
     // initial apply('all') below stays direct – nothing visible changes there.

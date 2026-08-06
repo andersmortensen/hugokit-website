@@ -1,12 +1,12 @@
 ---
 title: "Raw HTML omitted: your HTML disappears from Markdown"
-description: "Hugo replaces the HTML in your Markdown with an <!-- raw HTML omitted --> comment. Here's why Goldmark does that, and the two right ways to get your markup back."
+description: "Your HTML is still in the Markdown file; Goldmark has chosen not to render it."
 group: "Fixing common Hugo problems"
 weight: 40
 tags: [content, troubleshooting]
 ---
 
-You put a `<div>`, an `<iframe>` or a `<details>` block in a Markdown file. The page builds fine – and the HTML is gone. In the output there's a comment where your markup should be:
+A Markdown file contains a `<div>`, `<iframe>` or `<details>` block, but the generated page replaces it with:
 
 ```html
 <!-- raw HTML omitted -->
@@ -21,9 +21,9 @@ WARN  Raw HTML omitted while rendering "/content/about.md";
 
 ## Why
 
-Hugo renders Markdown with Goldmark, and Goldmark refuses to pass raw HTML through by default. It's a safety default: if your Markdown comes from somewhere you don't control, letting it emit arbitrary HTML – `<script>` included – is a hole. Hugo would rather drop it than trust it.
+Your markup is still in the source. Hugo uses Goldmark for Markdown, and by default Goldmark does not pass raw HTML through because the source could contain arbitrary markup or scripts.
 
-Your own content isn't untrusted input, so for most sites this default is just in the way.
+For content maintained inside the project, choose whether raw HTML should be allowed or replaced by a shortcode.
 
 ## Fix 1: allow it
 
@@ -32,7 +32,7 @@ Your own content isn't untrusted input, so for most sites this default is just i
   unsafe = true
 ```
 
-Your HTML now renders exactly as written. "Unsafe" is Goldmark's word, not a warning about your site: it means *HTML is passed through unchecked*. If you write all the content yourself, that's precisely what you want. If you render Markdown submitted by other people, it's exactly what you don't.
+`unsafe = true` passes raw HTML through without filtering. Use it only when the Markdown source is trusted.
 
 ## Fix 2: use a shortcode instead
 
@@ -50,7 +50,7 @@ and in the content file:
 {{</* video 123456 */>}}
 ```
 
-Templates are always allowed to emit HTML – only *Markdown* is restricted. This keeps the safety net and gives you markup you can reuse.
+Hugo templates can emit HTML even when raw HTML is disabled in Markdown. A shortcode also makes the markup reusable.
 
 ## What silencing the warning does not do
 
@@ -60,6 +60,6 @@ Hugo helpfully suggests this in the log:
 ignoreLogs = ['warning-goldmark-raw-html']
 ```
 
-That hides the warning. It does **not** render your HTML – the `<!-- raw HTML omitted -->` comment stays exactly where it was. It's the right setting when you've decided the omission is fine and you're tired of the noise; it's the wrong setting when you actually wanted the markup.
+`ignoreLogs` hides the warning but does **not** render the omitted HTML. Use it only when the omission is intentional.
 
-> HugoKit's preflight surfaces this warning before you publish, and its auto-fix adds the `ignoreLogs` line – the *quiet* option. If the HTML is meant to render, set `unsafe = true` in the config editor instead. See [Preflight](/docs/preflight/).
+> **In HugoKit:** Preflight reports the warning. Use the configuration editor to enable raw HTML when the markup should render.

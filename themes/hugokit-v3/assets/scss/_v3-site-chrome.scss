@@ -1,0 +1,805 @@
+/*
+   HugoKit site chrome – docs and release notes use the same editorial register
+   as the home page. The Sparkle in-app release view remains deliberately out of
+   scope: it keeps its compact, app-owned presentation.
+*/
+
+html:not(.in-app):has(main:is(.docs-hub, .doc, .release-hub, .release, .page, .notfound)) {
+  --v3-site-page: light-dark(#f0f0ec, #0d0e0f);
+  --v3-site-surface: light-dark(#f8f8f5, #121315);
+  --v3-site-ink: light-dark(#111213, #f0efeb);
+  --v3-site-muted: light-dark(#656762, #969893);
+  --v3-site-line: light-dark(rgba(17, 18, 19, .18), rgba(240, 239, 235, .16));
+  --v3-site-line-soft: light-dark(rgba(17, 18, 19, .09), rgba(240, 239, 235, .08));
+  --v3-site-accent: #0594cb;
+
+  --canvas: var(--v3-site-page);
+  --plate: var(--v3-site-surface);
+  --stage: var(--v3-site-surface);
+  --ink: var(--v3-site-ink);
+  --muted: var(--v3-site-muted);
+  --faint: color-mix(in srgb, var(--v3-site-ink) 48%, transparent);
+  --faint-text: color-mix(in srgb, var(--v3-site-ink) 64%, transparent);
+  --line: var(--v3-site-line-soft);
+  --line-strong: var(--v3-site-line);
+  --display: "Manrope", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  --sans: "Manrope", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  --toolbar-color: var(--v3-site-page);
+  --bezel-ground: var(--v3-site-page);
+  --bezel-hi: var(--v3-site-page);
+  --bezel-edge: transparent;
+  background: var(--v3-site-page);
+  scroll-padding-top: 86px;
+}
+
+body:not(.v3-home):has(main:is(.docs-hub, .doc, .release-hub, .release, .page, .notfound)) {
+  padding-top: 86px;
+  background: var(--v3-site-page);
+  color: var(--v3-site-ink);
+  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  font-size: 24px;
+  font-weight: 300;
+  letter-spacing: -.008em;
+  line-height: 1.5;
+}
+
+/* The legacy canvas frame supplied body padding and flex layout for the old
+   bezel. v3-navigation is a normal shared rail, so remove that frame geometry
+   before it can offset non-home navigation. */
+body.v3-site { display: block; padding: 0; }
+
+body:has(main:is(.docs-hub, .doc, .release-hub, .release, .page, .notfound)) .bezel-frame { display: none; }
+
+/* One floating rail is shared with the home page. */
+body:has(main:is(.docs-hub, .doc, .release-hub, .release, .page, .notfound)) .bezel-bar {
+  top: 14px;
+  left: 50%;
+  right: auto;
+  width: calc(100% - var(--v3-gutter, 24px) * 2);
+  height: 58px;
+  padding: 0 14px;
+  transform: translateX(-50%);
+  border: 1px solid color-mix(in srgb, var(--v3-site-line) 82%, transparent);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--v3-site-page) 76%, transparent);
+  box-shadow: 0 10px 24px rgba(12, 13, 14, .08), inset 0 1px 0 rgba(255, 255, 255, .08);
+  -webkit-backdrop-filter: blur(20px) saturate(1.22);
+  backdrop-filter: blur(20px) saturate(1.22);
+}
+body:has(main:is(.docs-hub, .doc, .release-hub, .release, .page, .notfound)) .bezel-bar .lockup { gap: 10px; }
+body:has(main:is(.docs-hub, .doc, .release-hub, .release, .page, .notfound)) .bezel-bar .lockup-name {
+  font-family: "Manrope", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -.035em;
+}
+body:has(main:is(.docs-hub, .doc, .release-hub, .release, .page, .notfound)) .bezel-bar .nav-links-mid {
+  position: absolute;
+  left: 50%;
+  gap: clamp(18px, 2.4vw, 38px);
+  transform: translateX(-50%);
+}
+body:has(main:is(.docs-hub, .doc, .release-hub, .release, .page, .notfound)) .bezel-bar .nav-link {
+  padding: 18px 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--v3-site-ink);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
+body:has(main:is(.docs-hub, .doc, .release-hub, .release)) .bezel-bar .nav-link:hover,
+body:has(main:is(.docs-hub, .doc, .release-hub, .release)) .bezel-bar .nav-link[aria-current] { color: var(--v3-site-ink); }
+body:has(main:is(.docs-hub, .doc, .release-hub, .release)) .bezel-bar .nav-link[aria-current],
+body:has(main:is(.docs-hub, .doc, .release-hub, .release)) .bezel-bar .nav-version[aria-current] { box-shadow: inset 0 -1px 0 var(--v3-site-ink); }
+body:has(main:is(.docs-hub, .doc, .release-hub, .release)) .canvas {
+  max-width: none;
+  min-height: 0;
+  padding: 0 var(--v3-gutter, 24px);
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+body:has(main:is(.docs-hub, .doc, .release-hub, .release)) .canvas::after { display: none; }
+
+/* Docs index */
+body:has(main.docs-hub) .docs-hub,
+body:has(main.release-hub) .release-hub {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 0 clamp(96px, 12vw, 176px);
+  background: transparent;
+}
+body:has(main.docs-hub) .docs-hub .hub-head,
+body:has(main.release-hub) .release-hub .hub-head {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 0 clamp(20px, 2vw, 38px);
+  padding: clamp(74px, 9vw, 128px) 0 clamp(54px, 7vw, 88px);
+  border: 0;
+  border-bottom: 1px solid var(--v3-site-line);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+body:has(main.docs-hub) .hub-title,
+body:has(main.release-hub) .hub-title {
+  grid-column: 1 / span 3;
+  max-width: 6ch;
+  margin: 9px 0 0;
+  color: var(--v3-site-muted);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .13em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+body:has(main.docs-hub) .docs-hub .section-body,
+body:has(main.release-hub) .hub-sub {
+  grid-column: 4 / -1;
+  max-width: 29ch;
+  margin: 0;
+  color: var(--v3-site-ink);
+  font-size: clamp(32px, 3.6vw, 54px);
+  font-weight: 500;
+  letter-spacing: -.065em;
+  line-height: 1.01;
+}
+body:has(main.release-hub) .hub-sub { max-width: 20ch; }
+body:has(main.release-hub) .hub-rss {
+  display: inline-block;
+  padding-bottom: .1em;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  color: var(--v3-site-accent);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: .21em;
+  font-weight: 500;
+  letter-spacing: .05em;
+  text-decoration: none;
+  vertical-align: .32em;
+}
+body:has(main.docs-hub) .docs-hub-search {
+  grid-column: 4 / -1;
+  width: 100%;
+  max-width: 740px;
+  margin-top: clamp(34px, 5vw, 64px);
+}
+body:has(main.docs-hub) .docs-hub-search .doc-search-input,
+body:has(main.doc) .doc-search-input {
+  min-height: 48px;
+  border-color: var(--v3-site-line);
+  border-radius: 0;
+  background: transparent;
+  color: var(--v3-site-ink);
+  font-family: "Manrope", sans-serif;
+}
+
+body:has(main.docs-hub) .doc-groups { display: block; margin: 0; }
+body:has(main.docs-hub) .doc-group {
+  position: static;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 0 clamp(20px, 2vw, 38px);
+  padding: clamp(52px, 7vw, 104px) 0;
+  border: 0;
+  border-bottom: 1px solid var(--v3-site-line);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none !important;
+}
+body:has(main.docs-hub) .doc-group + .doc-group { margin: 0; }
+body:has(main.docs-hub) .doc-group-head { grid-column: 1 / span 3; padding: 9px 0 0; }
+body:has(main.docs-hub) .section-label,
+body:has(main.doc) .section-label {
+  color: var(--v3-site-muted);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .13em;
+}
+body:has(main.docs-hub) .doc-group-count { display: block; margin-top: 9px; color: var(--v3-site-muted); }
+body:has(main.docs-hub) .doc-index { grid-column: 4 / -1; }
+body:has(main.docs-hub) .doc-index li + li { border-top-color: var(--v3-site-line-soft); }
+body:has(main.docs-hub) .doc-index a { padding: 20px 0; border-radius: 0; color: var(--v3-site-ink); }
+body:has(main.docs-hub) .doc-index a:hover { background: transparent; color: var(--v3-site-accent); }
+body:has(main.docs-hub) .doc-index-title { font-size: clamp(22px, 2.1vw, 32px); font-weight: 500; letter-spacing: -.05em; }
+body:has(main.docs-hub) .doc-index-desc { color: var(--v3-site-muted); font-size: 15px; }
+body:has(main.docs-hub) .doc-index-date { color: var(--v3-site-muted); }
+
+/* Docs article */
+body:has(main.doc) .doc {
+  width: 100%;
+  margin: 0 auto;
+  padding: clamp(86px, 11vw, 148px) 0;
+}
+body:has(main.doc) .doc-layout {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 0 clamp(20px, 2vw, 38px);
+}
+body:has(main.doc) .doc-nav {
+  grid-column: 1 / span 3;
+  position: sticky;
+  top: 94px;
+  align-self: start;
+  max-height: calc(100vh - 120px);
+  padding: 14px;
+  overflow: auto;
+  border: 1px solid var(--v3-site-line);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--v3-site-ink) 4%, transparent);
+  box-shadow: none;
+}
+body:has(main.doc) .doc-nav .doc-search { margin: 0 0 18px; }
+body:has(main.doc) .doc-nav .doc-search-input { min-height: 42px; padding: 0 12px; border-radius: 9px; background: color-mix(in srgb, var(--v3-site-ink) 5%, transparent); font-size: 13px; }
+body:has(main.doc) .doc-nav-home { display: block; margin: 0 0 18px; padding: 0 9px; color: var(--v3-site-ink); font-size: 12px; font-weight: 700; letter-spacing: -.01em; }
+body:has(main.doc) .doc-nav-group + .doc-nav-group { margin-top: 24px; }
+body:has(main.doc) .doc-nav-group .section-label { margin: 0 0 7px; padding: 0 9px; color: var(--v3-site-muted); font-size: 9px; letter-spacing: .13em; }
+body:has(main.doc) .doc-nav ul { gap: 2px; }
+body:has(main.doc) .doc-nav a { margin-left: 0; padding: 7px 9px; border-radius: 8px; color: var(--v3-site-muted); font-size: 13px; line-height: 1.35; }
+body:has(main.doc) .doc-nav a:hover,
+body:has(main.doc) .doc-nav a[aria-current="page"] { color: var(--v3-site-ink); background: color-mix(in srgb, var(--v3-site-ink) 9%, transparent); }
+body:has(main.doc) .doc-nav a[aria-current="page"] { font-weight: 700; }
+body:has(main.doc) .doc-nav-frag { position: relative; margin: 3px 0 6px 12px; padding-left: 13px; border-color: color-mix(in srgb, var(--v3-site-line) 80%, transparent); }
+body:has(main.doc) .doc-nav-frag li { position: relative; }
+body:has(main.doc) .doc-nav-frag li::before { position: absolute; top: 13px; left: -15px; width: 4px; height: 4px; border-radius: 50%; background: var(--v3-site-muted); content: ""; }
+body:has(main.doc) .doc-nav-frag a { padding: 5px 8px; font-size: 12px; }
+body:has(main.doc) .doc-article {
+  grid-column: 4 / -1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-top: 1px solid var(--v3-site-line);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+body:has(main.doc) .doc-head { padding: 26px 0 clamp(48px, 6vw, 78px); border-bottom-color: var(--v3-site-line); }
+body:has(main.doc) .doc-title {
+  max-width: 11ch;
+  margin-top: 22px;
+  color: var(--v3-site-ink);
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(38px, 4.2vw, 64px);
+  font-weight: 500;
+  letter-spacing: -.065em;
+  line-height: .93;
+}
+body:has(main.doc) .doc-lead { max-width: 38ch; color: var(--v3-site-ink); font-size: clamp(19px, 1.7vw, 25px); letter-spacing: -.03em; line-height: 1.36; }
+body:has(main.doc) .doc-updated,
+body:has(main.doc) .doc-body { color: var(--v3-site-muted); }
+body:has(main.doc) .doc-body { max-width: 62ch; }
+body:has(main.doc) .doc-body,
+body:has(main.doc) .doc-body p,
+body:has(main.doc) .doc-body li { font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif; font-size: 24px; font-weight: 300; letter-spacing: -.008em; line-height: 1.5; }
+body:has(main.doc) .doc-body h2,
+body:has(main.doc) .doc-body h3 { color: var(--v3-site-ink); font-family: "Manrope", sans-serif; font-weight: 500; letter-spacing: -.05em; }
+body:has(main.doc) .doc-body h2 { font-size: clamp(30px, 3.2vw, 46px); }
+body:has(main.doc) .doc-body blockquote { border-radius: 0; background: transparent; color: var(--v3-site-ink); }
+body:has(main.doc) .doc-body code { border-color: var(--v3-site-line); background: transparent; color: var(--v3-site-ink); }
+body:has(main.doc) .doc-foot { border-top-color: var(--v3-site-line); }
+
+/* Changelog index */
+body:has(main.release-hub) #release-list-view { margin-top: 0; border: 0; }
+body:has(main.release-hub) .release-list { display: block; margin: 0; }
+body:has(main.release-hub) .release-list li {
+  position: static;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 0 clamp(20px, 2vw, 38px);
+  padding: clamp(42px, 6vw, 82px) 0;
+  border: 0;
+  border-bottom: 1px solid var(--v3-site-line);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none !important;
+}
+body:has(main.release-hub) .release-list li + li { margin: 0; }
+body:has(main.release-hub) .rl-head { grid-column: 1 / span 5; }
+body:has(main.release-hub) .release-list a {
+  color: var(--v3-site-ink);
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(38px, 4.7vw, 74px);
+  font-weight: 500;
+  letter-spacing: -.065em;
+  line-height: .94;
+}
+body:has(main.release-hub) .release-list a:hover { color: var(--v3-site-accent); }
+body:has(main.release-hub) .release-list time { display: block; margin-top: 15px; color: var(--v3-site-muted); }
+body:has(main.release-hub) .rl-desc { grid-column: 7 / -1; max-width: 42ch; margin: 7px 0 0; color: var(--v3-site-muted); font-size: clamp(17px, 1.5vw, 21px); letter-spacing: -.02em; line-height: 1.45; }
+body:has(main.release-hub) .release-detail { max-width: none; padding: clamp(46px, 6vw, 88px) 0; border: 0; border-bottom: 1px solid var(--v3-site-line); border-radius: 0; background: transparent; box-shadow: none; }
+
+/* Direct release page */
+html:not(.in-app) body:has(main.release) .release {
+  width: 100%;
+  margin: 0 auto;
+  padding: clamp(86px, 11vw, 148px) 0;
+}
+html:not(.in-app) body:has(main.release) .release-wrap {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 0 clamp(20px, 2vw, 38px);
+}
+html:not(.in-app) body:has(main.release) .release-rail {
+  grid-column: 1 / span 4;
+  position: sticky;
+  top: 94px;
+  align-self: start;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+html:not(.in-app) body:has(main.release) .release-head { padding: 0; }
+html:not(.in-app) body:has(main.release) .release-version {
+  margin-top: 32px;
+  color: var(--v3-site-ink);
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(46px, 5.4vw, 84px);
+  font-weight: 500;
+  letter-spacing: -.065em;
+  line-height: .93;
+}
+html:not(.in-app) body:has(main.release) .release-date { color: var(--v3-site-muted); }
+html:not(.in-app) body:has(main.release) .release-note { max-width: 38ch; margin-top: 46px; padding: 22px 0 0; border: 0; border-top: 1px solid var(--v3-site-line); border-radius: 0; background: transparent; }
+html:not(.in-app) body:has(main.release) .release-note-head { margin-bottom: 15px; }
+html:not(.in-app) body:has(main.release) .release-note-label { color: var(--v3-site-ink); }
+html:not(.in-app) body:has(main.release) .release-note-body { color: var(--v3-site-muted); font-size: 16px; line-height: 1.58; }
+html:not(.in-app) body:has(main.release) .release-main {
+  grid-column: 5 / -1;
+  padding: 28px 0 0;
+  border: 0;
+  border-top: 1px solid var(--v3-site-line);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+/* A release note is a list of changes, not running prose – so it takes the
+   full column instead of stopping at a 62ch reading measure. */
+html:not(.in-app) body:has(main.release) .release-body { max-width: none; color: var(--v3-site-muted); }
+html:not(.in-app) body:has(main.release) .release-body > p:first-of-type { color: var(--v3-site-ink); font-family: "Manrope", sans-serif; font-size: clamp(24px, 2.7vw, 38px); font-weight: 500; line-height: 1.25; letter-spacing: -.055em; }
+/* display: flex, not inline-flex – block-level so the first category badge
+   drops onto its own line under the bar instead of sitting beside it. */
+html:not(.in-app) body:has(main.release) .release-filter { position: relative; width: max-content; display: flex; gap: 0; align-items: center; margin: 26px 0 30px; padding: 4px; overflow: hidden; border: 1px solid var(--v3-site-line); border-radius: 10px; background: color-mix(in srgb, var(--v3-site-ink) 6%, transparent); }
+html:not(.in-app) body:has(main.release) .release-filter-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+html:not(.in-app) body:has(main.release) .release-filter-indicator { position: absolute; top: 4px; bottom: 4px; left: 4px; z-index: 0; border-radius: 7px; background: var(--v3-site-ink); transition: transform 220ms cubic-bezier(.2, .8, .2, 1), width 220ms cubic-bezier(.2, .8, .2, 1); }
+html:not(.in-app) body:has(main.release) .rf-btn { position: relative; z-index: 1; min-height: 34px; padding: 0 13px; border: 0; border-radius: 7px; background: transparent; color: var(--v3-site-muted); font-family: "Manrope", sans-serif; font-size: 12px; font-weight: 700; letter-spacing: -.01em; transition: color 180ms ease; }
+html:not(.in-app) body:has(main.release) .rf-btn[aria-selected="true"] { background: transparent; color: var(--v3-site-page); box-shadow: none; }
+
+/* Page footer */
+body:has(main:is(.docs-hub, .doc, .release-hub, .release)) .site-footer { padding: 0 var(--v3-gutter, 24px) 34px; background: var(--v3-site-page); }
+body:has(main:is(.docs-hub, .doc, .release-hub, .release)) .footer-inner { max-width: none; padding: 30px 0 0; border-top: 1px solid var(--v3-site-line); }
+body:has(main:is(.docs-hub, .doc, .release-hub, .release)) .colophon-word { font-family: "Manrope", sans-serif; }
+
+@media (max-width: 900px) {
+  body:not(.v3-home):has(main:is(.docs-hub, .doc, .release-hub, .release)) { padding-top: 62px; }
+  body:has(main:is(.docs-hub, .doc, .release-hub, .release)) .bezel-bar { height: 62px; padding-inline: 20px; }
+  body:has(main:is(.docs-hub, .doc, .release-hub, .release)) .canvas { padding-inline: 20px; }
+  body:has(main.docs-hub) .docs-hub .hub-head,
+  body:has(main.release-hub) .release-hub .hub-head { grid-template-columns: 1fr; gap: 28px; }
+  body:has(main.docs-hub) .hub-title,
+  body:has(main.release-hub) .hub-title,
+  body:has(main.docs-hub) .docs-hub .section-body,
+  body:has(main.release-hub) .hub-sub,
+  body:has(main.docs-hub) .docs-hub-search { grid-column: 1; }
+  body:has(main.docs-hub) .doc-group { grid-template-columns: 1fr; gap: 24px; }
+  body:has(main.docs-hub) .doc-group-head,
+  body:has(main.docs-hub) .doc-index { grid-column: 1; }
+  body:has(main.doc) .doc-layout,
+  html:not(.in-app) body:has(main.release) .release-wrap { grid-template-columns: 1fr; gap: 42px; }
+  body:has(main.doc) .doc-nav,
+  body:has(main.doc) .doc-article,
+  html:not(.in-app) body:has(main.release) .release-rail,
+  html:not(.in-app) body:has(main.release) .release-main { grid-column: 1; }
+  body:has(main.doc) .doc-nav,
+  html:not(.in-app) body:has(main.release) .release-rail { position: static; }
+  body:has(main.release-hub) .release-list li { grid-template-columns: 1fr; gap: 20px; }
+  body:has(main.release-hub) .rl-head,
+  body:has(main.release-hub) .rl-desc { grid-column: 1; }
+  body:has(main.release-hub) .rl-desc { margin: 0; }
+}
+
+@media (max-width: 640px) {
+  body:has(main:is(.docs-hub, .doc, .release-hub, .release)) .bezel-bar .nav-links-mid,
+  body:has(main:is(.docs-hub, .doc, .release-hub, .release)) .bezel-bar .nav-version,
+  body:has(main:is(.docs-hub, .doc, .release-hub, .release)) .bezel-bar .btn { display: none; }
+  body:has(main.docs-hub) .docs-hub .hub-head,
+  body:has(main.release-hub) .release-hub .hub-head { padding: 84px 0 72px; }
+  body:has(main.docs-hub) .docs-hub .section-body,
+  body:has(main.release-hub) .hub-sub { font-size: clamp(44px, 13vw, 64px); }
+  body:has(main.docs-hub) .doc-group { padding: 52px 0; }
+  body:has(main.docs-hub) .doc-index a { padding: 17px 0; }
+  body:has(main.doc) .doc,
+  html:not(.in-app) body:has(main.release) .release { padding: 76px 0; }
+  body:has(main.doc) .doc-layout,
+  html:not(.in-app) body:has(main.release) .release-wrap { gap: 34px; }
+  body:has(main.doc) .doc-title { font-size: clamp(50px, 14vw, 72px); }
+  body:has(main.release-hub) .release-list li { padding: 38px 0; }
+  body:has(main.release-hub) .release-list a { font-size: clamp(40px, 13vw, 60px); }
+  body:has(main:is(.docs-hub, .doc, .release-hub, .release)) .site-footer { padding-inline: 20px; }
+}
+
+/* The non-home navbar uses the same grouped actions as the floating home rail. */
+body.v3-site .bezel-bar .nav-link { color: var(--v3-site-ink); font-size: 13px; font-weight: 700; }
+body.v3-site .bezel-bar .mode-toggle { order: 1; width: 38px; height: 38px; border: 1px solid var(--v3-site-line); border-radius: 8px; background: color-mix(in srgb, var(--v3-site-ink) 8%, transparent); color: var(--v3-site-ink); }
+body.v3-site .bezel-bar .mode-toggle:hover { border-color: color-mix(in srgb, var(--v3-site-ink) 28%, transparent); background: color-mix(in srgb, var(--v3-site-ink) 13%, transparent); }
+body.v3-site .bezel-bar .nav-download-group { order: 2; display: inline-flex; align-items: stretch; }
+body.v3-site .bezel-bar .nav-version { order: 0; display: inline-flex; align-items: center; min-height: 38px; padding: 0 10px; border: 1px solid var(--v3-site-line); border-right: 0; border-radius: 8px 0 0 8px; background: color-mix(in srgb, var(--v3-site-ink) 8%, transparent); color: var(--v3-site-muted); font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10px; font-weight: 500; letter-spacing: .08em; text-decoration: none; appearance: none; cursor: pointer; }
+body.v3-site .bezel-bar .btn { order: 0; min-height: 38px; padding: 0 0 0 12px; border-color: var(--v3-site-line); border-radius: 0 8px 8px 0; background: color-mix(in srgb, var(--v3-site-ink) 8%, transparent); color: var(--v3-site-ink); font-size: 11px; font-weight: 600; }
+body.v3-site .bezel-bar .nav-download-arrow { display: inline-grid; width: 32px; height: 38px; margin-left: 10px; border-left: 1px solid var(--v3-site-line); place-items: center; }
+
+/* Root pages and 404 use the same quiet, flat site system as docs and releases. */
+body.v3-site:has(main:is(.page, .notfound)) {
+  display: block;
+  min-height: 100svh;
+  padding: 86px 0 0;
+  background: var(--v3-site-page);
+  color: var(--v3-site-ink);
+  font-family: "Manrope", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+}
+body:has(main:is(.page, .notfound)) .bezel-bar {
+  top: 14px;
+  left: 50%;
+  right: auto;
+  width: calc(100% - var(--v3-gutter, 24px) * 2);
+  height: 58px;
+  padding: 0 14px;
+  transform: translateX(-50%);
+  border: 1px solid color-mix(in srgb, var(--v3-site-line) 82%, transparent);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--v3-site-page) 76%, transparent);
+  box-shadow: 0 10px 24px rgba(12, 13, 14, .08), inset 0 1px 0 rgba(255, 255, 255, .08);
+  -webkit-backdrop-filter: blur(20px) saturate(1.22);
+  backdrop-filter: blur(20px) saturate(1.22);
+}
+body:has(main:is(.page, .notfound)) .bezel-bar .lockup { gap: 10px; }
+body:has(main:is(.page, .notfound)) .bezel-bar .lockup-name { font-family: "Manrope", sans-serif; font-size: 15px; font-weight: 700; letter-spacing: -.035em; }
+body:has(main:is(.page, .notfound)) .bezel-bar .nav-links-mid { position: absolute; left: 50%; gap: clamp(18px, 2.4vw, 38px); transform: translateX(-50%); }
+body:has(main:is(.page, .notfound)) .bezel-bar .nav-link { padding: 18px 0; color: var(--v3-site-ink); font-size: 13px; font-weight: 700; letter-spacing: -.01em; }
+body:has(main:is(.page, .notfound)) .bezel-bar .nav-link:hover { color: var(--v3-site-ink); }
+body:has(main.page) .canvas {
+  max-width: none;
+  min-height: 0;
+  margin: 0;
+  padding: 0 var(--v3-gutter, 24px);
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+body:has(main.page) .canvas::after { display: none; }
+body:has(main.page) .page { width: 100%; margin: 0 auto; padding: clamp(72px, 9vw, 128px) 0 clamp(92px, 12vw, 168px); }
+body:has(main.page) .page-article { max-width: none; margin: 0; padding: 0; border: 0; border-radius: 0; background: transparent; }
+body:has(main.page) .page-head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0 clamp(20px, 2vw, 38px); padding: 0 0 clamp(42px, 6vw, 72px); border-bottom-color: var(--v3-site-line); }
+body:has(main.page) .page-head-copy { grid-column: 4 / -1; }
+body:has(main.page) .page-head .doc-updated { grid-column: 1 / span 3; grid-row: 1; align-self: start; padding-top: 11px; color: var(--v3-site-muted); }
+body:has(main.page) .page-eyebrow { margin-bottom: 20px; color: var(--v3-site-muted); font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10px; letter-spacing: .13em; }
+body:has(main.page) .page-title { color: var(--v3-site-ink); font-family: "Manrope", sans-serif; font-size: clamp(48px, 6.2vw, 84px); font-weight: 500; letter-spacing: -.065em; line-height: .94; }
+body:has(main.page) .page-lead { max-width: 38ch; color: var(--v3-site-muted); font-size: clamp(18px, 1.6vw, 24px); letter-spacing: -.03em; line-height: 1.4; }
+body:has(main.page) .page-glance { width: calc(75% - 28px); margin: 42px 0 0 auto; gap: 0; border-top: 1px solid var(--v3-site-line); border-bottom: 1px solid var(--v3-site-line); }
+body:has(main.page) .page-glance li { min-height: 82px; padding: 16px; border-top: 0; border-left: 1px solid var(--v3-site-line); color: var(--v3-site-ink); }
+body:has(main.page) .page-glance li:first-child { border-left: 0; }
+body:has(main.page) .page-glance-ic { border-radius: 0; background: transparent; box-shadow: none; color: var(--v3-site-muted); }
+body:has(main.page) .page-body { width: calc(75% - 28px); max-width: 760px; margin: clamp(56px, 8vw, 96px) 0 0 auto; color: var(--v3-site-muted); }
+body:has(main.page) .page-body h2 { color: var(--v3-site-ink); font-family: "Manrope", sans-serif; font-size: clamp(29px, 3vw, 42px); font-weight: 500; letter-spacing: -.05em; border-bottom-color: var(--v3-site-line); }
+body:has(main.page) .page-body .def-row { border-color: var(--v3-site-line); }
+body:has(main.page) .site-footer { padding: 0 var(--v3-gutter, 24px) 34px; background: var(--v3-site-page); }
+body:has(main.page) .footer-inner { max-width: none; padding: 30px 0 0; border-top: 1px solid var(--v3-site-line); }
+body:has(main.notfound) .notfound { width: 100%; min-height: calc(100vh - 86px); margin: 0 auto; display: grid; align-items: center; }
+body:has(main.notfound) .notfound-inner { width: 100%; padding: clamp(72px, 10vw, 140px) 0; text-align: left; }
+body:has(main.notfound) .notfound-mark { margin: 0 0 28px; }
+body:has(main.notfound) .notfound-heading { max-width: 9ch; color: var(--v3-site-ink); font-family: "Manrope", sans-serif; font-size: clamp(54px, 8vw, 112px); font-weight: 500; letter-spacing: -.07em; line-height: .92; }
+body:has(main.notfound) .notfound .section-body { margin: 22px 0 0; color: var(--v3-site-muted); }
+body:has(main.notfound) .notfound .centered-row { justify-content: flex-start; }
+
+@media (max-width: 900px) {
+  body.v3-site:has(main:is(.page, .notfound)) { padding-top: 72px; }
+  body:has(main:is(.page, .notfound)) .bezel-bar { top: 10px; width: calc(100% - 40px); height: 56px; padding-inline: 12px; }
+  body:has(main.page) .canvas { padding-inline: 20px; }
+  body:has(main.page) .page-head { grid-template-columns: 1fr; gap: 24px; }
+  body:has(main.page) .page-head-copy,
+  body:has(main.page) .page-head .doc-updated { grid-column: 1; grid-row: auto; padding: 0; }
+  body:has(main.page) .page-glance,
+  body:has(main.page) .page-body { width: 100%; max-width: none; }
+}
+
+@media (max-width: 640px) {
+  body:has(main:is(.page, .notfound)) .bezel-bar .nav-links-mid,
+  body:has(main:is(.page, .notfound)) .bezel-bar .nav-version,
+  body:has(main:is(.page, .notfound)) .bezel-bar .btn { display: none; }
+  body:has(main.page) .page-glance { grid-template-columns: 1fr; }
+  body:has(main.page) .page-glance li { border-top: 1px solid var(--v3-site-line); border-left: 0; }
+body:has(main.page) .page-glance li:first-child { border-top: 0; }
+}
+
+/* The old canvas frame supplied a body inset for the retired bezel. The shared
+   v3 rail lives in normal flow, so this reset keeps every route at home geometry. */
+body.v3-site:has(main:is(.docs-hub, .doc, .release-hub, .release, .page, .notfound)) {
+  display: block;
+  padding: 0 !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Reading scale – docs, changelog, release notes and root pages
+   Same pass as the home page: interface and body sizes come up, display type
+   stays where it is. .doc-body keeps its 62ch measure on purpose – it is running
+   prose at 24px, and a full-bleed line length there would be unreadable.
+   To revert: delete this block.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Hubs */
+body:has(main.docs-hub) .hub-title,
+body:has(main.release-hub) .hub-title { font-size: 12.5px; }
+body:has(main.docs-hub) .doc-index-desc { font-size: 17px; }
+body:has(main.docs-hub) .section-label,
+body:has(main.doc) .section-label { font-size: 11.5px; }
+
+/* Docs article and its rail */
+body:has(main.doc) .doc-nav .doc-search-input { font-size: 15px; }
+body:has(main.doc) .doc-nav-home { font-size: 14px; }
+body:has(main.doc) .doc-nav-group .section-label { font-size: 10.5px; }
+body:has(main.doc) .doc-nav a { font-size: 15px; }
+body:has(main.doc) .doc-nav-frag a { font-size: 13.5px; }
+body:has(main.doc) .doc-lead { font-size: clamp(21px, 1.9vw, 28px); }
+
+/* Changelog hub and release notes */
+body:has(main.release-hub) .rl-desc { font-size: clamp(19px, 1.7vw, 23px); }
+html:not(.in-app) body:has(main.release) .release-note-body { font-size: 18px; }
+html:not(.in-app) body:has(main.release) .release-body { font-size: 20px; }
+html:not(.in-app) body:has(main.release) .release-body h2 { font-size: 20px; }
+html:not(.in-app) body:has(main.release) .release-body h2#new,
+html:not(.in-app) body:has(main.release) .release-body h2#improved,
+html:not(.in-app) body:has(main.release) .release-body h2#fixed,
+html:not(.in-app) body:has(main.release) .release-body h2#removed { font-size: 13.5px; }
+html:not(.in-app) body:has(main.release) .release-body h2#notes { font-size: 14px; }
+html:not(.in-app) body:has(main.release) .rf-btn { font-size: 13.5px; }
+
+/* Root pages */
+body:has(main.page) .page-eyebrow { font-size: 11.5px; }
+body:has(main.page) .page-lead { font-size: clamp(20px, 1.8vw, 27px); }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Rule reduction – docs, changelog, release notes and root pages
+   Same pass as the home page: the hairlines that separated every group, row,
+   article head and glance cell come out, and the few places that genuinely need
+   an affordance (search field, inline code, the Fixed badge) switch from an
+   outline to a tinted plate. The category filter keeps its outline – it is a
+   control, like the nav.
+   To revert: delete this block.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Hubs */
+body:has(main.docs-hub) .docs-hub .hub-head,
+body:has(main.release-hub) .release-hub .hub-head { border-bottom: 0; }
+body:has(main.docs-hub) .doc-group { border-bottom: 0; }
+body:has(main.docs-hub) .doc-index li + li { border-top: 0; }
+
+/* Search fields read as a plate instead of an outlined box. */
+body:has(main.docs-hub) .docs-hub-search .doc-search-input,
+body:has(main.doc) .doc-search-input {
+  border: 0;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--v3-site-ink) 6%, transparent);
+}
+
+/* Docs article and rail */
+body:has(main.doc) .doc-nav { border: 0; }
+body:has(main.doc) .doc-nav-frag { border: 0; }
+body:has(main.doc) .doc-article { border-top: 0; }
+body:has(main.doc) .doc-head { border-bottom: 0; }
+body:has(main.doc) .doc-foot { border-top: 0; }
+body:has(main.doc) .doc-body code { border: 0; background: color-mix(in srgb, var(--v3-site-ink) 7%, transparent); }
+
+/* Changelog hub and release notes */
+body:has(main.release-hub) .release-list li { border-bottom: 0; }
+body:has(main.release-hub) .release-detail { border-bottom: 0; }
+html:not(.in-app) body:has(main.release) .release-note { border-top: 0; }
+html:not(.in-app) body:has(main.release) .release-main { border-top: 0; }
+/* Fixed was the one outlined badge in a row of filled ones. */
+html:not(.in-app) body:has(main.release) .release-body h2#fixed { border: 0; background: color-mix(in srgb, var(--v3-site-ink) 8%, transparent); }
+
+/* Root pages */
+body:has(main.page) .page-head { border-bottom: 0; }
+body:has(main.page) .page-glance { border-top: 0; border-bottom: 0; }
+body:has(main.page) .page-glance li { border-top: 0; border-left: 0; }
+body:has(main.page) .page-body h2 { border-bottom: 0; }
+body:has(main.page) .page-body .def-row { border: 0; }
+
+/* Footer */
+body:has(main:is(.docs-hub, .doc, .release-hub, .release)) .footer-inner { border-top: 0; }
+body:has(main.page) .footer-inner { border-top: 0; }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Display voice – docs, changelog, release notes and root pages
+   Same two decisions as the home page: one Manrope display face, and the
+   loosened tracking. These headings sat at −.065 and −.07em, tighter still than
+   the home page. To revert: delete this block.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* The two hub deks inherited DM Sans from the body – now Manrope like the rest. */
+body:has(main.docs-hub) .docs-hub .section-body,
+body:has(main.release-hub) .hub-sub { font-family: "Manrope", sans-serif; }
+
+/* ≥ ~40px */
+body:has(main.doc) .doc-title,
+body:has(main.release-hub) .release-list a,
+html:not(.in-app) body:has(main.release) .release-version,
+body:has(main.page) .page-title,
+body:has(main.notfound) .notfound-heading { letter-spacing: var(--v3-track-display, -.03em); }
+
+/* Mid sizes – the deks and prose headings. */
+body:has(main.docs-hub) .docs-hub .section-body,
+body:has(main.release-hub) .hub-sub,
+body:has(main.doc) .doc-body h2,
+body:has(main.page) .page-body h2 { letter-spacing: -.035em; }
+
+/* < ~40px */
+body:has(main.docs-hub) .doc-index-title { letter-spacing: -.04em; }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Radius system – docs, changelog, release notes and root pages
+   Same four tokens as the home page (declared on html.v3-page, which every
+   route carries). To revert: delete this block.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Nav – the legacy bezel rail, kept in step with the v3 pill */
+body:has(main:is(.docs-hub, .doc, .release-hub, .release, .page, .notfound)) .bezel-bar,
+body:has(main:is(.page, .notfound)) .bezel-bar { border-radius: var(--r-nav, 32px); }
+
+/* Surfaces */
+body:has(main.doc) .doc-nav { border-radius: var(--r-surface, 32px); }
+
+/* Controls */
+body:has(main.docs-hub) .docs-hub-search .doc-search-input,
+body:has(main.doc) .doc-search-input,
+body:has(main.doc) .doc-nav .doc-search-input { border-radius: var(--r-control, 32px); }
+body:has(main.doc) .doc-nav a { border-radius: var(--r-control, 32px); }
+html:not(.in-app) body:has(main.release) .release-filter { border-radius: var(--r-control, 32px); }
+/* Inner pills sit inside 4px of padding, so they inset by the same amount. */
+html:not(.in-app) body:has(main.release) .release-filter-indicator,
+html:not(.in-app) body:has(main.release) .rf-btn { border-radius: calc(var(--r-control, 32px) - 4px); }
+body.v3-site .bezel-bar .mode-toggle { border-radius: var(--r-control, 32px); }
+body.v3-site .bezel-bar .nav-version { border-radius: var(--r-control, 32px) 0 0 var(--r-control, 32px); }
+body.v3-site .bezel-bar .btn { border-radius: 0 var(--r-control, 32px) var(--r-control, 32px) 0; }
+
+/* Chips – the changelog category badges were the one 999px pill on the site */
+html:not(.in-app) body:has(main.release) .release-body h2#new,
+html:not(.in-app) body:has(main.release) .release-body h2#improved,
+html:not(.in-app) body:has(main.release) .release-body h2#fixed,
+html:not(.in-app) body:has(main.release) .release-body h2#removed { border-radius: var(--r-chip, 32px); }
+
+/* Terminal commands keep their own plate inside docs prose, where plain <code>
+   is a tinted inline chip. Same class, same look as the home page. */
+body:has(main.doc) .doc-body code.term-cmd,
+html:not(.in-app) body:has(main.release) .release-body code.term-cmd {
+  border: 0;
+  background: var(--v3-term-bg, #17181b);
+  color: var(--v3-term-ink, #f0efeb);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Docs and changelog hubs – one grid, not two
+   The hub head still carried max-width: 760px from the old narrow layout
+   (_docs.scss) and .release-list/.hub-sub the same from _changelog.scss. Both
+   heads are 12-column grids in this layer, so the cap made column 4 land at
+   221px in the head and 379px in the groups below – two left edges on one page,
+   with the meta labels alone out at the viewport gutter. Measured 6 August 2026.
+   ───────────────────────────────────────────────────────────────────────────── */
+body:has(main.docs-hub) .docs-hub .hub-head,
+body:has(main.release-hub) .release-hub .hub-head,
+body:has(main.release-hub) .release-hub .release-list,
+body:has(main.release-hub) .release-hub .hub-sub,
+body:has(main.release-hub) .release-hub .release-empty { max-width: none; }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Docs rail – more weight
+   The rail read as a list of captions next to 24px prose. The links carry the
+   navigation, so they get a real weight and full ink; the group labels step up
+   with them. Nothing moves on hover – only ink and plate.
+   ───────────────────────────────────────────────────────────────────────────── */
+body:has(main.doc) .doc-nav a {
+  color: color-mix(in srgb, var(--v3-site-ink) 82%, transparent);
+  font-weight: 550;
+  letter-spacing: -.012em;
+}
+body:has(main.doc) .doc-nav a:hover,
+body:has(main.doc) .doc-nav a[aria-current="page"] { color: var(--v3-site-ink); }
+body:has(main.doc) .doc-nav a[aria-current="page"] { font-weight: 700; }
+body:has(main.doc) .doc-nav-group .section-label { color: color-mix(in srgb, var(--v3-site-ink) 62%, transparent); font-weight: 600; }
+body:has(main.doc) .doc-nav-home { font-weight: 700; }
+/* Fragment links stay one step quieter – they are inside the current page. */
+body:has(main.doc) .doc-nav-frag a { color: var(--v3-site-muted); font-weight: 500; }
+
+/* The index rows carried margin-inline: -12px from _docs.scss – a bleed for the
+   old tinted hover plate, which this layer removed. Without the plate it only
+   pushed every title 12px left of column 4 and every date 12px past the right
+   gutter, which is what read as "the meta is out at the edge". Measured. */
+body:has(main.docs-hub) .doc-index a { margin-inline: 0; padding-inline: 0; }
+
+/* .doc-nav-home is an <a> inside .doc-nav, so the link rule above matches it at
+   equal specificity and wins on order. Restated last. */
+body:has(main.doc) .doc-nav-home { color: var(--v3-site-ink); font-weight: 700; }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Hub meta moves into the content column
+   The margin labels sat at the page gutter – 52px left of where the navigation's
+   own text begins, because the nav pill has internal padding a full-bleed grid
+   can never match. Rather than pick an edge to compromise on, the labels leave
+   the margin: DOCS, the group name and its page count now stand above the
+   content in column 4. The margin column is left empty on purpose – the inset
+   is what gives the hubs their editorial register.
+   Decided 6 August 2026. Rollback: delete this block.
+   ───────────────────────────────────────────────────────────────────────────── */
+body:has(main.docs-hub) .hub-title,
+body:has(main.release-hub) .hub-title {
+  grid-column: 4 / -1;
+  max-width: none;
+  margin: 0 0 20px;
+}
+body:has(main.docs-hub) .doc-group-head {
+  grid-column: 4 / -1;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 0 0 24px;
+}
+/* The count reads as part of the label line now, not a second block under it. */
+body:has(main.docs-hub) .doc-group-count { display: inline; margin: 0; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: .08em; }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Docs hub search – results as cards
+   The result list read as loose text under the field with nothing holding it.
+   Same card language as the feature grid on the home page: a tonal step from
+   page to surface, the shared radius, air between, no borders. Group name on
+   top as a mono kicker, title below – so the eye lands on where the page lives
+   before it reads the title.
+   The sidebar's own compact result list on article pages is left as it is.
+   ───────────────────────────────────────────────────────────────────────────── */
+body:has(main.docs-hub) .docs-hub-search { max-width: none; }
+body:has(main.docs-hub) .docs-hub-search .doc-search-results {
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--v3-tile-gap, clamp(10px, .9vw, 16px));
+  margin-top: 22px;
+}
+body:has(main.docs-hub) .docs-hub-search .doc-search-results a {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 10px;
+  min-height: 132px;
+  margin: 0;
+  padding: clamp(20px, 1.8vw, 26px);
+  border-radius: var(--r-surface, 32px);
+  background: var(--v3-site-surface);
+  transition: background-color .2s ease;
+}
+body:has(main.docs-hub) .docs-hub-search .doc-search-results a:hover {
+  background: color-mix(in srgb, var(--v3-site-ink) 6%, var(--v3-site-surface));
+}
+body:has(main.docs-hub) .docs-hub-search .dsr-title {
+  margin-top: auto;
+  color: var(--v3-site-ink);
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(18px, 1.5vw, 22px);
+  font-weight: 500;
+  letter-spacing: -.03em;
+  line-height: 1.2;
+}
+body:has(main.docs-hub) .docs-hub-search .dsr-group {
+  color: var(--v3-site-muted);
+  font-size: 10.5px;
+  letter-spacing: .13em;
+}
+body:has(main.docs-hub) .docs-hub-search .doc-search-empty {
+  grid-column: 1 / -1;
+  padding: clamp(20px, 1.8vw, 26px);
+  border-radius: var(--r-surface, 32px);
+  background: var(--v3-site-surface);
+  color: var(--v3-site-muted);
+  font-size: 17px;
+}

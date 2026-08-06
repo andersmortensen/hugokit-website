@@ -12,12 +12,20 @@
 
       Fired from here:
         Tier 1  download_started · cta_download_click · download_section_view
-        Tier 2  feedback_click · github_click
-        Tier 3  page_not_found · mode_toggled
+        Tier 2  feedback_click · github_click · search · search_result_click ·
+                docs_link_click
+        Tier 3  faq_opened · what_is_hugo_opened · release_dialog_opened ·
+                changelog_filter_used · page_not_found · mode_toggled
 
-      Removed 2026-07-21 (the spec-sheet redesign): faq_opened (the FAQ no longer has
-      any disclosures – everything is visible) and loop_tab_changed (the loop tabs
-      disappeared already with the spec sheet layout; the listener was dead code).
+      Rewritten 2026-08-06 against the v3 theme. The placement lookup asked for
+      .bezel, .hero, .get and .loop-panel – all four return zero elements on the
+      current markup, verified in the browser, so every CTA reported
+      placement "other" and the funnel could not tell nav from hero from the
+      download section. Both vocabularies are kept: v3 first, the legacy classes
+      as fallback, since docs pages still carry .site-footer and .doc-foot.
+
+      faq_opened is back. It was removed on 2026-07-21 when the spec-sheet
+      redesign dropped the disclosures; the v3 FAQ has ten <details> again.
 
       Rollback: delete this file and its call in baseof.html. */}}
 <script>
@@ -34,14 +42,30 @@
       gtag('event', name, params || {});
     };
 
-    {{- /* Where on the page did the link sit? Used by feedback_click and github_click. */}}
-    var placeOf = function (a) {
-      if (a.closest('.site-footer')) return 'footer';
-      if (a.closest('.doc-foot'))    return 'docs_page';
-      if (a.closest('.bezel'))       return 'nav'; /* nav lives in the bezel bar (2026-07-21) */
-      if (a.closest('.get'))         return 'download_section';
-      if (a.closest('.hero'))        return 'hero';
+    {{- /* Where on the page did the element sit? v3 classes first, the legacy
+          ones after – docs and release pages still render the old chrome. */}}
+    var placeOf = function (el) {
+      if (!el || !el.closest) return 'other';
+      if (el.closest('.v3-nav, .bezel, .bezel-bar'))                 return 'nav';
+      if (el.closest('.v3-hero'))                                    return 'hero';
+      if (el.closest('.v3-loop-card, .v3-loop-app'))                 return 'loop';
+      if (el.closest('.v3-feature-grid'))                            return 'features';
+      if (el.closest('.v3-faq-grid'))                                return 'faq';
+      if (el.closest('.v3-download-section, #download, .get'))       return 'download_section';
+      if (el.closest('.v3-site-footer, .site-footer'))               return 'footer';
+      if (el.closest('.doc-nav'))                                    return 'docs_sidebar';
+      if (el.closest('.doc-foot'))                                   return 'docs_page';
+      if (el.closest('.doc-body, .doc-article'))                     return 'docs_body';
+      if (el.closest('.release-body, .release-main'))                return 'release_note';
       return 'other';
+    };
+
+    {{- /* Which of the three loop cards, when the element sits in one. */}}
+    var loopIndex = function (el) {
+      var card = el.closest && el.closest('.v3-loop-card');
+      if (!card || !card.parentNode) return null;
+      var n = Array.prototype.indexOf.call(card.parentNode.children, card) + 1;
+      return n > 0 ? 'loop_0' + n : null;
     };
 
     {{- /* ── Click (delegated) ─────────────────────────────────────────────── */}}
@@ -59,21 +83,22 @@
         return;
       }
 
-      // Tier 1 – intent. The hero, nav and loop buttons are internal anchors to
-      // #download, not downloads. `location` tells which CTA drove the
-      // user down there; without it the whole funnel is one undifferentiated lump.
+      // Tier 1 – intent. The hero, nav and footer buttons are internal anchors
+      // to #download, not downloads. `location` tells which CTA drove the user
+      // down there; without it the whole funnel is one undifferentiated lump.
       if (a.getAttribute('href') && a.getAttribute('href').indexOf('#download') !== -1) {
-        var panel = a.closest('.loop-panel');
-        var loc = 'other';
-        if (a.closest('.bezel')) { /* nav lives in the bezel bar (2026-07-21) */
-          loc = 'nav';
-        } else if (a.closest('.hero')) {
-          loc = 'hero';
-        } else if (panel) {
-          var m = panel.className.match(/loop-panel-(\d+)/);
-          loc = m ? 'loop_0' + (parseInt(m[1], 10) + 1) : 'loop';
-        }
-        track('cta_download_click', { location: loc });
+        track('cta_download_click', { location: loopIndex(a) || placeOf(a) });
+        return;
+      }
+
+      // Tier 2 – the docs chips under each loop card, and any link out of the
+      // home page into the documentation. Tells which feature drives people to
+      // read more, which the docs page views alone cannot.
+      if (a.closest('.v3-doc-links, .feature-doc')) {
+        track('docs_link_click', {
+          location: loopIndex(a) || placeOf(a),
+          doc_path: a.getAttribute('href') || ''
+        });
         return;
       }
 
@@ -88,6 +113,96 @@
       if (a.hostname === 'github.com') {
         track('github_click', { location: placeOf(a) });
       }
+    }, { passive: true });
+
+    {{- /* ── Tier 3: dialogs and the changelog filter ─────────────────────── */}}
+    {{- /* Delegated on the same buttons the UI already marks with data
+          attributes, so no new hooks in the markup. */}}
+    document.addEventListener('click', function (e) {
+      var t = e.target.closest && e.target.closest('button');
+      if (!t) return;
+
+      if (t.hasAttribute('data-dialog-open')) {
+        track('what_is_hugo_opened', { location: placeOf(t) });
+        return;
+      }
+      if (t.hasAttribute('data-release-dialog-open')) {
+        track('release_dialog_opened', { app_version: VERSION, location: placeOf(t) });
+        return;
+      }
+      if (t.classList.contains('rf-btn')) {
+        track('changelog_filter_used', {
+          filter: (t.dataset.key || t.textContent || '').trim().toLowerCase(),
+          release: document.title.split('·')[0].trim()
+        });
+      }
+    }, { passive: true });
+
+    {{- /* ── Tier 3: FAQ ──────────────────────────────────────────────────── */}}
+    {{- /* The toggle event does not bubble, so this listens in the capture
+          phase – that reaches it without a listener per <details>. Only the
+          opening is tracked; a close is not a signal about the question. */}}
+    document.addEventListener('toggle', function (e) {
+      var d = e.target;
+      if (!d || d.tagName !== 'DETAILS' || !d.open) return;
+      if (!d.classList.contains('v3-faq-item') && !d.classList.contains('faq-item')) return;
+      var summary = d.querySelector('summary');
+      var num = d.querySelector('.v3-faq-num');
+      var text = summary ? summary.textContent : '';
+      if (num) text = text.replace(num.textContent, '');
+      track('faq_opened', { question: text.trim().slice(0, 100) });
+    }, true);
+
+    {{- /* ── Tier 2: docs search ──────────────────────────────────────────── */}}
+    {{- /* Two things worth knowing, and they are different questions: what
+          people look for (including the searches that find nothing – those are
+          the documentation gaps), and whether the results were good enough to
+          click. The term event is debounced so a query is counted once when the
+          typing settles, not once per keystroke, and only from two characters
+          up. GA4's standard event name is `search` with `search_term`, so it
+          lands in the built-in reports rather than needing a custom dimension. */}}
+    var searchTimer = null;
+    var lastTerm = '';
+
+    var searchScope = function (input) {
+      return input.closest('.docs-hub-search') ? 'docs_hub' : 'docs_sidebar';
+    };
+
+    document.addEventListener('input', function (e) {
+      var input = e.target;
+      if (!input.classList || !input.classList.contains('doc-search-input')) return;
+
+      var term = (input.value || '').trim();
+      clearTimeout(searchTimer);
+      if (term.length < 2 || term === lastTerm) return;
+
+      searchTimer = setTimeout(function () {
+        lastTerm = term;
+        var scope = input.closest('.docs-hub-search') || document;
+        var hits = scope.querySelectorAll('.doc-search-results a').length;
+        track('search', {
+          search_term: term.toLowerCase().slice(0, 100),
+          results_count: hits,
+          location: searchScope(input)
+        });
+      }, 900);
+    }, { passive: true });
+
+    {{- /* Which result was chosen, and how far down. A term with many searches
+          and no result clicks reads very differently from one with clicks. */}}
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('.doc-search-results a');
+      if (!a) return;
+      var list = a.closest('.doc-search-results');
+      var items = list ? list.querySelectorAll('a') : [];
+      var pos = Array.prototype.indexOf.call(items, a) + 1;
+      var title = a.querySelector('.dsr-title');
+      track('search_result_click', {
+        search_term: lastTerm.toLowerCase().slice(0, 100),
+        result_title: title ? title.textContent.trim().slice(0, 100) : '',
+        result_position: pos,
+        location: searchScope(a)
+      });
     }, { passive: true });
 
     {{- /* ── Tier 1: was the download section seen at all? ───────────────── */}}

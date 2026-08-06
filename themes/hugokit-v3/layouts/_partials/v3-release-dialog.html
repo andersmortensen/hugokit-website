@@ -1,0 +1,37 @@
+{{- $release := site.GetPage (printf "/changelog/%s" site.Params.version) -}}
+{{- $releaseURL := "changelog/" | relURL -}}
+{{- with $release }}{{ $releaseURL = .RelPermalink }}{{ end -}}
+<dialog class="v3-release-dialog" id="release-dialog" aria-labelledby="release-dialog-title">
+  <article class="v3-release-dialog-card">
+    <div class="v3-release-dialog-banner" aria-hidden="true">
+      <div class="v3-release-dialog-mark">{{ partial "mark.html" (dict "size" 56) }}</div>
+    </div>
+    <div class="v3-release-dialog-body">
+      <button class="v3-release-dialog-close" type="button" aria-label="Close release details" data-release-dialog-close>×</button>
+      <p class="v3-release-dialog-kicker">Latest release{{ with $release }} · {{ .Date | time.Format "2 January 2006" }}{{ end }}</p>
+      <h2 id="release-dialog-title">HugoKit 0.3.0</h2>
+      <p class="v3-release-dialog-summary">{{ with $release }}{{ .Description }}{{ else }}{{ site.Params.description }}{{ end }}</p>
+      {{ with $release.Params.modalFeatures }}
+      <ul class="v3-release-dialog-features" aria-label="What is new in this release">
+        {{ range $index, $feature := . }}
+        <li>
+          <span class="v3-release-dialog-feature-index">{{ add $index 1 | printf "%02d" }}</span>
+          <span><strong>{{ $feature.title }}</strong><small>{{ $feature.detail }}</small></span>
+        </li>
+        {{ end }}
+      </ul>
+      {{ end }}
+      <div class="v3-release-dialog-actions">
+        <a class="v3-release-dialog-primary" href="{{ $releaseURL }}">View full changelog <span aria-hidden="true">→</span></a>
+        <button class="v3-release-dialog-dismiss" type="button" data-release-dialog-close>Close</button>
+      </div>
+    </div>
+  </article>
+</dialog>
+{{- with resources.Get "js/v3-release-dialog.js" -}}
+  {{- if hugo.IsProduction -}}
+    {{- with . | minify | fingerprint -}}<script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>{{- end -}}
+  {{- else -}}
+    <script src="{{ .RelPermalink }}"></script>
+  {{- end -}}
+{{- end -}}

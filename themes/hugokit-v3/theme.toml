@@ -1,0 +1,9 @@
+name = 'HugoKit v3'
+license = 'Proprietary'
+description = 'The editorial HugoKit website layer.'
+homepage = 'https://hugokit.com/'
+min_version = '0.146.0'
+
+[author]
+  name = 'Anders Mortensen'
+  homepage = 'https://andersmortensen.com/'

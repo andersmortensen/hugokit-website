@@ -46,7 +46,7 @@
 .consent-ic .feature-glyph { width: 17px; height: 17px; color: inherit; }
 .consent-title {
   font-family: var(--display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: 18px;
   letter-spacing: -0.01em;
   color: var(--ink);
@@ -85,4 +85,3 @@
   .consent { flex-direction: column; align-items: stretch; }
   .consent-actions { justify-content: flex-end; }
 }
-

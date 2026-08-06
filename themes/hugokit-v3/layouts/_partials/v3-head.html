@@ -1,0 +1,15 @@
+{{- /* The inherited head owns SEO, consent, fonts and the stored hk-theme choice.
+      The home page only changes the browser toolbar colours to match its canvas. */ -}}
+<script>
+  (function () {
+    var root = document.documentElement;
+    var chosen = root.dataset.theme;
+    document.querySelectorAll('meta[name="theme-color"]').forEach(function (meta) {
+      var dark = chosen
+        ? chosen === 'dark'
+        : (meta.media || '').indexOf('dark') !== -1;
+      meta.content = dark ? '#0D0E0F' : '#F0F0EC';
+      if (chosen) meta.removeAttribute('media');
+    });
+  })();
+</script>
