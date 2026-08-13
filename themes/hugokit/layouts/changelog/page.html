@@ -3,11 +3,12 @@
       chrome (bezel nav + footer) and lays out as a two-zone editorial spread: a left
       rail (version, date, Anders' note) and a right column that leads with the intro
       line and then the categorised changes. All of that layout is scoped to
-      html:not(.in-app) in _changelog.scss. Sparkle's update WebView loads the SAME
-      url with ?in-app through page.inapp.html, which keeps the compact single column
-      (flag set flash-free in head.html, chrome hidden in _bezel.scss). The
-      .release-version / -date / -body hooks are kept verbatim: the changelog hub
-      fetches this page and pulls them out for its instant-nav view. */}}
+      html:not(.in-app) in _changelog.scss (12-col rework in v3-site-chrome.scss).
+      Sparkle's update WebView loads the SAME url with ?in-app through page.inapp.html,
+      which keeps the compact single column (flag set flash-free in head.html, chrome
+      hidden in _bezel.scss). This is the only place release content renders on the
+      web – the changelog hub (section.html) only links here now, it no longer
+      fetches this page and rebuilds a second copy of it. */}}
 <div class="canvas">
 
 

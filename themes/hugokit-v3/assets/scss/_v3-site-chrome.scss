@@ -310,7 +310,6 @@ body:has(main.release-hub) .release-list a {
 body:has(main.release-hub) .release-list a:hover { color: var(--v3-site-accent); }
 body:has(main.release-hub) .release-list time { display: block; margin-top: 15px; color: var(--v3-site-muted); }
 body:has(main.release-hub) .rl-desc { grid-column: 7 / -1; max-width: 42ch; margin: 7px 0 0; color: var(--v3-site-muted); font-size: clamp(17px, 1.5vw, 21px); letter-spacing: -.02em; line-height: 1.45; }
-body:has(main.release-hub) .release-detail { max-width: none; padding: clamp(46px, 6vw, 88px) 0; border: 0; border-bottom: 1px solid var(--v3-site-line); border-radius: 0; background: transparent; box-shadow: none; }
 
 /* Direct release page */
 html:not(.in-app) body:has(main.release) .release {
@@ -596,7 +595,6 @@ body:has(main.doc) .doc-body code { border: 0; background: color-mix(in srgb, va
 
 /* Changelog hub and release notes */
 body:has(main.release-hub) .release-list li { border-bottom: 0; }
-body:has(main.release-hub) .release-detail { border-bottom: 0; }
 html:not(.in-app) body:has(main.release) .release-note { border-top: 0; }
 html:not(.in-app) body:has(main.release) .release-main { border-top: 0; }
 /* Fixed was the one outlined badge in a row of filled ones. */

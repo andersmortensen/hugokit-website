@@ -1,11 +1,17 @@
 {{ define "body" }}
-{{- /* The changelog hub – the site's full layout (canvas, nav, footer).
-      Release notes load DYNAMICALLY into the hub: a click fetches the subpage,
-      pulls out .release-version/-date/-body and swaps the view with a
-      view transition + pushState – no browser refresh. Hover prefetches.
-      Without JS you navigate normally to the compact release pages, which
-      REMAIN minimal (the Sparkle contract in RELEASING.md: releaseNotesLink
-      is shown in the update window's WebView). */}}
+{{- /* The changelog hub – the site's full layout (canvas, nav, footer). Release
+      rows link straight to their own page (page.html) – the site's global instant
+      navigation (cross-document view transitions in _motion.scss + Speculation
+      Rules prefetch + hover-prefetch, all in head.html) already makes that feel
+      instant, no page-specific JS required. The view-transition-name below morphs
+      the version number from list row to heading natively across that navigation.
+      2026-08-13: this used to fetch the subpage and swap a rendered copy into
+      .release-detail in place (no browser refresh) – removed because that view
+      never got the two-column treatment .release-wrap has in page.html (nor
+      v3-site-chrome's later 12-col rework of it), so a click showed a stale,
+      single-column layout the direct URL didn't. page.html is now the only place
+      release content renders on the web; the Sparkle contract in RELEASING.md
+      (releaseNotesLink in the update window's WebView) is untouched by this. */}}
 <div class="canvas">
 
 
@@ -23,10 +29,9 @@
         {{ range .Pages.ByDate.Reverse }}
         <li>
           <div class="rl-head">
-            {{- /* view-transition-name pairs with .release-version – both on the
-                  direct release page (page.html, cross-document) and on the hub's
-                  instant-nav view (set by showRelease below, same-document): the
-                  version number morphs from list row to heading and back. */}}
+            {{- /* view-transition-name pairs with .release-version on the direct
+                  release page (page.html): cross-document navigation morphs the
+                  version number from this row into that heading, natively. */}}
             <a href="{{ .RelPermalink }}" style="view-transition-name: {{ printf "rel%s" (.RelPermalink | replaceRE `[^a-zA-Z0-9]` "-") }}">{{ .Title }}</a>
             {{ with .Date }}<time datetime="{{ .Format "2006-01-02" }}">{{ .Format "2 January 2006" }}</time>{{ end }}
           </div>
@@ -40,126 +45,9 @@
       <p class="release-empty">No releases yet.</p>
       {{ end }}
     </div>
-
-    <article id="release-view" class="release-detail" hidden>
-      <a class="hub-back" href="{{ .RelPermalink }}">&larr; All releases</a>
-      <h2 class="release-version"></h2>
-      <time class="release-date"></time>
-      <div class="release-body"></div>
-    </article>
   </main>
 
 </div>
 
 {{ partial "footer.html" . }}
-{{ partial "release-filter.html" . }}
-
-<script>
-  (function () {
-    var list = document.getElementById('release-list-view');
-    var view = document.getElementById('release-view');
-    if (!list || !view || !window.fetch || !window.DOMParser) return;
-
-    var hubURL = {{ .RelPermalink | jsonify }};
-    var cache = {};
-
-    function load(url) {
-      if (!cache[url]) {
-        cache[url] = fetch(url).then(function (r) {
-          if (!r.ok) throw new Error(r.status);
-          return r.text();
-        }).then(function (t) {
-          var d = new DOMParser().parseFromString(t, 'text/html');
-          var v = d.querySelector('.release-version');
-          var dt = d.querySelector('.release-date');
-          var b = d.querySelector('.release-body');
-          if (!v || !b) throw new Error('unexpected page shape');
-          return {
-            title: v.textContent,
-            dateText: dt ? dt.textContent : '',
-            dateAttr: dt ? dt.getAttribute('datetime') : '',
-            body: b.innerHTML
-          };
-        });
-        cache[url].catch(function () { delete cache[url]; });
-      }
-      return cache[url];
-    }
-
-    function transition(fn) {
-      if (document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        document.startViewTransition(fn);
-      } else {
-        fn();
-      }
-    }
-
-    function showRelease(data, url, push) {
-      // Same-document counterpart of the list row's view-transition-name: the
-      // hidden list's names go inert (display: none), so the heading can carry
-      // the slug and the version number morphs row → heading. Must match the
-      // Hugo-side formula on the <a> above (RelPermalink, non-alphanumerics → "-").
-      var vtName = 'rel' + new URL(url, location.href).pathname.replace(/[^a-zA-Z0-9]/g, '-');
-      transition(function () {
-        var vEl = view.querySelector('.release-version');
-        vEl.textContent = data.title;
-        vEl.style.viewTransitionName = vtName;
-        var time = view.querySelector('.release-date');
-        time.textContent = data.dateText;
-        if (data.dateAttr) time.setAttribute('datetime', data.dateAttr);
-        time.hidden = !data.dateText;
-        view.querySelector('.release-body').innerHTML = data.body;
-        if (window.hkReleaseFilter) window.hkReleaseFilter(view);
-        list.hidden = true;
-        view.hidden = false;
-        document.title = data.title + ' · HugoKit';
-      });
-      if (push) history.pushState({ release: url }, '', url);
-      scrollTo({ top: 0, behavior: 'instant' });
-    }
-
-    function showList(push) {
-      transition(function () {
-        view.hidden = true;
-        list.hidden = false;
-        document.title = 'Changelog · HugoKit';
-      });
-      if (push) history.pushState({}, '', hubURL);
-    }
-
-    list.addEventListener('click', function (e) {
-      var a = e.target.closest('.release-list a');
-      if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-      e.preventDefault();
-      load(a.href).then(function (d) { showRelease(d, a.href, true); })
-        .catch(function () { location.href = a.href; });
-    });
-
-    // Prefetch on hover/focus – the click feels instant
-    list.addEventListener('mouseover', function (e) {
-      var a = e.target.closest('.release-list a');
-      if (a) load(a.href).catch(function () {});
-    });
-    list.addEventListener('focusin', function (e) {
-      var a = e.target.closest('.release-list a');
-      if (a) load(a.href).catch(function () {});
-    });
-
-    view.querySelector('.hub-back').addEventListener('click', function (e) {
-      if (e.metaKey || e.ctrlKey) return;
-      e.preventDefault();
-      showList(true);
-    });
-
-    history.replaceState({}, '', location.href);
-    addEventListener('popstate', function (e) {
-      if (e.state && e.state.release) {
-        load(e.state.release).then(function (d) { showRelease(d, e.state.release, false); })
-          .catch(function () { location.reload(); });
-      } else {
-        showList(false);
-      }
-    });
-  })();
-</script>
 {{ end }}
