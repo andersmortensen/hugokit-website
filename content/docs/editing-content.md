@@ -12,6 +12,14 @@ The Content page gives you a quick way into the site's files, front matter and s
 
 Open **Content** for the selected site and HugoKit counts what's there – pages, sections, words and images, and how many are drafts, future-dated or expired – and lists the files. Open one and you get a preview, a front matter inspector, and a **Raw** tab.
 
+## Finding and replacing in Raw
+
+`⌘F` follows the active context. With no file editor active it focuses the Content list search. With the **Raw** editor active it opens the document's native find bar inside the sheet; `⌥⌘F` opens the same bar with replace controls.
+
+The find bar can match case or whole words. **Replace All** is recorded as one undoable edit, so one `⌘Z` restores the buffer.
+
+Find and replace only change the open buffer. Nothing is written to disk until you choose **Save** (`⌘S`).
+
 ## The front matter inspector
 
 The inspector shows **title, description, date, draft, tags and categories** as fields beside the content.

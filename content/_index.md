@@ -120,6 +120,7 @@ features:
       detail: "The Content page counts what is in the site and lists the files. It is built for a typo, a front matter field, a date – not for writing. A front matter inspector sits beside each file for exactly those fields; real writing stays in your own editor, and the preview reloads on save either way."
       points:
         - "Pages, sections, word counts and images per site – plus how many are drafts, future-dated or expired. A page bundle shows as one entry with its images, not a folder of loose files."
+        - "With a Raw editor active, `⌘F` opens a native find bar inside the sheet and `⌥⌘F` adds replace controls. Replace All is one undo step, and changes stay in the buffer until Save."
         - "Edit the front matter in a panel beside the file – title, description, date, tags and categories, with suggestions drawn from the site's own taxonomies – or use the Raw tab, a plain monospaced editor with an explicit Save (`⌘S`). Both edit the same text."
         - "See every tag and category across the site, catch a duplicate spelling, and rename one everywhere in a single pass you can undo."
         - "Close a file with unsaved changes and HugoKit asks first."
@@ -167,6 +168,7 @@ features:
         - "`⌘P` publish · `⇧⌘P` preflight · `⌘D` deploy"
         - "`⇧⌘H` site health · `⇧⌘T` template preview · `⌘2` Hugo Reference"
         - "`⌘O` open a site · `⇧⌘N` create one · `⌘,` settings"
+        - "`⌘F` search the active context – Content list or Raw document · `⌥⌘F` replace in Raw · `⌘K` insert a link while editing"
     - name: "Menu bar extra"
       glyph: "menubar"
       text: "Start and stop sites, open previews and check server status without opening the main window."
