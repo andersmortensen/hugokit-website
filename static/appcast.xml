@@ -1,15 +1,19 @@
-<?xml version="1.0" standalone="yes"?>
-<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+<?xml version="1.0" standalone="yes"?><!-- sparkle-sign-warning:
+IMPORTANT: This file was signed by Sparkle. Any modifications to this file requires re-signing this file with generate_appcast or sign_update! The signed signature will be embedded at the end of this file.
+--><rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
     <channel>
         <title>HugoKit</title>
         <item>
-            <title>0.3.0</title>
-            <pubDate>Sat, 01 Aug 2026 17:06:32 +0200</pubDate>
-            <sparkle:version>3</sparkle:version>
-            <sparkle:shortVersionString>0.3.0</sparkle:shortVersionString>
+            <title>0.4.0</title>
+            <pubDate>Fri, 28 Aug 2026 09:55:16 +0200</pubDate>
+            <sparkle:version>4</sparkle:version>
+            <sparkle:shortVersionString>0.4.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/andersmortensen/hugokit/releases/download/v0.3.0/HugoKit-0.3.0.dmg" length="7588292" type="application/octet-stream" sparkle:edSignature="Yo3AnnFIrc3qbZSyxsAF6E+rFRR8U6YOdXmD5Z+JjElUK7I+gPIQVTRGYBhOBDsrPZyEDHRPY9DIUJBSs1B4Aw=="/>
-            <sparkle:releaseNotesLink>https://hugokit.com/changelog/0.3.0/in-app.html</sparkle:releaseNotesLink>
+            <enclosure url="https://github.com/andersmortensen/hugokit/releases/download/v0.4.0/HugoKit-0.4.0.dmg" length="8428253" type="application/octet-stream" sparkle:edSignature="icn6sBH15Q2OFNi5XbmFmLCFnLaVHgpcsg1IS3IFM1T0kBXZyYquVmIR6DBaJukGZR0MJR92nfkf449ZLT/wBg=="></enclosure>
+            <sparkle:releaseNotesLink sparkle:edSignature="M5q+4likg5E3stl3CSENqCmRmj+7DAArXFnfyW/GiI1Psnlm6pjhtqiBHAmsymgElN9B+4Iz/bQI7i/b6ShTAA==" sparkle:length="17420">https://github.com/andersmortensen/hugokit/releases/download/v0.4.0/HugoKit-0.4.0-release-notes.html</sparkle:releaseNotesLink>
         </item>
     </channel>
-</rss>
+</rss><!-- sparkle-signatures:
+edSignature: V6nqP4v+TyBqWUMxe9AMY83Jnl8Otf3ZUFzwfrrBs6oMGgt51evawKR66yzjq/NBPNuyB4ax35vfpLSOof/xBA==
+length: 1345
+-->
