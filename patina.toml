@@ -1,0 +1,50 @@
+# Patina manifest. No manifest, no snapshots — this file is the opt-in.
+# Docs: ~/Developer/patina/README.md
+
+name = "hugokit-website"
+kind = "web"
+
+# Patina starts `hugo server` here and stops it again afterwards.
+serve = "hugo"
+port = 1314
+
+# Extra time after load before the shutter, in milliseconds.
+settle_ms = 400
+
+# Capture the whole scrollable page, not just the viewport.
+full_page = true
+
+# This repository has no tags, so retro import samples commits instead.
+retro_every_n_commits = 10
+
+# Both schemes. This has to stay above the [[...]] blocks: in TOML every key
+# after a header belongs to that header, so a `schemes` line placed below
+# [[viewports]] would silently become a property of the last viewport.
+schemes = ["light", "dark"]
+
+# The front page plus the pages that carry the site's identity.
+[[pages]]
+id = "home"
+path = "/"
+
+[[pages]]
+id = "docs"
+path = "/docs/"
+
+[[pages]]
+id = "getting-started"
+path = "/docs/getting-started/"
+
+[[pages]]
+id = "changelog"
+path = "/changelog/"
+
+[[viewports]]
+id = "desktop"
+width = 1440
+height = 900
+
+[[viewports]]
+id = "mobile"
+width = 390
+height = 844

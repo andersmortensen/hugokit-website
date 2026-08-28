@@ -8,7 +8,7 @@ tags: [checks]
 
 **Site Health** scans the built site and content for quality and maintenance issues. It reports findings but does not block publishing.
 
-Open it with **⇧⌘H**, from the Dashboard's health card, from the Config page, the View menu or the command palette (⌘K).
+Open it with **⇧⌘H**, from the Dashboard's health card, from the Config page or the View menu.
 
 {{< shot name="site-health" alt="HugoKit's Site Health sheet: a score out of 100, with warnings and info issues listed and tagged by category." >}}
 

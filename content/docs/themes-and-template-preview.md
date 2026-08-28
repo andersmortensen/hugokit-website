@@ -47,4 +47,4 @@ Templates are grouped by folder – `_default`, `partials`, `shortcodes`, `_mark
 
 The preview is live: save the file in your editor, and it reloads like any other page on the dev server.
 
-Template Preview opens from the Dashboard, the Themes page, the View menu, the command palette (⌘K) or **⇧⌘T** from anywhere.
+Template Preview opens from the Dashboard, the Themes page, the View menu or **⇧⌘T** from anywhere.

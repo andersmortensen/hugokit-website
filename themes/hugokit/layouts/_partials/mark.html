@@ -4,7 +4,10 @@
         < 28 px → H-free
         ≥ 28 px → full (with H)
       The classes mk-top/mk-left/mk-h/mk-q1…mk-q4 are used by the CSS animation
-      ("The assembly") on the hero mark.
+      ("The assembly", _motion.scss). It plays on whichever lockup is hovered –
+      the v3 nav rail, or a pre-v3 .lockup. The other three call sites (the
+      download receipt, the footer brand and the release dialog) are not
+      interactive, so the mark sits still there.
       The top surface follows the color scheme via --mark-top (light: #E2DFE7 = the brand's
       light-surface-variant, dark: #F2F0F4) – set in main.css. */ -}}
 {{- $size := .size | default 27 -}}

@@ -42,6 +42,18 @@ Without it, you'll get: *Password auth requires sshpass – install with: brew i
 
 Leave the password empty to use an SSH key from `~/.ssh`; this does not require `sshpass`.
 
+## Review the changes first
+
+**Review Changes** sits beside **Add Deploy Target** on the Deploy page. It works out what a publish would do to each target and uploads nothing.
+
+{{< shot name="review-changes" alt="The Review Changes sheet: deletions first in full weight, then added and changed counts, with the paths expanded below." >}}
+
+Each target reports added, changed and deleted files, how many are unchanged and how many bytes would go over the wire. Deletions lead the block and are the only line set in full weight – they are the one entry that publishing again cannot undo. Expand a line to read the paths.
+
+New and changed files are counted apart, which the transport itself does not need: three new pages and three rewritten ones are the same upload and a different piece of news.
+
+A GitHub Pages target says so rather than showing an empty plan. It publishes by pushing a commit, so what the remote holds is git's to report, not something an upload manifest can answer.
+
 ## Publish
 
 `⌘P`. HugoKit:

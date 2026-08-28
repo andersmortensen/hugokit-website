@@ -98,22 +98,33 @@
 
 /* ── The assembly – the lockup mark clicks together on hover ─────────────────
    The quartet facets (mk-q1–q4, prepared in mark.html since the Q2 v2 mark) fly
-   in from a slightly exploded state and settle 50ms apart. Scoped to .lockup, so
-   every lockup (bezel, release rail, footer) plays the same move; the element
-   itself never moves – all motion is inside the SVG. Offsets are viewBox units
-   (100-box at 26px ≈ 0.26px per unit) along each facet's outward direction.
+   in from a slightly exploded state and settle 50ms apart. The element itself
+   never moves – all motion is inside the SVG. Offsets are viewBox units
+   (100-box at 30px = 0.3px per unit) along each facet's outward direction.
+
+   Scoped to both lockup classes: .lockup is the pre-v3 markup (bezel, release
+   rail, footer), .v3-lockup is what v3-navigation.html writes. The rule was
+   .lockup only, so the move went silent the day baseof.html switched from
+   bezel.html to v3-navigation.html – nothing on the page carried the class
+   any more. Add the class here, not on the element: .lockup also brings its
+   own layout from _nav.scss, which the v3 rail does not want.
+
    Adjustable: the --mk-d offsets, the 50ms stagger, the 360ms settle. */
 .mk-q1 { --mk-dx: -5px; --mk-dy: -3px; }
 .mk-q2 { --mk-dx: 3px;  --mk-dy: -5px; }
 .mk-q3 { --mk-dx: -3px; --mk-dy: 5px; }
 .mk-q4 { --mk-dx: 5px;  --mk-dy: 3px; }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .lockup:hover .mk-q, .lockup:focus-visible .mk-q {
+  :is(.lockup, .v3-lockup):hover .mk-q,
+  :is(.lockup, .v3-lockup):focus-visible .mk-q {
     animation: mk-assemble 360ms cubic-bezier(0.19, 1, 0.22, 1) both;
   }
-  .lockup:hover .mk-q2, .lockup:focus-visible .mk-q2 { animation-delay: 50ms; }
-  .lockup:hover .mk-q3, .lockup:focus-visible .mk-q3 { animation-delay: 100ms; }
-  .lockup:hover .mk-q4, .lockup:focus-visible .mk-q4 { animation-delay: 150ms; }
+  :is(.lockup, .v3-lockup):hover .mk-q2,
+  :is(.lockup, .v3-lockup):focus-visible .mk-q2 { animation-delay: 50ms; }
+  :is(.lockup, .v3-lockup):hover .mk-q3,
+  :is(.lockup, .v3-lockup):focus-visible .mk-q3 { animation-delay: 100ms; }
+  :is(.lockup, .v3-lockup):hover .mk-q4,
+  :is(.lockup, .v3-lockup):focus-visible .mk-q4 { animation-delay: 150ms; }
 }
 @keyframes mk-assemble {
   from { opacity: 0; transform: translate(var(--mk-dx, 0), var(--mk-dy, 0)); }

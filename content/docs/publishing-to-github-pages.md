@@ -38,6 +38,8 @@ When you press **Done**, HugoKit wires the folder up: it makes it a git reposito
 
 ## Publish
 
+**Review Changes** on the Deploy page counts what a publish would add, change and delete on each target. A GitHub Pages target reports that it cannot answer: publishing here pushes a commit, so what the remote holds is git's to report rather than an upload manifest's. The [git checks](#git-checks-before-a-publish) below are the equivalent for this target. Review Changes does answer for [FTP and SFTP targets](/docs/publishing-over-sftp/#review-the-changes-first).
+
 `⌘P`, or the **Publish** button in the toolbar. With a cloud build, HugoKit:
 
 1. Writes or updates `.github/workflows/hugo-deploy.yml` – pinned to the Hugo version you're running, so the cloud builds your site with the same Hugo you preview it with.

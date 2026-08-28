@@ -77,6 +77,10 @@ ignoreLogs = ['warning-goldmark-raw-html']
   description = 'HugoKit is a Mac app for running Hugo sites locally and publishing them to GitHub Pages, FTP or SFTP.'
   # Appens aktuelle version — bruges i JSON-LD (softwareVersion); bump ved release.
   version = '0.3.0'
+  # Bumpes sammen med de tre tal nedenfor i trin 5 i RELEASING.md — EFTER
+  # release.sh har kørt og skrevet den nye appcast. Bumpes den i forvejen,
+  # annoncerer sitet en version brugerne endnu ikke kan hente, og
+  # release-preflight afviser releasen.
   # Download-fakta under knappen. Skal matche den DMG appcast'en peger på —
   # størrelsen er enclosure length i static/appcast.xml (7.588.292 B = 7,2 MB),
   # datoen er dens pubDate, og arkitekturen er aflæst på binæren i dist/export

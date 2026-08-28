@@ -10,7 +10,8 @@ er `SUFeedURL` i appens `Info.plist` og må aldrig flytte.
 | Appcast | `dist/sparkle/appcast.xml` | `static/appcast.xml` (dette repo) | `https://hugokit.com/appcast.xml` (= appens `SUFeedURL`) |
 | DMG (versioneret) | `dist/sparkle/HugoKit-X.Y.Z.dmg` | asset på GitHub-release `vX.Y.Z` | `…/releases/download/vX.Y.Z/HugoKit-X.Y.Z.dmg` — det er den appcast'en signerer og peger på |
 | DMG (fast navn) | `dist/HugoKit.dmg` (samme fil) | **andet** asset på samme release | `…/releases/latest/download/HugoKit.dmg` (= sitets `downloadURL`-param) |
-| Release notes | markdown pr. version | `content/changelog/X.Y.Z.md` (dette repo) | `/changelog/X.Y.Z/` — linkes fra appcast'en (`releaseNotesLink`) |
+| Release notes (kilde) | markdown pr. version | `content/changelog/X.Y.Z.md` (dette repo) | `/changelog/X.Y.Z/` — den fulde side i browseren |
+| Release notes (Sparkle) | `dist/HugoKit-X.Y.Z-release-notes.html`, bygget af `release.sh` fra sidens `in-app.html` | asset på GitHub-release `vX.Y.Z` | `…/releases/download/vX.Y.Z/HugoKit-X.Y.Z-release-notes.html` — det er den appcast'ens `releaseNotesLink` peger på, signeret |
 
 Sitet hoster altså ingen binærer længere; `static/downloads/` er ikke i brug.
 
@@ -23,20 +24,36 @@ Sitet hoster altså ingen binærer længere; `static/downloads/` er ikke i brug.
 > `## New / Improved / Fixed / Removed / Notes` rendrer som badges via heading-id.
 > Den gamle kontrakt (`static/changelog/X.Y.Z.html`) er udgået — mappen var tom,
 > ingen appcast var udgivet endnu.
+>
+> **Sparkle læser ikke siden fra hugokit.com** (siden 2026-08-08, M-09). En
+> signatur dækker præcise bytes, og `in-app.html` genbygges ved hver
+> website-deploy med et fingerprintet stylesheet-link — en website-hostet note
+> ville gå mørk ved næste urelaterede CSS-ændring. `release.sh` bygger derfor
+> sitet til `dist/website-build/`, kopierer `changelog/X.Y.Z/in-app.html` ud som
+> `HugoKit-X.Y.Z-release-notes.html`, signerer den med `sign_update` og lægger
+> den op som asset ved siden af DMG'en. Siden på hugokit.com er stadig kilden og
+> den fulde læseoplevelse i browseren — den er bare ikke det Sparkle henter.
 
 ## Trin
 
-1. Kør `scripts/release.sh` i HugoKit-repoet (7 trin, ender i `dist/`).
-   Scriptet printer til sidst den `gh release create`-kommando der skal køres.
-2. Udgiv GitHub-releasen med **begge** DMG-assets (versioneret + `HugoKit.dmg`).
-   Det faste navn holder sitets download-knap stabil uden redirects.
-3. Kopiér `dist/sparkle/appcast.xml` → `static/appcast.xml` i dette repo.
-4. Skriv/redigér `content/changelog/X.Y.Z.md`. Siden **skal** eksistere: scriptet
-   sætter selv appcast'ens `releaseNotesLink` til `https://hugokit.com/changelog/X.Y.Z/?in-app`
-   (`?in-app` fortæller siden at den skal fjerne sitets nav + footer, så Sparkles
-   update-vindue kun viser selve noten; samme URL uden query er den fulde side i
-   browseren). `generate_appcast` kan kun bygge linket som `<prefix><dmg-navn>.html`,
-   så release.sh patcher XML'en bagefter — der genereres ingen HTML-notes længere.
+1. Skriv/redigér `content/changelog/X.Y.Z.md` **først**. Siden skal eksistere og
+   være publiceret, før `release.sh` køres: scriptet bygger sitet og henter
+   `changelog/X.Y.Z/in-app.html` ud af build'et som den note Sparkle signerer og
+   viser. Mangler siden, stopper releasen.
+2. Kør `scripts/release.sh` i HugoKit-repoet (9 trin). Scriptet kører hele vejen
+   selv: det bygger, notariserer, signerer noten, patcher appcast'ens
+   `releaseNotesLink` til release-assettet, opretter GitHub-releasen som **draft**
+   med tre assets (versioneret DMG, `HugoKit.dmg`, release-noten), kører
+   `release-postflight.sh` mod det publicerede asset og udgiver først releasen når
+   postflight er grøn.
+3. Gennemgå den udgivne GitHub-release: den skal bære **tre** assets — den
+   versionerede DMG, `HugoKit.dmg` (det faste navn sitets download-knap bruger,
+   uden redirects) og `HugoKit-X.Y.Z-release-notes.html`.
+4. Scriptet kopierer selv `dist/sparkle/appcast.xml` → `static/appcast.xml` i dette
+   repo til sidst. Gennemgå diffen og commit den — den er ikke live før sitet
+   deployes. `generate_appcast` kan kun bygge release-notes-linket som
+   `<prefix><dmg-navn>.html`, så XML'en patches bagefter; enhver senere redigering
+   af `appcast.xml` ugyldiggør feed-signaturen.
 5. Bump download-fakta i `hugo.toml` (`[params]`) — de står under download-knappen
    på forsiden og skal matche den DMG appcast'en peger på:
 

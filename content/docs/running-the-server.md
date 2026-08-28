@@ -43,16 +43,19 @@ It only adopts a server whose project folder matches a site you've added. An unr
 
 ## Drafts, future and expired content
 
-Four toggles on the Server page cover the flags you'd otherwise have to remember:
+Five toggles on the Server page cover the flags you'd otherwise have to remember:
 
 | Setting | Flag it adds |
 |---|---|
 | Include drafts | `--buildDrafts` |
 | Include future content | `--buildFuture` |
 | Include expired content | `--buildExpired` |
+| Disable fast render | `--disableFastRender` |
 | Open browser on start | – |
 
 Change any of them – or the port – while the server is running, and HugoKit restarts it for you.
+
+**Disable fast render** is off by default, which is Hugo's own default. Hugo's fast render mode re-renders the page you are viewing rather than the whole site, which is why a page can keep showing output from before an edit – most often after a change to a shortcode, a partial or a list that other pages depend on. Turning it on rebuilds everything on every change: slower, and free of that particular surprise.
 
 Draft counts elsewhere in the app come from `hugo list drafts`, so they match what Hugo itself thinks is a draft.
 

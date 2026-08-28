@@ -8,6 +8,8 @@ tags: [basics]
 
 HugoKit works with the Hugo projects already on your Mac. Add one, start the development server and keep using the editor you already know.
 
+> New to Hugo? [Your first Hugo site](/docs/your-first-hugo-site/) covers the same ground as a walkthrough, starting from a Mac with nothing installed.
+
 ## What you need
 
 - A Mac running **macOS 26 (Tahoe) or later**.

@@ -83,7 +83,7 @@ features:
       text: "Find broken links, missing alt text, large images, deprecated config and content issues."
       docs:
         - "/docs/site-health/"
-      detail: "Preflight blocks what breaks a deployed site. Site health – `⇧⌘H` from anywhere – tells you what the site is like to read: broken links, images without alt text, a config key Hugo deprecated two versions ago. It points; you decide."
+      detail: "Preflight blocks what breaks a deployed site. Site Health – `⇧⌘H` from anywhere – reports on the site itself: broken links, images without alt text, config keys Hugo has deprecated. Findings are listed for you to act on; Site Health does not edit the site."
       points:
         - "Nine checks run in parallel: broken internal links, images without alt text, images over 500 KB, deprecated config keys, a missing favicon, build-time regressions, front matter gaps, draft ratio and a stale search index."
         - "A score out of 100 – an error costs 10 points, a warning 5, an info 2 – and every issue is tagged CONTENT, PERF, A11Y or CONFIG."
@@ -113,16 +113,22 @@ features:
         - "Removing a theme deletes themes/<name> and touches nothing else in the site."
     - name: "Content overview"
       glyph: "content"
-      text: "Browse pages, sections, word counts and images, with quick edits for front matter and text."
+      text: "Find pages, read what changed and edit front matter, with the page's own files beside it."
       docs:
         - "/docs/getting-started/#your-content"
         - "/docs/editing-content/"
       detail: "The Content page counts what is in the site and lists the files. It is built for a typo, a front matter field, a date – not for writing. A front matter inspector sits beside each file for exactly those fields; real writing stays in your own editor, and the preview reloads on save either way."
       points:
         - "Pages, sections, word counts and images per site – plus how many are drafts, future-dated or expired. A page bundle shows as one entry with its images, not a folder of loose files."
+        - "Search the list by title, section or path with `⌘F`. Matching ignores case and diacritics, so `aben` finds `Åben`."
         - "With a Raw editor active, `⌘F` opens a native find bar inside the sheet and `⌥⌘F` adds replace controls. Replace All is one undo step, and changes stay in the buffer until Save."
+        - "A Changed filter lists what git reports as new, modified, renamed or deleted since the last commit, with the word for which on each row. Sites without git do not show it."
         - "Edit the front matter in a panel beside the file – title, description, date, tags and categories, with suggestions drawn from the site's own taxonomies – or use the Raw tab, a plain monospaced editor with an explicit Save (`⌘S`). Both edit the same text."
+        - "Below the front matter: the files in the page's bundle, with Quick Look and insert-a-reference, and the pages that link to this one with the line each link sits on."
+        - "In the Raw tab, an outline of the document's headings. Click one and the cursor moves to that line."
+        - "New Content offers the site's own archetypes. A directory archetype creates a leaf bundle with the archetype's files inside it."
         - "See every tag and category across the site, catch a duplicate spelling, and rename one everywhere in a single pass you can undo."
+        - "On a site with configured languages, a page's translations can be grouped onto one row. Read-only, and filenames are left as the site writes them."
         - "Close a file with unsaved changes and HugoKit asks first."
         - "Open in editor is one click away, in whatever editor you already use."
     - name: "Config editor"
@@ -154,16 +160,16 @@ features:
       text: "Look up 195 Hugo reference entries without leaving the app."
       docs:
         - "/docs/getting-started/#hugo-reference"
-      detail: "Hugo's reference material, indexed and searchable inside the app, in a window of its own (`⌘2`). It is there so a forgotten function name does not cost you a browser tab and twenty minutes."
+      detail: "Hugo's reference material, indexed and searchable inside the app, in a window of its own (`⌘2`). Look up a function name, a page variable or a config key without switching to a browser."
       points:
         - "195 entries across twelve categories: functions, methods, page and site variables, templates, partials, shortcodes, front matter, config, content, build and performance."
         - "Opens in its own window and stays out of the way of the site you are working on."
     - name: "Keyboard shortcuts"
       glyph: "palette"
-      text: "Use shortcuts for Publish, Preflight, Site Health, Template Preview and the command palette."
+      text: "Use shortcuts for Publish, Preflight, Site Health, Template Preview and Hugo Reference."
       docs:
         - "/docs/getting-started/#shortcuts-worth-knowing"
-      detail: "The things you do every day have a key. Everything else is one `⌘K` away in the command palette."
+      detail: "The everyday actions have their own shortcuts. The rest sit in the menus, under the same names they carry in the app."
       points:
         - "`⌘P` publish · `⇧⌘P` preflight · `⌘D` deploy"
         - "`⇧⌘H` site health · `⇧⌘T` template preview · `⌘2` Hugo Reference"
@@ -174,11 +180,11 @@ features:
       text: "Start and stop sites, open previews and check server status without opening the main window."
       docs:
         - "/docs/getting-started/#outside-the-window"
-      detail: "HugoKit does not need its window open to be useful. Close it and the app keeps running in the menu bar, with every site and its status one click away."
+      detail: "Closing the window leaves HugoKit running in the menu bar, with every site and its server status one click away."
       points:
         - "Start or stop any site from the menu, and open its localhost URL in the browser."
         - "The status dot follows the server: green running, amber busy, red failed, grey idle."
-        - "Don't want it? Turn the icon off in Settings → General."
+        - "Turn the icon off in Settings → General."
     - name: "Notifications"
       glyph: "bell"
       text: "Choose which server, build and publish events are worth a macOS notification."
@@ -197,7 +203,7 @@ features:
       text: "Already have Hugo? HugoKit finds it. If not, it can install Hugo Extended for you."
       docs:
         - "/docs/getting-started/#first-launch"
-      detail: "You shouldn't have to install a Go binary to write a blog post. HugoKit looks for Hugo where Hugo usually lives, and installs it for you if it isn't there."
+      detail: "HugoKit looks for Hugo in the locations it is usually installed, and offers to install Hugo Extended when it finds none."
       points:
         - "It checks Homebrew's paths, /usr/local/bin, ~/.local/bin and /usr/bin, then falls back to which hugo."
         - "Nothing found? With Homebrew installed it runs brew install hugo; without it, it downloads the latest Hugo extended release from GitHub and installs it to ~/.local/bin."
@@ -210,7 +216,7 @@ features:
       spot:
         text: "Keychain · no sign-in"
       text: "Built in SwiftUI, with deploy credentials in Keychain and no account system or backend."
-      detail: "SwiftUI throughout – no Electron, no account, no backend. HugoKit talks to Hugo, Git and your host, and to nothing else."
+      detail: "Built in SwiftUI, with no account system or backend service. HugoKit communicates with Hugo, Git and the host you publish to."
       points:
         - "Your files stay where they are: nothing is converted, moved or copied into an app format."
         - "Deploy credentials go into the macOS Keychain, never into a config file in your repository."
@@ -279,15 +285,16 @@ moments:
     text: "Use GitHub Pages, FTP or SFTP, with the settings kept for each site."
     points:
       - "Publish to GitHub Pages, FTP or SFTP – one target or several."
+      - "Review Changes works out what a publish would add, change and delete on each target before it runs."
       - "See status and history per target, followed by a live-site check."
       - "Keep deploy credentials in the macOS Keychain."
     screenshot: "/images/app/deploy-light.webp"
     screenshotDark: "/images/app/deploy-dark.webp"
-    alt: "The Deploy view: a configured deploy target with Add Deploy Target and a history of successful deploys."
+    alt: "The Deploy view: a configured deploy target with Review Changes, Add Deploy Target and a history of successful deploys."
     docs:
       - "/docs/publishing-to-github-pages/"
       - "/docs/publishing-over-sftp/"
-    detail: "Each target stores its own build settings, status and history. HugoKit checks the public URL after publishing when one is configured."
+    detail: "Each target stores its own build settings, status and history. Review Changes counts the added, changed and deleted files before a publish, and HugoKit checks the public URL afterwards when one is configured."
 
 # Docs-teaser på forsiden – tre kuraterede sider, forankret i keyword-planen
 # (SEO-sporet: intern linking fra forsiden til landingssiderne). Titel og
