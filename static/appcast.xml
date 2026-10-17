@@ -4,16 +4,16 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     <channel>
         <title>HugoKit</title>
         <item>
-            <title>0.4.0</title>
-            <pubDate>Fri, 28 Aug 2026 09:55:16 +0200</pubDate>
-            <sparkle:version>4</sparkle:version>
-            <sparkle:shortVersionString>0.4.0</sparkle:shortVersionString>
+            <title>0.5.0</title>
+            <pubDate>Sat, 17 Oct 2026 21:07:20 +0200</pubDate>
+            <sparkle:version>5</sparkle:version>
+            <sparkle:shortVersionString>0.5.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/andersmortensen/hugokit/releases/download/v0.4.0/HugoKit-0.4.0.dmg" length="8428253" type="application/octet-stream" sparkle:edSignature="icn6sBH15Q2OFNi5XbmFmLCFnLaVHgpcsg1IS3IFM1T0kBXZyYquVmIR6DBaJukGZR0MJR92nfkf449ZLT/wBg=="></enclosure>
-            <sparkle:releaseNotesLink sparkle:edSignature="M5q+4likg5E3stl3CSENqCmRmj+7DAArXFnfyW/GiI1Psnlm6pjhtqiBHAmsymgElN9B+4Iz/bQI7i/b6ShTAA==" sparkle:length="17420">https://github.com/andersmortensen/hugokit/releases/download/v0.4.0/HugoKit-0.4.0-release-notes.html</sparkle:releaseNotesLink>
+            <enclosure url="https://github.com/andersmortensen/hugokit/releases/download/v0.5.0/HugoKit-0.5.0.dmg" length="9163893" type="application/octet-stream" sparkle:edSignature="uSj2/5aOnVI10mVG1EboxI2w7coP0ISu8IRNnbV28yFQQQUmcPfdlj2y350QFBVUFm/tNPpFFVKwe3TOx1LYCQ=="></enclosure>
+            <sparkle:releaseNotesLink sparkle:edSignature="zSx31EgOAaLvvfNE+lVojwYs+1lNWcdL4dQRzob7f19ViI0dg3GD3D+m9uXgWTM/wHwM2P4CKD1GxzOcnQv5Bg==" sparkle:length="16722">https://github.com/andersmortensen/hugokit/releases/download/v0.5.0/HugoKit-0.5.0-release-notes.html</sparkle:releaseNotesLink>
         </item>
     </channel>
 </rss><!-- sparkle-signatures:
-edSignature: V6nqP4v+TyBqWUMxe9AMY83Jnl8Otf3ZUFzwfrrBs6oMGgt51evawKR66yzjq/NBPNuyB4ax35vfpLSOof/xBA==
+edSignature: bdwNIH2YffjvUJ6TUA7BzOfD1O5KOKwc4N+qnd16dGIoXddiJPcvVqri2Zn9biC+ywEnbS/eF0QJ8nW5z/GKAA==
 length: 1345
 -->
