@@ -48,9 +48,9 @@
       if (!el || !el.closest) return 'other';
       if (el.closest('.v3-nav, .bezel, .bezel-bar'))                 return 'nav';
       if (el.closest('.v3-hero'))                                    return 'hero';
-      if (el.closest('.v3-loop-card, .v3-loop-app'))                 return 'loop';
-      if (el.closest('.v3-feature-grid'))                            return 'features';
-      if (el.closest('.v3-faq-grid'))                                return 'faq';
+      if (el.closest('.v3-loop-card, .v3-loop-app, .v3-workflow, .v3-story')) return 'loop';
+      if (el.closest('.v3-feature-grid, .v3-feature-list'))            return 'features';
+      if (el.closest('.v3-faq-grid, .v3-faq-list'))                    return 'faq';
       if (el.closest('.v3-download-section, #download, .get'))       return 'download_section';
       if (el.closest('.v3-site-footer, .site-footer'))               return 'footer';
       if (el.closest('.doc-nav'))                                    return 'docs_sidebar';
@@ -62,7 +62,7 @@
 
     {{- /* Which of the three loop cards, when the element sits in one. */}}
     var loopIndex = function (el) {
-      var card = el.closest && el.closest('.v3-loop-card');
+      var card = el.closest && el.closest('.v3-loop-card, .v3-workflow-row');
       if (!card || !card.parentNode) return null;
       var n = Array.prototype.indexOf.call(card.parentNode.children, card) + 1;
       return n > 0 ? 'loop_0' + n : null;

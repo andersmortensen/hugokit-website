@@ -1,0 +1,18 @@
+{{ with site.Home.Params.footer }}
+<footer class="v3-site-footer">
+  <div class="v3-footer-inner">
+    <div class="v3-footer-intro">
+      <a class="v3-lockup" href="{{ "" | relURL }}">{{ partial "mark.html" (dict "size" 30) }}<span class="v3-lockup-word">HugoKit</span></a>
+      <p>A Mac app for Hugo.</p>
+      <p>{{ .made }} <a href="{{ .authorURL }}">{{ .author }}</a></p>
+    </div>
+    <nav class="v3-footer-links" aria-label="Resources">
+      <a href="{{ "docs/" | relURL }}">Docs</a><a href="{{ "changelog/" | relURL }}">Changelog</a><a href="{{ "#faq" | relURL }}">FAQ</a><a href="mailto:{{ site.Params.feedbackEmail }}">Feedback</a>
+    </nav>
+    <nav class="v3-footer-links" aria-label="Project and privacy">
+      <a href="{{ site.Params.githubURL }}">GitHub</a><a href="{{ "privacy/" | relURL }}">Privacy</a><button type="button" data-consent-reopen>Cookies</button><a href="https://gohugo.io/">gohugo.io</a>
+    </nav>
+    <div class="v3-footer-bottom"><span>{{ .note }}</span><button type="button" data-release-dialog-open aria-haspopup="dialog" aria-controls="release-dialog">v{{ site.Params.version }} · {{ (time.AsTime site.Params.releaseDate) | time.Format "2 January 2006" }}</button></div>
+  </div>
+</footer>
+{{ end }}

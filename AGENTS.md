@@ -95,12 +95,13 @@ Enhver anden emoji må bruges frit i prosa, når den rammer noget præcist – m
 - Sidste task er altid verifikation
 - Følg med når Anders hopper i rækkefølgen – planen er ikke en kontrakt
 
-### Sandbox
+### Miljø
 
-- Agent-sandboxen er Linux og ikke Anders' Mac; oversæt altid mellem sandbox-stier og filværktøjernes stier
-- Kør aldrig git i dette repo fra en agent-sandbox, heller ikke `git status` – sandboxen efterlader en `.git/index.lock` den ikke kan fjerne igen
-- Skal noget committes: lever én copy-paste terminal-blok der starter med `rm -f .git/index.lock`
-- pip kræver `--break-system-packages`
+- På Anders' Mac (Claude Code, lokal Codex) virker git og builds direkte: read-only git frit, commit og push først efter et ja – og så udført direkte, ingen copy-paste-blok
+- I en Linux-sandbox (Cowork, cloud-agenter): oversæt altid mellem sandbox-stier og filværktøjernes stier
+- Kør aldrig git i dette repo fra en Linux-sandbox, heller ikke `git status` – sandboxen efterlader en `.git/index.lock` den ikke kan fjerne igen
+- Skal noget committes fra en sandbox: lever én copy-paste terminal-blok der starter med `rm -f .git/index.lock`
+- pip i en sandbox kræver `--break-system-packages`
 
 ### Projektet
 

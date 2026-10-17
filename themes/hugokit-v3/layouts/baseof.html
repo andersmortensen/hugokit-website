@@ -2,7 +2,7 @@
 <html lang="{{ site.Language.LanguageCode }}" class="v3-page">
 <head>
   {{ partial "head.html" . }}
-  {{ if .IsHome }}{{ partial "v3-head.html" . }}{{ end }}
+  {{ partial "v3-head.html" . }}
 </head>
 <body{{ if .IsHome }} class="v3-home"{{ else }} class="v3-site"{{ end }}>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -12,5 +12,6 @@
   {{ partial "v3-term-cmd.html" . }}
   {{ partial "consent.html" . }}
   {{ partial "analytics.html" . }}
+  {{ partial "v3-scripts.html" . }}
 </body>
 </html>

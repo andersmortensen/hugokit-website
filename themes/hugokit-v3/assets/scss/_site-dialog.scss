@@ -1,0 +1,32 @@
+.v3-release-dialog {
+  position: fixed;
+  inset: 0;
+  width: min(calc(100% - 32px), 580px);
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  padding: 32px;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+  color: var(--ink);
+}
+.v3-release-dialog::backdrop { background: rgba(0, 0, 0, .45); }
+.v3-release-dialog-card { position: relative; }
+.v3-release-dialog button { color: var(--ink); }
+.v3-release-dialog-banner { margin-bottom: 24px; }
+.v3-release-dialog-mark svg { width: 48px; height: 48px; }
+.v3-release-dialog-close { position: absolute; right: -12px; top: -12px; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 8px; background: none; font-size: 24px !important; }
+.v3-release-dialog-close:hover { background: var(--surface-raised); }
+.v3-release-dialog-kicker { color: var(--muted); font-size: 12px; }
+.v3-release-dialog h2 { margin-top: 12px; font-size: 34px; font-weight: var(--heading-weight); letter-spacing: var(--heading-tracking); line-height: var(--heading-leading); }
+.v3-release-dialog-summary { margin-top: 18px; color: var(--muted); font-size: 16px; line-height: 1.6; }
+.v3-release-dialog-features { margin-top: 24px; padding: 0; list-style: none; }
+.v3-release-dialog-features li { display: grid; grid-template-columns: 24px 1fr; gap: 12px; padding: 16px 0; border-top: 1px solid var(--line); }
+.v3-release-dialog-feature-index { padding-top: 2px; color: var(--muted); font-family: var(--mono); font-size: 11px; }
+.v3-release-dialog-features strong { display: block; font-size: 15px; font-weight: 500; }
+.v3-release-dialog-features small { display: block; margin-top: 4px; color: var(--muted); font-size: 14px; line-height: 1.5; }
+.v3-release-dialog-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 24px; margin-top: 28px; font-size: 14px; }
+.v3-release-dialog-primary { padding: 12px 16px; border-radius: 8px; background: var(--ink); color: var(--page); text-decoration: none; }
+.v3-release-dialog-dismiss { min-height: 44px; padding: 0; border: 0; background: none; }
+@media (max-width: 480px) { .v3-release-dialog { padding: 24px; } }

@@ -291,10 +291,9 @@
 
 {{- /* Fonts are self-hosted (woff2, latin) – @font-face lives in main.css, the files in
       static/fonts/. No Google Fonts CDN and thus no preconnect or
-      render-blocking external stylesheet. Manrope powers the site's display and
-      interface copy, so its local WOFF2 is preloaded. */}}
+      render-blocking external stylesheet. Manrope is kept for the HugoKit
+      wordmark; reading text and headings use the system font. */}}
 <link rel="preload" href="{{ "fonts/manrope-v20-latin-400-600.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="{{ "fonts/dm-sans-v17-latin-variable.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
 
 {{ with resources.Get "scss/main.scss" }}
   {{ $css := . | css.Sass (dict "targetPath" "css/main.css" "transpiler" "dartsass") | minify | fingerprint }}
@@ -357,14 +356,14 @@
     var all = document.querySelectorAll('.reveal');
     if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
       all.forEach(function (el) { el.classList.add('in'); });
-      return;
+    } else {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+      }, { rootMargin: '0px 0px 12% 0px', threshold: 0.08 });
+      all.forEach(function (el) { io.observe(el); });
     }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-      });
-    }, { rootMargin: '0px 0px 12% 0px', threshold: 0.08 });
-    all.forEach(function (el) { io.observe(el); });
 
     // Copy button on docs code blocks. Inserted only where the clipboard API exists
     // (requires secure context) – otherwise the blocks stay untouched. The receipt
@@ -479,7 +478,7 @@
         if (!box) build();
         lbImg.src = shot.currentSrc || shot.src;
         lbImg.alt = shot.alt || '';
-        lastFocus = shot;
+        lastFocus = shot.closest('.v3-shot-focus') || shot;
         box.classList.add('is-open');
         document.documentElement.style.overflow = 'hidden';
         closeBtn.focus();
@@ -488,13 +487,18 @@
       document.addEventListener('click', function (e) {
         var t = e.target;
         if (!t || !t.closest) return;
-        var shot = t.closest('img.shot');
+        var trigger = t.closest('.v3-shot-focus');
+        var shot = trigger ? trigger.querySelector('img.shot') : t.closest('img.shot');
         if (!shot || shot.closest('a')) return;
         e.preventDefault();
         open(shot);
       });
       document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') close();
+        if (e.key === 'Tab' && box && box.classList.contains('is-open')) {
+          e.preventDefault();
+          closeBtn.focus();
+        }
       });
     })();
 

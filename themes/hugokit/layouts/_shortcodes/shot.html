@@ -8,10 +8,17 @@
 {{- $alt := .Get "alt" -}}
 {{- $w := .Get "w" | default 1072 -}}
 {{- $h := .Get "h" | default 764 -}}
+{{- $light := printf "/images/docs/%s-light.webp" $name -}}
+{{- $dark := printf "/images/docs/%s-dark.webp" $name -}}
+{{- /* Omit an unavailable capture and use a single variant when only one exists. */ -}}
+{{- if not (fileExists (printf "static%s" $light)) }}{{ $light = "" }}{{ end -}}
+{{- if not (fileExists (printf "static%s" $dark)) }}{{ $dark = "" }}{{ end -}}
+{{- if or $light $dark -}}
 <figure class="doc-shot">
   {{ partial "shot.html" (dict
-      "light" (printf "/images/docs/%s-light.webp" $name)
-      "dark" (printf "/images/docs/%s-dark.webp" $name)
+      "light" ($light | default $dark)
+      "dark" $dark
       "alt" $alt "w" $w "h" $h) }}
   {{- with .Get "caption" }}<figcaption>{{ . }}</figcaption>{{ end -}}
 </figure>
+{{- end }}

@@ -44,6 +44,7 @@ features:
   title: "What you can do"
   items:
     - name: "All your sites"
+      highlight: true
       glyph: "sites"
       accent: "pink"
       # spot: meta-linjen på kvartet-kortet i Why. Hentes ikke fra prosaen – den står her,
@@ -74,6 +75,7 @@ features:
         - "The Starter is TOML-only and needs Hugo 0.146 or newer; Blank lets you choose the config format."
         - "Either one can initialise a git repository, open the site and start the server the moment it is done."
     - name: "Site health"
+      highlight: true
       glyph: "health"
       accent: "blue"
       featured: true
@@ -90,6 +92,7 @@ features:
         - "Front matter issues are aggregated per field, so 200 posts without a date cost you one issue, not two hundred."
         - "It reads the built site in public/, so build before you read too much into the score."
     - name: "Template preview"
+      highlight: true
       glyph: "templates"
       text: "Choose a layout and see it rendered with a matching page while the server is running."
       docs:
@@ -112,6 +115,7 @@ features:
         - "Set it as the active theme on creation, and the next build uses it."
         - "Removing a theme deletes themes/<name> and touches nothing else in the site."
     - name: "Content overview"
+      highlight: true
       glyph: "content"
       text: "Find pages, read what changed and edit front matter, with the page's own files beside it."
       docs:
@@ -132,6 +136,7 @@ features:
         - "Close a file with unsaved changes and HugoKit asks first."
         - "Open in editor is one click away, in whatever editor you already use."
     - name: "Config editor"
+      highlight: true
       glyph: "config"
       text: "Edit the Hugo config as fields or raw text, then check the diff before anything is saved."
       docs:
@@ -143,6 +148,7 @@ features:
         - "Save does not save. It shows every changed key, old value against new; you approve, and then it is written."
         - "TOML, YAML or JSON – the format is read from the file, and keys you never touched keep their place, their spelling and their comments."
     - name: "Snapshots and undo"
+      highlight: true
       glyph: "snapshots"
       accent: "pink"
       featured: true
@@ -275,7 +281,7 @@ moments:
       - "Ranks findings as errors, warnings or information."
     screenshot: "/images/app/preflight-light.webp"
     screenshotDark: "/images/app/preflight-dark.webp"
-    alt: "HugoKit's preflight check presenting a fix as a diff before publishing."
+    alt: "Preflight Check listing a Markdown warning, empty TOML sections and uncommitted changes."
     docs:
       - "/docs/preflight/"
     detail: "Preflight runs before every publish. Suggested fixes are shown as diffs and applied only after approval."
@@ -290,7 +296,7 @@ moments:
       - "Keep deploy credentials in the macOS Keychain."
     screenshot: "/images/app/deploy-light.webp"
     screenshotDark: "/images/app/deploy-dark.webp"
-    alt: "The Deploy view: a configured deploy target with Review Changes, Add Deploy Target and a history of successful deploys."
+    alt: "The Deploy view showing Git status, staging and production targets, and publishing controls."
     docs:
       - "/docs/publishing-to-github-pages/"
       - "/docs/publishing-over-sftp/"

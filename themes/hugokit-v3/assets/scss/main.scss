@@ -18,17 +18,10 @@
 @use "consent";
 @use "bezel";
 
-/* HugoKit v3 home bundle – polished navigation, hero, proof ledger and product loop. */
+/* Shared website system; inherited route styles remain available above. */
 @use "v3-tokens";
-@use "v3-foundation";
-@use "v3-hero";
-@use "v3-loop";
-@use "v3-features";
-@use "v3-note-faq";
-@use "v3-download-footer";
+@use "site-system";
+@use "site-home";
 @use "v3-dialog";
-@use "v3-motion";
-@use "v3-responsive";
-@use "v3-layout-contract";
-@use "v3-identity";
+@use "site-dialog";
 @use "v3-site-chrome";

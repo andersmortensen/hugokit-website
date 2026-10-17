@@ -1,0 +1,11 @@
+{{- $page := .page -}}
+{{- with .item -}}
+<details class="v3-feature-detail">
+  <summary><span class="v3-feature-glyph" aria-hidden="true">{{ partial "feature-glyph.html" (dict "glyph" .glyph) }}</span><span><span class="v3-feature-name">{{ .name }}</span><span class="v3-feature-description">{{ .text }}</span></span></summary>
+  <div class="v3-feature-body">
+    <p>{{ $page.RenderString .detail }}</p>
+    {{ with .points }}<ul>{{ range . }}<li>{{ $page.RenderString . }}</li>{{ end }}</ul>{{ end }}
+    {{ with .docs }}<div class="v3-doc-links">{{ partial "doc-links.html" . }}</div>{{ end }}
+  </div>
+</details>
+{{- end -}}
