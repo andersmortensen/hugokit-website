@@ -10,6 +10,9 @@
   RewriteEngine On
   RewriteCond %{HTTP_HOST} ^www\.hugokit\.com$ [NC]
   RewriteRule ^ https://hugokit.com%{REQUEST_URI} [L,R=301]
+
+  # Keep the draft release template private, including files from older uploads.
+  RewriteRule ^changelog/_skabelon(?:/|$) - [R=404,L]
 </IfModule>
 
 # ── Cache ─────────────────────────────────────────────────────────────────────
