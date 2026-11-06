@@ -1,5 +1,5 @@
 baseURL = 'https://hugokit.com/'
-languageCode = 'en'
+locale = 'en'
 title = 'HugoKit'
 timeZone = 'Europe/Copenhagen'
 # Sitets layouts/assets bor i temaet — roden ejer kun content, config og static.
